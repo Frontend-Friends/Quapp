@@ -6,10 +6,9 @@ import CssBaseline from '@mui/material/CssBaseline'
 import { CacheProvider, EmotionCache } from '@emotion/react'
 import theme from '../config/theme'
 import createEmotionCache from '../config/create-emotion-cache'
-import { Box, Container } from '@mui/material'
-import '../styles/globals.scss'
-import { NavBar } from '../components/nav-bar'
-import { Navigation } from '../mock/navigation'
+import { AuthContextProvider } from '../components/context/auth-context'
+import { useRouter } from 'next/router'
+import ProtectedRoute from '../components/auth/protected-route'
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
@@ -18,11 +17,12 @@ interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache
 }
 
-export default function App({
-  Component,
-  emotionCache = clientSideEmotionCache,
-  pageProps,
-}: MyAppProps) {
+export default function App(props: MyAppProps) {
+  const router = useRouter()
+  const noAuthRequired = ['/', '/login', '/signup']
+
+  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
+
   return (
     <CacheProvider value={emotionCache}>
       <Head>
@@ -31,13 +31,17 @@ export default function App({
       </Head>
 
       <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Box sx={{ backgroundColor: 'background.paper', minHeight: '100vh' }}>
-          <NavBar linkList={Navigation} />
-          <Container maxWidth="lg" sx={{ pt: 4 }}>
+        <AuthContextProvider>
+          <CssBaseline />
+          {noAuthRequired.includes(router.pathname) ? (
             <Component {...pageProps} />
-          </Container>
-        </Box>
+          ) : (
+            // @ts-ignore
+            <ProtectedRoute>
+              <Component {...pageProps} />
+            </ProtectedRoute>
+          )}
+        </AuthContextProvider>
       </ThemeProvider>
     </CacheProvider>
   )
