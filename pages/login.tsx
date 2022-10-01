@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import { FC, FormEventHandler, useState } from 'react'
 import Button from '@mui/material/Button'
-import { FormGroup, Input, TextField } from '@mui/material'
+import { Box, FormGroup, TextField, Typography } from '@mui/material'
 import { useAuth } from '../components/context/auth-context'
 
 const Login: FC = () => {
@@ -26,13 +26,15 @@ const Login: FC = () => {
   }
 
   return (
-    <div
-      style={{
-        width: '40%',
-        margin: 'auto',
+    <Box
+      sx={{
+        width: { xs: '90%', md: '50%', lg: '40%' },
+        maxWidth: '600px',
+        mx: 'auto',
+        my: '10%',
       }}
     >
-      <h1>Login</h1>
+      <Typography variant="h1">Login</Typography>
       <form onSubmit={handleLogin}>
         <FormGroup sx={{ my: 2 }}>
           <TextField
@@ -69,7 +71,7 @@ const Login: FC = () => {
           Login
         </Button>
       </form>
-    </div>
+    </Box>
   )
 }
 
