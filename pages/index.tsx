@@ -16,14 +16,11 @@ export default function Home() {
         </h1>
 
         <h1 className="text-3xl font-bold underline">
-        Hello world, Quartiervereins App mit Tailwind CSS!
+          Hello world, Quartiervereins App mit Tailwind CSS!
         </h1>
-
       </main>
 
-      <footer className={styles.footer}>
-
-      </footer>
+      <footer className={styles.footer}></footer>
     </div>
   )
 }

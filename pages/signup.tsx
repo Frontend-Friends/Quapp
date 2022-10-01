@@ -1,32 +1,32 @@
-import React, { useState } from "react";
-import { useAuth } from "../components/context/auth-context";
-import { Button, FormGroup, Input } from "@mui/material";
+import React, { FormEventHandler, useState } from 'react'
+import { useAuth } from '../components/context/auth-context'
+import { Button, FormGroup, Input } from '@mui/material'
 
 const Signup: React.FC = () => {
   // @ts-ignore
-  const { user, signup } = useAuth();
-  console.log(user);
+  const { user, signup } = useAuth()
+  console.log(user)
   const [data, setData] = useState({
-    email: "",
-    password: "",
-  });
+    email: '',
+    password: '',
+  })
 
-  const handleSignup = async (e: any) => {
-    e.preventDefault();
+  const handleSignup: FormEventHandler<HTMLFormElement> = async (e) => {
+    e.preventDefault()
 
     try {
-      await signup(data.email, data.password);
+      await signup(data.email, data.password)
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
-    console.log(data);
-  };
+    console.log(data)
+  }
 
   return (
     <div
       style={{
-        width: "40%",
-        margin: "auto",
+        width: '40%',
+        margin: 'auto',
       }}
     >
       <h1 className="text-center my-3 ">Signup</h1>
@@ -37,7 +37,7 @@ const Signup: React.FC = () => {
             type="email"
             placeholder="Enter email"
             required
-            onChange={(e: any) =>
+            onChange={(e) =>
               setData({
                 ...data,
                 email: e.target.value,
@@ -53,7 +53,7 @@ const Signup: React.FC = () => {
             type="password"
             placeholder="Password"
             required
-            onChange={(e: any) =>
+            onChange={(e) =>
               setData({
                 ...data,
                 password: e.target.value,
@@ -66,7 +66,7 @@ const Signup: React.FC = () => {
         <Button type="submit">Signup</Button>
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default Signup;
+export default Signup
