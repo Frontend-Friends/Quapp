@@ -6,7 +6,6 @@ import CssBaseline from '@mui/material/CssBaseline'
 import { CacheProvider, EmotionCache } from '@emotion/react'
 import theme from '../config/theme'
 import createEmotionCache from '../config/create-emotion-cache'
-import { useRouter } from 'next/router'
 import { Container } from '@mui/material'
 import '../styles/globals.scss'
 import { NavBar } from '../components/nav-bar/nav-bar'
@@ -19,9 +18,6 @@ interface MyAppProps extends AppProps {
 }
 
 export default function App(props: MyAppProps) {
-  const router = useRouter()
-  const noAuthRequired = ['/', '/login', '/signup']
-
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
 
   return (
