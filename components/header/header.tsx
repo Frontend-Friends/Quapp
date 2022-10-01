@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { FC } from 'react'
 import Image from 'next/image'
 
@@ -11,12 +11,14 @@ export const Header: FC<{
     <header>
       <Typography variant="h1">{title}</Typography>
       {imgSrc && (
-        <div className="relative w-full pt-[50%] mt-4">
+        <Box
+          sx={{ position: 'relative', width: '100%', paddingTop: '50%', mt: 2 }}
+        >
           <Image src={imgSrc} layout="fill" objectFit="cover" />
-        </div>
+        </Box>
       )}
       {lead && (
-        <Typography variant="subtitle1" mt={4}>
+        <Typography variant="subtitle1" mt={2}>
           {lead}
         </Typography>
       )}
