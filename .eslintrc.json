@@ -10,7 +10,7 @@
   "rules": {
     "@typescript-eslint/ban-ts-comment": "off",
     "semi": "off",
-    "prettier/prettier": ["error", {"semi":  false}]
+    "prettier/prettier": ["error", { "semi": false }]
   },
   "parserOptions": {
     "ecmaVersion": 2021,
