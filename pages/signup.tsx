@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../components/context/auth-context";
 import { Button, FormGroup, Input } from "@mui/material";
 
 const Signup: React.FC = () => {
