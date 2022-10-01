@@ -17,6 +17,7 @@ import {
 } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import '../styles/globals.scss'
+import { NavBar } from '../components/nav-bar/nav-bar'
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
@@ -40,24 +41,8 @@ export default function App(props: MyAppProps) {
 
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <AppBar position="sticky">
-          <Toolbar>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              sx={{ mr: 2 }}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              QUAPP
-            </Typography>
-            <Button color="inherit">Login</Button>
-          </Toolbar>
-        </AppBar>
-        <Container maxWidth="lg">
+        <NavBar />
+        <Container maxWidth="lg" sx={{ pt: 4 }}>
           <Component {...pageProps} />
         </Container>
       </ThemeProvider>

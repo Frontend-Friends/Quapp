@@ -1,5 +1,6 @@
 import { FC } from 'react'
 import {
+  Box,
   Button,
   Card,
   CardActions,
@@ -14,6 +15,9 @@ import MoreVertIcon from '@mui/icons-material/MoreVert'
 import { useTranslation } from '../../hooks/use-translation'
 import { GetServerSideProps } from 'next'
 import { PRODUCTS_MOCK } from '../../mock/products-mock'
+import { red } from '@mui/material/colors'
+import { ProductItem } from '../../components/products/product-item'
+import { Header } from '../../components/header/header'
 
 export type Product = {
   id: string
@@ -35,8 +39,10 @@ export const Products: FC<{ products: Product[] }> = ({ products }) => {
   const t = useTranslation()
   return (
     <>
-      <div className="bg-black">Text</div>
-      <Typography variant="h1">{t('PRODUCTS_title')}</Typography>
+      <Header
+        title={t('PRODUCTS_title')}
+        imgSrc="https://source.unsplash.com/random"
+      />
       <Grid container columns={{ md: 3 }} spacing={{ md: 4 }} pt={4}>
         {!products.length && (
           <Typography variant="body2">{t('PRODUCTS_no_entries')}</Typography>
@@ -44,41 +50,7 @@ export const Products: FC<{ products: Product[] }> = ({ products }) => {
         {!!products.length &&
           products.map((product) => (
             <Grid item xs={1} key={product.id}>
-              <Card
-                elevation={product.isAvailable ? undefined : 0}
-                className="bg-gray-50"
-              >
-                <CardHeader
-                  title={product.title}
-                  action={
-                    <IconButton aria-label="settings">
-                      <MoreVertIcon />
-                    </IconButton>
-                  }
-                />
-                {product.imgSrc && (
-                  <CardMedia
-                    component="img"
-                    height={194}
-                    src={product.imgSrc}
-                  />
-                )}
-                <CardContent>
-                  {product.description && (
-                    <Typography variant="body2">
-                      {product.description}
-                    </Typography>
-                  )}
-                </CardContent>
-                <CardActions
-                  sx={{ display: 'flex', justifyContent: 'space-between' }}
-                >
-                  <Button>{t('BUTTON_info')}</Button>
-                  {product.isAvailable && (
-                    <Button variant="contained">{t('BUTTON_contact')}</Button>
-                  )}
-                </CardActions>
-              </Card>
+              <ProductItem product={product} />
             </Grid>
           ))}
       </Grid>
