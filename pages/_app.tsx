@@ -28,7 +28,7 @@ export default function App(props: MyAppProps) {
     <CacheProvider value={emotionCache}>
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
-        <title>Quapp - sharing is caring</title>
+        <title>Quapp - Sharing is Caring</title>
       </Head>
 
       <ThemeProvider theme={theme}>
