@@ -6,10 +6,8 @@ import CssBaseline from '@mui/material/CssBaseline'
 import { CacheProvider, EmotionCache } from '@emotion/react'
 import theme from '../config/theme'
 import createEmotionCache from '../config/create-emotion-cache'
-import Nav from '../components/layout/nav'
-import { AuthContextProvider } from '../components/context/auth-context'
 import { useRouter } from 'next/router'
-import ProtectedRoute from '../components/auth/protected-route'
+import '../styles/globals.scss'
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
@@ -32,18 +30,8 @@ export default function App(props: MyAppProps) {
       </Head>
 
       <ThemeProvider theme={theme}>
-        <AuthContextProvider>
-          <CssBaseline />
-          <Nav />
-          {noAuthRequired.includes(router.pathname) ? (
-            <Component {...pageProps} />
-          ) : (
-            // @ts-ignore
-            <ProtectedRoute>
-              <Component {...pageProps} />
-            </ProtectedRoute>
-          )}
-        </AuthContextProvider>
+        <CssBaseline />
+        <Component {...pageProps} />
       </ThemeProvider>
     </CacheProvider>
   )
