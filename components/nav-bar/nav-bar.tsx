@@ -1,20 +1,9 @@
-import {
-  AppBar,
-  Button,
-  Drawer,
-  IconButton,
-  Toolbar,
-  Typography,
-  Box,
-  Link as MuiLink,
-} from '@mui/material'
+import { AppBar, Button, IconButton, Toolbar, Typography } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
-import { useState, KeyboardEvent, MouseEvent } from 'react'
-import Link from 'next/link'
-import { NavigationDrawer } from '../navigation/navigation-drawer'
-import { Navigation } from '../../mock/navigation'
+import { FC, KeyboardEvent, MouseEvent, useState } from 'react'
+import { LinkProps, NavigationDrawer } from '../navigation/navigation-drawer'
 
-export const NavBar = () => {
+export const NavBar: FC<{ linkList: LinkProps[] }> = ({ linkList }) => {
   const [drawerState, setDrawerState] = useState(false)
 
   const toggleDrawer = (event: KeyboardEvent | MouseEvent) => {
@@ -49,7 +38,7 @@ export const NavBar = () => {
         </Toolbar>
       </AppBar>
       <NavigationDrawer
-        list={Navigation}
+        list={linkList}
         state={drawerState}
         toggleState={toggleDrawer}
       />
