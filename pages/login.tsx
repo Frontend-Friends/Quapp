@@ -34,7 +34,9 @@ const Login: FC = () => {
         my: '10%',
       }}
     >
-      <Typography variant="h1">Login</Typography>
+      <Typography variant="h1" sx={{ my: 3 }}>
+        Login
+      </Typography>
       <form onSubmit={handleLogin}>
         <FormGroup sx={{ my: 2 }}>
           <TextField
