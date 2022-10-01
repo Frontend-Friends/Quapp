@@ -1,14 +1,14 @@
-import React from "react";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { Container } from "@mui/material";
-import { useAuth } from "../context/auth-context";
+import React from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { Container } from '@mui/material'
+import { useAuth } from '../context/auth-context'
 
 const Nav = () => {
   //  @ts-ignore
-  const { user, logout } = useAuth();
+  const { user, logout } = useAuth()
 
-  const router = useRouter();
+  const router = useRouter()
 
   return (
     <Container>
@@ -17,8 +17,8 @@ const Nav = () => {
           <div>
             <button
               onClick={() => {
-                logout();
-                router.push("/Login").then();
+                logout()
+                router.push('/Login').then()
               }}
             >
               <h2>You are logged in</h2>
@@ -37,7 +37,7 @@ const Nav = () => {
         )}
       </div>
     </Container>
-  );
-};
+  )
+}
 
-export default Nav;
+export default Nav
