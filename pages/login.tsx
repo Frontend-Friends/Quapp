@@ -1,18 +1,19 @@
 import { useRouter } from 'next/router'
-import { FC, useState } from 'react'
+import { FC, FormEventHandler, useState } from 'react'
 import Button from '@mui/material/Button'
 import { FormGroup, Input } from '@mui/material'
 import { useAuth } from '../components/context/auth-context'
 
 const Login: FC = () => {
   const router = useRouter()
+  // @ts-ignore
   const { user, login } = useAuth()
   const [data, setData] = useState({
     email: '',
     password: '',
   })
 
-  const handleLogin = async (e) => {
+  const handleLogin: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault()
 
     try {
@@ -36,7 +37,7 @@ const Login: FC = () => {
         <FormGroup className="mb-3">
           <label>Email address</label>
           <Input
-            onChange={(e: any) =>
+            onChange={(e) =>
               setData({
                 ...data,
                 email: e.target.value,
@@ -52,7 +53,7 @@ const Login: FC = () => {
         <FormGroup className="mb-3">
           <label>Password</label>
           <Input
-            onChange={(e: any) =>
+            onChange={(e) =>
               setData({
                 ...data,
                 password: e.target.value,
