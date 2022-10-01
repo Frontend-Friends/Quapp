@@ -7,7 +7,6 @@ import { CacheProvider, EmotionCache } from '@emotion/react'
 import theme from '../config/theme'
 import createEmotionCache from '../config/create-emotion-cache'
 import { useRouter } from 'next/router'
-import { Container } from '@mui/material'
 import '../styles/globals.scss'
 
 // Client-side cache, shared for the whole session of the user in the browser.
@@ -32,9 +31,7 @@ export default function App(props: MyAppProps) {
 
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Container maxWidth="lg">
-          <Component {...pageProps} />
-        </Container>
+        <Component {...pageProps} />
       </ThemeProvider>
     </CacheProvider>
   )
