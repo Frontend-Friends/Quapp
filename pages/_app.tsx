@@ -6,10 +6,17 @@ import CssBaseline from '@mui/material/CssBaseline'
 import { CacheProvider, EmotionCache } from '@emotion/react'
 import theme from '../config/theme'
 import createEmotionCache from '../config/create-emotion-cache'
-import Nav from '../components/layout/nav'
-import { AuthContextProvider } from '../components/context/auth-context'
 import { useRouter } from 'next/router'
-import ProtectedRoute from '../components/auth/protected-route'
+import {
+  AppBar,
+  Button,
+  Container,
+  IconButton,
+  Toolbar,
+  Typography,
+} from '@mui/material'
+import MenuIcon from '@mui/icons-material/Menu'
+import '../styles/globals.scss'
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
@@ -32,18 +39,27 @@ export default function App(props: MyAppProps) {
       </Head>
 
       <ThemeProvider theme={theme}>
-        <AuthContextProvider>
-          <CssBaseline />
-          <Nav />
-          {noAuthRequired.includes(router.pathname) ? (
-            <Component {...pageProps} />
-          ) : (
-            // @ts-ignore
-            <ProtectedRoute>
-              <Component {...pageProps} />
-            </ProtectedRoute>
-          )}
-        </AuthContextProvider>
+        <CssBaseline />
+        <AppBar position="sticky">
+          <Toolbar>
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ mr: 2 }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              QUAPP
+            </Typography>
+            <Button color="inherit">Login</Button>
+          </Toolbar>
+        </AppBar>
+        <Container maxWidth="lg">
+          <Component {...pageProps} />
+        </Container>
       </ThemeProvider>
     </CacheProvider>
   )
