@@ -7,15 +7,7 @@ import { CacheProvider, EmotionCache } from '@emotion/react'
 import theme from '../config/theme'
 import createEmotionCache from '../config/create-emotion-cache'
 import { useRouter } from 'next/router'
-import {
-  AppBar,
-  Button,
-  Container,
-  IconButton,
-  Toolbar,
-  Typography,
-} from '@mui/material'
-import MenuIcon from '@mui/icons-material/Menu'
+import { Container } from '@mui/material'
 import '../styles/globals.scss'
 import { NavBar } from '../components/nav-bar/nav-bar'
 
