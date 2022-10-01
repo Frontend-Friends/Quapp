@@ -6,7 +6,6 @@ import CssBaseline from '@mui/material/CssBaseline'
 import { CacheProvider, EmotionCache } from '@emotion/react'
 import theme from '../config/theme'
 import createEmotionCache from '../config/create-emotion-cache'
-import Nav from '../layout/components/nav'
 import { AuthContextProvider } from '../components/context/auth-context'
 import { useRouter } from 'next/router'
 import ProtectedRoute from '../components/auth/protected-route'
@@ -34,7 +33,6 @@ export default function App(props: MyAppProps) {
       <ThemeProvider theme={theme}>
         <AuthContextProvider>
           <CssBaseline />
-          <Nav />
           {noAuthRequired.includes(router.pathname) ? (
             <Component {...pageProps} />
           ) : (
