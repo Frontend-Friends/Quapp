@@ -5,11 +5,11 @@ import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { CacheProvider, EmotionCache } from "@emotion/react";
 import theme from "../config/theme";
-import createEmotionCache from "../config/createEmotionCache";
-import Nav from "../src/layout/Components/Nav";
-import { AuthContextProvider } from "../context/AuthContext";
+import createEmotionCache from "../config/create-emotion-cache";
+import Nav from "../layout/components/nav";
+import { AuthContextProvider } from "../components/context/auth-context";
 import { useRouter } from "next/router";
-import ProtectedRoute from "../src/components/auth/ProtectedRoute";
+import ProtectedRoute from "../components/auth/protected-route";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
