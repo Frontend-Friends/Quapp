@@ -1,6 +1,22 @@
 {
-  "name": "quartier-verein-app",
+  "name": "quapp",
+  "description": "Sharing ist Caring - Die App die Nachbarn verbindet",
   "version": "0.1.0",
+  "keywords": [
+    "share",
+    "trade",
+    "help",
+    "neighbours",
+    "spaces",
+    "communication"
+  ],
+  "license": "UNLICENSED",
+  "author": "Frontend Friends (Laurent Kerbage, Fabrice Tobler, Philip Park)",
+  "main": "pages/index.tsx",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Frontend-Friends/Quapp.git"
+  },
   "private": true,
   "scripts": {
     "dev": "next dev",
