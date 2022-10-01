@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router'
 import { FC, FormEventHandler, useState } from 'react'
 import Button from '@mui/material/Button'
-import { Box, FormGroup, TextField, Typography } from '@mui/material'
+import { FormGroup, TextField, Typography } from '@mui/material'
 import { useAuth } from '../components/context/auth-context'
+import { AuthContainer } from '../components/AuthContainer'
 import { useTranslation } from '../hooks/use-translation'
 
 const Login: FC = () => {
@@ -28,14 +29,7 @@ const Login: FC = () => {
 
   const t = useTranslation()
   return (
-    <Box
-      sx={{
-        width: { xs: '90%', md: '50%', lg: '40%' },
-        maxWidth: '600px',
-        mx: 'auto',
-        my: '10%',
-      }}
-    >
+    <AuthContainer>
       <Typography variant="h1" sx={{ my: 3 }}>
         {t('LOGIN_title')}
       </Typography>
@@ -75,7 +69,7 @@ const Login: FC = () => {
           {t('LOGIN_login')}
         </Button>
       </form>
-    </Box>
+    </AuthContainer>
   )
 }
 
