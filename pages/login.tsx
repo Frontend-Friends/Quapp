@@ -1,25 +1,28 @@
+import { useRouter } from "next/router";
 import React, { useState } from "react";
+import Button from "@mui/material/Button";
+import { FormGroup, Input } from "@mui/material";
 import { useAuth } from "../context/AuthContext";
-import { Button, FormGroup, Input } from "@mui/material";
 
-const Signup: React.FC = () => {
-  // @ts-ignore
-  const { user, signup } = useAuth();
-  console.log(user);
+const Login: React.FC = () => {
+  const router = useRouter();
+  //@ts-ignore
+  const { user, login } = useAuth();
   const [data, setData] = useState({
     email: "",
     password: "",
   });
 
-  const handleSignup = async (e: any) => {
+  const handleLogin = async (e: any) => {
     e.preventDefault();
 
     try {
-      await signup(data.email, data.password);
+      await login(data.email, data.password);
+      console.log("user is", user);
+      router.push("/dashboard");
     } catch (err) {
-      console.log(err);
+      console.error("error is", err);
     }
-    console.log(data);
   };
 
   return (
@@ -29,14 +32,11 @@ const Signup: React.FC = () => {
         margin: "auto",
       }}
     >
-      <h1 className="text-center my-3 ">Signup</h1>
-      <form onSubmit={handleSignup}>
+      <h1 className="text-center my-3 ">Login</h1>
+      <form onSubmit={handleLogin}>
         <FormGroup className="mb-3">
           <label>Email address</label>
           <Input
-            type="email"
-            placeholder="Enter email"
-            required
             onChange={(e: any) =>
               setData({
                 ...data,
@@ -44,15 +44,15 @@ const Signup: React.FC = () => {
               })
             }
             value={data.email}
+            required
+            type="email"
+            placeholder="Enter email"
           />
         </FormGroup>
 
         <FormGroup className="mb-3">
           <label>Password</label>
           <Input
-            type="password"
-            placeholder="Password"
-            required
             onChange={(e: any) =>
               setData({
                 ...data,
@@ -60,13 +60,15 @@ const Signup: React.FC = () => {
               })
             }
             value={data.password}
+            required
+            type="password"
+            placeholder="Password"
           />
         </FormGroup>
-
-        <Button type="submit">Signup</Button>
+        <Button type="submit">Login</Button>
       </form>
     </div>
   );
 };
 
-export default Signup;
+export default Login;
