@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useAuth } from "../../../context/AuthContext";
+import { useAuth } from "../context/auth-context";
 import { useRouter } from "next/router";
 
 const ProtectedRoute: React.FC = ({

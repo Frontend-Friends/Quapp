@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import { FormGroup, Input } from "@mui/material";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../components/context/auth-context";
 
 const Login: React.FC = () => {
   const router = useRouter();
