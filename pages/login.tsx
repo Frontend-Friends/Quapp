@@ -2,8 +2,8 @@ import { useRouter } from 'next/router'
 import { FC, FormEventHandler, useState } from 'react'
 import Button from '@mui/material/Button'
 import { FormGroup, TextField, Typography } from '@mui/material'
-import { useAuth } from '../components/context/auth-context'
-import { AuthContainer } from '../components/AuthContainer'
+import { useAuth } from '../components/auth-context'
+import { AuthContainer } from '../components/auth-container'
 import { useTranslation } from '../hooks/use-translation'
 
 const Login: FC = () => {

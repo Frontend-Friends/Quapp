@@ -1,5 +1,5 @@
 import React, { FC, ReactNode, useEffect } from 'react'
-import { useAuth } from '../context/auth-context'
+import { useAuth } from './auth-context'
 import { useRouter } from 'next/router'
 
 const ProtectedRoute: FC<{ children: ReactNode }> = ({ children }) => {
