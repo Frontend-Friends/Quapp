@@ -1,19 +1,14 @@
-import React, { useEffect } from "react";
-import { useAuth } from "../../../context/AuthContext";
-import { useRouter } from "next/router";
+import React, { FC, ReactNode, useEffect } from 'react';
+import { useAuth } from '../../../context/AuthContext';
+import { useRouter } from 'next/router';
 
-const ProtectedRoute: React.FC = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
-  //  @ts-ignore
+const ProtectedRoute: FC<{ children: ReactNode }> = ({ children }) => {
   const { user } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
     if (!user) {
-      router.push("/login").then();
+      router.push('/login').then();
     }
   }, [router, user]);
   return <>{user ? children : null}</>;

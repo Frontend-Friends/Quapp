@@ -1,35 +1,34 @@
-import { useRouter } from "next/router";
-import React, { useState } from "react";
-import Button from "@mui/material/Button";
-import { FormGroup, Input } from "@mui/material";
-import { useAuth } from "../context/AuthContext";
+import { useRouter } from 'next/router';
+import { FC, useState } from 'react';
+import Button from '@mui/material/Button';
+import { FormGroup, Input } from '@mui/material';
+import { useAuth } from '../context/AuthContext';
 
-const Login: React.FC = () => {
+const Login: FC = () => {
   const router = useRouter();
-  //@ts-ignore
   const { user, login } = useAuth();
   const [data, setData] = useState({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
 
-  const handleLogin = async (e: any) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
     try {
       await login(data.email, data.password);
-      console.log("user is", user);
-      router.push("/dashboard");
+      console.log('user is', user);
+      router.push('/dashboard');
     } catch (err) {
-      console.error("error is", err);
+      console.error('error is', err);
     }
   };
 
   return (
     <div
       style={{
-        width: "40%",
-        margin: "auto",
+        width: '40%',
+        margin: 'auto',
       }}
     >
       <h1 className="text-center my-3 ">Login</h1>
