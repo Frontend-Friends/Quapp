@@ -6,18 +6,10 @@ import CssBaseline from '@mui/material/CssBaseline'
 import { CacheProvider, EmotionCache } from '@emotion/react'
 import theme from '../config/theme'
 import createEmotionCache from '../config/create-emotion-cache'
-import { useRouter } from 'next/router'
-import {
-  AppBar,
-  Button,
-  Container,
-  IconButton,
-  Toolbar,
-  Typography,
-} from '@mui/material'
-import MenuIcon from '@mui/icons-material/Menu'
+import { Container } from '@mui/material'
 import '../styles/globals.scss'
 import { NavBar } from '../components/nav-bar/nav-bar'
+import { Navigation } from '../mock/navigation'
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
@@ -27,9 +19,6 @@ interface MyAppProps extends AppProps {
 }
 
 export default function App(props: MyAppProps) {
-  const router = useRouter()
-  const noAuthRequired = ['/', '/login', '/signup']
-
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
 
   return (
@@ -41,7 +30,7 @@ export default function App(props: MyAppProps) {
 
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <NavBar />
+        <NavBar linkList={Navigation} />
         <Container maxWidth="lg" sx={{ pt: 4 }}>
           <Component {...pageProps} />
         </Container>

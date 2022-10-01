@@ -2,8 +2,10 @@ import { Box, Drawer, Link as MuiLink } from '@mui/material'
 import Link from 'next/link'
 import { FC, KeyboardEvent, MouseEvent } from 'react'
 
+export type LinkProps = { href: string; label: string }
+
 export const NavigationDrawer: FC<{
-  list: { href: string; label: string }[]
+  list: LinkProps[]
   state: boolean
   toggleState: (event: KeyboardEvent | MouseEvent) => void
 }> = ({ list, state, toggleState }) => {

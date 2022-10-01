@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import { FC, FormEventHandler, useState } from 'react'
 import Button from '@mui/material/Button'
-import { FormGroup, Input } from '@mui/material'
+import { Box, FormGroup, TextField, Typography } from '@mui/material'
 import { useAuth } from '../components/context/auth-context'
 
 const Login: FC = () => {
@@ -19,24 +19,27 @@ const Login: FC = () => {
     try {
       await login(data.email, data.password)
       console.log('user is', user)
-      router.push('/dashboard')
+      await router.push('/dashboard')
     } catch (err) {
       console.error('error is', err)
     }
   }
 
   return (
-    <div
-      style={{
-        width: '40%',
-        margin: 'auto',
+    <Box
+      sx={{
+        width: { xs: '90%', md: '50%', lg: '40%' },
+        maxWidth: '600px',
+        mx: 'auto',
+        my: '10%',
       }}
     >
-      <h1 className="text-center my-3 ">Login</h1>
+      <Typography variant="h1" sx={{ my: 3 }}>
+        Login
+      </Typography>
       <form onSubmit={handleLogin}>
-        <FormGroup className="mb-3">
-          <label>Email address</label>
-          <Input
+        <FormGroup sx={{ my: 2 }}>
+          <TextField
             onChange={(e) =>
               setData({
                 ...data,
@@ -46,13 +49,13 @@ const Login: FC = () => {
             value={data.email}
             required
             type="email"
-            placeholder="Enter email"
+            label="E-Mail"
+            variant="outlined"
           />
         </FormGroup>
 
-        <FormGroup className="mb-3">
-          <label>Password</label>
-          <Input
+        <FormGroup sx={{ my: 2 }}>
+          <TextField
             onChange={(e) =>
               setData({
                 ...data,
@@ -62,12 +65,15 @@ const Login: FC = () => {
             value={data.password}
             required
             type="password"
-            placeholder="Password"
+            label="Password"
+            variant="outlined"
           />
         </FormGroup>
-        <Button type="submit">Login</Button>
+        <Button type="submit" variant="contained">
+          Login
+        </Button>
       </form>
-    </div>
+    </Box>
   )
 }
 
