@@ -3,6 +3,7 @@ import { useAuth } from '../context/auth-context'
 import { useRouter } from 'next/router'
 
 const ProtectedRoute: FC<{ children: ReactNode }> = ({ children }) => {
+  // @ts-ignore
   const { user } = useAuth()
   const router = useRouter()
 
