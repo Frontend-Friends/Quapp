@@ -4,55 +4,56 @@ import {
   useContext,
   useEffect,
   useState,
-} from "react";
+} from 'react'
 import {
   onAuthStateChanged,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-} from "firebase/auth";
-import { auth } from "../../config/firebase";
+} from 'firebase/auth'
+import { auth } from '../../config/firebase'
 
-const AuthContext = createContext({});
-export const useAuth = () => useContext(AuthContext);
+const AuthContext = createContext({})
+export const useAuth = () => useContext(AuthContext)
 
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+  // eslint-disable-next-line
+  const [user, setUser] = useState<any>(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      console.log(user);
-    });
+    const unsubscribe = onAuthStateChanged(auth, (userParam) => {
+      console.log(userParam)
+    })
     if (user) {
       setUser({
         uid: user.uid,
         email: user.email,
         displayName: user.displayName,
-      });
+      })
     } else {
-      setUser(null);
+      setUser(null)
     }
-    setLoading(false);
+    setLoading(false)
 
-    return () => unsubscribe();
-  }, [user]);
+    return () => unsubscribe()
+  }, [user])
 
   const signup = (email: string, password: string) => {
-    return createUserWithEmailAndPassword(auth, email, password);
-  };
+    return createUserWithEmailAndPassword(auth, email, password)
+  }
 
   const login = (email: string, password: string) => {
-    return signInWithEmailAndPassword(auth, email, password);
-  };
+    return signInWithEmailAndPassword(auth, email, password)
+  }
 
   const logout = async () => {
-    setUser(null);
-    await signOut(auth);
-  };
+    setUser(null)
+    await signOut(auth)
+  }
   return (
     <AuthContext.Provider value={{ user, login, signup, logout }}>
       {loading ? null : children}
     </AuthContext.Provider>
-  );
-};
+  )
+}
