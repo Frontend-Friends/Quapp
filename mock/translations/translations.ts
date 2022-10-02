@@ -9,7 +9,7 @@ export const translations: Record<string, string> = {
 
   LOGIN_title: 'Login',
   LOGIN_login: 'Anmelden',
-  LOGIN_forgot_password: 'Passwort vergessen?',
+  LOGIN_forgot_password: 'Passwort vergessen',
   LOGIN_has_no_account: 'Sie haben noch keinen Account',
   LOGIN_has_account: 'Sie haben schon einen Account',
 
