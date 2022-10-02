@@ -9,14 +9,14 @@ export const translations: Record<string, string> = {
 
   LOGIN_title: 'Login',
   LOGIN_login: 'Anmelden',
-  LOGIN_forgot_password: 'Passwort vergessen',
-  LOGIN_has_no_account: 'Sie haben noch keinen Account',
-  LOGIN_has_account: 'Sie haben schon einen Account',
+  LOGIN_forgot_password: 'Passwort vergessen?',
+  LOGIN_has_no_account: 'Sie haben noch keinen Account?',
+  LOGIN_has_account: 'Sie haben schon einen Account?',
 
   SIGNUP_title: 'Registration',
   SIGNUP_signup: 'Registrieren',
 
   PRODUCTS_title: 'Produkte',
-  PRODUCTS_no_entries: 'Leider gibt es noch keine Einträge',
+  PRODUCTS_no_entries: 'Leider gibt es noch keine Einträge.',
   PRODUCT_not_available: 'Nicht verfügbar',
 }
