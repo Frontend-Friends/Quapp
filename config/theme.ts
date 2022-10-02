@@ -24,6 +24,24 @@ const theme = createTheme({
   },
   typography: {
     fontFamily: 'Nunito, Helvetica, Arial, sans-serif',
+    h1: {
+      fontSize: '3rem',
+      letterSpacing: '0',
+      lineHeight: '1em',
+      fontWeight: '700',
+    },
+    h2: {
+      fontSize: '2.5rem',
+      letterSpacing: '0',
+      lineHeight: '1em',
+      fontWeight: '700',
+    },
+    h3: {
+      fontSize: '2rem',
+      letterSpacing: '0',
+      lineHeight: '1em',
+      fontWeight: '700',
+    },
   },
 })
 
