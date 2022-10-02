@@ -31,7 +31,7 @@ export const middleware = async (req: NextRequest) => {
   // demo:
   if (user?.admin !== 'true') {
     // unauthorized to see pages inside admin/
-    return NextResponse.redirect(new URL('/unauthorized', req.url)) // redirect to /unauthorized page
+    return NextResponse.redirect(new URL('/whatever-page', req.url)) // redirect to /whatever-page
   }
 
   return res
