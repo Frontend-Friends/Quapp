@@ -11,8 +11,8 @@ const Signup: React.FC = () => {
   const { user, signup } = useAuth()
   console.log(user)
   const [data, setData] = useState({
-    name: '',
-    surname: '',
+    firstName: '',
+    lastName: '',
     email: '',
     phone: '',
     password: '',
@@ -42,13 +42,13 @@ const Signup: React.FC = () => {
             onChange={(e) =>
               setData({
                 ...data,
-                name: e.target.value,
+                firstName: e.target.value,
               })
             }
-            value={data.name}
+            value={data.firstName}
             required
             type="text"
-            label={t('GLOBAL_name')}
+            label={t('GLOBAL_first_name')}
             variant="outlined"
           />
 
@@ -57,13 +57,13 @@ const Signup: React.FC = () => {
             onChange={(e) =>
               setData({
                 ...data,
-                surname: e.target.value,
+                lastName: e.target.value,
               })
             }
-            value={data.surname}
+            value={data.lastName}
             required
             type="text"
-            label={t('GLOBAL_surname')}
+            label={t('GLOBAL_last_name')}
             variant="outlined"
           />
 
