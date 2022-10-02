@@ -1,14 +1,8 @@
-// // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-//
-// import { NextApiRequest, NextApiResponse } from 'next'
-//
-// export default function handler(req: NextApiRequest, res: NextApiResponse) {
-//   res.status(200).json({ name: 'John Doe' })
-// }
-
 import { withIronSessionApiRoute } from 'iron-session/next'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { ironOptions } from '../../lib/config'
+import { signInWithEmailAndPassword } from 'firebase/auth'
+import { auth } from '../../config/firebase'
 
 declare module 'iron-session' {
   interface IronSessionData {
@@ -18,15 +12,31 @@ declare module 'iron-session' {
     }
   }
 }
-async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
-  // get user from database then:
 
-  const user = (req.session.user = {
-    email: req.body.email,
-    password: req.body.password,
-  })
-  await req.session.save()
-  res.send({ ok: true, user })
+const login = (email: string, password: string) => {
+  return signInWithEmailAndPassword(auth, email, password)
+}
+
+async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
+  try {
+    const email = req.body.email
+    const password = req.body.password
+
+    const credentials = await login(email, password)
+
+    const user = (req.session.user = {
+      email,
+      uid: credentials.user.uid,
+    })
+
+    console.log(user)
+
+    await req.session.save()
+    res.send({ ok: true })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: (error as Error).message })
+  }
 }
 
 export default withIronSessionApiRoute(loginRoute, ironOptions)
