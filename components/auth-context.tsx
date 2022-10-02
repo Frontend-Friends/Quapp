@@ -11,7 +11,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from 'firebase/auth'
-import { auth } from '../../config/firebase'
+import { auth } from '../config/firebase'
 
 const AuthContext = createContext({})
 export const useAuth = () => useContext(AuthContext)

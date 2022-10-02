@@ -1,5 +1,5 @@
 import React, { FormEventHandler, useState } from 'react'
-import { useAuth } from '../components/context/auth-context'
+import { useAuth } from '../components/auth-context'
 import { Button, FormGroup, Input } from '@mui/material'
 
 const Signup: React.FC = () => {

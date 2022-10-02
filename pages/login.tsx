@@ -1,8 +1,10 @@
 import { useRouter } from 'next/router'
 import { FC, FormEventHandler, useState } from 'react'
 import Button from '@mui/material/Button'
-import { Box, FormGroup, TextField, Typography } from '@mui/material'
-import { useAuth } from '../components/context/auth-context'
+import { FormGroup, TextField, Typography } from '@mui/material'
+import { useAuth } from '../components/auth-context'
+import { AuthContainer } from '../components/auth-container'
+import { useTranslation } from '../hooks/use-translation'
 
 const Login: FC = () => {
   const router = useRouter()
@@ -25,17 +27,11 @@ const Login: FC = () => {
     }
   }
 
+  const t = useTranslation()
   return (
-    <Box
-      sx={{
-        width: { xs: '90%', md: '50%', lg: '40%' },
-        maxWidth: '600px',
-        mx: 'auto',
-        my: '10%',
-      }}
-    >
+    <AuthContainer>
       <Typography variant="h1" sx={{ my: 3 }}>
-        Login
+        {t('LOGIN_title')}
       </Typography>
       <form onSubmit={handleLogin}>
         <FormGroup sx={{ my: 2 }}>
@@ -49,7 +45,7 @@ const Login: FC = () => {
             value={data.email}
             required
             type="email"
-            label="E-Mail"
+            label={t('GLOBAL_email')}
             variant="outlined"
           />
         </FormGroup>
@@ -65,15 +61,15 @@ const Login: FC = () => {
             value={data.password}
             required
             type="password"
-            label="Password"
+            label={t('GLOBAL_password')}
             variant="outlined"
           />
         </FormGroup>
         <Button type="submit" variant="contained">
-          Login
+          {t('LOGIN_login')}
         </Button>
       </form>
-    </Box>
+    </AuthContainer>
   )
 }
 
