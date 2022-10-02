@@ -119,7 +119,7 @@ const Signup: React.FC = () => {
 
         <Box sx={{ mt: 3 }}>
           <Link underline="hover" href="#">
-            Haben Sie bereits einen Account?
+            {t('LOGIN_has_account')}
           </Link>
         </Box>
       </form>

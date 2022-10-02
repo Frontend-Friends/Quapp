@@ -1,15 +1,7 @@
 import { useRouter } from 'next/router'
 import React, { FC, FormEventHandler, useState } from 'react'
 import Button from '@mui/material/Button'
-import {
-  Box,
-  Link,
-  List,
-  ListItem,
-  ListItemText,
-  TextField,
-  Typography,
-} from '@mui/material'
+import { Box, Link, TextField, Typography } from '@mui/material'
 import { useAuth } from '../components/auth-context'
 import { AuthContainer } from '../components/auth-container'
 import { useTranslation } from '../hooks/use-translation'
@@ -83,7 +75,7 @@ const Login: FC = () => {
             {t('LOGIN_forgot_password')}
           </Link>
           <Link underline="hover" href="#">
-            Haben Sie bereits einen Account?
+            {t('LOGIN_has_no_account')}
           </Link>
         </Box>
       </form>
