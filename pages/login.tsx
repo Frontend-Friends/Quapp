@@ -3,7 +3,7 @@ import { FC, FormEventHandler, useState } from 'react'
 import Button from '@mui/material/Button'
 import { FormGroup, TextField, Typography } from '@mui/material'
 import { useAuth } from '../components/auth-context'
-import { AuthContainer } from '../components/auth-container'
+import { CondensedContainer } from '../components/condensed-container'
 import { useTranslation } from '../hooks/use-translation'
 
 const Login: FC = () => {
@@ -29,7 +29,7 @@ const Login: FC = () => {
 
   const t = useTranslation()
   return (
-    <AuthContainer>
+    <CondensedContainer>
       <Typography variant="h1" sx={{ my: 3 }}>
         {t('LOGIN_title')}
       </Typography>
@@ -69,7 +69,7 @@ const Login: FC = () => {
           {t('LOGIN_login')}
         </Button>
       </form>
-    </AuthContainer>
+    </CondensedContainer>
   )
 }
 

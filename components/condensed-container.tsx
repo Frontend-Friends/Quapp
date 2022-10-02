@@ -1,7 +1,9 @@
 import { FC, ReactNode } from 'react'
 import { Box } from '@mui/material'
 
-export const AuthContainer: FC<{ children: ReactNode }> = ({ children }) => {
+export const CondensedContainer: FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   return (
     <Box
       sx={{
