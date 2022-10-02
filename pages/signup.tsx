@@ -2,7 +2,7 @@ import React, { FormEventHandler, useState } from 'react'
 import { useAuth } from '../components/auth-context'
 import { Box, Button, Link, TextField, Typography } from '@mui/material'
 import { useTranslation } from '../hooks/use-translation'
-import { AuthContainer } from '../components/auth-container'
+import { CondensedContainer } from '../components/condensed-container'
 
 const formGroupSX = { mb: 2 }
 
@@ -31,7 +31,7 @@ const Signup: React.FC = () => {
 
   const t = useTranslation()
   return (
-    <AuthContainer>
+    <CondensedContainer>
       <Typography variant="h1" sx={{ my: 3 }}>
         {t('SIGNUP_title')}
       </Typography>
@@ -123,7 +123,7 @@ const Signup: React.FC = () => {
           </Link>
         </Box>
       </form>
-    </AuthContainer>
+    </CondensedContainer>
   )
 }
 
