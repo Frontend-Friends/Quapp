@@ -1,23 +1,10 @@
 import { FC } from 'react'
-import {
-  Box,
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardHeader,
-  CardMedia,
-  Grid,
-  IconButton,
-  Typography,
-} from '@mui/material'
-import MoreVertIcon from '@mui/icons-material/MoreVert'
-import { useTranslation } from '../../hooks/use-translation'
+import { Grid, Typography } from '@mui/material'
+import { useTranslation } from '../../../hooks/use-translation'
 import { GetServerSideProps } from 'next'
-import { PRODUCTS_MOCK } from '../../mock/products-mock'
-import { red } from '@mui/material/colors'
-import { ProductItem } from '../../components/products/product-item'
-import { Header } from '../../components/header/header'
+import { PRODUCTS_MOCK } from '../../../mock/products-mock'
+import { ProductItem } from '../../../components/products/product-item'
+import { Header } from '../../../components/header/header'
 
 export type Product = {
   id: string
@@ -35,14 +22,11 @@ export const getServerSideProps: GetServerSideProps = async () => {
   }
 }
 
-export const Products: FC<{ products: Product[] }> = ({ products }) => {
+export const Product: FC<{ products: Product[] }> = ({ products }) => {
   const t = useTranslation()
   return (
     <>
-      <Header
-        title={t('PRODUCTS_title')}
-        imgSrc="https://source.unsplash.com/random"
-      />
+      <Header title={t('PRODUCTS_title')} />
       <Grid container columns={{ md: 3 }} spacing={{ md: 4 }} pt={4}>
         {!products.length && (
           <Typography variant="body2">{t('PRODUCTS_no_entries')}</Typography>
@@ -58,4 +42,4 @@ export const Products: FC<{ products: Product[] }> = ({ products }) => {
   )
 }
 
-export default Products
+export default Product

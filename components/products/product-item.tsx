@@ -12,7 +12,7 @@ import {
 } from '@mui/material'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import { FC } from 'react'
-import { Product } from '../../pages/space/products'
+import { Product } from '../../pages/space/products/[[...product]]'
 import { useTranslation } from '../../hooks/use-translation'
 
 export const ProductItem: FC<{ product: Product }> = ({ product }) => {
