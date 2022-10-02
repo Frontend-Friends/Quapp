@@ -11,11 +11,14 @@ import {
   Typography,
 } from '@mui/material'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
-import { FC } from 'react'
-import { Product } from '../../pages/space/products/[[...product]]'
+import { FC, MouseEventHandler } from 'react'
+import { Products } from '../../pages/space/products/[[...products]]'
 import { useTranslation } from '../../hooks/use-translation'
 
-export const ProductItem: FC<{ product: Product }> = ({ product }) => {
+export const ProductItem: FC<{
+  product: Products
+  handleMoreInformation?: MouseEventHandler<HTMLButtonElement>
+}> = ({ product, handleMoreInformation }) => {
   const t = useTranslation()
   return (
     <Card
@@ -48,7 +51,9 @@ export const ProductItem: FC<{ product: Product }> = ({ product }) => {
           </Box>
         )}
         {product.isAvailable && (
-          <Button variant="contained">{t('BUTTON_contact')}</Button>
+          <Button variant="contained" onClick={handleMoreInformation}>
+            {t('BUTTON_contact')}
+          </Button>
         )}
       </CardActions>
     </Card>

@@ -18,4 +18,5 @@ export const translations: Record<string, string> = {
   PRODUCTS_title: 'Produkte',
   BUTTON_borrow: 'Ich möchte das ausleihen!',
   BUTTON_contact: 'Kontakt aufnehmen',
+  BUTTON_info: 'mehr erfahren',
 }

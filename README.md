@@ -14,7 +14,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 [Open Tasks](https://github.com/orgs/Frontend-Friends/projects/1)
 
-You can start editing the page by modifying `pages/[[...product]].tsx`. The page auto-updates as you edit the file.
+You can start editing the page by modifying `pages/[[...products]].tsx`. The page auto-updates as you edit the file.
 
 [API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
 

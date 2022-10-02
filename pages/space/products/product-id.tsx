@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { GetServerSideProps } from 'next'
-import { Header } from '../../../components/header/header'
+import { Header } from '../../../components/header'
 import { Avatar, Box, Button, Card, CardContent } from '@mui/material'
 import { useTranslation } from '../../../hooks/use-translation'
 
@@ -23,7 +23,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   }
 }
 
-export const Id: FC<{ product: DetailProduct }> = ({ product }) => {
+export const ProductId: FC<{ product: DetailProduct }> = ({ product }) => {
   const t = useTranslation()
   return (
     <>
@@ -51,4 +51,4 @@ export const Id: FC<{ product: DetailProduct }> = ({ product }) => {
   )
 }
 
-export default Id
+export default ProductId
