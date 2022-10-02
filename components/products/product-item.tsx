@@ -14,6 +14,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert'
 import { FC, MouseEventHandler } from 'react'
 import { Products } from '../../pages/space/products/[[...products]]'
 import { useTranslation } from '../../hooks/use-translation'
+import Link from 'next/link'
 
 export const ProductItem: FC<{
   product: Products
@@ -51,9 +52,11 @@ export const ProductItem: FC<{
           </Box>
         )}
         {product.isAvailable && (
-          <Button variant="contained" onClick={handleMoreInformation}>
-            {t('BUTTON_contact')}
-          </Button>
+          <Link href={product.id} passHref shallow>
+            <Button variant="contained" onClick={handleMoreInformation}>
+              {t('BUTTON_contact')}
+            </Button>
+          </Link>
         )}
       </CardActions>
     </Card>
