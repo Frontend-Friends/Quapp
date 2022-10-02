@@ -8,7 +8,7 @@ import theme from '../config/theme'
 import createEmotionCache from '../config/create-emotion-cache'
 import { Container } from '@mui/material'
 import '../styles/globals.scss'
-import { NavBar } from '../components/nav-bar/nav-bar'
+import { NavBar } from '../components/nav-bar'
 import { Navigation } from '../mock/navigation'
 
 // Client-side cache, shared for the whole session of the user in the browser.

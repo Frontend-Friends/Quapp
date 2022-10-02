@@ -1,7 +1,7 @@
 import { AppBar, Button, IconButton, Toolbar, Typography } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import { FC, KeyboardEvent, MouseEvent, useState } from 'react'
-import { LinkProps, NavigationDrawer } from '../navigation/navigation-drawer'
+import { LinkProps, NavigationDrawer } from './navigation-drawer'
 
 export const NavBar: FC<{ linkList: LinkProps[] }> = ({ linkList }) => {
   const [drawerState, setDrawerState] = useState(false)
