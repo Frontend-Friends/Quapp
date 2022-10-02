@@ -1,8 +1,8 @@
 export const translations: Record<string, string> = {
   GLOBAL_email: 'E-Mail',
   GLOBAL_password: 'Passwort',
-  GLOBAL_name: 'Vorname',
-  GLOBAL_surname: 'Nachname',
+  GLOBAL_first_name: 'Vorname',
+  GLOBAL_last_name: 'Nachname',
   GLOBAL_mobile_number: 'Mobilfunknummer',
   GLOBAL_save: 'Speichern',
   GLOBAL_cancel: 'Abbrechen',
