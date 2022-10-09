@@ -1,10 +1,12 @@
 import { useRouter } from 'next/router'
-import { FC, FormEventHandler, useState } from 'react'
+import React, { FC, FormEventHandler, useState } from 'react'
 import Button from '@mui/material/Button'
-import { FormGroup, TextField, Typography } from '@mui/material'
+import { Box, Link, TextField, Typography } from '@mui/material'
 import { useAuth } from '../components/auth-context'
 import { CondensedContainer } from '../components/condensed-container'
 import { useTranslation } from '../hooks/use-translation'
+
+const formGroupSX = { mb: 2 }
 
 const Login: FC = () => {
   const router = useRouter()
@@ -34,8 +36,9 @@ const Login: FC = () => {
         {t('LOGIN_title')}
       </Typography>
       <form onSubmit={handleLogin}>
-        <FormGroup sx={{ my: 2 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           <TextField
+            sx={formGroupSX}
             onChange={(e) =>
               setData({
                 ...data,
@@ -48,10 +51,9 @@ const Login: FC = () => {
             label={t('GLOBAL_email')}
             variant="outlined"
           />
-        </FormGroup>
 
-        <FormGroup sx={{ my: 2 }}>
           <TextField
+            sx={formGroupSX}
             onChange={(e) =>
               setData({
                 ...data,
@@ -64,10 +66,18 @@ const Login: FC = () => {
             label={t('GLOBAL_password')}
             variant="outlined"
           />
-        </FormGroup>
-        <Button type="submit" variant="contained">
+        </Box>
+        <Button type="submit" variant="contained" sx={{ mr: 2 }}>
           {t('LOGIN_login')}
         </Button>
+        <Box sx={{ mt: 3 }}>
+          <Link underline="hover" href="#" sx={{ mr: 2 }}>
+            {t('LOGIN_forgot_password')}
+          </Link>
+          <Link underline="hover" href="#">
+            {t('LOGIN_has_no_account')}
+          </Link>
+        </Box>
       </form>
     </CondensedContainer>
   )
