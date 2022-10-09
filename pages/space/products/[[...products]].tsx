@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo, useState } from 'react'
+import { FC, useMemo } from 'react'
 import { Grid, Typography } from '@mui/material'
 import { useTranslation } from '../../../hooks/use-translation'
 import { GetServerSideProps } from 'next'
@@ -7,16 +7,7 @@ import { ProductItem } from '../../../components/products/product-item'
 import { Header } from '../../../components/header'
 import { useRouter } from 'next/router'
 import { ProductDetail } from '../../../components/products/product-detail'
-
-export type ProductType = {
-  id: string
-  title: string
-  lead?: string
-  text: string
-  description?: string
-  imgSrc?: string
-  isAvailable: boolean
-}
+import { ProductType } from '../../../components/products/types'
 
 export const getServerSideProps: GetServerSideProps = async () => {
   return {
@@ -31,15 +22,9 @@ export const Product: FC<{ products: ProductType[] }> = ({ products }) => {
 
   const { query } = useRouter()
 
-  const [modalState, setModalState] = useState(false)
-
   const product = useMemo(() => {
     return products.find((item) => item.id === query.products?.[0])
   }, [products, query])
-
-  useEffect(() => {
-    setModalState(!!query.products)
-  }, [query])
 
   return (
     <>
@@ -55,13 +40,7 @@ export const Product: FC<{ products: ProductType[] }> = ({ products }) => {
             </Grid>
           ))}
       </Grid>
-      <ProductDetail
-        product={product}
-        isOpen={modalState}
-        toggleModal={() => {
-          setModalState(false)
-        }}
-      />
+      <ProductDetail product={product} />
     </>
   )
 }

@@ -1,4 +1,4 @@
-import { FC, forwardRef, ReactNode } from 'react'
+import { forwardRef } from 'react'
 import { Box, BoxProps } from '@mui/material'
 
 export const CondensedContainer = forwardRef<HTMLDivElement, BoxProps>(
@@ -7,7 +7,7 @@ export const CondensedContainer = forwardRef<HTMLDivElement, BoxProps>(
       <Box
         {...props}
         sx={{
-          width: { xs: '90%', md: '50%', lg: '40%' },
+          width: '100%',
           maxWidth: '600px',
           mx: 'auto',
           my: '10%',

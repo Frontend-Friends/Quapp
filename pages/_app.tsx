@@ -6,7 +6,7 @@ import CssBaseline from '@mui/material/CssBaseline'
 import { CacheProvider, EmotionCache } from '@emotion/react'
 import theme from '../config/theme'
 import createEmotionCache from '../config/create-emotion-cache'
-import { Container } from '@mui/material'
+import { Container, Box } from '@mui/material'
 import '../styles/globals.scss'
 import { NavBar } from '../components/nav-bar'
 import { Navigation } from '../mock/navigation'
@@ -32,10 +32,12 @@ export default function App({
 
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <NavBar linkList={Navigation} />
-        <Container maxWidth="lg" sx={{ pt: 4 }}>
-          <Component {...pageProps} />
-        </Container>
+        <Box sx={{ backgroundColor: 'background.paper' }}>
+          <NavBar linkList={Navigation} />
+          <Container maxWidth="lg" sx={{ pt: 4 }}>
+            <Component {...pageProps} />
+          </Container>
+        </Box>
       </ThemeProvider>
     </CacheProvider>
   )

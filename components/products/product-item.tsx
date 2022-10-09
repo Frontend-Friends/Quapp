@@ -1,4 +1,3 @@
-import { red } from '@mui/material/colors'
 import {
   Box,
   Button,
@@ -12,20 +11,20 @@ import {
 } from '@mui/material'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import { FC, MouseEventHandler } from 'react'
-import { Products } from '../../pages/space/products/[[...products]]'
 import { useTranslation } from '../../hooks/use-translation'
 import Link from 'next/link'
+import { ProductType } from './types'
 
 export const ProductItem: FC<{
-  product: Products
+  product: ProductType
   handleMoreInformation?: MouseEventHandler<HTMLButtonElement>
 }> = ({ product, handleMoreInformation }) => {
   const t = useTranslation()
   return (
     <Card
-      elevation={product.isAvailable ? undefined : 0}
+      variant={product.isAvailable ? undefined : 'outlined'}
       sx={{
-        backgroundColor: product.isAvailable ? undefined : red[50],
+        backgroundColor: product.isAvailable ? undefined : 'background.paper',
       }}
     >
       <CardHeader

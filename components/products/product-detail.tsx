@@ -1,10 +1,9 @@
 import { useRouter } from 'next/router'
-import { useMemo } from 'react'
+import React, { useMemo } from 'react'
 import { useTranslation } from '../../hooks/use-translation'
 import {
   Avatar,
   Box,
-  Button,
   Card,
   CardContent,
   IconButton,
@@ -15,17 +14,25 @@ import { CondensedContainer } from '../condensed-container'
 import Link from 'next/link'
 import CloseIcon from '@mui/icons-material/Close'
 import { Header } from '../header'
-import { ProductType } from '../../pages/space/products/[[...products]]'
+import { BorrowForm, OnBorrowSubmit } from '../borrow-form'
+import { ProductType } from './types'
 
-export const ProductDetail = ({
-  product,
-  isOpen,
-  toggleModal,
-}: {
-  product?: ProductType
-  isOpen: boolean
-  toggleModal: () => void
-}) => {
+const handleSubmit: OnBorrowSubmit = async (values, setSubittming) => {
+  const fetchedData = await fetch('/api/borrow', {
+    method: 'POST',
+    body: JSON.stringify(values),
+  })
+    .then((r) => r.json())
+    .then((r) => r)
+
+  if (fetchedData.status === 500) {
+    return
+  }
+  console.log(fetchedData)
+  setSubittming(false)
+}
+
+export const ProductDetail = ({ product }: { product?: ProductType }) => {
   const { asPath, query, push } = useRouter()
 
   const backUrl = useMemo(() => {
@@ -34,26 +41,36 @@ export const ProductDetail = ({
     return queryString ? asPath.replace(`/${queryString}`, '') : asPath
   }, [asPath, query])
 
+  const modalIsOpen = useMemo(() => {
+    return !!query.products
+  }, [query])
+
   const t = useTranslation()
   return product ? (
     <Modal
-      open={isOpen}
+      open={modalIsOpen}
       onClose={() => {
         push(backUrl, undefined, { shallow: true })
       }}
       aria-labelledby="parent-modal-title"
       aria-describedby="parent-modal-description"
-      sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        p: { sm: 5 },
+      }}
       disablePortal
     >
       <CondensedContainer
         sx={{
           position: 'relative',
-          backgroundColor: 'white',
+          backgroundColor: 'background.paper',
           p: 4,
           m: 0,
           maxHeight: '100%',
           overflow: 'auto',
+          borderRadius: { sm: 2 },
         }}
       >
         <Box
@@ -64,14 +81,18 @@ export const ProductDetail = ({
             width: '100%',
             display: 'flex',
             justifyContent: 'flex-end',
+            zIndex: 10,
           }}
         >
           <Link href={backUrl} passHref shallow>
             <IconButton
-              onClick={toggleModal}
+              title={t('BUTTON_close')}
               sx={{
+                backgroundColor: 'background.paper',
+                border: 1,
+                borderColor: 'divider',
                 marginTop: -3,
-                marginRight: -1,
+                marginRight: -3,
                 width: '48px',
                 height: '48px',
               }}
@@ -98,11 +119,27 @@ export const ProductDetail = ({
         <Typography variant="body1" sx={{ mb: 4 }}>
           {product.text}
         </Typography>
-        <Card>
-          <CardContent>
-            <Button variant="contained">{t('BUTTON_borrow')}</Button>
-          </CardContent>
-        </Card>
+        <Box sx={{ position: 'relative', display: 'flex', flexFlow: 'column' }}>
+          <Box
+            sx={{
+              position: 'absolute',
+              top: 0,
+              ml: 2,
+              backgroundColor: 'background.paper',
+              p: 1,
+              borderRadius: 1,
+              border: 1,
+              borderColor: 'divider',
+            }}
+          >
+            <Typography variant="body2"> {t('BUTTON_borrow')}</Typography>
+          </Box>
+          <Card variant="outlined" sx={{ mt: 2.5 }}>
+            <CardContent>
+              <BorrowForm onSubmit={handleSubmit} />
+            </CardContent>
+          </Card>
+        </Box>
       </CondensedContainer>
     </Modal>
   ) : null
