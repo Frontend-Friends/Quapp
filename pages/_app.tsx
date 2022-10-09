@@ -32,7 +32,7 @@ export default function App({
 
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Box sx={{ backgroundColor: 'background.paper' }}>
+        <Box sx={{ backgroundColor: 'background.paper', minHeight: '100vh' }}>
           <NavBar linkList={Navigation} />
           <Container maxWidth="lg" sx={{ pt: 4 }}>
             <Component {...pageProps} />

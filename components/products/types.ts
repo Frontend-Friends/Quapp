@@ -6,4 +6,15 @@ export type ProductType = {
   description?: string
   imgSrc?: string
   isAvailable: boolean
+  owner: {
+    id: string
+    userName: string
+  }
+  chats: ProductChat[]
+}
+
+export type ProductChat = {
+  chatUserId: string
+  chatUserName: string | null
+  history: { dateTime: string; fromOwner: boolean; message: string }[]
 }

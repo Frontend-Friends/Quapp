@@ -16,6 +16,7 @@ import CloseIcon from '@mui/icons-material/Close'
 import { Header } from '../header'
 import { BorrowForm, OnBorrowSubmit } from '../borrow-form'
 import { ProductType } from './types'
+import dayjs from 'dayjs'
 
 const handleSubmit: OnBorrowSubmit = async (values, setSubittming) => {
   const fetchedData = await fetch('/api/borrow', {
@@ -28,7 +29,6 @@ const handleSubmit: OnBorrowSubmit = async (values, setSubittming) => {
   if (fetchedData.status === 500) {
     return
   }
-  console.log(fetchedData)
   setSubittming(false)
 }
 
@@ -139,6 +139,81 @@ export const ProductDetail = ({ product }: { product?: ProductType }) => {
               <BorrowForm onSubmit={handleSubmit} />
             </CardContent>
           </Card>
+        </Box>
+        <Box
+          sx={{
+            p: 3,
+            mt: 2,
+            border: 1,
+            borderRadius: 2,
+            borderColor: 'divider',
+          }}
+        >
+          <Typography variant="h6">{t('CHAT_title')}</Typography>
+          {product.chats.map((chat, chatIndex) => {
+            return chat.history.map((entry, entryIndex) => {
+              return (
+                <Box
+                  key={`${chatIndex}${entryIndex}`}
+                  sx={{
+                    display: 'flex',
+                    flexFlow: 'column',
+                    '&:not(:first-child)': { mt: 2 },
+                  }}
+                >
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      gap: 4,
+                    }}
+                  >
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: 'text.disabled',
+                      }}
+                    >
+                      {dayjs(entry.dateTime).format('D.MM.YYYY, HH:MM:ss')}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        order: entry.fromOwner ? undefined : -1,
+                        color: 'text.disabled',
+                      }}
+                    >
+                      {entry.fromOwner
+                        ? product.owner.userName
+                        : chat.chatUserName}
+                    </Typography>
+                  </Box>
+                  <Box
+                    sx={{
+                      position: 'relative',
+                      ml: entry.fromOwner ? 'auto' : 0,
+                      mr: entry.fromOwner ? 0 : 'auto',
+                      maxWidth: '80%',
+                      border: 1,
+                      borderColor: 'divider',
+                      borderRadius: 2,
+                      borderTopLeftRadius: entry.fromOwner ? undefined : 2,
+                      borderTopRightRadius: entry.fromOwner ? 2 : undefined,
+                      textAlign: entry.fromOwner ? 'right' : 'left',
+                      color: entry.fromOwner
+                        ? 'primary.contrastText'
+                        : undefined,
+                      backgroundColor: entry.fromOwner
+                        ? 'primary.main'
+                        : undefined,
+                    }}
+                  >
+                    <Box sx={{ p: 2 }}>{entry.message}</Box>
+                  </Box>
+                </Box>
+              )
+            })
+          })}
         </Box>
       </CondensedContainer>
     </Modal>

@@ -22,4 +22,5 @@ export const translations: Record<string, string> = {
   BUTTON_borrow: 'Ich möchte das ausleihen!',
   BUTTON_contact: 'Kontakt aufnehmen',
   BUTTON_info: 'mehr erfahren',
+  CHAT_title: 'Nachrichten',
 }

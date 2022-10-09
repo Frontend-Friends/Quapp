@@ -2,17 +2,74 @@ import { FC, useMemo } from 'react'
 import { Grid, Typography } from '@mui/material'
 import { useTranslation } from '../../../hooks/use-translation'
 import { GetServerSideProps } from 'next'
-import { PRODUCTS_MOCK } from '../../../mock/products-mock'
 import { ProductItem } from '../../../components/products/product-item'
 import { Header } from '../../../components/header'
 import { useRouter } from 'next/router'
 import { ProductDetail } from '../../../components/products/product-detail'
-import { ProductType } from '../../../components/products/types'
+import { ProductChat, ProductType } from '../../../components/products/types'
+import {
+  collection,
+  doc,
+  DocumentData,
+  getDoc,
+  getDocs,
+} from 'firebase/firestore'
+import { db } from '../../../config/firebase'
 
 export const getServerSideProps: GetServerSideProps = async () => {
+  const productCollection = collection(db, 'products')
+
+  const productSnapshot = await getDocs(productCollection)
+
+  const productsData: DocumentData[] = []
+
+  productSnapshot.forEach((productDoc) => {
+    productsData.push({ ...productDoc.data(), id: productDoc.id })
+  })
+
+  const products = await Promise.all(
+    productsData.map(async (productData) => {
+      const chatCollection = collection(db, 'products', productData.id, 'chat')
+      const [owner, chatSnapshot] = await Promise.all([
+        getDoc(productData.owner).then<{ id: string; userName: string }>(
+          (r) => ({
+            userName: (r.data() as { userName: string }).userName,
+            id: r.id,
+          })
+        ),
+        getDocs(chatCollection),
+      ])
+      const chatData: DocumentData[] = []
+      chatSnapshot.forEach((chatItem) => {
+        chatData.push({
+          chat: chatItem.data(),
+          chatUserId: chatItem.id,
+        })
+      })
+
+      const chats = await Promise.all(
+        chatData.map(async ({ chat, chatUserId }) => {
+          const ref = doc(db, 'user', chatUserId)
+          const user = await getDoc(ref).then((r) => r.data())
+          return {
+            chatUserName: user?.userName || null,
+            chatUserId,
+            history: chat.history || [],
+          } as ProductChat
+        })
+      )
+
+      return {
+        ...productData,
+        owner: { userName: owner.userName, id: owner.id },
+        chats,
+      }
+    })
+  )
+
   return {
     props: {
-      products: PRODUCTS_MOCK as ProductType[],
+      products: products,
     },
   }
 }
