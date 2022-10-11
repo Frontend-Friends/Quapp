@@ -3,26 +3,28 @@ import Head from 'next/head'
 import { AppProps } from 'next/app'
 import { ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
-import { EmotionCache } from '@emotion/react'
+import { CacheProvider, EmotionCache } from '@emotion/react'
 import theme from '../config/theme'
-
+import createEmotionCache from '../config/create-emotion-cache'
 import { Container } from '@mui/material'
-
 import '../styles/globals.scss'
 import { NavBar } from '../components/nav-bar'
 import { Navigation } from '../mock/navigation'
 
 // Client-side cache, shared for the whole session of the user in the browser.
+const clientSideEmotionCache = createEmotionCache()
 
 interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache
 }
 
-export default function App(props: MyAppProps) {
-  const { Component, pageProps } = props
-
+export default function App({
+  Component,
+  emotionCache = clientSideEmotionCache,
+  pageProps,
+}: MyAppProps) {
   return (
-    <>
+    <CacheProvider value={emotionCache}>
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
         <title>Quapp - sharing is caring</title>
@@ -35,6 +37,6 @@ export default function App(props: MyAppProps) {
           <Component {...pageProps} />
         </Container>
       </ThemeProvider>
-    </>
+    </CacheProvider>
   )
 }

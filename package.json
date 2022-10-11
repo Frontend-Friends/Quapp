@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "@emotion/react": "^11.10.4",
+    "@emotion/server": "^11.10.0",
     "@emotion/styled": "^11.10.4",
     "@firebase/auth": "^0.20.7",
     "@mui/icons-material": "^5.10.6",

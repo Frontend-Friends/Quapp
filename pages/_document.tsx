@@ -7,8 +7,11 @@ import Document, {
   NextScript,
 } from 'next/document'
 import * as React from 'react'
+import createEmotionCache from '../config/create-emotion-cache'
+import createEmotionServer from '@emotion/server/create-instance'
+import { ReactNode } from 'react'
 
-class MyDocument extends Document {
+class MyDocument extends Document<{ emotionStyleTags: ReactNode[] }> {
   static async getInitialProps(
     ctx: DocumentContext
   ): Promise<DocumentInitialProps> {
@@ -23,6 +26,7 @@ class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Nunito&display=swap"
             rel="stylesheet"
           />
+          {this.props.emotionStyleTags}
         </Head>
         <body>
           <Main />
@@ -30,6 +34,37 @@ class MyDocument extends Document {
         </body>
       </Html>
     )
+  }
+}
+
+MyDocument.getInitialProps = async (ctx) => {
+  const originalRenderPage = ctx.renderPage
+
+  const cache = createEmotionCache()
+  const { extractCriticalToChunks } = createEmotionServer(cache)
+
+  ctx.renderPage = () =>
+    originalRenderPage({
+      enhanceApp: (App) =>
+        function EnhanceApp(props) {
+          // @ts-ignore
+          return <App emotionCache={cache} {...props} />
+        },
+    })
+
+  const initialProps = await Document.getInitialProps(ctx)
+  const emotionStyles = extractCriticalToChunks(initialProps.html)
+  const emotionStyleTags = emotionStyles.styles.map((style) => (
+    <style
+      data-emotion={`${style.key} ${style.ids.join(' ')}`}
+      key={style.key}
+      dangerouslySetInnerHTML={{ __html: style.css }}
+    />
+  ))
+
+  return {
+    ...initialProps,
+    emotionStyleTags,
   }
 }
 
