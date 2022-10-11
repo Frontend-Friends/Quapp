@@ -1,4 +1,11 @@
-import { AppBar, Button, IconButton, Toolbar, Typography } from '@mui/material'
+import {
+  AppBar,
+  Button,
+  IconButton,
+  Link,
+  Toolbar,
+  Typography,
+} from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import { FC, KeyboardEvent, MouseEvent, useState } from 'react'
 import { LinkProps, NavigationDrawer } from './navigation-drawer'
@@ -34,7 +41,16 @@ export const NavBar: FC<{ linkList: LinkProps[] }> = ({ linkList }) => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             QUAPP
           </Typography>
-          <Button color="inherit">Login</Button>
+
+          <Button
+            href="login"
+            component="a"
+            LinkComponent={Link}
+            color="secondary"
+            variant="contained"
+          >
+            Login
+          </Button>
         </Toolbar>
       </AppBar>
       <NavigationDrawer
