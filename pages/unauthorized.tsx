@@ -1,36 +1,37 @@
 import React, { FormEvent } from 'react'
 
 const Unauthorized: React.FC = () => {
-  const handleSignup = async (e: FormEvent) => {
-    e.preventDefault()
-    const email: string = e.target[0].value
-    const password: string = e.target[1].value
+  // const handleSignup = async (e: FormEvent) => {
+  //   e.preventDefault()
+  //   const email: string = e.target[0].value
+  //   const password: string = e.target[1].value
+  //
+  //   const data = await fetch('/api/signup', {
+  //     method: 'POST',
+  //     headers: {
+  //       accept: 'application.json',
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify({ email, password }),
+  //     cache: 'default',
+  //   })
+  // }
 
-    const data = await fetch('/api/signup', {
-      method: 'POST',
-      headers: {
-        accept: 'application.json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password }),
-      cache: 'default',
-    })
-  }
-  const handleLogin = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault()
-    const email: string = e.target[0].value
-    const password: string = e.target[1].value
-
-    const data = await fetch('/api/login', {
-      method: 'POST',
-      headers: {
-        accept: 'application.json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password }),
-      cache: 'default',
-    })
-  }
+  // const handleLogin = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   e.preventDefault()
+  //   const email: string = e.target[0].value
+  //   const password: string = e.target[1].value
+  //
+  //   const data = await fetch('/api/login', {
+  //     method: 'POST',
+  //     headers: {
+  //       accept: 'application.json',
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify({ email, password }),
+  //     cache: 'default',
+  //   })
+  // }
 
   const handleLogout = async (e: FormEvent) => {
     e.preventDefault()

@@ -16,6 +16,7 @@ declare module 'iron-session' {
 }
 
 const signup = (email: string, password: string) => {
+  console.log(auth, email, password)
   return createUserWithEmailAndPassword(auth, email, password)
 }
 

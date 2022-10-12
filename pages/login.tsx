@@ -2,7 +2,6 @@ import { useRouter } from 'next/router'
 import React, { FC, FormEventHandler, useState } from 'react'
 import Button from '@mui/material/Button'
 import { Box, Link, TextField, Typography } from '@mui/material'
-import { useAuth } from '../components/auth-context'
 import { CondensedContainer } from '../components/condensed-container'
 import { useTranslation } from '../hooks/use-translation'
 import { fetchJson } from '../lib/helpers/fetch-json'
@@ -11,8 +10,7 @@ const formGroupSX = { mb: 2 }
 
 const Login: FC = () => {
   const router = useRouter()
-  // @ts-ignore
-  const { user, login } = useAuth()
+
   const [data, setData] = useState({
     email: '',
     password: '',
@@ -21,13 +19,22 @@ const Login: FC = () => {
   const handleLogin: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault()
 
-    try {
-      await login(data.email, data.password)
-      console.log('user is', user)
-      await router.push('/dashboard')
-    } catch (err) {
-      console.error('error is', err)
-    }
+    const eventTarget = e.target
+    const formData = new FormData(eventTarget)
+    const submittedData = Object.fromEntries(formData)
+
+    const email = submittedData.email
+    const password = submittedData.password
+
+    const fetchedData = await fetch('/api/login', {
+      method: 'POST',
+      headers: {
+        accept: 'application.json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
+      cache: 'default',
+    })
   }
 
   const t = useTranslation()
@@ -53,6 +60,7 @@ const Login: FC = () => {
                 email: e.target.value,
               })
             }
+            name="email"
             value={data.email}
             required
             type="email"
@@ -68,6 +76,7 @@ const Login: FC = () => {
                 password: e.target.value,
               })
             }
+            name="password"
             value={data.password}
             required
             type="password"
