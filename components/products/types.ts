@@ -1,3 +1,15 @@
+export type ChatMessage = {
+  dateTime: string
+  fromOwner: boolean
+  message: string
+}
+
+export type ProductChatType = {
+  chatUserId: string
+  chatUserName: string | null
+  history: ChatMessage[]
+}
+
 export type ProductType = {
   id: string
   title: string
@@ -10,11 +22,5 @@ export type ProductType = {
     id: string
     userName: string
   }
-  chats: ProductChat[]
-}
-
-export type ProductChat = {
-  chatUserId: string
-  chatUserName: string | null
-  history: { dateTime: string; fromOwner: boolean; message: string }[]
+  chats: ProductChatType[]
 }

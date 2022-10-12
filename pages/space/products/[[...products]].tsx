@@ -6,7 +6,10 @@ import { ProductItem } from '../../../components/products/product-item'
 import { Header } from '../../../components/header'
 import { useRouter } from 'next/router'
 import { ProductDetail } from '../../../components/products/product-detail'
-import { ProductChat, ProductType } from '../../../components/products/types'
+import {
+  ProductChatType,
+  ProductType,
+} from '../../../components/products/types'
 import {
   collection,
   doc,
@@ -16,18 +19,24 @@ import {
 } from 'firebase/firestore'
 import { db } from '../../../config/firebase'
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const productCollection = collection(db, 'products')
+  const { products: productsQuery } = query
 
   const productSnapshot = await getDocs(productCollection)
 
   const productsData: DocumentData[] = []
 
   productSnapshot.forEach((productDoc) => {
-    productsData.push({ ...productDoc.data(), id: productDoc.id })
+    const docData = productDoc.data()
+    productsData.push({
+      ...docData,
+      owner: docData.owner.id,
+      id: productDoc.id,
+    })
   })
 
-  const products = await Promise.all(
+  /*const products = await Promise.all(
     productsData.map(async (productData) => {
       const chatCollection = collection(db, 'products', productData.id, 'chat')
       const [owner, chatSnapshot] = await Promise.all([
@@ -55,7 +64,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
             chatUserName: user?.userName || null,
             chatUserId,
             history: chat.history || [],
-          } as ProductChat
+          } as ProductChatType
         })
       )
 
@@ -65,11 +74,11 @@ export const getServerSideProps: GetServerSideProps = async () => {
         chats,
       }
     })
-  )
+  )*/
 
   return {
     props: {
-      products: products,
+      products: productsData,
     },
   }
 }
