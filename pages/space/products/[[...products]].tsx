@@ -1,4 +1,4 @@
-import { FC, useMemo } from 'react'
+import { FC, useRef, useState } from 'react'
 import { Grid, Typography } from '@mui/material'
 import { useTranslation } from '../../../hooks/use-translation'
 import { GetServerSideProps } from 'next'
@@ -6,91 +6,60 @@ import { ProductItem } from '../../../components/products/product-item'
 import { Header } from '../../../components/header'
 import { useRouter } from 'next/router'
 import { ProductDetail } from '../../../components/products/product-detail'
-import {
-  ProductChatType,
-  ProductType,
-} from '../../../components/products/types'
-import {
-  collection,
-  doc,
-  DocumentData,
-  getDoc,
-  getDocs,
-} from 'firebase/firestore'
+import { ProductType } from '../../../components/products/types'
+import { collection, DocumentData, getDocs } from 'firebase/firestore'
 import { db } from '../../../config/firebase'
+import { useAsync } from 'react-use'
+import { fetchProduct } from '../../../lib/services/fetch-product'
+import { fetchJson } from '../../../lib/helpers/fetch-json'
+import { fetchProductList } from '../../../lib/services/fetch-product-list'
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const productCollection = collection(db, 'products')
   const { products: productsQuery } = query
+  let productDetail: ProductType | undefined = undefined
+  const productsData = await fetchProductList()
 
-  const productSnapshot = await getDocs(productCollection)
+  if (productsQuery) {
+    productDetail = await fetchProduct(productsQuery[0])
 
-  const productsData: DocumentData[] = []
-
-  productSnapshot.forEach((productDoc) => {
-    const docData = productDoc.data()
-    productsData.push({
-      ...docData,
-      owner: docData.owner.id,
-      id: productDoc.id,
-    })
-  })
-
-  /*const products = await Promise.all(
-    productsData.map(async (productData) => {
-      const chatCollection = collection(db, 'products', productData.id, 'chat')
-      const [owner, chatSnapshot] = await Promise.all([
-        getDoc(productData.owner).then<{ id: string; userName: string }>(
-          (r) => ({
-            userName: (r.data() as { userName: string }).userName,
-            id: r.id,
-          })
-        ),
-        getDocs(chatCollection),
-      ])
-      const chatData: DocumentData[] = []
-      chatSnapshot.forEach((chatItem) => {
-        chatData.push({
-          chat: chatItem.data(),
-          chatUserId: chatItem.id,
-        })
-      })
-
-      const chats = await Promise.all(
-        chatData.map(async ({ chat, chatUserId }) => {
-          const ref = doc(db, 'user', chatUserId)
-          const user = await getDoc(ref).then((r) => r.data())
-          return {
-            chatUserName: user?.userName || null,
-            chatUserId,
-            history: chat.history || [],
-          } as ProductChatType
-        })
-      )
-
-      return {
-        ...productData,
-        owner: { userName: owner.userName, id: owner.id },
-        chats,
-      }
-    })
-  )*/
+    if (!productDetail) {
+      return { notFound: true }
+    }
+  }
 
   return {
     props: {
       products: productsData,
+      productDetail: productDetail || null,
     },
   }
 }
 
-export const Product: FC<{ products: ProductType[] }> = ({ products }) => {
+export const Product: FC<{
+  products: ProductType[]
+  productDetail: ProductType
+}> = ({ products, productDetail }) => {
   const t = useTranslation()
-
   const { query } = useRouter()
+  const { products: productQuery } = query
+  const isInitial = useRef(true)
+  const currentQuery = useRef(productQuery?.[0])
+  const [product, setProduct] = useState(productDetail)
 
-  const product = useMemo(() => {
-    return products.find((item) => item.id === query.products?.[0])
-  }, [products, query])
+  useAsync(async () => {
+    if (
+      !!productQuery?.[0] &&
+      !isInitial.current &&
+      currentQuery.current !== productQuery[0]
+    ) {
+      const fetchedProduct = await fetchJson<ProductType>(
+        `/api/product?productId=${productQuery[0]}`
+      )
+      setProduct(fetchedProduct)
+    }
+    isInitial.current = false
+    currentQuery.current = productQuery?.[0]
+  }, [productQuery])
 
   return (
     <>

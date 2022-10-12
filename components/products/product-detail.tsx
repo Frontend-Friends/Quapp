@@ -6,6 +6,7 @@ import {
   Box,
   Card,
   CardContent,
+  CircularProgress,
   IconButton,
   Modal,
   Typography,
@@ -33,7 +34,11 @@ const handleSubmit: OnBorrowSubmit = async (values, setSubittming) => {
   setSubittming(false)
 }
 
-export const ProductDetail = ({ product }: { product?: ProductType }) => {
+export const ProductDetail = ({
+  product,
+}: {
+  product?: ProductType | null
+}) => {
   const { asPath, query, push } = useRouter()
 
   const backUrl = useMemo(() => {
@@ -47,7 +52,7 @@ export const ProductDetail = ({ product }: { product?: ProductType }) => {
   }, [query])
 
   const t = useTranslation()
-  return product ? (
+  return (
     <Modal
       open={modalIsOpen}
       onClose={() => {
@@ -63,89 +68,95 @@ export const ProductDetail = ({ product }: { product?: ProductType }) => {
       }}
       disablePortal
     >
-      <CondensedContainer
-        sx={{
-          position: 'relative',
-          backgroundColor: 'background.paper',
-          p: 4,
-          m: 0,
-          maxHeight: '100%',
-          overflow: 'auto',
-          borderRadius: { sm: 2 },
-        }}
-      >
-        <Box
+      {product ? (
+        <CondensedContainer
           sx={{
-            position: 'sticky',
-            top: 0,
-            height: 0,
-            width: '100%',
-            display: 'flex',
-            justifyContent: 'flex-end',
-            zIndex: 10,
+            position: 'relative',
+            backgroundColor: 'background.paper',
+            p: 4,
+            m: 0,
+            maxHeight: '100%',
+            overflow: 'auto',
+            borderRadius: { sm: 2 },
           }}
         >
-          <Link href={backUrl} passHref shallow>
-            <IconButton
-              title={t('BUTTON_close')}
-              sx={{
-                backgroundColor: 'background.paper',
-                border: 1,
-                borderColor: 'divider',
-                marginTop: -3,
-                marginRight: -3,
-                width: '48px',
-                height: '48px',
-              }}
-            >
-              <CloseIcon />
-            </IconButton>
-          </Link>
-        </Box>
-        <Header
-          title={product.title}
-          lead={product.lead}
-          imgSrc={product.imgSrc}
-        />
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, py: 4 }}>
-          <Avatar
-            alt="Remy Sharp"
-            src="https://source.unsplash.com/random"
-            sx={{ width: 56, height: 56 }}
-          >
-            RS
-          </Avatar>
-          <p>Remy Sharp</p>
-        </Box>
-        <Typography variant="body1" sx={{ mb: 4 }}>
-          {product.text}
-        </Typography>
-        <Box sx={{ position: 'relative', display: 'flex', flexFlow: 'column' }}>
           <Box
             sx={{
-              position: 'absolute',
+              position: 'sticky',
               top: 0,
-              ml: 2,
-              backgroundColor: 'background.paper',
-              p: 1,
-              borderRadius: 1,
-              border: 1,
-              borderColor: 'divider',
+              height: 0,
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'flex-end',
+              zIndex: 10,
             }}
           >
-            <Typography variant="body2"> {t('BUTTON_borrow')}</Typography>
+            <Link href={backUrl} passHref shallow>
+              <IconButton
+                title={t('BUTTON_close')}
+                sx={{
+                  backgroundColor: 'background.paper',
+                  border: 1,
+                  borderColor: 'divider',
+                  marginTop: -3,
+                  marginRight: -3,
+                  width: '48px',
+                  height: '48px',
+                }}
+              >
+                <CloseIcon />
+              </IconButton>
+            </Link>
           </Box>
-          <Card variant="outlined" sx={{ mt: 2.5 }}>
-            <CardContent>
-              <BorrowForm onSubmit={handleSubmit} />
-            </CardContent>
-          </Card>
-        </Box>
-        <ProductChats
-          chats={product.chats}
-          productOwnerName={product.owner.userName}
-        />
-      </CondensedContainer>
+          <Header
+            title={product.title}
+            lead={product.lead}
+            imgSrc={product.imgSrc}
+          />
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, py: 4 }}>
+            <Avatar
+              alt="Remy Sharp"
+              src="https://source.unsplash.com/random"
+              sx={{ width: 56, height: 56 }}
+            >
+              RS
+            </Avatar>
+            <p>Remy Sharp</p>
+          </Box>
+          <Typography variant="body1" sx={{ mb: 4 }}>
+            {product.text}
+          </Typography>
+          <Box
+            sx={{ position: 'relative', display: 'flex', flexFlow: 'column' }}
+          >
+            <Box
+              sx={{
+                position: 'absolute',
+                top: 0,
+                ml: 2,
+                backgroundColor: 'background.paper',
+                p: 1,
+                borderRadius: 1,
+                border: 1,
+                borderColor: 'divider',
+              }}
+            >
+              <Typography variant="body2"> {t('BUTTON_borrow')}</Typography>
+            </Box>
+            <Card variant="outlined" sx={{ mt: 2.5 }}>
+              <CardContent>
+                <BorrowForm onSubmit={handleSubmit} />
+              </CardContent>
+            </Card>
+          </Box>
+          <ProductChats
+            chats={product.chats}
+            productOwnerName={product.owner.userName}
+          />
+        </CondensedContainer>
+      ) : (
+        <CircularProgress />
+      )}
     </Modal>
-  ) : null
+  )
 }
