@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import React, { FC, FormEventHandler, useState } from 'react'
+import React, { FC, FormEvent, FormEventHandler, useState } from 'react'
 import Button from '@mui/material/Button'
 import { Box, Link, TextField, Typography } from '@mui/material'
 import { CondensedContainer } from '../components/condensed-container'
@@ -34,6 +34,13 @@ const Login: FC = () => {
       body: JSON.stringify({ email, password }),
       cache: 'default',
     })
+  }
+
+  const handleLogout = async (e: FormEvent) => {
+    e.preventDefault()
+    const logoutData = await fetch(' /api/logout')
+      .then((response) => response.json())
+      .then((json) => console.log(json))
   }
 
   const t = useTranslation()
@@ -88,6 +95,7 @@ const Login: FC = () => {
           </Link>
         </Box>
       </form>
+      <button onClick={handleLogout}>Logout</button>
     </CondensedContainer>
   )
 }

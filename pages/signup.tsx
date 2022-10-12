@@ -136,7 +136,6 @@ const Signup: React.FC = () => {
           </Link>
         </Box>
       </form>
-      <button onClick={handleLogout}>Logout</button>
     </CondensedContainer>
   )
 }
