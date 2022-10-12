@@ -13,7 +13,7 @@ import {
 } from 'firebase/auth'
 import { auth } from '../config/firebase'
 
-const AuthContext = createContext({})
+const AuthContext = createContext<any>({})
 export const useAuth = () => useContext(AuthContext)
 
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
