@@ -29,16 +29,23 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/css": "^11.10.0",
     "@emotion/react": "^11.10.4",
     "@emotion/server": "^11.10.0",
     "@emotion/styled": "^11.10.4",
     "@mui/icons-material": "^5.10.6",
     "@mui/material": "^5.10.7",
+    "@mui/x-date-pickers": "^5.0.4",
+    "dayjs": "^1.11.5",
     "firebase": "^9.10.0",
+    "formik": "^2.2.9",
+    "framer-motion": "^7.5.3",
     "next": "12.3.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "sass": "^1.55.0"
+    "react-use": "^17.4.0",
+    "sass": "^1.55.0",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@types/node": "^18.7.23",

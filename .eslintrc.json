@@ -10,7 +10,8 @@
   "rules": {
     "@typescript-eslint/ban-ts-comment": "off",
     "semi": "off",
-    "prettier/prettier": ["error", {"endOfLine": "auto", "semi":  false} ]
+    "prettier/prettier": ["error", { "endOfLine": "auto", "semi": false }],
+    "react/display-name": "off"
   },
   "parserOptions": {
     "ecmaVersion": 2021,
