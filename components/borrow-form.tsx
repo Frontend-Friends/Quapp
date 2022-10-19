@@ -3,15 +3,10 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { Formik } from 'formik'
 import React from 'react'
-import { date, object, string } from 'yup'
 import { useTranslation } from '../hooks/use-translation'
 import { useRouter } from 'next/router'
 import { DatePicker } from '@mui/x-date-pickers'
-
-const FormSchema = object().shape({
-  message: string().min(1, 'to short').required('Required'),
-  borrowDate: date().required('Required'),
-})
+import { borrowFormSchema } from '../lib/schema/borrow-form-schema'
 
 export type OnBorrowSubmit = (
   values: { message: string; borrowDate: Date | null },
@@ -29,7 +24,7 @@ export const BorrowForm = ({ onSubmit }: { onSubmit: OnBorrowSubmit }) => {
           borrowDate: Date | null
         }
       }
-      validationSchema={FormSchema}
+      validationSchema={borrowFormSchema}
       validateOnChange={false}
       validateOnBlur={false}
       onSubmit={(values, actions) => {
