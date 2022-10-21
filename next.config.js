@@ -3,6 +3,10 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  images: {
+    domains: ['source.unsplash.com', 'firebasestorage.googleapis.com'],
+  },
+  i18n: { locales: ['de'], defaultLocale: 'de' },
 }
 
 module.exports = nextConfig
