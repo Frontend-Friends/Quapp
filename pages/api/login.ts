@@ -29,8 +29,6 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
       uid: credentials.user.uid,
     })
 
-    console.log(user)
-
     await req.session.save()
     res.send({ ok: true })
   } catch (error) {
