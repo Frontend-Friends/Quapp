@@ -6,6 +6,10 @@ export const translations: Record<string, string> = {
   GLOBAL_mobile_number: 'Mobilfunknummer',
   GLOBAL_save: 'Speichern',
   GLOBAL_cancel: 'Abbrechen',
+  GLOBAL_edit: 'Bearbeiten',
+  GLOBAL_delete: 'Löschen',
+  GLOBAL_open: 'Öffne',
+  GLOBAL_options: 'Optionen',
 
   LOGIN_title: 'Login',
   LOGIN_login: 'Anmelden',
