@@ -19,5 +19,8 @@ Der Server läuft dann regulär mit Hot-Reload unter http://localhost:3000/
 - Node
 - Firebase
 
+### Wireframes
+Die UI Wireframes können unter https://t.ly/i_VV eingesehen werden.
+
 ### Autoren
 Frontend Friends (Laurent Kerbage, Fabrice Tobler, Philip Park)
