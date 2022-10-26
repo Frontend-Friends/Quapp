@@ -28,9 +28,10 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
       email,
       uid: credentials.user.uid,
     })
+    //todo @lk set user to store
 
     await req.session.save()
-    res.send({ ok: true })
+    res.send({ session: true })
   } catch (error) {
     console.error(error)
     res.status(500).json({ message: (error as Error).message })

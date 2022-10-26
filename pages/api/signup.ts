@@ -4,8 +4,6 @@ import { ironOptions } from '../../lib/config'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../../config/firebase'
 
-// 2 tasks: sign up in firebase auth (OK) and put data into firebase database (all user infos).
-
 declare module 'iron-session' {
   interface IronSessionData {
     user?: {
@@ -14,7 +12,7 @@ declare module 'iron-session' {
     }
   }
 }
-
+debugger
 const signup = (email: string, password: string) => {
   return createUserWithEmailAndPassword(auth, email, password)
 }
@@ -22,16 +20,16 @@ const signup = (email: string, password: string) => {
 async function signupRoute(req: NextApiRequest, res: NextApiResponse) {
   try {
     const email = req.body.email
+    //todo @lk, make hash password
     const password = req.body.password
-
     const credentials = await signup(email, password)
 
     const user = (req.session.user = {
       email,
       uid: credentials.user.uid,
     })
-    await req.session.save()
-    res.send({ ok: true })
+    //no session here, because we don't want to log in the user after signup
+    res.status(200).json({ user })
   } catch (error) {
     console.error(error)
     res.status(500).json({ message: (error as Error).message })

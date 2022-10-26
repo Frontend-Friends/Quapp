@@ -5,7 +5,7 @@ export default withIronSessionApiRoute(
   <NextApiHandler>(
     function logoutRoute(req: NextApiRequest, res: NextApiResponse) {
       req.session.destroy()
-      res.send({ ok: true })
+      res.send({ logout: true })
     }
   ),
   {
