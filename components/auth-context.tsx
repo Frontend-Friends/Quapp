@@ -6,8 +6,8 @@ import {
   useState,
 } from 'react'
 import {
-  onAuthStateChanged,
   createUserWithEmailAndPassword,
+  onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
 } from 'firebase/auth'

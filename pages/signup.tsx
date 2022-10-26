@@ -2,6 +2,7 @@ import React, { FormEvent, FormEventHandler, useState } from 'react'
 import { Box, Button, Link, TextField, Typography } from '@mui/material'
 import { useTranslation } from '../hooks/use-translation'
 import { CondensedContainer } from '../components/condensed-container'
+import { fetchJson } from '../lib/helpers/fetch-json'
 
 const formGroupSX = { mb: 2 }
 
@@ -14,19 +15,24 @@ const Signup: React.FC = () => {
     password: '',
   })
 
+  const setUserInDb = async () => {
+    await fetchJson('/api/user-db', {
+      method: 'POST',
+      body: JSON.stringify({
+        ...data,
+      }),
+    })
+  }
+
   const handleSignup: FormEventHandler<HTMLFormElement> = async (
     e: FormEvent
   ) => {
     e.preventDefault()
 
-    const eventTarget = e.target
-    const formData = new FormData(eventTarget)
-    const submittedData = Object.fromEntries(formData)
+    const { email } = data
+    const { password } = data
 
-    const email = submittedData.email
-    const password = submittedData.password
-
-    const signupData = await fetch('/api/signup', {
+    await fetchJson('/api/signup', {
       method: 'POST',
       headers: {
         accept: 'application.json',
@@ -35,6 +41,7 @@ const Signup: React.FC = () => {
       body: JSON.stringify({ email, password }),
       cache: 'default',
     })
+    await setUserInDb()
   }
 
   const t = useTranslation()
