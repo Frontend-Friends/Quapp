@@ -17,7 +17,6 @@ import CloseIcon from '@mui/icons-material/Close'
 import { Header } from '../header'
 import { BorrowForm, OnBorrowSubmit } from '../borrow-form'
 import { ProductType } from './types'
-import dayjs from 'dayjs'
 import { ProductChats } from './product-chats'
 
 const handleSubmit: OnBorrowSubmit = async (values, setSubittming) => {

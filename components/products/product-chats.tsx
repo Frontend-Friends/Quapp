@@ -1,5 +1,4 @@
 import { Box, Typography } from '@mui/material'
-import dayjs from 'dayjs'
 import React from 'react'
 import { ProductChatType } from './types'
 import { useTranslation } from '../../hooks/use-translation'

@@ -1,47 +1,45 @@
-import React from 'react'
+import { FC } from 'react'
 import { CondensedContainer } from '../components/condensed-container'
 import { useTranslation } from '../hooks/use-translation'
-import {
-  Card,
-  CardActions,
-  CardContent,
-  CardHeader,
-  Grid,
-  Typography,
-} from '@mui/material'
-import { SPACES_MOCK } from '../mock/spaces-mock'
+import { Grid, Typography } from '@mui/material'
 import { Header } from '../components/header'
+import { InferGetServerSidePropsType } from 'next'
+import { SpaceItemType } from '../components/products/types'
+import { collection, getDocs } from 'firebase/firestore'
+import { db } from '../config/firebase'
+import SpaceItem from '../components/spaces/space-item'
 
-const Spaces: React.FC = () => {
+export const getServerSideProps = async () => {
+  const spaceCollection = collection(db, 'spaces')
+  const spaceSnapshot = await getDocs(spaceCollection)
+  const spaces: SpaceItemType[] = []
+  spaceSnapshot.forEach((spaceData) => {
+    const data = spaceData.data()
+    spaces.push({
+      ...data,
+      id: spaceData.id,
+      creatorId: data.creatorId.id,
+      ownerId: data.ownerId.id,
+      creationDate: data.creationDate.seconds,
+    } as SpaceItemType)
+  })
+  return { props: { spaces } }
+}
+
+const Spaces: FC<InferGetServerSidePropsType<typeof getServerSideProps>> = ({
+  spaces,
+}) => {
   const t = useTranslation()
 
   return (
     <CondensedContainer>
       <Header title={t('SPACES_title')} />
       <Grid container columns={{ sm: 2, md: 3 }} spacing={{ xs: 4 }} pt={4}>
-        {SPACES_MOCK.length === 0 && (
+        {spaces.length ? (
+          spaces.map((space) => <SpaceItem key={space.id} space={space} />)
+        ) : (
           <Typography variant="body2">{t('SPACES_no_entries')}</Typography>
         )}
-        {SPACES_MOCK.map((space) => (
-          <Grid item xs={1} key={space.id} sx={{ flexGrow: '1' }}>
-            <Card variant="outlined">
-              <CardHeader title={space.name} />
-              <CardContent>
-                {space.memberCount && (
-                  <Typography variant="body2">
-                    {t('SPACES_members')}: {space.memberCount}
-                  </Typography>
-                )}
-                {space.itemCount && (
-                  <Typography variant="body2">
-                    {t('SPACES_items')}: {space.itemCount}
-                  </Typography>
-                )}
-              </CardContent>
-              <CardActions>Settings</CardActions>
-            </Card>
-          </Grid>
-        ))}
       </Grid>
     </CondensedContainer>
   )
