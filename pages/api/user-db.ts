@@ -1,13 +1,13 @@
-import { collection, addDoc } from 'firebase/firestore'
+import { addDoc, collection, getDocs, query, where } from 'firebase/firestore'
 import { db } from '../../config/firebase'
 import { NextApiRequest, NextApiResponse } from 'next'
 
-export default async function handler(
+export default async function userDb(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  console.log(req.body)
   if (req.method === 'POST') {
+    //signup
     try {
       const { email, firstName, lastName, phone } = JSON.parse(req.body)
 
@@ -25,8 +25,22 @@ export default async function handler(
       console.log('Error adding document: ', err)
       res.status(500).json({ err })
     }
-  } else if (req.method === 'GET') {
-    // Handle any GET requests
+  } else if (req.method === 'GET' && req.query.email) {
+    try {
+      const q = query(
+        collection(db, 'user'),
+        where('email', '==', req.query.email)
+      )
+
+      const querySnapshot = await getDocs(q)
+      querySnapshot.forEach((doc) => {
+        console.log(doc.id, ' => ', doc.data())
+      })
+      res.status(200).json({ userFound: 'ok' })
+    } catch (err) {
+      console.log('Error receiving document: ', err)
+      res.status(500).json({ err })
+    }
   } else if (req.method === 'DELETE') {
     // Handle Delete requests
   }
