@@ -19,27 +19,24 @@ const Login: FC = () => {
   const handleLogin: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault()
 
-    const eventTarget = e.target
-    const formData = new FormData(eventTarget)
-    const submittedData = Object.fromEntries(formData)
-
-    const email = submittedData.email
-    const password = submittedData.password
-
-    const fetchedData = await fetch('/api/login', {
+    await fetch('/api/login', {
       method: 'POST',
       headers: {
         accept: 'application.json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ ...data }),
       cache: 'default',
+    }).then((res) => {
+      if (res.ok) {
+        router.push('/dashboard')
+      }
     })
   }
 
   const handleLogout = async (e: FormEvent) => {
     e.preventDefault()
-    const logoutData = await fetch(' /api/logout')
+    await fetch(' /api/logout')
       .then((response) => response.json())
       .then((json) => console.log(json))
   }
