@@ -19,6 +19,7 @@ export const translations: Record<string, string> = {
   PRODUCTS_title: 'Produkte',
   PRODUCTS_no_entries: 'Leider gibt es noch keine Einträge.',
   PRODUCT_not_available: 'Nicht verfügbar',
+  PRODUCT_add: 'Neues Produckt erstellen',
   BUTTON_borrow: 'Ich möchte das ausleihen!',
   BUTTON_contact: 'Kontakt aufnehmen',
   BUTTON_info: 'mehr erfahren',

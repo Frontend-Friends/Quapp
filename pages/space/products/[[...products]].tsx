@@ -1,5 +1,13 @@
-import { FC, useRef, useState } from 'react'
-import { Grid, Typography } from '@mui/material'
+import React, { Dispatch, FC, SetStateAction, useRef, useState } from 'react'
+import {
+  Box,
+  Button,
+  Fab,
+  Grid,
+  Modal,
+  TextField,
+  Typography,
+} from '@mui/material'
 import { useTranslation } from '../../../hooks/use-translation'
 import { GetServerSideProps } from 'next'
 import { ProductItem } from '../../../components/products/product-item'
@@ -11,6 +19,14 @@ import { useAsync } from 'react-use'
 import { fetchProduct } from '../../../lib/services/fetch-product'
 import { fetchJson } from '../../../lib/helpers/fetch-json'
 import { fetchProductList } from '../../../lib/services/fetch-product-list'
+import AddIcon from '@mui/icons-material/Add'
+import { CondensedContainer } from '../../../components/condensed-container'
+import { borrowFormSchema } from '../../../lib/schema/borrow-form-schema'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { DatePicker } from '@mui/x-date-pickers'
+import { Formik } from 'formik'
+import { CreateNewProduct } from '../../../components/products/create-product'
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const { products: productsQuery } = query
@@ -43,6 +59,7 @@ export const Product: FC<{
   const isInitial = useRef(true)
   const currentQuery = useRef(productQuery?.[0])
   const [product, setProduct] = useState(productDetail)
+  const [showCreateProduct, setShowCreateProduct] = useState(false)
 
   useAsync(async () => {
     if (
@@ -61,6 +78,18 @@ export const Product: FC<{
 
   return (
     <>
+      <Fab
+        size="medium"
+        color="secondary"
+        aria-label={t('PRODUCT_add')}
+        title={t('PRODUCT_add')}
+        sx={{ position: 'fixed', top: 72, right: 12, zIndex: 10 }}
+        onClick={() => {
+          setShowCreateProduct(true)
+        }}
+      >
+        <AddIcon />
+      </Fab>
       <Header title={t('PRODUCTS_title')} />
       <Grid container columns={{ sm: 2, md: 3 }} spacing={{ xs: 4 }} pt={4}>
         {!products.length && (
@@ -74,6 +103,10 @@ export const Product: FC<{
           ))}
       </Grid>
       <ProductDetail product={product} />
+      <CreateNewProduct
+        showModal={showCreateProduct}
+        onClose={setShowCreateProduct}
+      />
     </>
   )
 }

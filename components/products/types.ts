@@ -24,3 +24,8 @@ export type ProductType = {
   }
   chats: ProductChatType[]
 }
+
+export type CreateProduct = Pick<
+  ProductType,
+  'title' | 'lead' | 'text' | 'description'
+> & { img: File }
