@@ -28,4 +28,4 @@ export type ProductType = {
 export type CreateProduct = Pick<
   ProductType,
   'title' | 'lead' | 'text' | 'description'
-> & { img: File }
+> & { img?: File }
