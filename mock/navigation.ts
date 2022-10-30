@@ -1,4 +1,7 @@
 export const Navigation = [
   { label: 'Home', href: '/' },
-  { label: 'Products', href: '/space/products' },
+  { label: 'Spaces', href: '/spaces' },
+  { label: 'Angebote', href: '/space/products' },
+  { label: 'Login', href: '/login' },
+  { label: 'Registration', href: '/signup' },
 ]
