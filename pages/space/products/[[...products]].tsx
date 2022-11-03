@@ -1,13 +1,5 @@
-import React, { Dispatch, FC, SetStateAction, useRef, useState } from 'react'
-import {
-  Box,
-  Button,
-  Fab,
-  Grid,
-  Modal,
-  TextField,
-  Typography,
-} from '@mui/material'
+import { FC, useRef, useState } from 'react'
+import { Fab, Grid, Typography } from '@mui/material'
 import { useTranslation } from '../../../hooks/use-translation'
 import { GetServerSideProps } from 'next'
 import { ProductItem } from '../../../components/products/product-item'
@@ -20,12 +12,6 @@ import { fetchProduct } from '../../../lib/services/fetch-product'
 import { fetchJson } from '../../../lib/helpers/fetch-json'
 import { fetchProductList } from '../../../lib/services/fetch-product-list'
 import AddIcon from '@mui/icons-material/Add'
-import { CondensedContainer } from '../../../components/condensed-container'
-import { borrowFormSchema } from '../../../lib/schema/borrow-form-schema'
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { DatePicker } from '@mui/x-date-pickers'
-import { Formik } from 'formik'
 import { CreateNewProduct } from '../../../components/products/create-product'
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
