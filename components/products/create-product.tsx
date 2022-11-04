@@ -1,25 +1,25 @@
-import React, { Dispatch, SetStateAction } from 'react'
+import React, { Dispatch, SetStateAction, useState } from 'react'
 import { useTranslation } from '../../hooks/use-translation'
-import { useRouter } from 'next/router'
 import { Box, Button, Modal, TextField } from '@mui/material'
 import { CondensedContainer } from '../condensed-container'
 import { Formik } from 'formik'
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { DatePicker } from '@mui/x-date-pickers'
 import { createProductSchema } from '../../lib/schema/create-product-schema'
-import { fetchJson } from '../../lib/helpers/fetch-json'
 import { CreateProduct } from './types'
+import { sendFormData } from '../../lib/helpers/send-form-data'
+import { useRouter } from 'next/router'
 
 export const CreateNewProduct = ({
   showModal,
   onClose,
+  onError,
 }: {
   showModal: boolean
   onClose: Dispatch<SetStateAction<boolean>>
+  onError?: () => void
 }) => {
   const t = useTranslation()
-  const { locale } = useRouter()
+  const [loading, setLoading] = useState(false)
+  const { push } = useRouter()
   return (
     <Modal
       open={showModal}
@@ -56,16 +56,18 @@ export const CreateNewProduct = ({
           validateOnChange={false}
           validateOnBlur={false}
           onSubmit={async (values, actions) => {
-            const data = new FormData()
+            setLoading(true)
+            const response = await sendFormData<{
+              isOk: boolean
+              productId: string
+            }>('/api/create-product', values)
+            if (!response.isOk) {
+              if (onError) onError()
+            }
+            console.log('called')
+            setLoading(false)
 
-            Object.entries(values).forEach(([key, value]) => {
-              if (value) data.append(key, value)
-            })
-            const result = await fetchJson('/api/create-product', {
-              method: 'POST',
-              body: data,
-            })
-            console.log(result)
+            if (response.isOk) push(response.productId)
           }}
         >
           {(props) => (
@@ -131,8 +133,10 @@ export const CreateNewProduct = ({
                   type="submit"
                   variant="contained"
                   sx={{ ml: 'auto', mt: 2 }}
+                  disabled={loading}
                 >
-                  {t('CREATE_PRODUCT_submit')}
+                  {loading && t('CREATE_PRODUCT_loading')}
+                  {!loading && t('CREATE_PRODUCT_submit')}
                 </Button>
               </Box>
             </form>

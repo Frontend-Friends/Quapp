@@ -1,18 +1,16 @@
-import { FC, useRef, useState } from 'react'
-import { Fab, Grid, Typography } from '@mui/material'
+import { FC, useState } from 'react'
+import { Alert, Fab, Grid, Snackbar, Typography } from '@mui/material'
 import { useTranslation } from '../../../hooks/use-translation'
 import { GetServerSideProps } from 'next'
 import { ProductItem } from '../../../components/products/product-item'
 import { Header } from '../../../components/header'
-import { useRouter } from 'next/router'
 import { ProductDetail } from '../../../components/products/product-detail'
 import { ProductType } from '../../../components/products/types'
-import { useAsync } from 'react-use'
 import { fetchProduct } from '../../../lib/services/fetch-product'
-import { fetchJson } from '../../../lib/helpers/fetch-json'
 import { fetchProductList } from '../../../lib/services/fetch-product-list'
 import AddIcon from '@mui/icons-material/Add'
 import { CreateNewProduct } from '../../../components/products/create-product'
+import { useFetchProductDetail } from '../../../hooks/use-fetch-product-detail'
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const { products: productsQuery } = query
@@ -40,27 +38,11 @@ export const Product: FC<{
   productDetail: ProductType
 }> = ({ products, productDetail }) => {
   const t = useTranslation()
-  const { query } = useRouter()
-  const { products: productQuery } = query
-  const isInitial = useRef(true)
-  const currentQuery = useRef(productQuery?.[0])
-  const [product, setProduct] = useState(productDetail)
-  const [showCreateProduct, setShowCreateProduct] = useState(false)
 
-  useAsync(async () => {
-    if (
-      !!productQuery?.[0] &&
-      !isInitial.current &&
-      currentQuery.current !== productQuery[0]
-    ) {
-      const fetchedProduct = await fetchJson<ProductType>(
-        `/api/product?productId=${productQuery[0]}`
-      )
-      setProduct(fetchedProduct)
-    }
-    isInitial.current = false
-    currentQuery.current = productQuery?.[0]
-  }, [productQuery])
+  const [showCreateProduct, setShowCreateProduct] = useState(false)
+  const [hasError, setHasError] = useState(false)
+
+  const product = useFetchProductDetail(productDetail)
 
   return (
     <>
@@ -92,7 +74,19 @@ export const Product: FC<{
       <CreateNewProduct
         showModal={showCreateProduct}
         onClose={setShowCreateProduct}
+        onError={() => {
+          setHasError(true)
+        }}
       />
+      <Snackbar
+        open={hasError}
+        autoHideDuration={6000}
+        onClose={() => {
+          setHasError(false)
+        }}
+      >
+        <Alert severity="error">${t('FORM_submitting_error')}</Alert>
+      </Snackbar>
     </>
   )
 }

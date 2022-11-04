@@ -1,18 +1,11 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import formidable, { File } from 'formidable'
+import formidable from 'formidable'
 import { createProductSchema } from '../../lib/schema/create-product-schema'
-import { CreateProduct } from '../../components/products/types'
 import { mockUsers } from '../../mock/mock-users'
-import { db, storage } from '../../config/firebase'
+import { db } from '../../config/firebase'
 import { addDoc, collection, doc } from 'firebase/firestore'
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
-import path from 'path'
-import * as fs from 'fs'
-
-type FormData = {
-  fields: Omit<CreateProduct, 'img'>
-  files: { img: File }
-}
+import { uploadFileToStorage } from '../../lib/scripts/upload-file-to-storage'
+import { ProductFormData } from '../../components/products/types'
 
 export const config = {
   api: {
@@ -29,13 +22,13 @@ export default async function createProduct(
   try {
     const form = new formidable.IncomingForm()
 
-    const formData = await new Promise<FormData>((resolve, reject) =>
+    const formData = await new Promise<ProductFormData>((resolve, reject) =>
       form.parse(req, async (err, fields, files) => {
         if (err) reject(err)
         resolve({
           fields: { ...fields },
           files: { ...files },
-        } as unknown as FormData)
+        } as unknown as ProductFormData)
       })
     )
 
@@ -44,37 +37,22 @@ export default async function createProduct(
       ...formData.files,
     })
 
-    const imgSrc: { current: null | string } = { current: null }
-
-    if (formData.files.img && formData.files.img.originalFilename) {
-      const filePath = path.join(formData.files.img.filepath)
-
-      const fileBuffer = await fs.promises.readFile(filePath)
-
-      const imgRef = ref(
-        storage,
-        `${new Date().getTime()}-${formData.files.img.originalFilename}`
-      )
-
-      await uploadBytes(imgRef, fileBuffer)
-
-      imgSrc.current = await getDownloadURL(imgRef)
-    }
+    const imgSrc = await uploadFileToStorage(formData.files?.img)
 
     const docRef = collection(db, 'spaces', fabriceTobler.spaces[0], 'products')
 
     const userRef = doc(db, 'user', fabriceTobler.id)
 
-    await addDoc(docRef, {
+    const productId = await addDoc(docRef, {
       ...formData.fields,
-      imgSrc: imgSrc.current,
+      imgSrc,
       isAvailable: true,
       owner: userRef,
-    })
+    }).then((r) => r.id)
 
-    res.status(200).json({ status: 'ok' })
+    res.status(200).json({ isOk: true, productId })
   } catch (err) {
-    console.log(err)
-    res.status(500).json({ status: 'not Ok' })
+    console.error(err)
+    res.status(500).json({ isOk: false })
   }
 }

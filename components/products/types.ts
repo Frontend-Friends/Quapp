@@ -1,3 +1,5 @@
+import { File } from 'formidable'
+
 export type ChatMessage = {
   dateTime: string
   fromOwner: boolean
@@ -29,3 +31,8 @@ export type CreateProduct = Pick<
   ProductType,
   'title' | 'lead' | 'text' | 'description'
 > & { img?: File }
+
+export type ProductFormData = {
+  fields: Omit<CreateProduct, 'img'>
+  files?: { img?: File | null } | null
+}
