@@ -9,7 +9,7 @@ import { db } from '../../config/firebase'
 import { ProductChatType, ProductType } from '../../components/products/types'
 
 export const fetchProduct = async (productsQuery: string) => {
-  const ref = doc(db, 'products', productsQuery || '')
+  const ref = doc(db, 'spaces', 'space1', 'products', productsQuery || '')
   const chatCollection = collection(db, 'products', productsQuery || '', 'chat')
   const productDetailSnap = await getDoc(ref).then(
     (r) =>
@@ -43,11 +43,11 @@ export const fetchProduct = async (productsQuery: string) => {
     })
   )
   const owner = await getDoc(productDetailSnap.owner).then<{
-    id: string
-    userName: string
+    id: string | null
+    userName: string | null
   }>((r) => ({
-    userName: (r.data() as { userName: string }).userName,
-    id: r.id,
+    userName: (r.data() as { userName: string }).userName || null,
+    id: r.id || null,
   }))
 
   return {

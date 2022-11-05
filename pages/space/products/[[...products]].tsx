@@ -11,32 +11,45 @@ import { fetchProductList } from '../../../lib/services/fetch-product-list'
 import AddIcon from '@mui/icons-material/Add'
 import { CreateNewProduct } from '../../../components/products/create-product'
 import { useFetchProductDetail } from '../../../hooks/use-fetch-product-detail'
+import { withIronSessionSsr } from 'iron-session/next'
+import { sessionOptions } from '../../../config/session-config'
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const { products: productsQuery } = query
-  let productDetail: ProductType | undefined = undefined
-  const productsData = await fetchProductList()
+export const getServerSideProps: GetServerSideProps = withIronSessionSsr(
+  async ({ query, req }) => {
+    const { user } = req.session
 
-  if (productsQuery) {
-    productDetail = await fetchProduct(productsQuery[0])
-
-    if (!productDetail) {
+    if (!user) {
       return { notFound: true }
     }
-  }
 
-  return {
-    props: {
-      products: productsData,
-      productDetail: productDetail || null,
-    },
-  }
-}
+    const { products: productsQuery } = query
+    let productDetail: ProductType | undefined = undefined
+    const productsData = await fetchProductList()
+
+    if (productsQuery) {
+      productDetail = await fetchProduct(productsQuery[0])
+
+      if (!productDetail) {
+        return { notFound: true }
+      }
+    }
+
+    return {
+      props: {
+        userId: user.id,
+        products: productsData,
+        productDetail: productDetail || null,
+      },
+    }
+  },
+  sessionOptions
+)
 
 export const Product: FC<{
+  userId: string
   products: ProductType[]
   productDetail: ProductType
-}> = ({ products, productDetail }) => {
+}> = ({ userId, products, productDetail }) => {
   const t = useTranslation()
 
   const [showCreateProduct, setShowCreateProduct] = useState(false)
@@ -66,11 +79,11 @@ export const Product: FC<{
         {!!products.length &&
           products.map((item, index) => (
             <Grid item xs={1} key={index} sx={{ flexGrow: '1' }}>
-              <ProductItem product={item} />
+              <ProductItem product={item} userId={userId} />
             </Grid>
           ))}
       </Grid>
-      <ProductDetail product={product} />
+      <ProductDetail product={product} userId={userId} />
       <CreateNewProduct
         showModal={showCreateProduct}
         onClose={setShowCreateProduct}

@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction, useState } from 'react'
 import { useTranslation } from '../../hooks/use-translation'
-import { Box, Button, Modal, TextField } from '@mui/material'
+import { Box, Button, Modal, TextField, Typography } from "@mui/material";
 import { CondensedContainer } from '../condensed-container'
 import { Formik } from 'formik'
 import { createProductSchema } from '../../lib/schema/create-product-schema'
@@ -42,6 +42,7 @@ export const CreateNewProduct = ({
           borderRadius: { sm: 2 },
         }}
       >
+        <Typography variant="h2">{t('CREATE_PRODUCT_page_title')}</Typography>
         <Formik
           initialValues={
             {

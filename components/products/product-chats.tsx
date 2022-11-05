@@ -1,17 +1,24 @@
 import { Box, Typography } from '@mui/material'
-import React from 'react'
+import React, { useMemo } from 'react'
 import { ProductChatType } from './types'
 import { useTranslation } from '../../hooks/use-translation'
 import { ProductChat } from './product-chat'
 
 export const ProductChats = ({
+  userId,
+  isOwner,
   chats,
   productOwnerName,
 }: {
+  isOwner: boolean
+  userId: string
   chats: ProductChatType[]
   productOwnerName: string
 }) => {
   const t = useTranslation()
+  const selectedChats = useMemo(() => {
+    return chats.filter((chat) => chat.chatUserId === userId || isOwner)
+  }, [userId, isOwner, chats])
   return (
     <Box
       sx={{
@@ -23,7 +30,7 @@ export const ProductChats = ({
       }}
     >
       <Typography variant="h6">{t('CHAT_title')}</Typography>
-      {chats.map((chat, index) => {
+      {selectedChats.map((chat, index) => {
         return (
           <ProductChat
             key={index}

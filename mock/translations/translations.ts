@@ -29,6 +29,7 @@ export const translations: Record<string, string> = {
   CREATE_PRODUCT_text: 'Produkt Text',
   CREATE_PRODUCT_submit: 'Produkt erstellen',
   CREATE_PRODUCT_loading: 'übertragen...',
+  CREATE_PRODUCT_page_title:'Produkt erstellen',
 
   BUTTON_borrow: 'Ich möchte das ausleihen!',
   BUTTON_contact: 'Kontakt aufnehmen',

@@ -23,6 +23,9 @@ export const useFetchProductDetail = (
       )
       setProduct(fetchedProduct)
     }
+    if (!productQuery?.[0]) {
+      setProduct(null)
+    }
     isInitial.current = false
     currentQuery.current = productQuery?.[0]
   }, [productQuery])
