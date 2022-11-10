@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction, useState } from 'react'
 import { useTranslation } from '../../hooks/use-translation'
-import { Box, Button, Modal, TextField, Typography } from "@mui/material";
+import { Box, Button, Modal, TextField, Typography } from '@mui/material'
 import { CondensedContainer } from '../condensed-container'
 import { Formik } from 'formik'
 import { createProductSchema } from '../../lib/schema/create-product-schema'
@@ -19,10 +19,11 @@ export const CreateNewProduct = ({
 }) => {
   const t = useTranslation()
   const [loading, setLoading] = useState(false)
+  const [onSuccess, setOnSuccess] = useState(false)
   const { push } = useRouter()
   return (
     <Modal
-      open={showModal}
+      open={showModal && !onSuccess}
       onClose={() => onClose(false)}
       sx={{
         display: 'flex',
@@ -66,6 +67,7 @@ export const CreateNewProduct = ({
               if (onError) onError()
             }
             setLoading(false)
+            setOnSuccess(true)
 
             if (response.isOk) push(response.productId)
           }}
@@ -75,13 +77,8 @@ export const CreateNewProduct = ({
               <Box sx={{ pt: 5, pb: 2, display: 'grid' }}>
                 <TextField
                   label={t('CREATE_PRODUCT_upload')}
-                  onChange={(event) => {
-                    props.setFieldValue(
-                      'img',
-                      (event.currentTarget as HTMLInputElement).files?.[0]
-                    )
-                  }}
-                  defaultValue={props.values.img}
+                  onChange={props.handleChange}
+                  value={props.values.img}
                   name="img"
                   type="file"
                   error={!!props.errors.img}
@@ -89,9 +86,9 @@ export const CreateNewProduct = ({
                 />
                 <TextField
                   label={t('CREATE_PRODUCT_title')}
-                  onKeyUp={props.handleChange}
+                  onChange={props.handleChange}
                   onBlur={props.handleBlur}
-                  defaultValue={props.values.title}
+                  value={props.values.title}
                   name="title"
                   error={!!props.errors.title}
                   helperText={props.errors.title}
@@ -99,9 +96,9 @@ export const CreateNewProduct = ({
                 />
                 <TextField
                   label={t('CREATE_PRODUCT_description')}
-                  onKeyUp={props.handleChange}
+                  onChange={props.handleChange}
                   onBlur={props.handleBlur}
-                  defaultValue={props.values.description}
+                  value={props.values.description}
                   name="description"
                   error={!!props.errors.description}
                   helperText={props.errors.description}
@@ -110,9 +107,9 @@ export const CreateNewProduct = ({
                 <TextField
                   multiline
                   label={t('CREATE_PRODUCT_lead')}
-                  onKeyUp={props.handleChange}
+                  onChange={props.handleChange}
                   onBlur={props.handleBlur}
-                  defaultValue={props.values.lead}
+                  value={props.values.lead}
                   name="lead"
                   error={!!props.errors.lead}
                   helperText={props.errors.lead}
@@ -121,9 +118,9 @@ export const CreateNewProduct = ({
                 <TextField
                   multiline
                   label={t('CREATE_PRODUCT_text')}
-                  onKeyUp={props.handleChange}
+                  onChange={props.handleChange}
                   onBlur={props.handleBlur}
-                  defaultValue={props.values.text}
+                  value={props.values.text}
                   name="text"
                   error={!!props.errors.text}
                   helperText={props.errors.text}
