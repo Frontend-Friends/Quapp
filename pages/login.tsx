@@ -11,7 +11,6 @@ const formGroupSX = { mb: 2 }
 
 const fetchMockUser = async () => {
   const fetchedData = await fetchJson('/api/login')
-  console.log(fetchedData)
 }
 
 const Login: FC = () => {

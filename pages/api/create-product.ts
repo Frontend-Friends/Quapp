@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import formidable from 'formidable'
+import formidable, { IncomingForm } from 'formidable'
 import { createProductSchema } from '../../lib/schema/create-product-schema'
 import { mockUsers } from '../../mock/mock-users'
 import { db } from '../../config/firebase'
@@ -8,6 +8,7 @@ import { uploadFileToStorage } from '../../lib/scripts/upload-file-to-storage'
 import { ProductFormData } from '../../components/products/types'
 import { withIronSessionApiRoute } from 'iron-session/next'
 import { sessionOptions } from '../../config/session-config'
+import { parsedForm } from '../../components/parsed-form'
 
 export const config = {
   api: {
@@ -22,17 +23,7 @@ async function createProduct(req: NextApiRequest, res: NextApiResponse) {
       res.redirect('/login')
       return
     }
-    const form = new formidable.IncomingForm()
-
-    const formData = await new Promise<ProductFormData>((resolve, reject) =>
-      form.parse(req, async (err, fields, files) => {
-        if (err) reject(err)
-        resolve({
-          fields: { ...fields },
-          files: { ...files },
-        } as unknown as ProductFormData)
-      })
-    )
+    const formData = await parsedForm<ProductFormData>(req)
 
     await createProductSchema.validate({
       ...formData.fields,

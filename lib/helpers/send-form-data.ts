@@ -8,7 +8,7 @@ export const sendFormData = async <P, T extends FormikValues = FormikValues>(
   const data = new FormData()
 
   Object.entries(values).forEach(([key, value]) => {
-    if (value) data.append(key, value as string | Blob)
+    if (value !== undefined) data.append(key, value as string | Blob)
   })
   return fetchJson<P>(input, {
     method: 'POST',

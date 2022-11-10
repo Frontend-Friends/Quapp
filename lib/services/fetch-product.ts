@@ -7,10 +7,18 @@ import {
 } from 'firebase/firestore'
 import { db } from '../../config/firebase'
 import { ProductChatType, ProductType } from '../../components/products/types'
+import { sortChatByTime } from '../scripts/sort-chat-by-time'
 
 export const fetchProduct = async (productsQuery: string) => {
   const ref = doc(db, 'spaces', 'space1', 'products', productsQuery || '')
-  const chatCollection = collection(db, 'products', productsQuery || '', 'chat')
+  const chatCollection = collection(
+    db,
+    'spaces',
+    'space1',
+    'products',
+    productsQuery || '',
+    'chats'
+  )
   const productDetailSnap = await getDoc(ref).then(
     (r) =>
       ({
@@ -50,9 +58,14 @@ export const fetchProduct = async (productsQuery: string) => {
     id: r.id || null,
   }))
 
+  const sortedChats = chats.map((item) => {
+    const sortedHistory = sortChatByTime(item.history)
+    return { ...item, history: sortedHistory }
+  })
+
   return {
     ...productDetailSnap,
     owner: { userName: owner.userName, id: owner.id },
-    chats,
+    chats: sortedChats,
   } as ProductType
 }

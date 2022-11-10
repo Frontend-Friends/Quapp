@@ -65,7 +65,6 @@ export const CreateNewProduct = ({
             if (!response.isOk) {
               if (onError) onError()
             }
-            console.log('called')
             setLoading(false)
 
             if (response.isOk) push(response.productId)

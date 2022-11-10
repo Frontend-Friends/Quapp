@@ -3,7 +3,7 @@ import { db } from '../config/firebase'
 import { User } from '../components/user/types'
 
 const mockFabriceToblerId = 'jk1r8SXpX7mbCgy9WyCy'
-const mockLaurentKerbageId = 'aUWzjKreyyXKGxXeCYor'
+const mockLaurentKerbageId = 'REMNKUhwipVJmEStx84c'
 
 export const mockUsers = async () => {
   const fabriceToblerDoc = doc(db, 'user', mockFabriceToblerId)

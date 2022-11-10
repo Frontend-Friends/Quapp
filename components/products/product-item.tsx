@@ -21,7 +21,6 @@ export const ProductItem: FC<{
   userId: string
 }> = ({ product, handleMoreInformation, userId }) => {
   const t = useTranslation()
-  console.log(userId, product.owner)
   return (
     <Card
       variant={product.isAvailable ? undefined : 'outlined'}
