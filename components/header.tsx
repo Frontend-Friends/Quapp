@@ -14,7 +14,12 @@ export const Header: FC<{
         <Box
           sx={{ position: 'relative', width: '100%', paddingTop: '50%', mt: 2 }}
         >
-          <Image src={imgSrc} layout="fill" objectFit="cover" />
+          <Image
+            src={imgSrc}
+            layout="fill"
+            objectFit="cover"
+            alt="Product Image"
+          />
         </Box>
       )}
       {lead && (
