@@ -1,4 +1,4 @@
-import formidable, { IncomingForm } from 'formidable'
+import formidable from 'formidable'
 import { NextApiRequest } from 'next'
 import { FormikValues } from 'formik'
 

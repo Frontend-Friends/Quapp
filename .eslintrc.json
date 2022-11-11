@@ -11,7 +11,8 @@
     "@typescript-eslint/ban-ts-comment": "off",
     "semi": "off",
     "prettier/prettier": ["error", { "endOfLine": "auto", "semi": false }],
-    "react/display-name": "off"
+    "react/display-name": "off",
+    "import/no-unused-modules": [1]
   },
   "parserOptions": {
     "ecmaVersion": 2021,

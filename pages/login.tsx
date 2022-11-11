@@ -10,7 +10,7 @@ import { fetchJson } from '../lib/helpers/fetch-json'
 const formGroupSX = { mb: 2 }
 
 const fetchMockUser = async () => {
-  const fetchedData = await fetchJson('/api/login')
+  await fetchJson('/api/login')
 }
 
 const Login: FC = () => {

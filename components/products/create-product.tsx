@@ -57,7 +57,7 @@ export const CreateNewProduct = ({
           validationSchema={createProductSchema}
           validateOnChange={false}
           validateOnBlur={false}
-          onSubmit={async (values, actions) => {
+          onSubmit={async (values) => {
             setLoading(true)
             const response = await sendFormData<{
               isOk: boolean
