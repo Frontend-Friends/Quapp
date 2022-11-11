@@ -1,14 +1,12 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import formidable, { IncomingForm } from 'formidable'
 import { createProductSchema } from '../../lib/schema/create-product-schema'
-import { mockUsers } from '../../mock/mock-users'
 import { db } from '../../config/firebase'
 import { addDoc, collection, doc } from 'firebase/firestore'
 import { uploadFileToStorage } from '../../lib/scripts/upload-file-to-storage'
 import { ProductFormData } from '../../components/products/types'
 import { withIronSessionApiRoute } from 'iron-session/next'
 import { sessionOptions } from '../../config/session-config'
-import { parsedForm } from '../../components/parsed-form'
+import { parsedForm } from '../../lib/helpers/parsed-form'
 
 export const config = {
   api: {

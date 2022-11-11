@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { withIronSessionApiRoute } from 'iron-session/next'
 import { sessionOptions } from '../../config/session-config'
-import { parsedForm } from '../../components/parsed-form'
+import { parsedForm } from '../../lib/helpers/parsed-form'
 import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { db } from '../../config/firebase'
 import { sortChatByTime } from '../../lib/scripts/sort-chat-by-time'
