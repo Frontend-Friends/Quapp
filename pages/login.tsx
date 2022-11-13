@@ -33,11 +33,15 @@ const Login: FC = () => {
       },
       body: JSON.stringify({ ...data }),
       cache: 'default',
-    }).then((res) => {
-      if (res.ok) {
-        router.push('/dashboard')
-      }
     })
+      .then((res) => {
+        if (res.ok) {
+          router.push('/dashboard')
+        }
+      })
+      .catch((err) => {
+        console.log(err, 'error!')
+      })
   }
 
   const t = useTranslation()

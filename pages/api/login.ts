@@ -31,11 +31,11 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
       password,
       uid,
     })
-    await getUser(email)
+    // await getUser(email)
     await req.session.save()
     res.send({ session: true })
   } catch (error) {
-    console.error(error)
+    console.error(error, 'is error')
     res.status(500).json({ message: (error as Error).message })
   }
 }

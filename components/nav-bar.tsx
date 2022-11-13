@@ -5,6 +5,7 @@ import { LinkProps, NavigationDrawer } from './navigation-drawer'
 import { useTranslation } from '../hooks/use-translation'
 import { useLocation } from 'react-use'
 import { fetchJson } from '../lib/helpers/fetch-json'
+import { useRouter } from 'next/router'
 
 export const NavBar: FC<{ linkList: LinkProps[]; isLoggedIn: boolean }> = ({
   linkList,
@@ -14,6 +15,7 @@ export const NavBar: FC<{ linkList: LinkProps[]; isLoggedIn: boolean }> = ({
   const [isLoggedOut, setIsLoggedOut] = useState(!isLoggedIn)
   const t = useTranslation()
   const location = useLocation()
+  const router = useRouter()
 
   const toggleDrawer = (event: KeyboardEvent | MouseEvent) => {
     if (
@@ -34,6 +36,7 @@ export const NavBar: FC<{ linkList: LinkProps[]; isLoggedIn: boolean }> = ({
 
     if (result.isLoggedOut) {
       setIsLoggedOut(true)
+      await router.push('/login')
     }
   }
 
@@ -57,16 +60,16 @@ export const NavBar: FC<{ linkList: LinkProps[]; isLoggedIn: boolean }> = ({
 
           {location.pathname !== '/login' &&
             (isLoggedOut ? (
+              <Button color="secondary" variant="contained">
+                {t('LOGIN_login')}
+              </Button>
+            ) : (
               <Button
                 color="secondary"
                 variant="contained"
                 onClick={handleLogout}
               >
                 {t('LOGOUT_logout')}
-              </Button>
-            ) : (
-              <Button color="secondary" variant="contained">
-                {t('LOGIN_login')}
               </Button>
             ))}
         </Toolbar>
