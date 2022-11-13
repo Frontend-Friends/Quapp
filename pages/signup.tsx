@@ -15,15 +15,6 @@ const Signup: React.FC = () => {
     password: '',
   })
 
-  const setUserInDb = async () => {
-    await fetchJson('/api/user-db', {
-      method: 'POST',
-      body: JSON.stringify({
-        ...data,
-      }),
-    })
-  }
-
   const handleSignup: FormEventHandler<HTMLFormElement> = async (
     e: FormEvent
   ) => {
@@ -41,7 +32,6 @@ const Signup: React.FC = () => {
       body: JSON.stringify({ email, password }),
       cache: 'default',
     })
-    await setUserInDb()
   }
 
   const t = useTranslation()

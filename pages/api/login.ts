@@ -4,13 +4,11 @@ import { ironOptions, server } from '../../lib/config'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../../config/firebase'
 import { fetchJson } from '../../lib/helpers/fetch-json'
+import { User } from '../../interfaces/user'
 
 declare module 'iron-session' {
   interface IronSessionData {
-    user?: {
-      email: string
-      password: string
-    }
+    user?: User
   }
 }
 
@@ -26,15 +24,14 @@ async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
   try {
     const email = req.body.email
     const password = req.body.password
-
+    const uid = req.body.uid
     const credentials = await login(email, password)
-
     const user = (req.session.user = {
       email,
-      uid: credentials.user.uid,
+      password,
+      uid,
     })
     await getUser(email)
-
     await req.session.save()
     res.send({ session: true })
   } catch (error) {
