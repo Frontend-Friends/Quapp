@@ -87,7 +87,7 @@ const Login: FC = () => {
           <Link underline="hover" href="#" sx={{ mr: 2 }}>
             {t('LOGIN_forgot_password')}
           </Link>
-          <Link underline="hover" href="#">
+          <Link underline="hover" href="/signup">
             {t('LOGIN_has_no_account')}
           </Link>
         </Box>

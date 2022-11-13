@@ -128,7 +128,7 @@ const Signup: React.FC = () => {
         </Button>
 
         <Box sx={{ mt: 3 }}>
-          <Link underline="hover" href="#">
+          <Link underline="hover" href="/login">
             {t('LOGIN_has_account')}
           </Link>
         </Box>

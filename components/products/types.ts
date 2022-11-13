@@ -24,3 +24,13 @@ export type ProductType = {
   }
   chats: ProductChatType[]
 }
+
+export type SpaceItemType = {
+  name: string
+  id: string
+  ownerId: string
+  creatorId: string
+  creationDate: Date
+  memberCount: number
+  itemCount: number
+}

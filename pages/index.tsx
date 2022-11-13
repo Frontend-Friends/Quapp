@@ -20,13 +20,19 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+        <h1 className={styles.title}>Willkommen bei Quapp!</h1>
 
         <h1 className="text-3xl font-bold underline">
-          Hello world, Quartiervereins App mit Tailwind CSS!
+          Die App die Nachbarn verbindet
         </h1>
+        <p>
+          Sharing is caring - nach dieser Devise sollten unserer Meinung nach,
+          jede Nachbarschaften leben! <strong>Quapp</strong> ermöglicht es dir
+          ganz einfach Kontakt zu deiner Nachbarschaft aufzubauen und sich
+          gegenseitig zu unterstützen. Biete einfach Hilfe, Werkzeuge oder
+          ähnliches in deinen Spaces an oder nutze die Angebote von anderen.
+          Gemeinsam sind wir stärker!
+        </p>
       </main>
 
       <footer className={styles.footer}></footer>
