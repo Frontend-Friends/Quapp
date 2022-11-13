@@ -1,7 +1,8 @@
 import { withIronSessionApiRoute } from 'iron-session/next'
+import { NextApiRequest, NextApiResponse } from 'next'
 
 export default withIronSessionApiRoute(
-  function userRoute(req, res) {
+  function userRoute(req: NextApiRequest, res: NextApiResponse) {
     res.send({ user: req.session.user })
   },
   {
