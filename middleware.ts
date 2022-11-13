@@ -1,19 +1,25 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { getIronSession } from 'iron-session/edge'
+import { ironOptions } from './lib/config'
+
+export const config = {
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api (API routes)
+     * - _next/static (static files)
+     * - favicon.ico (favicon file)
+     */
+    '/((?!api|_next/static|favicon.ico).*)',
+  ],
+}
 
 export const middleware = async (req: NextRequest) => {
   const res = NextResponse.next()
   const session = await getIronSession(req, res, {
-    cookieName: '__session',
-    password: 'complex_password_at_least_32_characters_long',
-    // secure: true should be used in production (HTTPS) but can't be used in development (HTTP)
-    cookieOptions: {
-      secure: process.env.NODE_ENV === 'production',
-    },
+    ...ironOptions,
   })
-
-  // do anything with session here:
   const { user } = session
 
   // like mutate user:
@@ -25,18 +31,9 @@ export const middleware = async (req: NextRequest) => {
   // await session.save();
   // or maybe you want to destroy session:
   // await session.destroy();
-
-  console.log('from middleware', { user })
-
-  // demo:
-  if (user?.admin !== 'true') {
-    // unauthorized to see pages inside admin/
-    return NextResponse.redirect(new URL('/whatever-page', req.url)) // redirect to /whatever-page
+  //todo @LK, if certain routes (i.e. spaces and dashboard) than check if user otherwise redirect to login
+  if (!req.nextUrl.pathname.startsWith('/login') && !user) {
+    return NextResponse.redirect(new URL('/login', req.url))
   }
-
   return res
-}
-
-export const config = {
-  matcher: '/admin',
 }

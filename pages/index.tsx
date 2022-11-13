@@ -1,5 +1,14 @@
 import Head from 'next/head'
 import styles from '../styles/home.module.scss'
+import { withIronSessionSsr } from 'iron-session/next'
+import { ironOptions } from '../lib/config'
+
+export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
+  const { user } = req.session
+  return {
+    props: { isLoggedIn: !!user },
+  }
+}, ironOptions)
 
 export default function Home() {
   return (

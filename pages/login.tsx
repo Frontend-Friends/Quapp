@@ -1,20 +1,27 @@
 import { useRouter } from 'next/router'
-import React, { FC, FormEvent, FormEventHandler, useState } from 'react'
+import React, { FC, FormEventHandler, useState } from 'react'
 import Button from '@mui/material/Button'
 import { Box, Link, TextField, Typography } from '@mui/material'
 import { CondensedContainer } from '../components/condensed-container'
 import { useTranslation } from '../hooks/use-translation'
+import { withIronSessionSsr } from 'iron-session/next'
+import { ironOptions } from '../lib/config'
 
 const formGroupSX = { mb: 2 }
 
+export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
+  const { user } = req.session
+  return {
+    props: { isLoggedIn: !!user },
+  }
+}, ironOptions)
+
 const Login: FC = () => {
   const router = useRouter()
-
   const [data, setData] = useState({
     email: '',
     password: '',
   })
-
   const handleLogin: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault()
 
@@ -31,13 +38,6 @@ const Login: FC = () => {
         router.push('/dashboard')
       }
     })
-  }
-
-  const handleLogout = async (e: FormEvent) => {
-    e.preventDefault()
-    await fetch(' /api/logout')
-      .then((response) => response.json())
-      .then((json) => console.log(json))
   }
 
   const t = useTranslation()
@@ -92,7 +92,6 @@ const Login: FC = () => {
           </Link>
         </Box>
       </form>
-      <button onClick={handleLogout}>Logout</button>
     </CondensedContainer>
   )
 }

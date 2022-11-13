@@ -1,4 +1,6 @@
-export const ironOptions = {
+import { IronSessionOptions } from 'iron-session'
+
+export const ironOptions: IronSessionOptions = {
   cookieName: '__session',
   password: process.env.SECRET_COOKIE_PASSWORD as string,
   // secure: true should be used in production (HTTPS) but can't be used in development (HTTP)

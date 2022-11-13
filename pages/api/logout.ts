@@ -1,19 +1,19 @@
 import { withIronSessionApiRoute } from 'iron-session/next'
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next'
+import { ironOptions } from '../../lib/config'
+import { signOut } from 'firebase/auth'
+import { auth } from '../../config/firebase'
 
 export default withIronSessionApiRoute(
   <NextApiHandler>(
-    function logoutRoute(req: NextApiRequest, res: NextApiResponse) {
+    async function logoutRoute(req: NextApiRequest, res: NextApiResponse) {
+      await signOut(auth).then(() => console.log('is logged out'))
+
       req.session.destroy()
-      res.send({ logout: true })
+      res.send({ isLoggedOut: true })
     }
   ),
   {
-    cookieName: '__session',
-    password: process.env.SECRET_COOKIE_PASSWORD as string,
-    // secure: true should be used in production (HTTPS) but can't be used in development (HTTP)
-    cookieOptions: {
-      secure: process.env.NODE_ENV === 'production',
-    },
+    ...ironOptions,
   }
 )
