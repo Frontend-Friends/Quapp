@@ -1,8 +1,9 @@
 import { FC } from 'react'
 import { CondensedContainer } from '../components/condensed-container'
 import { useTranslation } from '../hooks/use-translation'
-import { Grid, Typography } from '@mui/material'
+import { Fab, Grid, Typography } from '@mui/material'
 import { Header } from '../components/header'
+import AddIcon from '@mui/icons-material/Add'
 import { InferGetServerSidePropsType } from 'next'
 import { SpaceItemType } from '../components/products/types'
 import { collection, getDocs } from 'firebase/firestore'
@@ -32,7 +33,7 @@ const Spaces: FC<InferGetServerSidePropsType<typeof getServerSideProps>> = ({
   const t = useTranslation()
 
   return (
-    <CondensedContainer>
+    <CondensedContainer sx={{ position: 'relative' }}>
       <Header title={t('SPACES_title')} />
       <Grid container columns={{ md: 1 }} spacing={{ xs: 4 }} pt={4}>
         {spaces.length ? (
@@ -41,6 +42,9 @@ const Spaces: FC<InferGetServerSidePropsType<typeof getServerSideProps>> = ({
           <Typography variant="body2">{t('SPACES_no_entries')}</Typography>
         )}
       </Grid>
+      <Fab color="primary" aria-label="add" variant="extended" sx={{ mt: 4 }}>
+        <AddIcon sx={{ mr: 1 }} /> {t('SPACES_add_space')}
+      </Fab>
     </CondensedContainer>
   )
 }
