@@ -8,7 +8,7 @@ export const CondensedContainer = forwardRef<HTMLDivElement, BoxProps>(
         {...props}
         sx={{
           width: '100%',
-          maxWidth: '600px',
+          maxWidth: '768px',
           mx: 'auto',
           my: '10%',
           ...props.sx,
