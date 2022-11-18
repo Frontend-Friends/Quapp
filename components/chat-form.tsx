@@ -5,6 +5,7 @@ import { Formik } from 'formik'
 import { sendFormData } from '../lib/helpers/send-form-data'
 import { Button, TextField } from '@mui/material'
 import React, { useState } from 'react'
+import { chatFormSchema } from '../lib/schema/chat-form-schema'
 
 export const ChatForm = ({
   isOwner,
@@ -21,7 +22,10 @@ export const ChatForm = ({
   const [productId] = query.products as string[]
   return (
     <Formik
+      validationSchema={chatFormSchema}
       initialValues={{ message: '' }}
+      validateOnBlur={false}
+      validateOnChange={false}
       onSubmit={async (values, { resetForm, setSubmitting, setValues }) => {
         setIsLoading(true)
         const result = await sendFormData<{
@@ -42,7 +46,7 @@ export const ChatForm = ({
         setIsLoading(false)
       }}
     >
-      {({ values, handleSubmit, handleBlur, handleChange }) => (
+      {({ values, handleSubmit, handleBlur, handleChange, errors }) => (
         <form onSubmit={handleSubmit} className="flex flex-col gap-4 mt-10">
           <TextField
             label={t('CHAT_message')}
@@ -50,12 +54,14 @@ export const ChatForm = ({
             onChange={handleChange}
             onBlur={handleBlur}
             name="message"
+            error={!!errors.message}
+            helperText={errors.message}
           />
           <Button
             type="submit"
             variant="contained"
             color="secondary"
-            disabled={isLoading}
+            disabled={isLoading || !values.message}
           >
             {isLoading ? t('CHAT_button_send') : t('CHAT_button_send')}
           </Button>

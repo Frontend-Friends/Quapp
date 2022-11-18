@@ -2,7 +2,12 @@ import formidable from 'formidable'
 import { NextApiRequest } from 'next'
 import { FormikValues } from 'formik'
 
-export const parsedForm = async <T extends Record<string, unknown>>(
+export const parsedForm = async <
+  T extends {
+    fields: Record<string, unknown>
+    files?: Record<string, unknown> | null
+  }
+>(
   req: NextApiRequest
 ) => {
   const form = new formidable.IncomingForm()

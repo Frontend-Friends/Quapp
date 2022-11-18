@@ -46,7 +46,7 @@ export const ProductChat = ({
             sx={{
               display: 'flex',
               flexFlow: 'column',
-              '&:not(:first-child)': { mt: 2 },
+              '&:not(:first-of-type)': { mt: 2 },
             }}
           >
             <Box
