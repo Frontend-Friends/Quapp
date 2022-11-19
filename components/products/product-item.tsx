@@ -6,13 +6,14 @@ import {
   CardContent,
   CardHeader,
   CardMedia,
+  IconButton,
   Typography,
 } from '@mui/material'
+import MoreVertIcon from '@mui/icons-material/MoreVert'
 import { FC, MouseEventHandler } from 'react'
 import { useTranslation } from '../../hooks/use-translation'
 import Link from 'next/link'
 import { ProductType } from './types'
-import { ProductMenu } from './product-menu'
 
 export const ProductItem: FC<{
   product: ProductType
@@ -33,7 +34,11 @@ export const ProductItem: FC<{
       <CardHeader
         title={product.title}
         action={
-          userId === product.owner.id && <ProductMenu productId={product.id} />
+          userId === product.owner.id && (
+            <IconButton aria-label="settings">
+              <MoreVertIcon />
+            </IconButton>
+          )
         }
       />
       {product.imgSrc && (

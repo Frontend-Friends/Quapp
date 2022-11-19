@@ -21,7 +21,7 @@ export const parsedForm = async <
       })
     })
   )
-  const normalizeFields = Object.entries(formResult.fields).reduce(
+  const normalizeFileds = Object.entries(formResult.fields).reduce(
     (acc, [key, value]) => {
       if (value === 'true') {
         acc[`${key}`] = true
@@ -34,5 +34,5 @@ export const parsedForm = async <
     },
     {} as Record<string, string | boolean>
   )
-  return { fields: normalizeFields, files: formResult.files } as unknown as T
+  return { fields: normalizeFileds, files: formResult.files } as unknown as T
 }

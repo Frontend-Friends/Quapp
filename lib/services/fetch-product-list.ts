@@ -3,8 +3,8 @@ import { db } from '../../config/firebase'
 import { ProductType } from '../../components/products/types'
 import { User } from '../../components/user/types'
 
-export const fetchProductList = async (space: string) => {
-  const productCollection = collection(db, 'spaces', space, 'products')
+export const fetchProductList = async () => {
+  const productCollection = collection(db, 'spaces', 'space1', 'products')
 
   const productSnapshot = await getDocs(productCollection)
 

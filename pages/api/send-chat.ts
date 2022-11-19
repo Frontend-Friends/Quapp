@@ -15,8 +15,6 @@ export const config = {
 async function sendChat(req: NextApiRequest, res: NextApiResponse) {
   const { user } = req.session
 
-  const { space } = req.query
-
   if (!user) {
     res.redirect('/login')
     return
@@ -36,7 +34,7 @@ async function sendChat(req: NextApiRequest, res: NextApiResponse) {
   const docRef = doc(
     db,
     'spaces',
-    (space as string) || '',
+    'space1',
     'products',
     productId,
     'chats',
