@@ -35,7 +35,9 @@ const handleSubmit: OnBorrowSubmit = async (values, setSubittming) => {
 
 export const ProductDetail = ({
   product,
+  userId,
 }: {
+  userId: string
   product?: ProductType | null
 }) => {
   const { asPath, query, push } = useRouter()
@@ -114,42 +116,46 @@ export const ProductDetail = ({
           />
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, py: 4 }}>
             <Avatar
-              alt="Remy Sharp"
-              src="https://source.unsplash.com/random"
+              alt={product.owner.userName}
+              src=""
               sx={{ width: 56, height: 56 }}
             >
-              RS
+              {product.owner.userName?.slice(0, 2)}
             </Avatar>
-            <p>Remy Sharp</p>
+            <p>{product.owner.userName}</p>
           </Box>
           <Typography variant="body1" sx={{ mb: 4 }}>
             {product.text}
           </Typography>
-          <Box
-            sx={{ position: 'relative', display: 'flex', flexFlow: 'column' }}
-          >
+          {userId !== product.owner.id && (
             <Box
-              sx={{
-                position: 'absolute',
-                top: 0,
-                ml: 2,
-                backgroundColor: 'background.paper',
-                p: 1,
-                borderRadius: 1,
-                border: 1,
-                borderColor: 'divider',
-              }}
+              sx={{ position: 'relative', display: 'flex', flexFlow: 'column' }}
             >
-              <Typography variant="body2"> {t('BUTTON_borrow')}</Typography>
+              <Box
+                sx={{
+                  position: 'absolute',
+                  top: 0,
+                  ml: 2,
+                  backgroundColor: 'background.paper',
+                  p: 1,
+                  borderRadius: 1,
+                  border: 1,
+                  borderColor: 'divider',
+                }}
+              >
+                <Typography variant="body2"> {t('BUTTON_borrow')}</Typography>
+              </Box>
+              <Card variant="outlined" sx={{ mt: 2.5 }}>
+                <CardContent>
+                  <BorrowForm onSubmit={handleSubmit} />
+                </CardContent>
+              </Card>
             </Box>
-            <Card variant="outlined" sx={{ mt: 2.5 }}>
-              <CardContent>
-                <BorrowForm onSubmit={handleSubmit} />
-              </CardContent>
-            </Card>
-          </Box>
+          )}
           <ProductChats
+            isOwner={product.owner.id === userId}
             chats={product.chats}
+            userId={userId}
             productOwnerName={product.owner.userName}
           />
         </CondensedContainer>

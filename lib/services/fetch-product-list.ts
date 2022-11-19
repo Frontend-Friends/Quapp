@@ -1,9 +1,10 @@
-import { collection, DocumentData, getDocs } from 'firebase/firestore'
+import { collection, DocumentData, getDoc, getDocs } from 'firebase/firestore'
 import { db } from '../../config/firebase'
 import { ProductType } from '../../components/products/types'
+import { User } from '../../components/user/types'
 
 export const fetchProductList = async () => {
-  const productCollection = collection(db, 'products')
+  const productCollection = collection(db, 'spaces', 'space1', 'products')
 
   const productSnapshot = await getDocs(productCollection)
 
@@ -13,10 +14,22 @@ export const fetchProductList = async () => {
     const docData = productDoc.data()
     productsData.push({
       ...docData,
-      owner: docData.owner.id,
       id: productDoc.id,
     })
   })
 
-  return productsData as ProductType[]
+  const products = await Promise.all(
+    productsData.map(async (product) => {
+      const user = await getDoc<User>(product.owner).then((r) => ({
+        ...r.data(),
+        id: r.id,
+      }))
+      return {
+        ...product,
+        owner: { userName: user.userName || null, id: user.id || null },
+      } as unknown as ProductType
+    })
+  )
+
+  return products as ProductType[]
 }

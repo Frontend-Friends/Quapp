@@ -16,6 +16,6 @@
     "jsx": "preserve"
   },
 
-  "include": ["next-env.d.ts", "additional.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules", "lint-staged.config.js"]
 }

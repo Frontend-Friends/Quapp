@@ -18,33 +18,43 @@ import { ProductType } from './types'
 export const ProductItem: FC<{
   product: ProductType
   handleMoreInformation?: MouseEventHandler<HTMLButtonElement>
-}> = ({ product, handleMoreInformation }) => {
+  userId: string
+}> = ({ product, handleMoreInformation, userId }) => {
   const t = useTranslation()
   return (
     <Card
       variant={product.isAvailable ? undefined : 'outlined'}
       sx={{
         backgroundColor: product.isAvailable ? undefined : 'background.paper',
+        display: 'flex',
+        flexFlow: 'column',
+        height: '100%',
       }}
     >
       <CardHeader
         title={product.title}
         action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
+          userId === product.owner.id && (
+            <IconButton aria-label="settings">
+              <MoreVertIcon />
+            </IconButton>
+          )
         }
       />
       {product.imgSrc && (
         <CardMedia component="img" height={194} src={product.imgSrc} />
       )}
-      <CardContent>
+      {!product.imgSrc && (
+        <Box
+          sx={{ width: '100%', flexGrow: '1', bgcolor: 'secondary.light' }}
+        />
+      )}
+      <CardContent sx={{ mt: 'auto' }}>
         {product.description && (
           <Typography variant="body2">{product.description}</Typography>
         )}
       </CardContent>
-      <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Button>{t('BUTTON_info')}</Button>
+      <CardActions sx={{ display: 'flex', justifyContent: 'flex-end' }}>
         {!product.isAvailable && (
           <Box p={1} color="red">
             {t('PRODUCT_not_available')}
