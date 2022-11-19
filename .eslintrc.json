@@ -7,6 +7,11 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended"
   ],
+  "ignorePatterns": [
+    "public/",
+    "./tailwind.config.js",
+    "./lintstaged.config.js"
+  ],
   "rules": {
     "@typescript-eslint/ban-ts-comment": "off",
     "semi": "off",
