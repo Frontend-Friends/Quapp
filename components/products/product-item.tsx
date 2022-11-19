@@ -45,7 +45,9 @@ export const ProductItem: FC<{
         <CardMedia component="img" height={194} src={product.imgSrc} />
       )}
       {!product.imgSrc && (
-        <Box sx={{ width: '100%', flexGrow: '1', bgcolor: 'secondary.light' }} />
+        <Box
+          sx={{ width: '100%', flexGrow: '1', bgcolor: 'secondary.light' }}
+        />
       )}
       <CardContent sx={{ mt: 'auto' }}>
         {product.description && (
