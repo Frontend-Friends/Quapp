@@ -7,11 +7,17 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended"
   ],
+  "ignorePatterns": [
+    "public/",
+    "./tailwind.config.js",
+    "./lintstaged.config.js"
+  ],
   "rules": {
     "@typescript-eslint/ban-ts-comment": "off",
     "semi": "off",
     "prettier/prettier": ["error", { "endOfLine": "auto", "semi": false }],
-    "react/display-name": "off"
+    "react/display-name": "off",
+    "import/no-unused-modules": [1]
   },
   "parserOptions": {
     "ecmaVersion": 2021,
