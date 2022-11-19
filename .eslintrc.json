@@ -10,7 +10,7 @@
   "ignorePatterns": [
     "public/",
     "./tailwind.config.js",
-    "./lintstaged.config.js"
+    "./lint-staged.config.js"
   ],
   "rules": {
     "@typescript-eslint/ban-ts-comment": "off",
@@ -22,6 +22,6 @@
   "parserOptions": {
     "ecmaVersion": 2021,
     "sourceType": "module",
-    "project": "./tsconfig.json"
+    "project": ["./tsconfig.json"]
   }
 }
