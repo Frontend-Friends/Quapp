@@ -23,6 +23,21 @@ export const translations: Record<string, string> = {
   PRODUCTS_title: 'Produkte',
   PRODUCTS_no_entries: 'Leider gibt es noch keine Einträge.',
   PRODUCT_not_available: 'Nicht verfügbar',
+  PRODUCT_add: 'Neues Produckt erstellen',
+
+  BORROW_TEXTFIELD_label: 'Nachricht',
+  BORROW_TEXTFIELD_default_value: 'Schreibe eine Nachricht',
+  BORROW_DATEPICKER_label: 'Ausleihdatum',
+
+  CREATE_PRODUCT_detail: 'Produkt Detail',
+  CREATE_PRODUCT_upload: 'Bild hochladen',
+  CREATE_PRODUCT_description: 'Produkt Beschreibung',
+  CREATE_PRODUCT_title: 'Produkt Titel',
+  CREATE_PRODUCT_lead: 'Produkt Leittext',
+  CREATE_PRODUCT_text: 'Produkt Text',
+  CREATE_PRODUCT_submit: 'Produkt erstellen',
+  CREATE_PRODUCT_loading: 'übertragen...',
+  CREATE_PRODUCT_page_title: 'Produkt erstellen',
 
   BUTTON_borrow: 'Ich möchte das ausleihen!',
   BUTTON_contact: 'Kontakt aufnehmen',
@@ -34,4 +49,10 @@ export const translations: Record<string, string> = {
   SPACES_no_entries: 'Es gibt noch keine Spaces.',
   SPACES_members: 'Mitglieder',
   SPACES_items: 'Einträge',
+
+  CHAT_button_send: 'Nachricht senden',
+  CHAT_button_loading: 'wird gesendet',
+  CHAT_message: 'Nachricht',
+  CHAT_message_error: 'Die Nachricht darf nicht leer sein',
+  CHAT_message_required: 'Das Feld ist pflicht',
 }
