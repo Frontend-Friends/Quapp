@@ -5,13 +5,8 @@ import { Box, Link, TextField, Typography } from '@mui/material'
 import { useAuth } from '../components/auth-context'
 import { CondensedContainer } from '../components/condensed-container'
 import { useTranslation } from '../hooks/use-translation'
-import { fetchJson } from '../lib/helpers/fetch-json'
 
 const formGroupSX = { mb: 2 }
-
-const fetchMockUser = async () => {
-  await fetchJson('/api/login')
-}
 
 const Login: FC = () => {
   const router = useRouter()
@@ -37,7 +32,6 @@ const Login: FC = () => {
   const t = useTranslation()
   return (
     <CondensedContainer>
-      <Button onClick={fetchMockUser}>Mock User</Button>
       <Typography variant="h1" sx={{ my: 3 }}>
         {t('LOGIN_title')}
       </Typography>
