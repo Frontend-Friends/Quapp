@@ -59,19 +59,20 @@ export const NavBar: FC<{ linkList: LinkProps[]; isLoggedIn: boolean }> = ({
           </Typography>
 
           {location.pathname !== '/login' &&
-            (isLoggedOut ? (
-              <Button color="secondary" variant="contained">
-                {t('LOGIN_login')}
-              </Button>
-            ) : (
-              <Button
-                color="secondary"
-                variant="contained"
-                onClick={handleLogout}
-              >
-                {t('LOGOUT_logout')}
-              </Button>
-            ))}
+            // (isLoggedOut ? (
+            //   <Button color="secondary" variant="contained">
+            //     {t('LOGIN_login')}
+            //   </Button>
+            // ) : (
+            //   <Button
+            //     color="secondary"
+            //     variant="contained"
+            //     onClick={handleLogout}
+            //   >
+            //     {t('LOGOUT_logout')}
+            //   </Button>
+            // )
+            null}
         </Toolbar>
       </AppBar>
       <NavigationDrawer
