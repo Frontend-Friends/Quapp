@@ -55,7 +55,7 @@ export const ChatForm = ({
             onBlur={handleBlur}
             name="message"
             error={!!errors.message}
-            helperText={errors.message}
+            helperText={errors.message ? t(errors.message) : ''}
           />
           <Button
             type="submit"
@@ -63,7 +63,7 @@ export const ChatForm = ({
             color="secondary"
             disabled={isLoading || !values.message}
           >
-            {isLoading ? t('CHAT_button_send') : t('CHAT_button_send')}
+            {isLoading ? t('CHAT_button_loading') : t('CHAT_button_send')}
           </Button>
         </form>
       )}

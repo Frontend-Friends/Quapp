@@ -26,6 +26,9 @@ export const ProductItem: FC<{
       variant={product.isAvailable ? undefined : 'outlined'}
       sx={{
         backgroundColor: product.isAvailable ? undefined : 'background.paper',
+        display: 'flex',
+        flexFlow: 'column',
+        height: '100%',
       }}
     >
       <CardHeader
@@ -41,7 +44,10 @@ export const ProductItem: FC<{
       {product.imgSrc && (
         <CardMedia component="img" height={194} src={product.imgSrc} />
       )}
-      <CardContent>
+      {!product.imgSrc && (
+        <Box sx={{ width: '100%', flexGrow: '1', bgcolor: 'secondary.light' }} />
+      )}
+      <CardContent sx={{ mt: 'auto' }}>
         {product.description && (
           <Typography variant="body2">{product.description}</Typography>
         )}
