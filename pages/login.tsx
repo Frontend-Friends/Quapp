@@ -1,11 +1,13 @@
 import { useRouter } from 'next/router'
-import React, { FC, FormEventHandler, useState } from 'react'
+import React, { FC } from 'react'
 import Button from '@mui/material/Button'
 import { Box, Link, TextField, Typography } from '@mui/material'
 import { CondensedContainer } from '../components/condensed-container'
 import { useTranslation } from '../hooks/use-translation'
 import { withIronSessionSsr } from 'iron-session/next'
 import { ironOptions } from '../lib/config'
+import { Formik } from 'formik'
+import { loginFormSchema } from '../lib/schema/login-form-schema'
 
 const formGroupSX = { mb: 2 }
 
@@ -18,20 +20,15 @@ export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
 
 const Login: FC = () => {
   const router = useRouter()
-  const [data, setData] = useState({
-    email: '',
-    password: '',
-  })
-  const handleLogin: FormEventHandler<HTMLFormElement> = async (e) => {
-    e.preventDefault()
 
+  const handleLogin = async (values: { email: string; password: string }) => {
     await fetch('/api/login', {
       method: 'POST',
       headers: {
         accept: 'application.json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ ...data }),
+      body: JSON.stringify({ ...values }),
       cache: 'default',
     })
       .then((res) => {
@@ -50,52 +47,61 @@ const Login: FC = () => {
       <Typography variant="h1" sx={{ my: 3 }}>
         {t('LOGIN_title')}
       </Typography>
-      <form onSubmit={handleLogin}>
-        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-          <TextField
-            sx={formGroupSX}
-            onChange={(e) =>
-              setData({
-                ...data,
-                email: e.target.value,
-              })
-            }
-            name="email"
-            value={data.email}
-            required
-            type="email"
-            label={t('GLOBAL_email')}
-            variant="outlined"
-          />
+      <Formik
+        initialValues={
+          { email: '', password: '' } as {
+            email: string
+            password: string
+          }
+        }
+        validationSchema={loginFormSchema}
+        validateOnChange={false}
+        validateOnBlur={false}
+        onSubmit={handleLogin}
+      >
+        {(props) => (
+          <form onSubmit={props.handleSubmit}>
+            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+              <TextField
+                sx={formGroupSX}
+                name="email"
+                value={props.values.email}
+                onChange={props.handleChange}
+                error={!!props.errors.email}
+                helperText={props.errors.email}
+                onBlur={props.handleBlur}
+                type="email"
+                label={t('GLOBAL_email')}
+                variant="outlined"
+              />
 
-          <TextField
-            sx={formGroupSX}
-            onChange={(e) =>
-              setData({
-                ...data,
-                password: e.target.value,
-              })
-            }
-            name="password"
-            value={data.password}
-            required
-            type="password"
-            label={t('GLOBAL_password')}
-            variant="outlined"
-          />
-        </Box>
-        <Button type="submit" variant="contained" sx={{ mr: 2 }}>
-          {t('LOGIN_login')}
-        </Button>
-        <Box sx={{ mt: 3 }}>
-          <Link underline="hover" href="#" sx={{ mr: 2 }}>
-            {t('LOGIN_forgot_password')}
-          </Link>
-          <Link underline="hover" href="/signup">
-            {t('LOGIN_has_no_account')}
-          </Link>
-        </Box>
-      </form>
+              <TextField
+                sx={formGroupSX}
+                name="password"
+                value={props.values.password}
+                onChange={props.handleChange}
+                onBlur={props.handleBlur}
+                helperText={props.errors.password}
+                error={!!props.errors.password}
+                type="password"
+                label={t('GLOBAL_password')}
+                variant="outlined"
+              />
+            </Box>
+            <Button type="submit" variant="contained" sx={{ mr: 2 }}>
+              {t('LOGIN_login')}
+            </Button>
+            <Box sx={{ mt: 3 }}>
+              <Link underline="hover" href="#" sx={{ mr: 2 }}>
+                {t('LOGIN_forgot_password')}
+              </Link>
+              <Link underline="hover" href="/signup">
+                {t('LOGIN_has_no_account')}
+              </Link>
+            </Box>
+          </form>
+        )}
+      </Formik>
     </CondensedContainer>
   )
 }
