@@ -1,35 +1,22 @@
-import React, { FormEvent, FormEventHandler, useState } from 'react'
 import { Box, Button, Link, TextField, Typography } from '@mui/material'
 import { useTranslation } from '../hooks/use-translation'
 import { CondensedContainer } from '../components/condensed-container'
 import { fetchJson } from '../lib/helpers/fetch-json'
+import { Formik } from 'formik'
+import { SignupType } from '../components/products/types'
+import { signupFormSchema } from '../lib/schema/signup-form-schema'
 
 const formGroupSX = { mb: 2 }
 
 const Signup: React.FC = () => {
-  const [data, setData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    password: '',
-  })
-
-  const handleSignup: FormEventHandler<HTMLFormElement> = async (
-    e: FormEvent
-  ) => {
-    e.preventDefault()
-
-    const { email } = data
-    const { password } = data
-
+  const handleSignup = async (values: SignupType) => {
     await fetchJson('/api/signup', {
       method: 'POST',
       headers: {
         accept: 'application.json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ ...values }),
       cache: 'default',
     })
   }
@@ -40,99 +27,107 @@ const Signup: React.FC = () => {
       <Typography variant="h1" sx={{ my: 3 }}>
         {t('SIGNUP_title')}
       </Typography>
-      <form onSubmit={handleSignup}>
-        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-          <TextField
-            sx={formGroupSX}
-            name="firstName"
-            onChange={(e) =>
-              setData({
-                ...data,
-                firstName: e.target.value,
-              })
-            }
-            value={data.firstName}
-            required
-            type="text"
-            label={t('GLOBAL_first_name')}
-            variant="outlined"
-          />
+      <Formik
+        initialValues={
+          {
+            firstName: '',
+            lastName: '',
+            email: '',
+            phone: '',
+            password: '',
+          } as SignupType
+        }
+        validationSchema={signupFormSchema}
+        validateOnChange={false}
+        validateOnBlur={false}
+        onSubmit={handleSignup}
+      >
+        {(props) => (
+          <form onSubmit={props.handleSubmit}>
+            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+              <TextField
+                sx={formGroupSX}
+                name="firstName"
+                onChange={props.handleChange}
+                onBlur={props.handleBlur}
+                value={props.values.firstName}
+                error={!!props.errors.firstName}
+                helperText={props.errors.firstName}
+                type="text"
+                label={t('GLOBAL_first_name')}
+                variant="outlined"
+                required
+              />
 
-          <TextField
-            sx={formGroupSX}
-            onChange={(e) =>
-              setData({
-                ...data,
-                lastName: e.target.value,
-              })
-            }
-            name="lastName"
-            value={data.lastName}
-            required
-            type="text"
-            label={t('GLOBAL_last_name')}
-            variant="outlined"
-          />
+              <TextField
+                sx={formGroupSX}
+                name="lastName"
+                onChange={props.handleChange}
+                onBlur={props.handleBlur}
+                value={props.values.lastName}
+                error={!!props.errors.lastName}
+                helperText={props.errors.lastName}
+                type="text"
+                label={t('GLOBAL_last_name')}
+                variant="outlined"
+                required
+              />
 
-          <TextField
-            sx={formGroupSX}
-            onChange={(e) =>
-              setData({
-                ...data,
-                email: e.target.value,
-              })
-            }
-            name="email"
-            value={data.email}
-            required
-            type="email"
-            label={t('GLOBAL_email')}
-            variant="outlined"
-          />
+              <TextField
+                sx={formGroupSX}
+                name="email"
+                onChange={props.handleChange}
+                onBlur={props.handleBlur}
+                value={props.values.email}
+                error={!!props.errors.email}
+                helperText={props.errors.email}
+                type="email"
+                label={t('GLOBAL_email')}
+                variant="outlined"
+                required
+              />
 
-          <TextField
-            sx={formGroupSX}
-            onChange={(e) =>
-              setData({
-                ...data,
-                phone: e.target.value,
-              })
-            }
-            name="phone"
-            value={data.phone}
-            required
-            type="tel"
-            label={t('GLOBAL_mobile_number')}
-            variant="outlined"
-          />
+              <TextField
+                sx={formGroupSX}
+                name="phone"
+                onChange={props.handleChange}
+                onBlur={props.handleBlur}
+                value={props.values.phone}
+                error={!!props.errors.phone}
+                helperText={props.errors.phone}
+                type="tel"
+                label={t('GLOBAL_mobile_number')}
+                variant="outlined"
+                required
+              />
 
-          <TextField
-            sx={formGroupSX}
-            onChange={(e) =>
-              setData({
-                ...data,
-                password: e.target.value,
-              })
-            }
-            name="password"
-            value={data.password}
-            required
-            type="password"
-            label={t('GLOBAL_password')}
-            variant="outlined"
-          />
-        </Box>
+              <TextField
+                sx={formGroupSX}
+                name="password"
+                onChange={props.handleChange}
+                onBlur={props.handleBlur}
+                value={props.values.password}
+                error={!!props.errors.password}
+                helperText={props.errors.password}
+                type="password"
+                label={t('GLOBAL_password')}
+                variant="outlined"
+                required
+              />
+            </Box>
 
-        <Button type="submit" variant="contained">
-          {t('SIGNUP_signup')}
-        </Button>
+            <Button type="submit" variant="contained">
+              {t('SIGNUP_signup')}
+            </Button>
 
-        <Box sx={{ mt: 3 }}>
-          <Link underline="hover" href="/login">
-            {t('LOGIN_has_account')}
-          </Link>
-        </Box>
-      </form>
+            <Box sx={{ mt: 3 }}>
+              <Link underline="hover" href="/login">
+                {t('LOGIN_has_account')}
+              </Link>
+            </Box>
+          </form>
+        )}
+      </Formik>
     </CondensedContainer>
   )
 }
