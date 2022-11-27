@@ -31,7 +31,7 @@ export const ChatForm = ({
         const result = await sendFormData<{
           isOk: boolean
           history: ChatMessage[]
-        }>('/api/send-chat', {
+        }>(`/api/send-chat?space=${query.space}`, {
           productId,
           chatId,
           fromOwner: isOwner,
