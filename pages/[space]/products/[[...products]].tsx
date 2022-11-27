@@ -22,12 +22,15 @@ export const getServerSideProps: GetServerSideProps = withIronSessionSsr(
       return { notFound: true }
     }
 
-    const { products: productsQuery } = query
+    const { products: productsQuery, space } = query
     let productDetail: ProductType | undefined = undefined
-    const productsData = await fetchProductList()
+    const productsData = await fetchProductList((space as string) || '')
 
     if (productsQuery) {
-      productDetail = await fetchProduct(productsQuery[0])
+      productDetail = await fetchProduct(
+        (space as string) || '',
+        productsQuery[0]
+      )
 
       if (!productDetail) {
         return { notFound: true }
