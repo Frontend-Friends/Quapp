@@ -16,6 +16,7 @@ export const config = {
 
 async function createProduct(req: NextApiRequest, res: NextApiResponse) {
   try {
+    const { space } = req.query
     const { user } = req.session
     if (!user) {
       res.redirect('/login')
@@ -30,7 +31,8 @@ async function createProduct(req: NextApiRequest, res: NextApiResponse) {
 
     const imgSrc = await uploadFileToStorage(formData.files?.img)
 
-    const docRef = collection(db, 'spaces', user.spaces[0], 'products')
+    const docRef = collection(db, 'spaces', space as string, 'products')
+    console.log(docRef)
 
     const userRef = doc(db, 'user', user.id)
 

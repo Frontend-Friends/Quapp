@@ -19,7 +19,7 @@ export const useFetchProductDetail = (
       currentQuery.current !== productQuery[0]
     ) {
       const fetchedProduct = await fetchJson<ProductType>(
-        `/api/product?productId=${productQuery[0]}?space=${space}`
+        `/api/product?productId=${productQuery[0]}&space=${space}`
       )
       setProduct(fetchedProduct)
     }

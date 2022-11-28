@@ -65,7 +65,7 @@ export const fetchProduct = async (space: string, productsQuery: string) => {
 
   return {
     ...productDetailSnap,
-    owner: { userName: owner.userName, id: owner.id },
+    owner: { userName: owner.userName || null, id: owner.id },
     chats: sortedChats,
   } as ProductType
 }
