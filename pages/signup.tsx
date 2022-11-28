@@ -20,16 +20,13 @@ const Signup: React.FC = () => {
   ) => {
     e.preventDefault()
 
-    const { email } = data
-    const { password } = data
-
     await fetchJson('/api/signup', {
       method: 'POST',
       headers: {
         accept: 'application.json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ ...data }),
       cache: 'default',
     })
   }

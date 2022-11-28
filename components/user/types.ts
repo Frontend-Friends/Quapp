@@ -6,4 +6,5 @@ export type User = {
   email: string
   lastName: string
   id: string
+  uid: string
 }
