@@ -1,4 +1,4 @@
-import { doc, DocumentData, getDoc } from 'firebase/firestore'
+import { doc, getDoc } from 'firebase/firestore'
 import { db } from '../config/firebase'
 import { User } from '../components/user/types'
 

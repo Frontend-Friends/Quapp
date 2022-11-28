@@ -14,8 +14,9 @@ import { Navigation } from '../mock/navigation'
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
 
-interface MyAppProps extends AppProps {
+interface MyAppProps extends AppProps<{ isLoggedIn: boolean }> {
   emotionCache?: EmotionCache
+  pageProps: { isLoggedIn: boolean }
 }
 
 export default function App({
@@ -29,11 +30,10 @@ export default function App({
         <meta name="viewport" content="initial-scale=1, width=device-width" />
         <title>Quapp - sharing is caring</title>
       </Head>
-
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Box sx={{ backgroundColor: 'background.paper', minHeight: '100vh' }}>
-          <NavBar linkList={Navigation} />
+          <NavBar linkList={Navigation} isLoggedIn={pageProps.isLoggedIn} />
           <Container maxWidth="lg" sx={{ pt: 4 }}>
             <Component {...pageProps} />
           </Container>

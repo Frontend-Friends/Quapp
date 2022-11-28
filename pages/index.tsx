@@ -1,7 +1,18 @@
 import Head from 'next/head'
 import styles from '../styles/home.module.scss'
+import { withIronSessionSsr } from 'iron-session/next'
+import { ironOptions } from '../lib/config'
+import React from 'react'
 
-export default function Home() {
+export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
+  const { user } = req.session
+  return {
+    props: { isLoggedIn: !!user },
+  }
+}, ironOptions)
+
+const Home: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
+  console.log('isLoggedIn in index', isLoggedIn)
   return (
     <div className={styles.container}>
       <Head>
@@ -30,3 +41,4 @@ export default function Home() {
     </div>
   )
 }
+export default Home

@@ -1,4 +1,4 @@
-import { date, object, string } from 'yup'
+import { object, string } from 'yup'
 
 export const chatFormSchema = object().shape({
   message: string()

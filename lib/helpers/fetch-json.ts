@@ -4,5 +4,8 @@ export const fetchJson = async <T>(
 ) => {
   return fetch(input, init)
     .then((r) => r.json())
-    .then((r) => r as T)
+    .then((r) => {
+      // console.log(r, 'result from fetchJson')
+      return r as T
+    })
 }
