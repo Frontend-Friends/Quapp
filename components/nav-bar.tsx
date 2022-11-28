@@ -1,17 +1,18 @@
-import {
-  AppBar,
-  Button,
-  IconButton,
-  Link,
-  Toolbar,
-  Typography,
-} from '@mui/material'
+import { AppBar, Button, IconButton, Toolbar, Typography } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
-import { FC, KeyboardEvent, MouseEvent, useState } from 'react'
+import { FC, FormEvent, KeyboardEvent, MouseEvent, useState } from 'react'
 import { LinkProps, NavigationDrawer } from './navigation-drawer'
+import { useTranslation } from '../hooks/use-translation'
+import { fetchJson } from '../lib/helpers/fetch-json'
+import { useRouter } from 'next/router'
 
-export const NavBar: FC<{ linkList: LinkProps[] }> = ({ linkList }) => {
+export const NavBar: FC<{
+  linkList: LinkProps[]
+  isLoggedIn: boolean | undefined
+}> = ({ linkList, isLoggedIn }) => {
   const [drawerState, setDrawerState] = useState(false)
+  const t = useTranslation()
+  const router = useRouter()
 
   const toggleDrawer = (event: KeyboardEvent | MouseEvent) => {
     if (
@@ -24,6 +25,17 @@ export const NavBar: FC<{ linkList: LinkProps[] }> = ({ linkList }) => {
 
     setDrawerState(!drawerState)
   }
+
+  const handleLogout = async (e: FormEvent) => {
+    e.preventDefault()
+
+    const result = await fetchJson<{ isLoggedOut: boolean }>(' /api/logout')
+
+    if (result.isLoggedOut) {
+      await router.push('/login')
+    }
+  }
+
   return (
     <>
       <AppBar position="sticky">
@@ -42,15 +54,23 @@ export const NavBar: FC<{ linkList: LinkProps[] }> = ({ linkList }) => {
             QUAPP
           </Typography>
 
-          <Button
-            href="login"
-            component="a"
-            LinkComponent={Link}
-            color="secondary"
-            variant="contained"
-          >
-            Login
-          </Button>
+          {isLoggedIn ? (
+            <Button
+              color="secondary"
+              variant="contained"
+              onClick={handleLogout}
+            >
+              {t('LOGOUT_logout')}
+            </Button>
+          ) : (
+            <Button
+              color="secondary"
+              variant="contained"
+              onClick={() => router.push('/login')}
+            >
+              {t('LOGIN_login')}
+            </Button>
+          )}
         </Toolbar>
       </AppBar>
       <NavigationDrawer

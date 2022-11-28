@@ -1,4 +1,3 @@
-// /middleware.ts
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 import { getIronSession } from 'iron-session/edge'
@@ -9,6 +8,8 @@ export const middleware = async (req: NextRequest) => {
   const session = await getIronSession(req, res, sessionOptions)
 
   const { user } = session
-
+  if (req.nextUrl.pathname.startsWith('/login') && user) {
+    return NextResponse.redirect(new URL('/dashboard', req.url))
+  }
   return res
 }

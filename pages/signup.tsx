@@ -1,15 +1,12 @@
-import React, { FormEventHandler, useState } from 'react'
-import { useAuth } from '../components/auth-context'
+import React, { FormEvent, FormEventHandler, useState } from 'react'
 import { Box, Button, Link, TextField, Typography } from '@mui/material'
 import { useTranslation } from '../hooks/use-translation'
 import { CondensedContainer } from '../components/condensed-container'
+import { fetchJson } from '../lib/helpers/fetch-json'
 
 const formGroupSX = { mb: 2 }
 
 const Signup: React.FC = () => {
-  // @ts-ignore
-  const { user, signup } = useAuth()
-  console.log(user)
   const [data, setData] = useState({
     firstName: '',
     lastName: '',
@@ -18,15 +15,20 @@ const Signup: React.FC = () => {
     password: '',
   })
 
-  const handleSignup: FormEventHandler<HTMLFormElement> = async (e) => {
+  const handleSignup: FormEventHandler<HTMLFormElement> = async (
+    e: FormEvent
+  ) => {
     e.preventDefault()
 
-    try {
-      await signup(data.email, data.password)
-    } catch (err) {
-      console.log(err)
-    }
-    console.log(data)
+    await fetchJson('/api/signup', {
+      method: 'POST',
+      headers: {
+        accept: 'application.json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ ...data }),
+      cache: 'default',
+    })
   }
 
   const t = useTranslation()
@@ -39,6 +41,7 @@ const Signup: React.FC = () => {
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           <TextField
             sx={formGroupSX}
+            name="firstName"
             onChange={(e) =>
               setData({
                 ...data,
@@ -60,6 +63,7 @@ const Signup: React.FC = () => {
                 lastName: e.target.value,
               })
             }
+            name="lastName"
             value={data.lastName}
             required
             type="text"
@@ -75,6 +79,7 @@ const Signup: React.FC = () => {
                 email: e.target.value,
               })
             }
+            name="email"
             value={data.email}
             required
             type="email"
@@ -90,6 +95,7 @@ const Signup: React.FC = () => {
                 phone: e.target.value,
               })
             }
+            name="phone"
             value={data.phone}
             required
             type="tel"
@@ -105,6 +111,7 @@ const Signup: React.FC = () => {
                 password: e.target.value,
               })
             }
+            name="password"
             value={data.password}
             required
             type="password"

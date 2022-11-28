@@ -1,92 +1,142 @@
 import { useRouter } from 'next/router'
-import React, { FC, FormEventHandler, useState } from 'react'
-import Button from '@mui/material/Button'
-import { Box, Link, TextField, Typography } from '@mui/material'
-import { useAuth } from '../components/auth-context'
+import React, { FC, useCallback, useState } from 'react'
+import LoadingButton from '@mui/lab/LoadingButton'
+
+import { Box, Link, Snackbar, TextField, Typography } from '@mui/material'
 import { CondensedContainer } from '../components/condensed-container'
 import { useTranslation } from '../hooks/use-translation'
+import { Formik } from 'formik'
+import { loginFormSchema } from '../lib/schema/login-form-schema'
+import { withIronSessionSsr } from 'iron-session/next'
+import { ironOptions } from '../lib/config'
 import { fetchJson } from '../lib/helpers/fetch-json'
 
 const formGroupSX = { mb: 2 }
 
+export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
+  const { user } = req.session
+  return {
+    props: { isLoggedIn: !!user },
+  }
+}, ironOptions)
+
 const Login: FC = () => {
   const router = useRouter()
-  // @ts-ignore
-  const { user, login } = useAuth()
-  const [data, setData] = useState({
-    email: '',
-    password: '',
-  })
-
-  const handleLogin: FormEventHandler<HTMLFormElement> = async (e) => {
-    e.preventDefault()
-
-    try {
-      await login(data.email, data.password)
-      console.log('user is', user)
-      await router.push('/dashboard')
-    } catch (err) {
-      console.error('error is', err)
-    }
-  }
-
   const t = useTranslation()
+  const [open, setOpen] = React.useState(false)
+  const [message, setMessage] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+
+  const handleLogin = useCallback(
+    async (values: { email: string; password: string }) => {
+      setIsLoading(true)
+
+      try {
+        const fetchedLogin = await fetchJson<{ session: boolean }>(
+          '/api/login',
+          {
+            method: 'POST',
+            headers: {
+              accept: 'application.json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ ...values }),
+            cache: 'default',
+          }
+        )
+
+        if (fetchedLogin.session) {
+          setIsLoading(false)
+          router.push('/dashboard')
+        } else {
+          setOpen(true)
+          setMessage('LOGIN_invalid_email_or_password')
+          setIsLoading(false)
+        }
+      } catch {
+        setOpen(true)
+        setMessage('LOGIN_server_error')
+        setIsLoading(false)
+      }
+    },
+    [router]
+  )
+
   return (
     <CondensedContainer>
       <Typography variant="h1" sx={{ my: 3 }}>
         {t('LOGIN_title')}
       </Typography>
-      <Button
-        onClick={async () => {
-          await fetchJson('/api/mock-user')
-        }}
+      <Formik
+        initialValues={
+          { email: '', password: '' } as {
+            email: string
+            password: string
+          }
+        }
+        validationSchema={loginFormSchema}
+        validateOnChange={false}
+        validateOnBlur={false}
+        onSubmit={handleLogin}
       >
-        Mock User
-      </Button>
-      <form onSubmit={handleLogin}>
-        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-          <TextField
-            sx={formGroupSX}
-            onChange={(e) =>
-              setData({
-                ...data,
-                email: e.target.value,
-              })
-            }
-            value={data.email}
-            required
-            type="email"
-            label={t('GLOBAL_email')}
-            variant="outlined"
-          />
+        {(props) => (
+          <form onSubmit={props.handleSubmit}>
+            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+              <TextField
+                sx={formGroupSX}
+                name="email"
+                value={props.values.email}
+                onChange={props.handleChange}
+                error={!!props.errors.email}
+                helperText={props.errors.email}
+                onBlur={props.handleBlur}
+                type="email"
+                label={t('GLOBAL_email')}
+                variant="outlined"
+              />
 
-          <TextField
-            sx={formGroupSX}
-            onChange={(e) =>
-              setData({
-                ...data,
-                password: e.target.value,
-              })
-            }
-            value={data.password}
-            required
-            type="password"
-            label={t('GLOBAL_password')}
-            variant="outlined"
-          />
-        </Box>
-        <Button type="submit" variant="contained" sx={{ mr: 2 }}>
-          {t('LOGIN_login')}
-        </Button>
-        <Box sx={{ mt: 3 }}>
-          <Link underline="hover" href="#" sx={{ mr: 2 }}>
-            {t('LOGIN_forgot_password')}
-          </Link>
-          <Link underline="hover" href="/signup">
-            {t('LOGIN_has_no_account')}
-          </Link>
-        </Box>
-      </form>
+              <TextField
+                sx={formGroupSX}
+                name="password"
+                value={props.values.password}
+                onChange={props.handleChange}
+                onBlur={props.handleBlur}
+                helperText={props.errors.password}
+                error={!!props.errors.password}
+                type="password"
+                label={t('GLOBAL_password')}
+                variant="outlined"
+              />
+            </Box>
+            <LoadingButton
+              type="submit"
+              variant="contained"
+              sx={{ mr: 2 }}
+              loading={isLoading}
+            >
+              {t('LOGIN_login')}
+            </LoadingButton>
+            <Box sx={{ mt: 3 }}>
+              <Link underline="hover" href="#" sx={{ mr: 2 }}>
+                {t('LOGIN_forgot_password')}
+              </Link>
+              <Link underline="hover" href="/signup">
+                {t('LOGIN_has_no_account')}
+              </Link>
+            </Box>
+          </form>
+        )}
+      </Formik>
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center',
+        }}
+        open={open}
+        autoHideDuration={3000}
+        onClose={() => setOpen(false)}
+        message={t(message)}
+      />
     </CondensedContainer>
   )
 }
