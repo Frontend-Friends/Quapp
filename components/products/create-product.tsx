@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from 'react'
+import React, { ChangeEvent, Dispatch, SetStateAction, useState } from 'react'
 import { useTranslation } from '../../hooks/use-translation'
 import { Box, Button, Modal, TextField, Typography } from '@mui/material'
 import { CondensedContainer } from '../condensed-container'
@@ -18,6 +18,7 @@ export const CreateNewProduct = ({
   onError?: () => void
 }) => {
   const t = useTranslation()
+  const { query } = useRouter()
   const [loading, setLoading] = useState(false)
   const [onSuccess, setOnSuccess] = useState(false)
   const { push } = useRouter()
@@ -59,10 +60,11 @@ export const CreateNewProduct = ({
           validateOnBlur={false}
           onSubmit={async (values) => {
             setLoading(true)
+            console.log(values)
             const response = await sendFormData<{
               isOk: boolean
               productId: string
-            }>('/api/create-product', values)
+            }>(`/api/create-product?space=${query.space}`, values)
             if (!response.isOk) {
               if (onError) onError()
             }
@@ -77,8 +79,13 @@ export const CreateNewProduct = ({
               <Box sx={{ pt: 5, pb: 2, display: 'grid' }}>
                 <TextField
                   label={t('CREATE_PRODUCT_upload')}
-                  onChange={props.handleChange}
-                  value={props.values.img}
+                  onChange={(event) => {
+                    props.setFieldValue(
+                      'img',
+                      (event.currentTarget as HTMLInputElement).files?.[0]
+                    )
+                  }}
+                  value={props.values.img?.filepath}
                   name="img"
                   type="file"
                   error={!!props.errors.img}

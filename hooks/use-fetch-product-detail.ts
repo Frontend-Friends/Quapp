@@ -8,7 +8,7 @@ export const useFetchProductDetail = (
   initialProdcutDetail: ProductType | null
 ) => {
   const { query } = useRouter()
-  const { products: productQuery } = query
+  const { products: productQuery, space } = query
   const isInitial = useRef(true)
   const currentQuery = useRef(productQuery?.[0])
   const [product, setProduct] = useState(initialProdcutDetail)
@@ -19,7 +19,7 @@ export const useFetchProductDetail = (
       currentQuery.current !== productQuery[0]
     ) {
       const fetchedProduct = await fetchJson<ProductType>(
-        `/api/product?productId=${productQuery[0]}`
+        `/api/product?productId=${productQuery[0]}&space=${space}`
       )
       setProduct(fetchedProduct)
     }

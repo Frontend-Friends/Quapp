@@ -39,7 +39,7 @@ export const getServerSideProps: GetServerSideProps = withIronSessionSsr(
 
     return {
       props: {
-        userId: user.id,
+        userId: user.id || null,
         products: productsData,
         productDetail: productDetail || null,
       },

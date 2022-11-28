@@ -53,10 +53,15 @@ export const fetchProduct = async (productsQuery: string) => {
   const owner = await getDoc(productDetailSnap.owner).then<{
     id: string | null
     userName: string | null
-  }>((r) => ({
-    userName: (r.data() as { userName: string }).userName || null,
-    id: r.id || null,
-  }))
+  } | null>((r) => {
+    if (r.data()) {
+      return {
+        userName: (r.data() as { userName: string }).userName || null,
+        id: r.id || null,
+      }
+    }
+    return null
+  })
 
   const sortedChats = chats.map((item) => {
     const sortedHistory = sortChatByTime(item.history)
@@ -65,7 +70,7 @@ export const fetchProduct = async (productsQuery: string) => {
 
   return {
     ...productDetailSnap,
-    owner: { userName: owner.userName, id: owner.id },
+    owner: { userName: owner?.userName || null, id: owner?.id || null },
     chats: sortedChats,
   } as ProductType
 }

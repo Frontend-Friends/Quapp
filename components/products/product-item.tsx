@@ -13,6 +13,7 @@ import { useTranslation } from '../../hooks/use-translation'
 import Link from 'next/link'
 import { ProductType } from './types'
 import { ProductMenu } from './product-menu'
+import { useRouter } from 'next/router'
 
 export const ProductItem: FC<{
   product: ProductType
@@ -20,6 +21,7 @@ export const ProductItem: FC<{
   userId: string
 }> = ({ product, handleMoreInformation, userId }) => {
   const t = useTranslation()
+  const { query } = useRouter()
   return (
     <Card
       variant={product.isAvailable ? undefined : 'outlined'}
@@ -56,7 +58,11 @@ export const ProductItem: FC<{
           </Box>
         )}
         {product.isAvailable && (
-          <Link href={product.id} passHref shallow>
+          <Link
+            href={`/${query.space}/products/${product.id}`}
+            passHref
+            shallow
+          >
             <Button variant="contained" onClick={handleMoreInformation}>
               {t('BUTTON_contact')}
             </Button>
