@@ -50,7 +50,7 @@ const Dashboard: FC<InferGetServerSidePropsType<typeof getServerSideProps>> = ({
   return (
     <CondensedContainer sx={{ position: 'relative' }}>
       <Header title={t('SPACES_title')} />
-      {spaces && !!spaces.length ? (
+      {!!spaces?.length ? (
         <Grid container columns={{ md: 1 }} spacing={{ xs: 4 }} pt={4}>
           {spaces.map((space) => (
             <SpaceItem key={space.id} space={space} />
