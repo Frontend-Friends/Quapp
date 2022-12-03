@@ -37,6 +37,12 @@ export type SpaceItemType = {
   itemCount: number
 }
 
+export type SignupType = {
+  firstName: string
+  email: string
+  password: string
+}
+
 export type CreateProduct = Pick<
   ProductType,
   'title' | 'lead' | 'text' | 'description'
