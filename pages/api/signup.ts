@@ -2,13 +2,6 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { auth, db } from '../../config/firebase'
 import { doc, setDoc } from 'firebase/firestore'
-import { User } from '../../interfaces/user'
-
-declare module 'iron-session' {
-  interface IronSessionData {
-    user?: User
-  }
-}
 
 export default async function signupRoute(
   req: NextApiRequest,

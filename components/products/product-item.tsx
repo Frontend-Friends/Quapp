@@ -14,13 +14,16 @@ import { FC, MouseEventHandler } from 'react'
 import { useTranslation } from '../../hooks/use-translation'
 import Link from 'next/link'
 import { ProductType } from './types'
+import { useRouter } from 'next/router'
 
 export const ProductItem: FC<{
   product: ProductType
   handleMoreInformation?: MouseEventHandler<HTMLButtonElement>
-  userId: string
+  userId?: string | null
 }> = ({ product, handleMoreInformation, userId }) => {
   const t = useTranslation()
+  const router = useRouter()
+  const { query } = router
   return (
     <Card
       variant={product.isAvailable ? undefined : 'outlined'}
@@ -61,7 +64,14 @@ export const ProductItem: FC<{
           </Box>
         )}
         {product.isAvailable && (
-          <Link href={product.id} passHref shallow>
+          <Link
+            href={{
+              href: product.id,
+              query: { ...query, products: [product.id] },
+            }}
+            passHref
+            shallow
+          >
             <Button variant="contained" onClick={handleMoreInformation}>
               {t('BUTTON_contact')}
             </Button>

@@ -3,18 +3,16 @@ import MenuIcon from '@mui/icons-material/Menu'
 import { FC, FormEvent, KeyboardEvent, MouseEvent, useState } from 'react'
 import { LinkProps, NavigationDrawer } from './navigation-drawer'
 import { useTranslation } from '../hooks/use-translation'
-import { useLocation } from 'react-use'
 import { fetchJson } from '../lib/helpers/fetch-json'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 
-export const NavBar: FC<{ linkList: LinkProps[]; isLoggedIn: boolean }> = ({
-  linkList,
-  isLoggedIn,
-}) => {
+export const NavBar: FC<{
+  linkList: LinkProps[]
+  isLoggedIn: boolean | undefined
+}> = ({ linkList, isLoggedIn }) => {
   const [drawerState, setDrawerState] = useState(false)
-  const [isLoggedOut, setIsLoggedOut] = useState(!isLoggedIn)
   const t = useTranslation()
-  const location = useLocation()
   const router = useRouter()
 
   const toggleDrawer = (event: KeyboardEvent | MouseEvent) => {
@@ -35,8 +33,7 @@ export const NavBar: FC<{ linkList: LinkProps[]; isLoggedIn: boolean }> = ({
     const result = await fetchJson<{ isLoggedOut: boolean }>(' /api/logout')
 
     if (result.isLoggedOut) {
-      setIsLoggedOut(true)
-      await router.push('/login')
+      await router.push('/auth/login')
     }
   }
 
@@ -58,21 +55,21 @@ export const NavBar: FC<{ linkList: LinkProps[]; isLoggedIn: boolean }> = ({
             QUAPP
           </Typography>
 
-          {location.pathname !== '/login' &&
-            // (isLoggedOut ? (
-            //   <Button color="secondary" variant="contained">
-            //     {t('LOGIN_login')}
-            //   </Button>
-            // ) : (
-            //   <Button
-            //     color="secondary"
-            //     variant="contained"
-            //     onClick={handleLogout}
-            //   >
-            //     {t('LOGOUT_logout')}
-            //   </Button>
-            // )
-            null}
+          {isLoggedIn ? (
+            <Button
+              color="secondary"
+              variant="contained"
+              onClick={handleLogout}
+            >
+              {t('LOGOUT_logout')}
+            </Button>
+          ) : (
+            <Link href="/auth/login" passHref>
+              <Button color="secondary" variant="contained">
+                {t('LOGIN_login')}
+              </Button>
+            </Link>
+          )}
         </Toolbar>
       </AppBar>
       <NavigationDrawer

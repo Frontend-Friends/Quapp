@@ -16,6 +16,7 @@ const clientSideEmotionCache = createEmotionCache()
 
 interface MyAppProps extends AppProps<{ isLoggedIn: boolean }> {
   emotionCache?: EmotionCache
+  pageProps: { isLoggedIn: boolean }
 }
 
 export default function App({

@@ -5,13 +5,13 @@ import { useAsync } from 'react-use'
 import { fetchJson } from '../lib/helpers/fetch-json'
 
 export const useFetchProductDetail = (
-  initialProdcutDetail: ProductType | null
+  initialProductDetail?: ProductType | null
 ) => {
   const { query } = useRouter()
   const { products: productQuery, space } = query
   const isInitial = useRef(true)
   const currentQuery = useRef(productQuery?.[0])
-  const [product, setProduct] = useState(initialProdcutDetail)
+  const [product, setProduct] = useState(initialProductDetail)
   useAsync(async () => {
     if (
       !!productQuery?.[0] &&
@@ -19,7 +19,7 @@ export const useFetchProductDetail = (
       currentQuery.current !== productQuery[0]
     ) {
       const fetchedProduct = await fetchJson<ProductType>(
-        `/api/product?productId=${productQuery[0]}?space=${space}`
+        `/api/product?productId=${productQuery[0]}&space=${space}`
       )
       setProduct(fetchedProduct)
     }
