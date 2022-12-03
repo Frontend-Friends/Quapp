@@ -7,7 +7,7 @@ export type ChatMessage = {
 }
 
 export type ProductChatType = {
-  chatUserId: string
+  chatUserId: string | null
   chatUserName: string | null
   history: ChatMessage[]
 }

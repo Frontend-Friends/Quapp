@@ -10,7 +10,7 @@ export const createProduct = async (
 ) => {
   const docRef = collection(db, 'spaces', user.spaces[0], 'products')
 
-  const userRef = doc(db, 'user', user.id)
+  const userRef = doc(db, 'user', user.uid)
 
   await addDoc(docRef, {
     ...fields,

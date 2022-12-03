@@ -18,6 +18,7 @@ import { Header } from '../header'
 import { BorrowForm, OnBorrowSubmit } from '../borrow-form'
 import { ProductType } from './types'
 import { ProductChats } from './product-chats'
+import { User } from '../user/types'
 
 const handleSubmit: OnBorrowSubmit = async (values, setSubittming) => {
   const fetchedData = await fetch('/api/borrow', {
@@ -37,7 +38,7 @@ export const ProductDetail = ({
   product,
   userId,
 }: {
-  userId?: string | null
+  userId?: User['id']
   product?: ProductType | null
 }) => {
   const { asPath, query, push } = useRouter()
