@@ -37,7 +37,7 @@ export const ProductDetail = ({
   product,
   userId,
 }: {
-  userId: string
+  userId?: string | null
   product?: ProductType | null
 }) => {
   const { asPath, query, push } = useRouter()
@@ -152,12 +152,14 @@ export const ProductDetail = ({
               </Card>
             </Box>
           )}
-          <ProductChats
-            isOwner={product.owner.id === userId}
-            chats={product.chats}
-            userId={userId}
-            productOwnerName={product.owner.userName}
-          />
+          {userId && (
+            <ProductChats
+              isOwner={product.owner.id === userId}
+              chats={product.chats}
+              userId={userId}
+              productOwnerName={product.owner.userName}
+            />
+          )}
         </CondensedContainer>
       ) : (
         <CircularProgress />

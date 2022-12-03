@@ -18,7 +18,7 @@ async function createProduct(req: NextApiRequest, res: NextApiResponse) {
   try {
     const { user } = req.session
     if (!user) {
-      res.redirect('/login')
+      res.redirect('/auth/login')
       return
     }
     const formData = await parsedForm<ProductFormData>(req)

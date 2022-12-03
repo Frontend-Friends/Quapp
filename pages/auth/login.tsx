@@ -3,13 +3,13 @@ import React, { FC, useCallback, useState } from 'react'
 import LoadingButton from '@mui/lab/LoadingButton'
 
 import { Box, Link, Snackbar, TextField, Typography } from '@mui/material'
-import { CondensedContainer } from '../components/condensed-container'
-import { useTranslation } from '../hooks/use-translation'
+import { CondensedContainer } from '../../components/condensed-container'
+import { useTranslation } from '../../hooks/use-translation'
 import { Formik } from 'formik'
-import { loginFormSchema } from '../lib/schema/login-form-schema'
+import { loginFormSchema } from '../../lib/schema/login-form-schema'
 import { withIronSessionSsr } from 'iron-session/next'
-import { ironOptions } from '../lib/config'
-import { fetchJson } from '../lib/helpers/fetch-json'
+import { ironOptions } from '../../lib/config'
+import { fetchJson } from '../../lib/helpers/fetch-json'
 
 const formGroupSX = { mb: 2 }
 
@@ -47,7 +47,7 @@ const Login: FC = () => {
 
         if (fetchedLogin.session) {
           setIsLoading(false)
-          router.push('/dashboard')
+          router.push('/community/dashboard')
         } else {
           setOpen(true)
           setMessage('LOGIN_invalid_email_or_password')

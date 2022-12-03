@@ -1,30 +1,23 @@
 import { FC } from 'react'
-import { CondensedContainer } from '../components/condensed-container'
-import { useTranslation } from '../hooks/use-translation'
+import { CondensedContainer } from '../../components/condensed-container'
+import { useTranslation } from '../../hooks/use-translation'
 import { Fab, Grid, Typography } from '@mui/material'
-import { Header } from '../components/header'
+import { Header } from '../../components/header'
 import AddIcon from '@mui/icons-material/Add'
 import { InferGetServerSidePropsType } from 'next'
-import { SpaceItemType } from '../components/products/types'
-import {
-  collection,
-  getDoc,
-  getDocs,
-  query,
-  where,
-  doc,
-} from 'firebase/firestore'
-import { db } from '../config/firebase'
-import SpaceItem from '../components/spaces/space-item'
+import { SpaceItemType } from '../../components/products/types'
+import { doc, getDoc } from 'firebase/firestore'
+import { db } from '../../config/firebase'
+import SpaceItem from '../../components/spaces/space-item'
 import { withIronSessionSsr } from 'iron-session/next'
-import { sessionOptions } from '../config/session-config'
+import { sessionOptions } from '../../config/session-config'
 
 export const getServerSideProps = withIronSessionSsr<{
   spaces?: SpaceItemType[]
-}>(async ({ req, res }) => {
+}>(async ({ req }) => {
   const { user } = req.session
   if (!user) {
-    return { notFound: true, props: {} }
+    return { props: {} }
   }
 
   const spaces = await Promise.all<SpaceItemType>(
