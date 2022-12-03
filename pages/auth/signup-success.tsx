@@ -1,6 +1,6 @@
 import React from 'react'
-import { useTranslation } from '../hooks/use-translation'
-import { CondensedContainer } from '../components/condensed-container'
+import { useTranslation } from '../../hooks/use-translation'
+import { CondensedContainer } from '../../components/condensed-container'
 import { Link, Typography } from '@mui/material'
 import Button from '@mui/material/Button'
 

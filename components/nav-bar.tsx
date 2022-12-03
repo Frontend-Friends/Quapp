@@ -5,6 +5,7 @@ import { LinkProps, NavigationDrawer } from './navigation-drawer'
 import { useTranslation } from '../hooks/use-translation'
 import { fetchJson } from '../lib/helpers/fetch-json'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 export const NavBar: FC<{
   linkList: LinkProps[]
@@ -32,7 +33,7 @@ export const NavBar: FC<{
     const result = await fetchJson<{ isLoggedOut: boolean }>(' /api/logout')
 
     if (result.isLoggedOut) {
-      await router.push('/login')
+      await router.push('/auth/login')
     }
   }
 
@@ -63,13 +64,11 @@ export const NavBar: FC<{
               {t('LOGOUT_logout')}
             </Button>
           ) : (
-            <Button
-              color="secondary"
-              variant="contained"
-              onClick={() => router.push('/login')}
-            >
-              {t('LOGIN_login')}
-            </Button>
+            <Link href="/auth/login" passHref>
+              <Button color="secondary" variant="contained">
+                {t('LOGIN_login')}
+              </Button>
+            </Link>
           )}
         </Toolbar>
       </AppBar>

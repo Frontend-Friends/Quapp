@@ -1,8 +1,8 @@
 import React, { FormEvent, FormEventHandler, useState } from 'react'
 import { Box, Button, Link, TextField, Typography } from '@mui/material'
-import { useTranslation } from '../hooks/use-translation'
-import { CondensedContainer } from '../components/condensed-container'
-import { fetchJson } from '../lib/helpers/fetch-json'
+import { useTranslation } from '../../hooks/use-translation'
+import { CondensedContainer } from '../../components/condensed-container'
+import { fetchJson } from '../../lib/helpers/fetch-json'
 
 const formGroupSX = { mb: 2 }
 
@@ -125,7 +125,7 @@ const Signup: React.FC = () => {
         </Button>
 
         <Box sx={{ mt: 3 }}>
-          <Link underline="hover" href="/login">
+          <Link underline="hover" href="/auth/login">
             {t('LOGIN_has_account')}
           </Link>
         </Box>

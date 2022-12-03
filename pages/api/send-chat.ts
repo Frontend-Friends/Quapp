@@ -18,7 +18,7 @@ async function sendChat(req: NextApiRequest, res: NextApiResponse) {
   const { space } = req.query
 
   if (!user) {
-    res.redirect('/login')
+    res.redirect('/auth/login')
     return
   }
 
