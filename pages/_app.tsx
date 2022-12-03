@@ -6,10 +6,7 @@ import CssBaseline from '@mui/material/CssBaseline'
 import { CacheProvider, EmotionCache } from '@emotion/react'
 import theme from '../config/theme'
 import createEmotionCache from '../config/create-emotion-cache'
-import { Box, Container } from '@mui/material'
 import '../styles/globals.scss'
-import { NavBar } from '../components/nav-bar'
-import { Navigation } from '../mock/navigation'
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
@@ -28,16 +25,11 @@ export default function App({
     <CacheProvider value={emotionCache}>
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
-        <title>Quapp - sharing is caring</title>
+        <title>Quapp - Die App die Nachbarn verbindet.</title>
       </Head>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Box sx={{ backgroundColor: 'background.paper', minHeight: '100vh' }}>
-          <NavBar linkList={Navigation} isLoggedIn={pageProps.isLoggedIn} />
-          <Container maxWidth="lg" sx={{ pt: 4 }}>
-            <Component {...pageProps} />
-          </Container>
-        </Box>
+        <Component {...pageProps} />
       </ThemeProvider>
     </CacheProvider>
   )
