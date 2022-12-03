@@ -18,7 +18,7 @@ import { useRouter } from 'next/router'
 export const ProductItem: FC<{
   product: ProductType
   handleMoreInformation?: MouseEventHandler<HTMLButtonElement>
-  userId: string
+  userId?: string | null
 }> = ({ product, handleMoreInformation, userId }) => {
   const t = useTranslation()
   const { query } = useRouter()
@@ -59,7 +59,10 @@ export const ProductItem: FC<{
         )}
         {product.isAvailable && (
           <Link
-            href={`/${query.space}/products/${product.id}`}
+            href={{
+              href: product.id,
+              query: { ...query, products: [product.id] },
+            }}
             passHref
             shallow
           >

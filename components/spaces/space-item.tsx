@@ -37,7 +37,7 @@ const SpaceItem: FC<Props> = ({ space }) => {
   return (
     <Grid item xs={1} sx={{ flexGrow: '1' }}>
       <Card variant="outlined" sx={{ position: 'relative' }}>
-        <Link href={'#'} passHref>
+        <Link href={`${space.id}/products`} passHref>
           <MuiLink
             title={`${t('GLOBAL_open')} ${space.name}`}
             style={{
