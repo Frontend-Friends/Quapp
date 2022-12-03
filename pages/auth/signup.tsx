@@ -1,10 +1,12 @@
+import React from 'react'
 import { Box, Button, Link, TextField, Typography } from '@mui/material'
-import { useTranslation } from '../hooks/use-translation'
-import { CondensedContainer } from '../components/condensed-container'
-import { fetchJson } from '../lib/helpers/fetch-json'
+
 import { Formik } from 'formik'
-import { SignupType } from '../components/products/types'
-import { signupFormSchema } from '../lib/schema/signup-form-schema'
+import { useTranslation } from '../../hooks/use-translation'
+import { SignupType } from '../../components/products/types'
+import { fetchJson } from '../../lib/helpers/fetch-json'
+import { signupFormSchema } from '../../lib/schema/signup-form-schema'
+import { CondensedContainer } from '../../components/condensed-container'
 
 const formGroupSX = { mb: 2 }
 
@@ -31,9 +33,7 @@ const Signup: React.FC = () => {
         initialValues={
           {
             firstName: '',
-            lastName: '',
             email: '',
-            phone: '',
             password: '',
           } as SignupType
         }
@@ -56,21 +56,6 @@ const Signup: React.FC = () => {
                 type="text"
                 label={t('GLOBAL_first_name')}
                 variant="outlined"
-                required
-              />
-
-              <TextField
-                sx={formGroupSX}
-                name="lastName"
-                onChange={props.handleChange}
-                onBlur={props.handleBlur}
-                value={props.values.lastName}
-                error={!!props.errors.lastName}
-                helperText={props.errors.lastName}
-                type="text"
-                label={t('GLOBAL_last_name')}
-                variant="outlined"
-                required
               />
 
               <TextField
@@ -84,21 +69,6 @@ const Signup: React.FC = () => {
                 type="email"
                 label={t('GLOBAL_email')}
                 variant="outlined"
-                required
-              />
-
-              <TextField
-                sx={formGroupSX}
-                name="phone"
-                onChange={props.handleChange}
-                onBlur={props.handleBlur}
-                value={props.values.phone}
-                error={!!props.errors.phone}
-                helperText={props.errors.phone}
-                type="tel"
-                label={t('GLOBAL_mobile_number')}
-                variant="outlined"
-                required
               />
 
               <TextField
@@ -112,7 +82,6 @@ const Signup: React.FC = () => {
                 type="password"
                 label={t('GLOBAL_password')}
                 variant="outlined"
-                required
               />
             </Box>
 
@@ -121,7 +90,7 @@ const Signup: React.FC = () => {
             </Button>
 
             <Box sx={{ mt: 3 }}>
-              <Link underline="hover" href="/login">
+              <Link underline="hover" href="/auth/login">
                 {t('LOGIN_has_account')}
               </Link>
             </Box>

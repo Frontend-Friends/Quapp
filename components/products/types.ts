@@ -39,9 +39,7 @@ export type SpaceItemType = {
 
 export type SignupType = {
   firstName: string
-  lastName: string
   email: string
-  phone: string
   password: string
 }
 
