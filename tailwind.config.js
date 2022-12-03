@@ -11,7 +11,7 @@ module.exports = {
     extend: {
       colors: {
         violetRed: {
-          300: '#E45093',
+          300: '#ff7bb8',
           600: '#D80062',
           900: '#990054',
           contrastText: '#fff',
