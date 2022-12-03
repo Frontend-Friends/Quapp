@@ -15,6 +15,7 @@ Der Server läuft dann regulär mit Hot-Reload unter http://localhost:3000/
 - React
 - NextJS
 - TypeScript
+- tailwindCSS
 - MUI
 - Node
 - Firebase
