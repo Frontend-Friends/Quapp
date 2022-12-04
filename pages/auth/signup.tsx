@@ -1,5 +1,5 @@
-import React from 'react'
-import { Box, Button, Link, TextField, Typography } from '@mui/material'
+import React, { useState } from 'react'
+import { Box, Link, Snackbar, TextField, Typography } from '@mui/material'
 
 import { Formik } from 'formik'
 import { useTranslation } from '../../hooks/use-translation'
@@ -7,22 +7,45 @@ import { SignupType } from '../../components/products/types'
 import { fetchJson } from '../../lib/helpers/fetch-json'
 import { signupFormSchema } from '../../lib/schema/signup-form-schema'
 import { CondensedContainer } from '../../components/condensed-container'
+import { LoadingButton } from '@mui/lab'
+import { router } from 'next/client'
 
 const formGroupSX = { mb: 2 }
 
 const Signup: React.FC = () => {
-  const handleSignup = async (values: SignupType) => {
-    await fetchJson('/api/signup', {
-      method: 'POST',
-      headers: {
-        accept: 'application.json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ ...values }),
-      cache: 'default',
-    })
-  }
+  const [isLoading, setIsLoading] = useState(false)
+  const [open, setOpen] = React.useState(false)
+  const [message, setMessage] = useState('')
 
+  const handleSignup = async (values: SignupType) => {
+    setIsLoading(true)
+    try {
+      const fetchedSignup = await fetchJson<{
+        isSignedUp: boolean
+        message: string
+      }>('/api/signup', {
+        method: 'POST',
+        headers: {
+          accept: 'application.json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ...values }),
+        cache: 'default',
+      })
+
+      if (fetchedSignup.isSignedUp) {
+        await router.push('/auth/login')
+      } else {
+        setOpen(true)
+        setMessage(fetchedSignup.message)
+        setIsLoading(false)
+      }
+    } catch {
+      setIsLoading(false)
+      setOpen(true)
+      setMessage('SIGNUP_failed')
+    }
+  }
   const t = useTranslation()
   return (
     <CondensedContainer>
@@ -85,9 +108,13 @@ const Signup: React.FC = () => {
               />
             </Box>
 
-            <Button type="submit" variant="contained">
+            <LoadingButton
+              type="submit"
+              variant="contained"
+              loading={isLoading}
+            >
               {t('SIGNUP_signup')}
-            </Button>
+            </LoadingButton>
 
             <Box sx={{ mt: 3 }}>
               <Link underline="hover" href="/auth/login">
@@ -97,6 +124,16 @@ const Signup: React.FC = () => {
           </form>
         )}
       </Formik>
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center',
+        }}
+        open={open}
+        autoHideDuration={3000}
+        onClose={() => setOpen(false)}
+        message={t(message)}
+      />
     </CondensedContainer>
   )
 }
