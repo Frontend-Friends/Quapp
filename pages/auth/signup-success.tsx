@@ -13,7 +13,7 @@ const SignupSuccess: React.FC = () => {
   return (
     <CondensedContainer>
       <Typography variant="h1" sx={{ my: 3 }}>
-        {t('SIGNUP_hello')} {name}!
+        {t('GLOBAL_hello')} {name}!
       </Typography>
       {/*todo translate*/}
       <p>
