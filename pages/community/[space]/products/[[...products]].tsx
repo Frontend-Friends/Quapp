@@ -9,10 +9,15 @@ import { ProductType } from '../../../../components/products/types'
 import { fetchProduct } from '../../../../lib/services/fetch-product'
 import { fetchProductList } from '../../../../lib/services/fetch-product-list'
 import AddIcon from '@mui/icons-material/Add'
-import { CreateNewProduct } from '../../../../components/products/create-product'
-import { useFetchProductDetail } from '../../../../hooks/use-fetch-product-detail'
+import { CreateEditProduct } from '../../../../components/products/create-product'
+import {
+  useFetchProductDetail,
+  fetchProduct as fetchProductOnClient,
+  deleteProduct,
+} from '../../../../hooks/use-fetch-product-detail'
 import { withIronSessionSsr } from 'iron-session/next'
 import { sessionOptions } from '../../../../config/session-config'
+import { useRouter } from 'next/router'
 
 export const getServerSideProps = withIronSessionSsr<{
   userId?: string | null
@@ -55,8 +60,12 @@ export const Product = ({
   productDetail,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const t = useTranslation()
+  const { query } = useRouter()
+
+  const [productList, setProductList] = useState(products)
 
   const [showCreateProduct, setShowCreateProduct] = useState(false)
+  const [productToEdit, setProductToEdit] = useState<ProductType | null>(null)
   const [hasError, setHasError] = useState(false)
 
   const product = useFetchProductDetail(productDetail)
@@ -77,20 +86,41 @@ export const Product = ({
       </Fab>
       <Header title={t('PRODUCTS_title')} />
       <Grid container columns={{ sm: 2, md: 3 }} spacing={{ xs: 4 }} pt={4}>
-        {!products?.length && (
+        {!productList?.length && (
           <Typography variant="body2">{t('PRODUCTS_no_entries')}</Typography>
         )}
-        {!!products?.length &&
-          products.map((item, index) => (
+        {!!productList?.length &&
+          productList.map((item, index) => (
             <Grid item xs={1} key={index} sx={{ flexGrow: '1' }}>
-              <ProductItem product={item} userId={userId} />
+              <ProductItem
+                product={item}
+                userId={userId}
+                onDelete={async (id) => {
+                  await deleteProduct(id, query.space as string)
+                  setProductList((state) =>
+                    state?.filter((entry) => entry.id !== id)
+                  )
+                }}
+                onEdit={async (id) => {
+                  const fetchedProduct = await fetchProductOnClient(
+                    id,
+                    query.space as string
+                  )
+                  setProductToEdit(fetchedProduct || null)
+                  setShowCreateProduct(true)
+                }}
+              />
             </Grid>
           ))}
       </Grid>
       <ProductDetail product={product} userId={userId} />
-      <CreateNewProduct
+      <CreateEditProduct
         showModal={showCreateProduct}
-        onClose={setShowCreateProduct}
+        onClose={(state) => {
+          setProductToEdit(null)
+          setShowCreateProduct(state)
+        }}
+        product={productToEdit}
         onError={() => {
           setHasError(true)
         }}

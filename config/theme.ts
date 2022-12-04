@@ -6,12 +6,12 @@ const theme = createTheme({
   spacing: 8,
   palette: {
     primary: {
-      main: '#0072ff',
+      main: '#D80062',
       light: '#338eff',
       dark: '#005fd4',
     },
     secondary: {
-      main: '#00E676',
+      main: '#57B894',
       light: '#21ff94',
       dark: '#00b45c',
     },
@@ -22,25 +22,28 @@ const theme = createTheme({
       default: '#F3FAFD',
     },
   },
+  shape: {
+    borderRadius: 6,
+  },
   typography: {
-    fontFamily: 'Nunito, Helvetica, Arial, sans-serif',
+    fontFamily: 'Jost, Helvetica, Arial, sans-serif',
     h1: {
-      fontSize: '3rem',
+      fontSize: '1.5rem',
       letterSpacing: '0',
       lineHeight: '1em',
-      fontWeight: '700',
+      fontWeight: '500',
     },
     h2: {
-      fontSize: '2.5rem',
+      fontSize: '1.25rem',
       letterSpacing: '0',
       lineHeight: '1em',
-      fontWeight: '700',
+      fontWeight: '500',
     },
     h3: {
-      fontSize: '2rem',
+      fontSize: '1rem',
       letterSpacing: '0',
       lineHeight: '1em',
-      fontWeight: '700',
+      fontWeight: '500',
     },
   },
 })

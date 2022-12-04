@@ -1,77 +1,100 @@
 import {
   Box,
-  Button,
+  ButtonBase,
   Card,
-  CardActions,
   CardContent,
-  CardHeader,
   CardMedia,
   Typography,
 } from '@mui/material'
-import { FC, MouseEventHandler } from 'react'
+import { FC } from 'react'
 import { useTranslation } from '../../hooks/use-translation'
 import Link from 'next/link'
 import { ProductType } from './types'
-import { ProductMenu } from './product-menu'
 import { useRouter } from 'next/router'
+import { ProductMenu } from './product-menu'
 
 export const ProductItem: FC<{
   product: ProductType
-  handleMoreInformation?: MouseEventHandler<HTMLButtonElement>
   userId?: string | null
-}> = ({ product, handleMoreInformation, userId }) => {
+  onEdit: (id: string) => void
+  onDelete: (id: string) => void
+}> = ({ product, userId, onEdit, onDelete }) => {
   const t = useTranslation()
   const { query } = useRouter()
-  return (
-    <Card
-      variant={product.isAvailable ? undefined : 'outlined'}
-      sx={{
-        backgroundColor: product.isAvailable ? undefined : 'background.paper',
-        display: 'flex',
-        flexFlow: 'column',
-        height: '100%',
-      }}
-    >
-      <CardHeader
-        title={product.title}
-        action={
-          userId === product.owner.id && <ProductMenu productId={product.id} />
-        }
-      />
-      {product.imgSrc && (
-        <CardMedia component="img" height={194} src={product.imgSrc} />
-      )}
-      {!product.imgSrc && (
-        <Box
-          sx={{ width: '100%', flexGrow: '1', bgcolor: 'secondary.light' }}
-        />
-      )}
-      <CardContent sx={{ mt: 'auto' }}>
-        {product.description && (
-          <Typography variant="body2">{product.description}</Typography>
-        )}
-      </CardContent>
-      <CardActions sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-        {!product.isAvailable && (
-          <Box p={1} color="red">
-            {t('PRODUCT_not_available')}
-          </Box>
-        )}
-        {product.isAvailable && (
-          <Link
-            href={{
-              href: product.id,
-              query: { ...query, products: [product.id] },
+  return product.isAvailable ? (
+    <Box sx={{ position: 'relative' }}>
+      <Link
+        href={{
+          href: product.id,
+          query: { ...query, products: [product.id] },
+        }}
+        passHref
+        shallow
+      >
+        <ButtonBase
+          sx={{ display: 'block' }}
+          title={`${t('PRODUCT_label')} ${product.title}`}
+        >
+          <Card
+            component="span"
+            variant="outlined"
+            sx={{
+              backgroundColor: product.isAvailable
+                ? undefined
+                : 'background.paper',
+              display: 'flex',
+              height: '100%',
             }}
-            passHref
-            shallow
           >
-            <Button variant="contained" onClick={handleMoreInformation}>
-              {t('BUTTON_contact')}
-            </Button>
-          </Link>
-        )}
-      </CardActions>
-    </Card>
-  )
+            {product.imgSrc && (
+              <CardMedia
+                component="img"
+                height={100}
+                sx={{
+                  width: 100,
+                  height: 100,
+                  overflow: 'hidden',
+                  objectFit: 'cover',
+                  flexShrink: 0,
+                }}
+                src={product.imgSrc}
+              />
+            )}
+            {!product.imgSrc && (
+              <Box
+                component="span"
+                sx={{
+                  width: 100,
+                  height: 100,
+                  overflow: 'hidden',
+                  objectFit: 'cover',
+                  bgcolor: 'secondary.light',
+                  flexShrink: 0,
+                }}
+              />
+            )}
+            <CardContent component="span">
+              {product.title && (
+                <Typography variant="h3">{product.title}</Typography>
+              )}
+              {product.description && (
+                <Typography variant="body2" sx={{ pt: 0.5 }}>
+                  {product.description}
+                </Typography>
+              )}
+            </CardContent>
+          </Card>
+        </ButtonBase>
+      </Link>
+      {userId === product.owner.id && (
+        <Box sx={{ position: 'absolute', right: 0, top: 0 }}>
+          <ProductMenu
+            productId={product.id}
+            onEdit={onEdit}
+            onDelete={onDelete}
+          />
+        </Box>
+      )}
+    </Box>
+  ) : null
 }

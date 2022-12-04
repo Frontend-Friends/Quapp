@@ -26,6 +26,7 @@ export const translations: Record<string, string> = {
   PRODUCTS_no_entries: 'Leider gibt es noch keine Einträge.',
   PRODUCT_not_available: 'Nicht verfügbar',
   PRODUCT_add: 'Neues Produckt erstellen',
+  PRODUCT_image: 'Produkt Bild',
 
   BORROW_TEXTFIELD_label: 'Nachricht',
   BORROW_TEXTFIELD_default_value: 'Schreibe eine Nachricht',

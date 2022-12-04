@@ -4,7 +4,15 @@ import MenuItem from '@mui/material/MenuItem'
 import { useCallback, useState, MouseEvent, useMemo } from 'react'
 import { useTranslation } from '../../hooks/use-translation'
 
-export const ProductMenu = ({ productId }: { productId: string }) => {
+export const ProductMenu = ({
+  productId,
+  onEdit,
+  onDelete,
+}: {
+  productId: string
+  onEdit: (id: string) => void
+  onDelete: (id: string) => void
+}) => {
   const t = useTranslation()
   const [buttonElement, setMenuElement] = useState<HTMLElement | null>(null)
 
@@ -18,16 +26,16 @@ export const ProductMenu = ({ productId }: { productId: string }) => {
     setMenuElement(event.currentTarget)
   }, [])
   const handleOnDelete = useCallback(() => {
-    console.log('delete', productId)
+    onDelete(productId)
     handleOnClose()
-  }, [productId, handleOnClose])
+  }, [productId, handleOnClose, onDelete])
   const handleOnEdit = useCallback(() => {
-    console.log('bearbeiten -> ', productId)
+    onEdit(productId)
     handleOnClose()
-  }, [productId, handleOnClose])
+  }, [productId, handleOnClose, onEdit])
   return (
     <>
-      <IconButton aria-label="settings" onClick={handleOnClick}>
+      <IconButton aria-label={t('PRODUCT_settings')} onClick={handleOnClick}>
         <MoreVertIcon />
       </IconButton>
       <Menu open={menuOpen} onClose={handleOnClose} anchorEl={buttonElement}>

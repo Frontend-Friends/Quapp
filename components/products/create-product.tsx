@@ -1,21 +1,24 @@
-import React, { Dispatch, SetStateAction, useState } from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from '../../hooks/use-translation'
 import { Box, Button, Modal, TextField, Typography } from '@mui/material'
 import { CondensedContainer } from '../condensed-container'
 import { Formik } from 'formik'
 import { createProductSchema } from '../../lib/schema/create-product-schema'
-import { CreateProduct } from './types'
+import { CreateProduct, ProductType } from './types'
 import { sendFormData } from '../../lib/helpers/send-form-data'
 import { useRouter } from 'next/router'
+import Image from 'next/image'
 
-export const CreateNewProduct = ({
+export const CreateEditProduct = ({
   showModal,
   onClose,
   onError,
+  product,
 }: {
   showModal: boolean
-  onClose: Dispatch<SetStateAction<boolean>>
+  onClose: (state: boolean) => void
   onError?: () => void
+  product: ProductType | null
 }) => {
   const t = useTranslation()
   const { query } = useRouter()
@@ -48,10 +51,10 @@ export const CreateNewProduct = ({
         <Formik
           initialValues={
             {
-              title: '',
-              description: '',
-              lead: '',
-              text: '',
+              title: product?.title || '',
+              description: product?.description || '',
+              lead: product?.lead || '',
+              text: product?.text || '',
               img: undefined,
             } as CreateProduct
           }
@@ -77,6 +80,9 @@ export const CreateNewProduct = ({
           {(props) => (
             <form onSubmit={props.handleSubmit}>
               <Box sx={{ pt: 5, pb: 2, display: 'grid' }}>
+                {product?.imgSrc && (
+                  <Image src={product.imgSrc} alt={t('PRODUCT_image')} />
+                )}
                 <TextField
                   label={t('CREATE_PRODUCT_upload')}
                   onChange={(event) => {
