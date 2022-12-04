@@ -4,12 +4,6 @@ import { withIronSessionApiRoute } from 'iron-session/next'
 import { sessionOptions } from '../../config/session-config'
 import { db } from '../../config/firebase'
 
-export const config = {
-  api: {
-    bodyParser: false, // Disallow body parsing, consume as stream
-  },
-}
-
 async function deleteProduct(req: NextApiRequest, res: NextApiResponse) {
   try {
     const { space, productId } = req.query
