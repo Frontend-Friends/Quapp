@@ -8,7 +8,7 @@ import { fetchJson } from '../../lib/helpers/fetch-json'
 import { signupFormSchema } from '../../lib/schema/signup-form-schema'
 import { CondensedContainer } from '../../components/condensed-container'
 import { LoadingButton } from '@mui/lab'
-import { router } from 'next/client'
+import { useRouter } from 'next/router'
 
 const formGroupSX = { mb: 2 }
 
@@ -16,6 +16,7 @@ const Signup: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [open, setOpen] = React.useState(false)
   const [message, setMessage] = useState('')
+  const router = useRouter()
 
   const handleSignup = async (values: SignupType) => {
     setIsLoading(true)
@@ -34,7 +35,10 @@ const Signup: React.FC = () => {
       })
 
       if (fetchedSignup.isSignedUp) {
-        await router.push('/auth/login')
+        await router.push({
+          pathname: '/auth/signup-success',
+          query: { name: values.firstName },
+        })
       } else {
         setOpen(true)
         setMessage(fetchedSignup.message)
