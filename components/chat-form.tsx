@@ -13,7 +13,7 @@ export const ChatForm = ({
   setChat,
 }: {
   isOwner: boolean
-  chatId: string
+  chatId: string | null
   setChat?: (chat: ChatMessage[]) => void
 }) => {
   const [isLoading, setIsLoading] = useState(false)

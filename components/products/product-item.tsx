@@ -15,11 +15,12 @@ import { useTranslation } from '../../hooks/use-translation'
 import Link from 'next/link'
 import { ProductType } from './types'
 import { useRouter } from 'next/router'
+import { User } from '../user/types'
 
 export const ProductItem: FC<{
   product: ProductType
   handleMoreInformation?: MouseEventHandler<HTMLButtonElement>
-  userId?: string | null
+  userId?: User['id']
 }> = ({ product, handleMoreInformation, userId }) => {
   const t = useTranslation()
   const router = useRouter()

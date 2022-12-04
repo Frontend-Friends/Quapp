@@ -10,14 +10,12 @@ export default async function userDb(
 ) {
   //signup
   try {
-    const { email, firstName, lastName, phone } = JSON.parse(req.body)
+    const { email, firstName } = JSON.parse(req.body)
     const emailHash = crypto.createHash('md5').update(email).digest('hex')
     const userRef = document(db, 'user', emailHash)
     await setDoc(userRef, {
       email,
       firstName,
-      lastName,
-      phone,
     } as User).then((result) => {
       res.status(200).json({ res: 'ok' })
       console.log('Document written with ID: ', { res: 'ok' })

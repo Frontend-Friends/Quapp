@@ -13,9 +13,10 @@ import { CreateNewProduct } from '../../../../components/products/create-product
 import { useFetchProductDetail } from '../../../../hooks/use-fetch-product-detail'
 import { withIronSessionSsr } from 'iron-session/next'
 import { sessionOptions } from '../../../../config/session-config'
+import { User } from '../../../../components/user/types'
 
 export const getServerSideProps = withIronSessionSsr<{
-  userId?: string | null
+  userId?: User['id']
   products?: ProductType[]
   productDetail?: ProductType | null
 }>(async ({ query, req }) => {
