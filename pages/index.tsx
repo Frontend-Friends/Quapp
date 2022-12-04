@@ -8,6 +8,8 @@ import { AppartmentSVG } from '../components/svg/appartment'
 import { WindowNeighboursSVG } from '../components/svg/windowneighbours'
 import { CollaboratorSVG } from '../components/svg/collaborator'
 import { HangoutSVG } from '../components/svg/hangout'
+import { Box, Button, Link } from '@mui/material'
+import { useTranslation } from '../hooks/use-translation'
 
 export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
   const { user } = req.session
@@ -17,7 +19,8 @@ export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
 }, ironOptions)
 
 const Home: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
-  console.log('isLoggedIn in index', isLoggedIn)
+  console.log('isLoggedIn in index', isLoggedIn) //TODO remove this
+  const t = useTranslation()
   return (
     <>
       <Head>
@@ -51,11 +54,23 @@ const Home: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
 
       <main>
         <section
-          className={`bg-gradient-to-br from-violetRed-600 via-violetRed-600 to-violetRed-900`}
+          className={`bg-gradient-to-br from-violetRed-600 via-violetRed-600 to-violetRed-900 text-white`}
         >
           <LogoSVG className="h-[256px] w-full" />
           <AppartmentSVG className="h-[256px] w-full" />
           <h1 className={styles.title}>Die App die Nachbarn verbindet.</h1>
+          <p>
+            Du brauchst ein Werkzeug oder eine helfende Hand? Quapp ermöglicht
+            dir einfachen Kontakt zu deinen Nachbarn!
+          </p>
+          <Button type="submit" variant="contained" color="secondary">
+            {t('SIGNUP_signup')}
+          </Button>
+          <Box className="mt-0">
+            <Link underline="hover" href="/auth/login">
+              {t('LOGIN_has_account')}
+            </Link>
+          </Box>
         </section>
 
         <section>
