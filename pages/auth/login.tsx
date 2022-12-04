@@ -32,25 +32,25 @@ const Login: FC = () => {
       setIsLoading(true)
 
       try {
-        const fetchedLogin = await fetchJson<{ session: boolean }>(
-          '/api/login',
-          {
-            method: 'POST',
-            headers: {
-              accept: 'application.json',
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ ...values }),
-            cache: 'default',
-          }
-        )
+        const fetchedLogin = await fetchJson<{
+          session: boolean
+          message: string
+        }>('/api/login', {
+          method: 'POST',
+          headers: {
+            accept: 'application.json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ ...values }),
+          cache: 'default',
+        })
 
         if (fetchedLogin.session) {
           setIsLoading(false)
-          router.push('/community/dashboard')
+          await router.push('/community/dashboard')
         } else {
           setOpen(true)
-          setMessage('LOGIN_invalid_email_or_password')
+          setMessage(fetchedLogin.message)
           setIsLoading(false)
         }
       } catch {
