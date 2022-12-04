@@ -10,6 +10,7 @@ export const translations: Record<string, string> = {
   GLOBAL_delete: 'Löschen',
   GLOBAL_open: 'Öffne',
   GLOBAL_options: 'Optionen',
+  GLOBAL_back_to_login: 'Zurück zum Login',
 
   LOGIN_title: 'Login',
   LOGIN_login: 'Anmelden',
@@ -21,6 +22,7 @@ export const translations: Record<string, string> = {
 
   SIGNUP_title: 'Registration',
   SIGNUP_signup: 'Registrieren',
+  SIGNUP_hello: 'Hallo',
 
   PRODUCTS_title: 'Produkte',
   PRODUCTS_no_entries: 'Leider gibt es noch keine Einträge.',
