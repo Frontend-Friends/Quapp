@@ -1,4 +1,4 @@
-import { mixed, object, string } from 'yup'
+import { boolean, mixed, object, string } from 'yup'
 
 export const createProductSchema = object().shape({
   title: string().min(4, 'to short').required('Required'),
@@ -6,4 +6,5 @@ export const createProductSchema = object().shape({
   lead: string(),
   img: mixed(),
   description: string(),
+  isAvailable: boolean(),
 })

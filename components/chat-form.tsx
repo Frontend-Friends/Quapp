@@ -3,9 +3,10 @@ import { useTranslation } from '../hooks/use-translation'
 import { useRouter } from 'next/router'
 import { Formik } from 'formik'
 import { sendFormData } from '../lib/helpers/send-form-data'
-import { Button, TextField } from '@mui/material'
+import { TextField } from '@mui/material'
 import React, { useState } from 'react'
 import { chatFormSchema } from '../lib/schema/chat-form-schema'
+import { LoadingButton } from '@mui/lab'
 
 export const ChatForm = ({
   isOwner,
@@ -57,14 +58,15 @@ export const ChatForm = ({
             error={!!errors.message}
             helperText={errors.message ? t(errors.message) : ''}
           />
-          <Button
+          <LoadingButton
             type="submit"
             variant="contained"
             color="secondary"
+            loading={isLoading}
             disabled={isLoading || !values.message}
           >
-            {isLoading ? t('CHAT_button_loading') : t('CHAT_button_send')}
-          </Button>
+            {t('CHAT_button_send')}
+          </LoadingButton>
         </form>
       )}
     </Formik>

@@ -85,13 +85,13 @@ export const Product = ({
         <AddIcon />
       </Fab>
       <Header title={t('PRODUCTS_title')} />
-      <Grid container columns={{ sm: 2, md: 3 }} spacing={{ xs: 4 }} pt={4}>
+      <Grid container columns={{ md: 2, lg: 3 }} spacing={{ xs: 4 }} pt={4}>
         {!productList?.length && (
           <Typography variant="body2">{t('PRODUCTS_no_entries')}</Typography>
         )}
         {!!productList?.length &&
           productList.map((item, index) => (
-            <Grid item xs={1} key={index} sx={{ flexGrow: '1' }}>
+            <Grid item xs={1} key={index} sx={{ flexGrow: '1', width: '100%' }}>
               <ProductItem
                 product={item}
                 userId={userId}
@@ -115,6 +115,17 @@ export const Product = ({
       </Grid>
       <ProductDetail product={product} userId={userId} />
       <CreateEditProduct
+        onUpdateProduct={(updatedProduct) => {
+          setProductList((state) => {
+            const foundIndex = state?.findIndex(
+              (item) => item.id === updatedProduct.id
+            )
+            if (state && foundIndex !== undefined && foundIndex > -1) {
+              state[foundIndex] = updatedProduct
+            }
+            return state ? [...state] : state
+          })
+        }}
         showModal={showCreateProduct}
         onClose={(state) => {
           setProductToEdit(null)

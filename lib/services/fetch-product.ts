@@ -5,12 +5,13 @@ import {
   getDoc,
   getDocs,
 } from 'firebase/firestore'
-import { db } from '../../config/firebase'
+import { getMetadata, ref } from 'firebase/storage'
+import { db, storage } from '../../config/firebase'
 import { ProductChatType, ProductType } from '../../components/products/types'
 import { sortChatByTime } from '../scripts/sort-chat-by-time'
 
 export const fetchProduct = async (space: string, productsQuery: string) => {
-  const ref = doc(db, 'spaces', space, 'products', productsQuery || '')
+  const productRef = doc(db, 'spaces', space, 'products', productsQuery || '')
   const chatCollection = collection(
     db,
     'spaces',
@@ -19,7 +20,7 @@ export const fetchProduct = async (space: string, productsQuery: string) => {
     productsQuery || '',
     'chats'
   )
-  const productDetailSnap = await getDoc(ref).then(
+  const productDetailSnap = await getDoc(productRef).then(
     (r) =>
       ({
         ...r.data(),
@@ -62,6 +63,14 @@ export const fetchProduct = async (space: string, productsQuery: string) => {
     const sortedHistory = sortChatByTime(item.history)
     return { ...item, history: sortedHistory }
   })
+
+  console.log(productDetailSnap)
+  if (productDetailSnap.imgSrc) {
+    const imgRef = ref(storage, productDetailSnap.imgSrc)
+    await getMetadata(imgRef).then((r) => {
+      console.log(r)
+    })
+  }
 
   return {
     ...productDetailSnap,

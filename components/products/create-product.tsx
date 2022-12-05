@@ -1,6 +1,14 @@
 import React, { useState } from 'react'
 import { useTranslation } from '../../hooks/use-translation'
-import { Box, Button, Modal, TextField, Typography } from '@mui/material'
+import {
+  Box,
+  FormControlLabel,
+  FormGroup,
+  Modal,
+  Switch,
+  TextField,
+  Typography,
+} from '@mui/material'
 import { CondensedContainer } from '../condensed-container'
 import { Formik } from 'formik'
 import { createProductSchema } from '../../lib/schema/create-product-schema'
@@ -8,17 +16,20 @@ import { CreateProduct, ProductType } from './types'
 import { sendFormData } from '../../lib/helpers/send-form-data'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
+import { LoadingButton } from '@mui/lab'
 
 export const CreateEditProduct = ({
   showModal,
   onClose,
   onError,
   product,
+  onUpdateProduct,
 }: {
   showModal: boolean
   onClose: (state: boolean) => void
   onError?: () => void
   product: ProductType | null
+  onUpdateProduct: (product: ProductType) => void
 }) => {
   const t = useTranslation()
   const { query } = useRouter()
@@ -28,7 +39,9 @@ export const CreateEditProduct = ({
   return (
     <Modal
       open={showModal && !onSuccess}
-      onClose={() => onClose(false)}
+      onClose={() => {
+        onClose(false)
+      }}
       sx={{
         display: 'flex',
         alignItems: 'center',
@@ -56,6 +69,7 @@ export const CreateEditProduct = ({
               lead: product?.lead || '',
               text: product?.text || '',
               img: undefined,
+              isAvailable: product ? product.isAvailable : true,
             } as CreateProduct
           }
           validationSchema={createProductSchema}
@@ -63,25 +77,50 @@ export const CreateEditProduct = ({
           validateOnBlur={false}
           onSubmit={async (values) => {
             setLoading(true)
+            const createAPi = `/api/create-product?space=${query.space}`
+            const updateAPi = `/api/update-product?space=${query.space}&id=${
+              product?.id || ''
+            }`
             const response = await sendFormData<{
               isOk: boolean
               productId: string
-            }>(`/api/create-product?space=${query.space}`, values)
+              product: ProductType
+            }>(product ? updateAPi : createAPi, values)
             if (!response.isOk) {
               if (onError) onError()
             }
             setLoading(false)
-            setOnSuccess(true)
 
-            if (response.isOk)
-              push(`/${query.space}/products/${response.productId}`)
+            if (response.isOk && !product) {
+              setOnSuccess(true)
+              await push(`/${query.space}/products/${response.productId}`)
+            }
+            if (response.isOk) {
+              onUpdateProduct({ ...product, ...response.product })
+              onClose(false)
+            }
           }}
         >
           {(props) => (
             <form onSubmit={props.handleSubmit}>
               <Box sx={{ pt: 5, pb: 2, display: 'grid' }}>
                 {product?.imgSrc && (
-                  <Image src={product.imgSrc} alt={t('PRODUCT_image')} />
+                  <Box
+                    sx={{
+                      width: '100%',
+                      pt: '56%',
+                      overflow: 'hidden',
+                      position: 'relative',
+                      mb: 4,
+                    }}
+                  >
+                    <Image
+                      src={product.imgSrc}
+                      alt={t('PRODUCT_image')}
+                      layout="fill"
+                      objectFit="cover"
+                    />
+                  </Box>
                 )}
                 <TextField
                   label={t('CREATE_PRODUCT_upload')}
@@ -139,15 +178,32 @@ export const CreateEditProduct = ({
                   helperText={props.errors.text}
                   sx={{ mt: 2 }}
                 />
-                <Button
+                {!!product && (
+                  <FormGroup>
+                    <FormControlLabel
+                      control={
+                        <Switch
+                          defaultChecked={props.values.isAvailable}
+                          value={props.values.isAvailable}
+                          name="isAvailable"
+                          onChange={props.handleChange}
+                          onBlur={props.handleBlur}
+                        />
+                      }
+                      label={t('CREATE_PRODUCT_is_available')}
+                    />
+                  </FormGroup>
+                )}
+                <LoadingButton
                   type="submit"
                   variant="contained"
                   sx={{ ml: 'auto', mt: 2 }}
                   disabled={loading}
+                  loading={loading}
                 >
-                  {loading && t('CREATE_PRODUCT_loading')}
-                  {!loading && t('CREATE_PRODUCT_submit')}
-                </Button>
+                  {!loading && !product && t('CREATE_PRODUCT_submit')}
+                  {!loading && product && t('SAVE_PRODUCT_submit')}
+                </LoadingButton>
               </Box>
             </form>
           )}

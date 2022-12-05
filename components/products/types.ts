@@ -39,7 +39,7 @@ export type SpaceItemType = {
 
 export type CreateProduct = Pick<
   ProductType,
-  'title' | 'lead' | 'text' | 'description'
+  'title' | 'lead' | 'text' | 'description' | 'isAvailable'
 > & { img?: File }
 
 export type ProductFormData = {

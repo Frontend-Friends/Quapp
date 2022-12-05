@@ -1,6 +1,6 @@
 import {
   Box,
-  ButtonBase,
+  Button,
   Card,
   CardContent,
   CardMedia,
@@ -21,7 +21,7 @@ export const ProductItem: FC<{
 }> = ({ product, userId, onEdit, onDelete }) => {
   const t = useTranslation()
   const { query } = useRouter()
-  return product.isAvailable ? (
+  return (
     <Box sx={{ position: 'relative' }}>
       <Link
         href={{
@@ -31,60 +31,58 @@ export const ProductItem: FC<{
         passHref
         shallow
       >
-        <ButtonBase
-          sx={{ display: 'block' }}
+        <Card
+          component={Button}
           title={`${t('PRODUCT_label')} ${product.title}`}
+          color="inherit"
+          variant="outlined"
+          sx={{
+            backgroundColor: product.isAvailable
+              ? undefined
+              : 'background.paper',
+            display: 'flex',
+            justifyContent: 'flex-start',
+            height: '100%',
+          }}
         >
-          <Card
-            component="span"
-            variant="outlined"
-            sx={{
-              backgroundColor: product.isAvailable
-                ? undefined
-                : 'background.paper',
-              display: 'flex',
-              height: '100%',
-            }}
-          >
-            {product.imgSrc && (
-              <CardMedia
-                component="img"
-                height={100}
-                sx={{
-                  width: 100,
-                  height: 100,
-                  overflow: 'hidden',
-                  objectFit: 'cover',
-                  flexShrink: 0,
-                }}
-                src={product.imgSrc}
-              />
+          {product.imgSrc && (
+            <CardMedia
+              component="img"
+              height={100}
+              sx={{
+                width: 100,
+                height: 100,
+                overflow: 'hidden',
+                objectFit: 'cover',
+                flexShrink: 0,
+              }}
+              src={product.imgSrc}
+            />
+          )}
+          {!product.imgSrc && (
+            <Box
+              component="span"
+              sx={{
+                width: 100,
+                height: 100,
+                overflow: 'hidden',
+                objectFit: 'cover',
+                bgcolor: 'secondary.light',
+                flexShrink: 0,
+              }}
+            />
+          )}
+          <CardContent component="span">
+            {product.title && (
+              <Typography variant="h3">{product.title}</Typography>
             )}
-            {!product.imgSrc && (
-              <Box
-                component="span"
-                sx={{
-                  width: 100,
-                  height: 100,
-                  overflow: 'hidden',
-                  objectFit: 'cover',
-                  bgcolor: 'secondary.light',
-                  flexShrink: 0,
-                }}
-              />
+            {product.description && (
+              <Typography variant="body2" sx={{ pt: 0.5 }}>
+                {product.description}
+              </Typography>
             )}
-            <CardContent component="span">
-              {product.title && (
-                <Typography variant="h3">{product.title}</Typography>
-              )}
-              {product.description && (
-                <Typography variant="body2" sx={{ pt: 0.5 }}>
-                  {product.description}
-                </Typography>
-              )}
-            </CardContent>
-          </Card>
-        </ButtonBase>
+          </CardContent>
+        </Card>
       </Link>
       {userId === product.owner.id && (
         <Box sx={{ position: 'absolute', right: 0, top: 0 }}>
@@ -96,5 +94,5 @@ export const ProductItem: FC<{
         </Box>
       )}
     </Box>
-  ) : null
+  )
 }
