@@ -11,7 +11,8 @@ export const fetchProduct = async (productId: string, space: string) => {
 }
 export const deleteProduct = async (productId: string, space: string) => {
   return fetchJson<ProductType>(
-    `/api/delete-product?productId=${productId}&space=${space}`
+    `/api/delete-product?productId=${productId}&space=${space}`,
+    { method: 'DELETE' }
   )
 }
 
