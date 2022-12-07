@@ -10,6 +10,9 @@ import { CollaboratorSVG } from '../components/svg/collaborator'
 import { HangoutSVG } from '../components/svg/hangout'
 import { Box, Button, Link } from '@mui/material'
 import { useTranslation } from '../hooks/use-translation'
+import { WaveWhiteSVG } from '../components/svg/wave_white'
+import { WaveWhiteBottomSVG } from '../components/svg/wave_white_bottom'
+import { WaveWhiteTopSVG } from '../components/svg/wave_white_top'
 
 export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
   const { user } = req.session
@@ -19,8 +22,8 @@ export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
 }, ironOptions)
 
 const Home: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
-  console.log('isLoggedIn in index', isLoggedIn) //TODO remove this
   const t = useTranslation()
+  console.log(isLoggedIn)
   return (
     <>
       <Head>
@@ -54,37 +57,65 @@ const Home: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
 
       <main>
         <section
-          className={`bg-gradient-to-br from-violetRed-600 via-violetRed-600 to-violetRed-900 text-white`}
+          className={`relative bg-gradient-to-br from-violetRed-600 via-violetRed-600 to-violetRed-900 pb-10 text-white`}
         >
-          <LogoSVG className="h-[256px] w-full" />
-          <AppartmentSVG className="h-[256px] w-full" />
-          <h1 className={styles.title}>Die App die Nachbarn verbindet.</h1>
-          <p>
-            Du brauchst ein Werkzeug oder eine helfende Hand? Quapp ermöglicht
-            dir einfachen Kontakt zu deinen Nachbarn!
-          </p>
-          <Button type="submit" variant="contained" color="secondary">
-            {t('SIGNUP_signup')}
-          </Button>
-          <Box className="mt-0">
-            <Link underline="hover" href="/auth/login">
-              {t('LOGIN_has_account')}
-            </Link>
-          </Box>
+          <div className="p-3">
+            <LogoSVG className="mx-auto block w-1/2" />
+            <h1 className="text-center text-lg font-normal">
+              Die App die Nachbarn verbindet.
+            </h1>
+            <div className="flex gap-5">
+              <AppartmentSVG className="-ml-24 h-[130px] w-full flex-1" />
+              <p className="m-0 flex-1 font-light">
+                Du brauchst ein Werkzeug oder eine helfende Hand? Quapp
+                ermöglicht dir einfachen Kontakt zu deinen Nachbarn!
+              </p>
+            </div>
+            <Button
+              type="submit"
+              variant="contained"
+              color="secondary"
+              className="mx-auto mt-5 mb-3 block px-16"
+            >
+              {t('HOME_signup_free')}
+            </Button>
+            <Box className="text-center">
+              <Link
+                underline="hover"
+                href="/auth/login"
+                className="text-white underline"
+              >
+                {t('LOGIN_has_account')}
+              </Link>
+            </Box>
+          </div>
+          <WaveWhiteSVG
+            preserveAspectRatio="none"
+            className="absolute bottom-0 w-full"
+          />
         </section>
 
         <section>
-          <WindowNeighboursSVG className="h-[256px] w-full" />
-          <h2>Sich gegenseitig unterstützen.</h2>
-          <p>
-            Wer kennt es nicht: Man braucht mal eben kurz eine Bohrmaschine oder
-            jemanden der einem fünf Minuten hilft einen Tisch zu tragen, aber
-            man kennt die Nachbarn nocht nicht und hat niemanden zum Fragen.
-          </p>
+          <WindowNeighboursSVG className="w-full" />
+          <div className="p-3">
+            <h2 className="m-0 text-center text-xl text-blueishGray-600">
+              Sich gegenseitig unterstützen.
+            </h2>
+            <p className="text-center text-blueishGray-600">
+              Wer kennt es nicht: Man braucht mal eben kurz eine Bohrmaschine
+              oder jemanden der einem fünf Minuten hilft einen Tisch zu tragen,
+              aber man kennt die Nachbarn nocht nicht und hat niemanden zum
+              Fragen.
+            </p>
+          </div>
         </section>
 
-        <section>
-          <CollaboratorSVG className="h-[256px] w-full" />
+        <section className="relative bg-slate-300">
+          <WaveWhiteTopSVG
+            preserveAspectRatio="none"
+            className="absolute top-0 w-full"
+          />
+          <CollaboratorSVG className="relative h-[256px] w-full" />
           <h2>Spaces.</h2>
           <p>
             Indem du selbst einen Space erstellst oder einem vorhandenen Space
@@ -95,6 +126,10 @@ const Home: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
             Logge dich ein und durchsuche die Angebote deiner Nachbarn oder
             stelle einfach selbst ein Angebot für andere ein.
           </p>
+          <WaveWhiteBottomSVG
+            preserveAspectRatio="none"
+            className="absolute bottom-0 w-full"
+          />
         </section>
 
         <section>
