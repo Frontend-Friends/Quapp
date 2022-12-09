@@ -35,6 +35,8 @@ const Signup: React.FC = () => {
       })
 
       if (fetchedSignup.isSignedUp) {
+        setIsLoading(false)
+        localStorage.setItem('emailForSignIn', values.email)
         await router.push({
           pathname: '/auth/signup-success',
           query: { name: values.firstName },
