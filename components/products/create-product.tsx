@@ -27,7 +27,7 @@ export const CreateEditProduct = ({
 }: {
   showModal: boolean
   onClose: (state: boolean) => void
-  onError?: () => void
+  onError?: (error: string) => void
   product: ProductType | null
   onUpdateProduct: (product: ProductType) => void
 }) => {
@@ -87,7 +87,7 @@ export const CreateEditProduct = ({
               product: ProductType
             }>(product ? updateAPi : createAPi, values)
             if (!response.isOk) {
-              if (onError) onError()
+              if (onError) onError(t('FORM_submitting_error'))
             }
             setLoading(false)
 

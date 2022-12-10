@@ -1,13 +1,13 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { createProductSchema } from '../../lib/schema/create-product-schema'
-import { db } from '../../config/firebase'
-import { doc, getDoc, setDoc } from 'firebase/firestore'
+import { setDoc } from 'firebase/firestore'
 import { uploadFileToStorage } from '../../lib/scripts/upload-file-to-storage'
 import { ProductFormData, ProductType } from '../../components/products/types'
 import { withIronSessionApiRoute } from 'iron-session/next'
 import { sessionOptions } from '../../config/session-config'
 import { parsedForm } from '../../lib/helpers/parsed-form'
 import { deleteFileInStorage } from '../../lib/scripts/delete-file-in-storage'
+import { getProduct } from '../../lib/services/get-product'
 
 export const config = {
   api: {
@@ -32,15 +32,7 @@ async function createProduct(req: NextApiRequest, res: NextApiResponse) {
 
     const imgSrc = await uploadFileToStorage(formData.files?.img)
 
-    const docRef = doc(db, 'spaces', space as string, 'products', id as string)
-
-    const oldDoc = await getDoc(docRef).then(
-      (r) =>
-        ({
-          id: r.id,
-          ...r.data(),
-        } as ProductType)
-    )
+    const [oldDoc, docRef] = await getProduct(id as string, space as string)
 
     const data = {
       ...formData.fields,

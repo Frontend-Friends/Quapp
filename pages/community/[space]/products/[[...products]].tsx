@@ -1,5 +1,12 @@
-import { useState } from 'react'
-import { Alert, Fab, Grid, Snackbar, Typography } from '@mui/material'
+import { ReactNode, useState } from 'react'
+import {
+  Alert,
+  AlertColor,
+  Fab,
+  Grid,
+  Snackbar,
+  Typography,
+} from '@mui/material'
 import { useTranslation } from '../../../../hooks/use-translation'
 import { InferGetServerSidePropsType } from 'next'
 import { ProductItem } from '../../../../components/products/product-item'
@@ -54,6 +61,10 @@ export const getServerSideProps = withIronSessionSsr<{
   }
 }, sessionOptions)
 
+const useAlert = () => {
+  return useState<{ severity: AlertColor; children: ReactNode }>()
+}
+
 export const Product = ({
   userId,
   products,
@@ -62,11 +73,13 @@ export const Product = ({
   const t = useTranslation()
   const { query } = useRouter()
 
+  const [alert, setAlert] = useAlert()
+
   const [productList, setProductList] = useState(products)
 
   const [showCreateProduct, setShowCreateProduct] = useState(false)
   const [productToEdit, setProductToEdit] = useState<ProductType | null>(null)
-  const [hasError, setHasError] = useState(false)
+  const [openSnackbar, setOpenSnackbar] = useState(false)
 
   const product = useFetchProductDetail(productDetail)
 
@@ -125,6 +138,11 @@ export const Product = ({
             }
             return state ? [...state] : state
           })
+          setAlert({
+            severity: 'info',
+            children: `${t('PRODUCT_updated_info')} ${updatedProduct.title}`,
+          })
+          setOpenSnackbar(true)
         }}
         showModal={showCreateProduct}
         onClose={(state) => {
@@ -132,18 +150,19 @@ export const Product = ({
           setShowCreateProduct(state)
         }}
         product={productToEdit}
-        onError={() => {
-          setHasError(true)
+        onError={(error) => {
+          setAlert({ severity: 'error', children: error })
+          setOpenSnackbar(true)
         }}
       />
       <Snackbar
-        open={hasError}
+        open={openSnackbar}
         autoHideDuration={6000}
         onClose={() => {
-          setHasError(false)
+          setOpenSnackbar(false)
         }}
       >
-        <Alert severity="error">${t('FORM_submitting_error')}</Alert>
+        <Alert {...alert} />
       </Snackbar>
     </>
   )

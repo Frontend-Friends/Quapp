@@ -1,10 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { doc, deleteDoc, getDoc } from 'firebase/firestore'
+import { deleteDoc } from 'firebase/firestore'
 import { withIronSessionApiRoute } from 'iron-session/next'
 import { sessionOptions } from '../../config/session-config'
-import { db } from '../../config/firebase'
 import { deleteFileInStorage } from '../../lib/scripts/delete-file-in-storage'
-import { ProductType } from '../../components/products/types'
+import { getProduct } from '../../lib/services/get-product'
 
 async function deleteProduct(req: NextApiRequest, res: NextApiResponse) {
   try {
@@ -15,20 +14,9 @@ async function deleteProduct(req: NextApiRequest, res: NextApiResponse) {
       return
     }
 
-    const productRef = doc(
-      db,
-      'spaces',
-      space as string,
-      'products',
-      productId as string
-    )
-
-    const product = await getDoc(productRef).then(
-      (r) =>
-        ({
-          id: r.id,
-          ...r.data(),
-        } as ProductType)
+    const [product, productRef] = await getProduct(
+      productId as string,
+      space as string
     )
 
     if (product.imgSrc) await deleteFileInStorage(product.imgSrc)

@@ -27,6 +27,10 @@ export const translations: Record<string, string> = {
   PRODUCT_not_available: 'Nicht verfügbar',
   PRODUCT_add: 'Neues Produckt erstellen',
   PRODUCT_image: 'Produkt Bild',
+  PRODUCT_edit: 'bearbeiten',
+  PRODUCT_delete: 'löschen',
+  PRODUCT_UPDATED_info: '',
+  SAVE_PRODUCT_submit: 'speichern',
 
   BORROW_TEXTFIELD_label: 'Nachricht',
   BORROW_TEXTFIELD_default_value: 'Schreibe eine Nachricht',
