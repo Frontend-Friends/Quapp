@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from '../../hooks/use-translation'
 import { CondensedContainer } from '../../components/condensed-container'
 import { Typography } from '@mui/material'
@@ -6,20 +6,33 @@ import { fetchJson } from '../../lib/helpers/fetch-json'
 
 const EmailConfirmation: React.FC = () => {
   const t = useTranslation()
-  // verification of emailLink cannot be done since isSignInWithEmailLink() needs auth as aprameter which should is not be available in the frontend
+  const [email, setEmail] = useState<string | null>(null)
+  const [url, setUrl] = useState<string | undefined>(undefined)
 
-  const emailConfirmation = async () => {
-    try {
-      const email = localStorage.getItem('emailForSignIn')
-      if (!email) {
-        window.prompt('Please provide your email for confirmation')
+  //in order to run it client side only
+  useEffect(() => {
+    const emailConfirmation = async () => {
+      try {
+        if (!email) {
+          window.prompt('Please provide your email for confirmation')
+        }
+        return await fetchJson(
+          '/api/email-confirmation?confirmationUrl=' + url
+        ).then((res) => console.log(res, 'res'))
+      } catch {
+        console.error('error in emailConfirmation in landing page')
       }
-      return await fetchJson('/api/email-confirmation')
-    } catch {
-      console.error('error in emailConfirmation in landing page')
     }
-  }
-  emailConfirmation().then()
+
+    const userEmail = window.localStorage.getItem('emailForSignIn')
+    setEmail(userEmail && userEmail)
+    // window.localStorage.removeItem('emailForSignIn')
+    const confirmationUrl = window.location.href
+    setUrl(confirmationUrl && confirmationUrl)
+
+    if (url) emailConfirmation().then()
+  }, [url, email])
+  // verification of emailLink cannot be done here since isSignInWithEmailLink() needs auth as parameter which should is not be available in the frontend
 
   return (
     <CondensedContainer>
