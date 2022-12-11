@@ -109,7 +109,7 @@ const Home: FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
             className="absolute top-0 w-full"
           />
           <CollaboratorSVG className="relative h-[256px] w-full" />
-          <div className="z-1 relative p-3">
+          <div className="relative z-10 p-3">
             <h2 className="m-0 text-3xl font-medium">
               {t('HOME_spaces_title')}
             </h2>
