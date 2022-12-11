@@ -12,6 +12,7 @@ import { useTranslation } from '../hooks/use-translation'
 import { WaveWhiteSVG } from '../components/svg/wave_white'
 import { WaveWhiteBottomSVG } from '../components/svg/wave_white_bottom'
 import { WaveWhiteTopSVG } from '../components/svg/wave_white_top'
+import Footer from '../components/footer'
 
 export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
   const { user } = req.session
@@ -57,7 +58,10 @@ const Home: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
       <main className="mx-auto max-w-[680px] text-blueishGray-600">
         <section className="relative bg-gradient-to-br from-violetRed-600 via-violetRed-600 to-violetRed-900 pb-10 text-white">
           <div className="p-3">
-            <LogoSVG className="mx-auto block w-1/2" />
+            <LogoSVG
+              aria-labelledby="LogoTitle"
+              className="mx-auto block w-1/2"
+            />
             <h1 className="text-center text-lg font-medium">
               {t('HOME_subtitle')}
             </h1>
@@ -128,7 +132,7 @@ const Home: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
           <p className="p-3 text-center">{t('HOME_support_text')}</p>
         </section>
       </main>
-      <footer></footer>
+      <Footer />
     </>
   )
 }

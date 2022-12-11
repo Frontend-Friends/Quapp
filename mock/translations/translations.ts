@@ -10,6 +10,7 @@ export const translations: Record<string, string> = {
   GLOBAL_delete: 'Löschen',
   GLOBAL_open: 'Öffne',
   GLOBAL_options: 'Optionen',
+  GLOBAL_back_to_home: 'Zurück zur Startseite',
 
   HOME_signup_free: 'Jetzt kostenlos Registrieren',
   HOME_subtitle: 'Die App die Nachbarn verbindet.',
@@ -74,6 +75,12 @@ export const translations: Record<string, string> = {
   CHAT_message: 'Nachricht',
   CHAT_message_error: 'Die Nachricht darf nicht leer sein',
   CHAT_message_required: 'Das Feld ist pflicht',
+
+  SVG_logo: 'Das Quapp Logo mit Link auf die Startseite',
+
+  FOOTER_contact: 'Kontakt',
+  FOOTER_imprint: 'Impressum',
+  FOOTER_privacy: 'Datenschutz',
 
   HTML_TITLE_general: 'Quapp - Die App die Nachbarn verbindet',
 }
