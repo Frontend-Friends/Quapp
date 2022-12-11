@@ -10,6 +10,7 @@ import { Box, Container } from '@mui/material'
 import '../styles/globals.scss'
 import { NavBar } from '../components/nav-bar'
 import { Navigation } from '../mock/navigation'
+import BottomNavigationBar from '../components/bottom-navigation'
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
@@ -38,6 +39,7 @@ export default function App({
             <Component {...pageProps} />
           </Container>
         </Box>
+        <BottomNavigationBar />
       </ThemeProvider>
     </CacheProvider>
   )
