@@ -34,6 +34,7 @@ class MyDocument extends Document<{ emotionStyleTags: ReactNode[] }> {
           />
           {this.props.emotionStyleTags}
         </Head>
+        <title>Quapp</title>
         <body>
           <Main />
           <NextScript />
