@@ -69,14 +69,16 @@ const Home: FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
               <AppartmentSVG className="-ml-24 h-[130px] w-full flex-1" />
               <p className="m-0 flex-1 font-light">{t('HOME_intro')}</p>
             </div>
-            <Button
-              type="submit"
-              variant="contained"
-              color="secondary"
-              className="mx-auto mt-5 mb-3 block px-14"
-            >
-              {t('HOME_signup_free')}
-            </Button>
+            <Link underline="none" href="/auth/signup">
+              <Button
+                type="submit"
+                variant="contained"
+                color="secondary"
+                className="mx-auto mt-5 mb-3 block px-14"
+              >
+                {t('HOME_signup_free')}
+              </Button>
+            </Link>
             <Box className="text-center">
               <Link
                 underline="hover"
