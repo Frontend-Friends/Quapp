@@ -27,10 +27,14 @@ const Footer: FC = () => {
         </ul>
         <Link
           underline="hover"
-          href="#"
+          href="/"
           className="block flex-[0_0_100px] text-white"
+          title={t('GLOBAL_back_to_home')}
         >
-          <LogoSVG className="mx-auto block w-full" />
+          <LogoSVG
+            aria-labelledby="LogoTitle"
+            className="mx-auto block w-full"
+          />
         </Link>
       </div>
       <hr className="h-[1px] border-0 bg-blueishGray-300" />

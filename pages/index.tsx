@@ -58,7 +58,10 @@ const Home: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
       <main className="text-blueishGray-600">
         <section className="relative bg-gradient-to-br from-violetRed-600 via-violetRed-600 to-violetRed-900 pb-10 text-white">
           <div className="p-3">
-            <LogoSVG className="mx-auto block w-1/2" />
+            <LogoSVG
+              aria-labelledby="LogoTitle"
+              className="mx-auto block w-1/2"
+            />
             <h1 className="text-center text-lg font-medium">
               Die App die Nachbarn verbindet.
             </h1>
