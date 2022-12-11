@@ -4,6 +4,7 @@ import {
   Box,
   FormControlLabel,
   FormGroup,
+  IconButton,
   Modal,
   Switch,
   TextField,
@@ -17,6 +18,7 @@ import { sendFormData } from '../../lib/helpers/send-form-data'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 import { LoadingButton } from '@mui/lab'
+import CloseIcon from '@mui/icons-material/Close'
 
 export const CreateEditProduct = ({
   showModal,
@@ -55,12 +57,46 @@ export const CreateEditProduct = ({
           backgroundColor: 'background.paper',
           p: 4,
           m: 0,
+          height: { xs: '100%', sm: 'auto' },
           maxHeight: '100%',
           overflow: 'auto',
           borderRadius: { sm: 2 },
         }}
       >
-        <Typography variant="h2">{t('CREATE_PRODUCT_page_title')}</Typography>
+        <Box
+          sx={{
+            position: 'sticky',
+            top: 0,
+            height: 0,
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'flex-end',
+            zIndex: 10,
+          }}
+        >
+          <IconButton
+            title={t('BUTTON_close')}
+            sx={{
+              backgroundColor: 'background.paper',
+              border: 1,
+              borderColor: 'divider',
+              marginTop: -3,
+              marginRight: -3,
+              width: '48px',
+              height: '48px',
+            }}
+            onClick={() => {
+              onClose(false)
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </Box>
+        <Typography variant="h2">
+          {product
+            ? t('EDIT_PRODUCT_page_title')
+            : t('CREATE_PRODUCT_page_title')}
+        </Typography>
         <Formik
           initialValues={
             {
