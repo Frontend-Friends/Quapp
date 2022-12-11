@@ -12,6 +12,7 @@ import { useTranslation } from '../hooks/use-translation'
 import { WaveWhiteSVG } from '../components/svg/wave_white'
 import { WaveWhiteBottomSVG } from '../components/svg/wave_white_bottom'
 import { WaveWhiteTopSVG } from '../components/svg/wave_white_top'
+import Footer from '../components/footer'
 
 export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
   const { user } = req.session
@@ -143,7 +144,7 @@ const Home: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
           </p>
         </section>
       </main>
-      <footer></footer>
+      <Footer />
     </>
   )
 }
