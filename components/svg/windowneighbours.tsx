@@ -1,6 +1,8 @@
 import { SVGProps } from 'react'
+import { useTranslation } from '../../hooks/use-translation'
 
 export const WindowNeighboursSVG = (props: SVGProps<SVGSVGElement>) => {
+  const t = useTranslation()
   return (
     <svg
       width="495"
@@ -8,8 +10,10 @@ export const WindowNeighboursSVG = (props: SVGProps<SVGSVGElement>) => {
       viewBox="0 0 495 236"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      role="img"
       {...props}
     >
+      <title id="windowNeighboursTitle">{t('SVG_windowneighbours')}</title>
       <g clipPath="url(#clip0_726_4922)">
         <path d="M233 217H-3V234H233V217Z" fill="#E6E6E6" />
         <path

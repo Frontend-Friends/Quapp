@@ -77,6 +77,14 @@ export const translations: Record<string, string> = {
   CHAT_message_required: 'Das Feld ist pflicht',
 
   SVG_logo: 'Das Quapp Logo mit Link auf die Startseite',
+  SVG_appartment:
+    'Eine rein Dekorative Illustration die ein Wohngebäude zeigt.',
+  SVG_collaborator:
+    'Eine rein Dekorative Illustration die zusammenarbeitende Menschen zeigt.',
+  SVG_hangout:
+    'Eine rein Dekorative Illustration die zwei Personen zeigt, welche zusammen an einem Tisch einen Kaffe trinken.',
+  SVG_windowneighbours:
+    'Eine rein Dekorative Illustration die zwei sich unterhaltende Nachbarn zeigt.',
 
   FOOTER_contact: 'Kontakt',
   FOOTER_imprint: 'Impressum',

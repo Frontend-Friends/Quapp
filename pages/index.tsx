@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import { withIronSessionSsr } from 'iron-session/next'
 import { ironOptions } from '../lib/config'
-import React from 'react'
+import { FC } from 'react'
 import { LogoSVG } from '../components/svg/quapp_logo'
 import { AppartmentSVG } from '../components/svg/appartment'
 import { WindowNeighboursSVG } from '../components/svg/windowneighbours'
@@ -21,7 +21,7 @@ export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
   }
 }, ironOptions)
 
-const Home: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
+const Home: FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
   const t = useTranslation()
   console.log(isLoggedIn)
   return (
@@ -59,7 +59,7 @@ const Home: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
         <section className="relative bg-gradient-to-br from-violetRed-600 via-violetRed-600 to-violetRed-900 pb-10 text-white">
           <div className="p-3">
             <LogoSVG
-              aria-labelledby="LogoTitle"
+              aria-labelledby="logoTitle"
               className="mx-auto block w-1/2"
             />
             <h1 className="text-center text-lg font-medium">

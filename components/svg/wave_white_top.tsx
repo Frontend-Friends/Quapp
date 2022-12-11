@@ -2,7 +2,12 @@ import { SVGProps } from 'react'
 
 export const WaveWhiteTopSVG = (props: SVGProps<SVGSVGElement>) => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 375 63.52" {...props}>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 375 63.52"
+      role="none"
+      {...props}
+    >
       <g>
         <path
           fill="#FFFFFF"
