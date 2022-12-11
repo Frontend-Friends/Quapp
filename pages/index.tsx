@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import styles from '../styles/home.module.scss'
 import { withIronSessionSsr } from 'iron-session/next'
 import { ironOptions } from '../lib/config'
 import React from 'react'
@@ -55,13 +54,11 @@ const Home: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
         />
       </Head>
 
-      <main>
-        <section
-          className={`relative bg-gradient-to-br from-violetRed-600 via-violetRed-600 to-violetRed-900 pb-10 text-white`}
-        >
+      <main className="text-blueishGray-600">
+        <section className="relative bg-gradient-to-br from-violetRed-600 via-violetRed-600 to-violetRed-900 pb-10 text-white">
           <div className="p-3">
             <LogoSVG className="mx-auto block w-1/2" />
-            <h1 className="text-center text-lg font-normal">
+            <h1 className="text-center text-lg font-medium">
               Die App die Nachbarn verbindet.
             </h1>
             <div className="flex gap-5">
@@ -94,14 +91,13 @@ const Home: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
             className="absolute bottom-0 w-full"
           />
         </section>
-
         <section>
           <WindowNeighboursSVG className="w-full" />
           <div className="p-3">
-            <h2 className="m-0 text-center text-xl text-blueishGray-600">
+            <h2 className="m-0 text-center font-medium">
               Sich gegenseitig unterstützen.
             </h2>
-            <p className="text-center text-blueishGray-600">
+            <p className="mt-1 text-center">
               Wer kennt es nicht: Man braucht mal eben kurz eine Bohrmaschine
               oder jemanden der einem fünf Minuten hilft einen Tisch zu tragen,
               aber man kennt die Nachbarn nocht nicht und hat niemanden zum
@@ -109,33 +105,37 @@ const Home: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
             </p>
           </div>
         </section>
-
-        <section className="relative bg-slate-300">
+        <section className="relative mb-10 bg-gradient-to-t from-slate-300 to-slate-200 pb-24">
           <WaveWhiteTopSVG
             preserveAspectRatio="none"
             className="absolute top-0 w-full"
           />
           <CollaboratorSVG className="relative h-[256px] w-full" />
-          <h2>Spaces.</h2>
-          <p>
-            Indem du selbst einen Space erstellst oder einem vorhandenen Space
-            mit einer Einladung beitrittst, wirst du Teil der Gemeinschaft.
-          </p>
-          <h2>Angebote.</h2>
-          <p>
-            Logge dich ein und durchsuche die Angebote deiner Nachbarn oder
-            stelle einfach selbst ein Angebot für andere ein.
-          </p>
+          <div className="p-3">
+            <h2 className="m-0 text-3xl font-medium">Spaces.</h2>
+            <p className="mt-1">
+              Indem du selbst einen Space erstellst oder einem vorhandenen Space
+              mit einer Einladung beitrittst, wirst du Teil der Gemeinschaft.
+            </p>
+            <h2 className="m-0 text-right text-3xl font-medium">Angebote.</h2>
+            <p className="mt-1 text-right">
+              Logge dich ein und durchsuche die Angebote deiner Nachbarn oder
+              stelle einfach selbst ein Angebot für andere ein.
+            </p>
+          </div>
           <WaveWhiteBottomSVG
             preserveAspectRatio="none"
             className="absolute bottom-0 w-full"
           />
         </section>
-
         <section>
-          <HangoutSVG className="h-[256px] w-full" />
-          <h2>Gemeinsam Nachbarn sein.</h2>
-          <p>
+          <div className="relative">
+            <h2 className="absolute m-0 w-1/2 pl-[30%] text-left text-4xl font-medium">
+              Gemeinsam Nachbarn sein.
+            </h2>
+            <HangoutSVG className="-ml-20 h-[256px] w-full" />
+          </div>
+          <p className="p-3 text-center">
             Sharing is caring - nach dieser Devise sollte unserer Meinung nach,
             jede Nachbarschaft leben! <strong>Quapp</strong> ermöglicht es dir
             ganz einfach Kontakt zu deiner Nachbarschaft aufzubauen und sich
@@ -143,8 +143,7 @@ const Home: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
           </p>
         </section>
       </main>
-
-      <footer className={styles.footer}></footer>
+      <footer></footer>
     </>
   )
 }
