@@ -113,6 +113,11 @@ export const Product = ({
                   setProductList((state) =>
                     state?.filter((entry) => entry.id !== id)
                   )
+                  setAlert({
+                    severity: 'success',
+                    children: t('DELETE_PRODUCT_success_text'),
+                  })
+                  setOpenSnackbar(true)
                 }}
                 onEdit={async (id) => {
                   const fetchedProduct = await fetchProductOnClient(
@@ -139,7 +144,7 @@ export const Product = ({
             return state ? [...state] : state
           })
           setAlert({
-            severity: 'info',
+            severity: 'success',
             children: `${t('PRODUCT_updated_info')} ${updatedProduct.title}`,
           })
           setOpenSnackbar(true)
@@ -161,6 +166,7 @@ export const Product = ({
         onClose={() => {
           setOpenSnackbar(false)
         }}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       >
         <Alert {...alert} />
       </Snackbar>

@@ -25,16 +25,17 @@ export const translations: Record<string, string> = {
   PRODUCTS_title: 'Produkte',
   PRODUCTS_no_entries: 'Leider gibt es noch keine Einträge.',
   PRODUCT_not_available: 'Nicht verfügbar',
-  PRODUCT_add: 'Neues Produckt erstellen',
+  PRODUCT_add: 'Neues Produkt erstellen',
   PRODUCT_image: 'Produkt Bild',
   PRODUCT_edit: 'bearbeiten',
   PRODUCT_delete: 'löschen',
-  PRODUCT_UPDATED_info: '',
+  PRODUCT_updated_info: 'Der Eintrag wurde gespeichert:',
 
   DELETE_cancel_button: 'abbrechen',
   DELETE_confirm_button: 'löschen',
   DELETE_title: 'Löschen von: ',
   DELETE_text: 'Der Eintrag wird unwiederruflich gelöscht.',
+  DELETE_PRODUCT_success_text: 'Der Eintrag wurde erfolgreich gelöscht.',
 
   SAVE_PRODUCT_submit: 'speichern',
 
