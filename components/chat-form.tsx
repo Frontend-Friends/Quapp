@@ -47,7 +47,7 @@ export const ChatForm = ({
       }}
     >
       {({ values, handleSubmit, handleBlur, handleChange, errors }) => (
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4 mt-10">
+        <form onSubmit={handleSubmit} className="mt-10 flex flex-col gap-4">
           <TextField
             label={t('CHAT_message')}
             value={values.message}
