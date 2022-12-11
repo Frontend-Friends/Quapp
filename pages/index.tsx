@@ -26,7 +26,7 @@ const Home: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
   return (
     <>
       <Head>
-        <title>Quapp - Die App die Nachbarn verbindet</title>
+        <title>{t('HTML_TITLE_general')}</title>
         <link
           rel="apple-touch-icon"
           sizes="180x180"
@@ -54,25 +54,22 @@ const Home: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
         />
       </Head>
 
-      <main className="text-blueishGray-600">
+      <main className="mx-auto max-w-[680px] text-blueishGray-600">
         <section className="relative bg-gradient-to-br from-violetRed-600 via-violetRed-600 to-violetRed-900 pb-10 text-white">
           <div className="p-3">
             <LogoSVG className="mx-auto block w-1/2" />
             <h1 className="text-center text-lg font-medium">
-              Die App die Nachbarn verbindet.
+              {t('HOME_subtitle')}
             </h1>
             <div className="flex gap-5">
               <AppartmentSVG className="-ml-24 h-[130px] w-full flex-1" />
-              <p className="m-0 flex-1 font-light">
-                Du brauchst ein Werkzeug oder eine helfende Hand? Quapp
-                ermöglicht dir einfachen Kontakt zu deinen Nachbarn!
-              </p>
+              <p className="m-0 flex-1 font-light">{t('HOME_intro')}</p>
             </div>
             <Button
               type="submit"
               variant="contained"
               color="secondary"
-              className="mx-auto mt-5 mb-3 block px-16"
+              className="mx-auto mt-5 mb-3 block px-14"
             >
               {t('HOME_signup_free')}
             </Button>
@@ -95,14 +92,9 @@ const Home: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
           <WindowNeighboursSVG className="w-full" />
           <div className="p-3">
             <h2 className="m-0 text-center font-medium">
-              Sich gegenseitig unterstützen.
+              {t('HOME_support_title')}
             </h2>
-            <p className="mt-1 text-center">
-              Wer kennt es nicht: Man braucht mal eben kurz eine Bohrmaschine
-              oder jemanden der einem fünf Minuten hilft einen Tisch zu tragen,
-              aber man kennt die Nachbarn nocht nicht und hat niemanden zum
-              Fragen.
-            </p>
+            <p className="mt-1 text-center">{t('HOME_support_text')}</p>
           </div>
         </section>
         <section className="relative mb-10 bg-gradient-to-t from-slate-300 to-slate-200 pb-24">
@@ -111,17 +103,15 @@ const Home: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
             className="absolute top-0 w-full"
           />
           <CollaboratorSVG className="relative h-[256px] w-full" />
-          <div className="p-3">
-            <h2 className="m-0 text-3xl font-medium">Spaces.</h2>
-            <p className="mt-1">
-              Indem du selbst einen Space erstellst oder einem vorhandenen Space
-              mit einer Einladung beitrittst, wirst du Teil der Gemeinschaft.
-            </p>
-            <h2 className="m-0 text-right text-3xl font-medium">Angebote.</h2>
-            <p className="mt-1 text-right">
-              Logge dich ein und durchsuche die Angebote deiner Nachbarn oder
-              stelle einfach selbst ein Angebot für andere ein.
-            </p>
+          <div className="z-1 relative p-3">
+            <h2 className="m-0 text-3xl font-medium">
+              {t('HOME_spaces_title')}
+            </h2>
+            <p className="mt-1">{t('HOME_spaces_text')}</p>
+            <h2 className="m-0 text-right text-3xl font-medium">
+              {t('HOME_offers_title')}
+            </h2>
+            <p className="mt-1 text-right">{t('HOME_offers_text')}</p>
           </div>
           <WaveWhiteBottomSVG
             preserveAspectRatio="none"
@@ -131,16 +121,11 @@ const Home: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
         <section>
           <div className="relative">
             <h2 className="absolute m-0 w-1/2 pl-[30%] text-left text-4xl font-medium">
-              Gemeinsam Nachbarn sein.
+              {t('HOME_support_title')}
             </h2>
             <HangoutSVG className="-ml-20 h-[256px] w-full" />
           </div>
-          <p className="p-3 text-center">
-            Sharing is caring - nach dieser Devise sollte unserer Meinung nach,
-            jede Nachbarschaft leben! <strong>Quapp</strong> ermöglicht es dir
-            ganz einfach Kontakt zu deiner Nachbarschaft aufzubauen und sich
-            gegenseitig zu unterstützen.
-          </p>
+          <p className="p-3 text-center">{t('HOME_support_text')}</p>
         </section>
       </main>
       <footer></footer>
