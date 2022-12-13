@@ -71,6 +71,7 @@ export const ProductDetail = ({
     >
       {product ? (
         <CondensedContainer
+          className="min-h-screen sm:min-h-max"
           sx={{
             position: 'relative',
             backgroundColor: 'background.paper',
@@ -111,7 +112,7 @@ export const ProductDetail = ({
           </Box>
           <Header
             title={product.title}
-            lead={product.lead}
+            lead={product.description}
             imgSrc={product.imgSrc}
           />
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, py: 4 }}>

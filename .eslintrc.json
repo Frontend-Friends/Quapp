@@ -9,8 +9,8 @@
   ],
   "ignorePatterns": [
     "public/",
-    "./tailwind.config.js",
-    "./lint-staged.config.js"
+    "tailwind.config.js",
+    "lint-staged.config.js"
   ],
   "rules": {
     "@typescript-eslint/ban-ts-comment": "off",

@@ -30,6 +30,7 @@ export const translations: Record<string, string> = {
   PRODUCT_edit: 'bearbeiten',
   PRODUCT_delete: 'löschen',
   PRODUCT_updated_info: 'Der Eintrag wurde gespeichert:',
+  PRODUCT_settings: 'Produkteinstellungen',
 
   DELETE_cancel_button: 'abbrechen',
   DELETE_confirm_button: 'löschen',
@@ -47,7 +48,6 @@ export const translations: Record<string, string> = {
   CREATE_PRODUCT_upload: 'Bild hochladen',
   CREATE_PRODUCT_description: 'Produkt Beschreibung',
   CREATE_PRODUCT_title: 'Produkt Titel',
-  CREATE_PRODUCT_lead: 'Produkt Leittext',
   CREATE_PRODUCT_text: 'Produkt Text',
   CREATE_PRODUCT_submit: 'Produkt erstellen',
   CREATE_PRODUCT_loading: 'übertragen...',
@@ -58,6 +58,8 @@ export const translations: Record<string, string> = {
   BUTTON_borrow: 'Ich möchte das ausleihen!',
   BUTTON_contact: 'Kontakt aufnehmen',
   BUTTON_info: 'mehr erfahren',
+  BUTTON_close: 'schliessen',
+  BUTTON_remove_upload: 'Hochgeladenes Bild entfernen',
 
   CHAT_title: 'Nachrichten',
 

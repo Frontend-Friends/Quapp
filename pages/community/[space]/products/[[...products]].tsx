@@ -18,9 +18,9 @@ import { fetchProductList } from '../../../../lib/services/fetch-product-list'
 import AddIcon from '@mui/icons-material/Add'
 import { CreateEditProduct } from '../../../../components/products/create-product'
 import {
-  useFetchProductDetail,
-  fetchProduct as fetchProductOnClient,
   deleteProduct,
+  fetchProduct as fetchProductOnClient,
+  useFetchProductDetail,
 } from '../../../../hooks/use-fetch-product-detail'
 import { withIronSessionSsr } from 'iron-session/next'
 import { sessionOptions } from '../../../../config/session-config'
@@ -140,6 +140,8 @@ export const Product = ({
             )
             if (state && foundIndex !== undefined && foundIndex > -1) {
               state[foundIndex] = updatedProduct
+            } else {
+              state?.unshift(updatedProduct)
             }
             return state ? [...state] : state
           })

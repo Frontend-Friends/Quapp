@@ -15,7 +15,6 @@ export type ProductChatType = {
 export type ProductType = {
   id: string
   title: string
-  lead?: string
   text: string
   description?: string
   imgSrc?: string
@@ -24,6 +23,7 @@ export type ProductType = {
     id: string
     userName: string
   }
+  createdAt: string
   chats: ProductChatType[]
 }
 
@@ -39,7 +39,7 @@ export type SpaceItemType = {
 
 export type CreateProduct = Pick<
   ProductType,
-  'title' | 'lead' | 'text' | 'description' | 'isAvailable'
+  'title' | 'text' | 'description' | 'isAvailable'
 > & { img?: File }
 
 export type ProductFormData = {

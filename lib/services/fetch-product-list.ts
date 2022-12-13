@@ -31,5 +31,15 @@ export const fetchProductList = async (space: string) => {
     })
   )
 
+  products.sort((a, b) => {
+    if (!a.createdAt) {
+      return 1
+    }
+    if (!b.createdAt) {
+      return -1
+    }
+    return a.createdAt > b.createdAt ? -1 : 1
+  })
+
   return products as ProductType[]
 }

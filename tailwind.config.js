@@ -10,6 +10,6 @@ module.exports = {
   theme: {
     extend: {},
   },
-  important: '#__next',
+  important: 'body',
   plugins: ['tailwindcss', 'postcss-preset-env'],
 }

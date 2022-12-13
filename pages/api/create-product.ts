@@ -7,6 +7,7 @@ import { ProductFormData } from '../../components/products/types'
 import { withIronSessionApiRoute } from 'iron-session/next'
 import { sessionOptions } from '../../config/session-config'
 import { parsedForm } from '../../lib/helpers/parsed-form'
+import { fetchProduct } from '../../lib/services/fetch-product'
 
 export const config = {
   api: {
@@ -22,6 +23,7 @@ async function createProduct(req: NextApiRequest, res: NextApiResponse) {
       res.redirect('/auth/login')
       return
     }
+
     const formData = await parsedForm<ProductFormData>(req)
 
     await createProductSchema.validate({
@@ -34,15 +36,17 @@ async function createProduct(req: NextApiRequest, res: NextApiResponse) {
     const docRef = collection(db, 'spaces', space as string, 'products')
 
     const userRef = doc(db, 'user', user.id)
-
     const productId = await addDoc(docRef, {
       ...formData.fields,
+      createdAt: new Date().getTime(),
       imgSrc,
       isAvailable: true,
       owner: userRef,
     }).then((r) => r.id)
 
-    res.status(200).json({ isOk: true, productId })
+    const productData = await fetchProduct(space as string, productId)
+
+    res.status(200).json({ isOk: true, productId, product: productData })
   } catch (err) {
     console.error(err)
     res.status(500).json({ isOk: false })
