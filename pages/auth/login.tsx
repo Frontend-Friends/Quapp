@@ -44,7 +44,6 @@ const Login: FC = () => {
           body: JSON.stringify({ ...values }),
           cache: 'default',
         })
-
         if (fetchedLogin.session) {
           setIsLoading(false)
           await router.push('/community/dashboard')
