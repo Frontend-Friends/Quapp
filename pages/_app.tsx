@@ -7,6 +7,8 @@ import { CacheProvider, EmotionCache } from '@emotion/react'
 import theme from '../config/theme'
 import createEmotionCache from '../config/create-emotion-cache'
 import '../styles/globals.scss'
+import { useTranslation } from '../hooks/use-translation'
+import Footer from '../components/footer'
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
@@ -21,15 +23,18 @@ export default function App({
   emotionCache = clientSideEmotionCache,
   pageProps,
 }: MyAppProps) {
+  const t = useTranslation()
+
   return (
     <CacheProvider value={emotionCache}>
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
-        <title>Quapp - Die App die Nachbarn verbindet.</title>
+        <title>{t('HTML_TITLE_general')}</title>
       </Head>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Component {...pageProps} />
+        <Footer />
       </ThemeProvider>
     </CacheProvider>
   )
