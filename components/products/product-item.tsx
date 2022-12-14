@@ -28,12 +28,9 @@ export const ProductItem: FC<{
   return (
     <Card
       variant={product.isAvailable ? undefined : 'outlined'}
-      sx={{
-        backgroundColor: product.isAvailable ? undefined : 'background.paper',
-        display: 'flex',
-        flexFlow: 'column',
-        height: '100%',
-      }}
+      className={`flex h-full flex-col bg-[${
+        product.isAvailable ? undefined : 'background.paper'
+      }]`}
     >
       <CardHeader
         title={product.title}
@@ -49,16 +46,14 @@ export const ProductItem: FC<{
         <CardMedia component="img" height={194} src={product.imgSrc} />
       )}
       {!product.imgSrc && (
-        <Box
-          sx={{ width: '100%', flexGrow: '1', bgcolor: 'secondary.light' }}
-        />
+        <Box className={`bg-[secondary.light] w-full grow`} />
       )}
-      <CardContent sx={{ mt: 'auto' }}>
+      <CardContent className="mt-auto">
         {product.description && (
           <Typography variant="body2">{product.description}</Typography>
         )}
       </CardContent>
-      <CardActions sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+      <CardActions className="flex justify-end">
         {!product.isAvailable && (
           <Box p={1} color="red">
             {t('PRODUCT_not_available')}
