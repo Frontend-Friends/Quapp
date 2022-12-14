@@ -75,11 +75,7 @@ export const BorrowForm = ({ onSubmit }: { onSubmit: OnBorrowSubmit }) => {
                 )}
               />
             </LocalizationProvider>
-            <Button
-              type="submit"
-              variant="contained"
-              sx={{ ml: 'auto', mt: 2 }}
-            >
+            <Button type="submit" variant="contained" className="ml-auto mt-4">
               {t('BORROW_button_submit')}
             </Button>
           </Box>
