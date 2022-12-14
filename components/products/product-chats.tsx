@@ -35,15 +35,7 @@ export const ProductChats = ({
   }, [])
 
   return (
-    <Box
-      sx={{
-        p: 3,
-        mt: 2,
-        border: 1,
-        borderRadius: 2,
-        borderColor: 'divider',
-      }}
-    >
+    <Box className="border-[divider] mt-4 rounded border p-6">
       <Typography variant="h6">{t('CHAT_title')}</Typography>
       {!isOwner && (
         <ChatForm

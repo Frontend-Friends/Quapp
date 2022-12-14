@@ -67,7 +67,7 @@ export const BorrowForm = ({ onSubmit }: { onSubmit: OnBorrowSubmit }) => {
                   <>
                     <TextField
                       {...params}
-                      sx={{ mt: 2 }}
+                      className="mt-4"
                       error={!!props.errors.borrowDate}
                       helperText={props.errors.borrowDate}
                     />

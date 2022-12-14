@@ -41,59 +41,34 @@ export const ProductChat = ({
         const hasDate = mayHasDate(entry, history, index)
         const alignLeft = isOwner ? entry.fromOwner : !entry.fromOwner
         return (
-          <Box
-            key={index}
-            sx={{
-              display: 'flex',
-              flexFlow: 'column',
-              '&:not(:first-of-type)': { mt: 2 },
-            }}
-          >
-            <Box
-              sx={{
-                display: 'flex',
-                flexFlow: 'column',
-                alignItems: 'center',
-              }}
-            >
+          <Box key={index} className="&:not(:first-of-type:mt-4) flex flex-col">
+            <Box className="flex flex-col items-center">
               {hasDate && (
-                <Typography
-                  variant="body2"
-                  sx={{
-                    color: 'text.disabled',
-                  }}
-                >
+                <Typography variant="body2" className="text-[text.disabled]">
                   {dayjs(entry.dateTime).format('D.MM.YYYY, HH:MM:ss')}
                 </Typography>
               )}
               <Typography
                 variant="body2"
-                sx={{
-                  color: 'text.disabled',
-                  ml: alignLeft ? 'auto' : undefined,
-                  mr: !alignLeft ? 'auto' : undefined,
-                }}
+                className={`text-[text.disabled] ml-${
+                  alignLeft ? 'auto' : undefined
+                } mr-${!alignLeft ? 'auto' : undefined}`}
               >
                 {entry.fromOwner ? productOwnerName : userName}
               </Typography>
             </Box>
             <Box
-              sx={{
-                position: 'relative',
-                ml: alignLeft ? 'auto' : 0,
-                mr: alignLeft ? 0 : 'auto',
-                maxWidth: '80%',
-                border: 1,
-                borderColor: 'divider',
-                borderRadius: 2,
-                borderTopLeftRadius: alignLeft ? undefined : 2,
-                borderTopRightRadius: alignLeft ? 2 : undefined,
-                textAlign: alignLeft ? 'right' : 'left',
-                color: alignLeft ? 'primary.contrastText' : undefined,
-                backgroundColor: alignLeft ? 'primary.main' : undefined,
-              }}
+              className={`border-[divider] relative max-w-[80%] rounded border ml-${
+                alignLeft ? 'auto' : 0
+              } mr-${alignLeft ? 0 : 'auto'} ${
+                alignLeft ? undefined : 'rounded-tl'
+              } ${alignLeft ? 'rounded-tr' : undefined} text-[${
+                alignLeft ? 'right' : 'left'
+              }] text-[${alignLeft ? 'primary.contrastText' : undefined}] bg-[${
+                alignLeft ? 'primary.main' : undefined
+              }]`}
             >
-              <Box sx={{ p: 2 }}>{entry.message}</Box>
+              <Box className="p-4">{entry.message}</Box>
             </Box>
           </Box>
         )

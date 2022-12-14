@@ -25,24 +25,9 @@ export const CreateNewProduct = ({
     <Modal
       open={showModal && !onSuccess}
       onClose={() => onClose(false)}
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        p: { sm: 5 },
-      }}
+      className="flex items-center justify-center sm:p-10"
     >
-      <CondensedContainer
-        sx={{
-          position: 'relative',
-          backgroundColor: 'background.paper',
-          p: 4,
-          m: 0,
-          maxHeight: '100%',
-          overflow: 'auto',
-          borderRadius: { sm: 2 },
-        }}
-      >
+      <CondensedContainer className="bg-[background.paper] relative m-0 max-h-full overflow-auto p-8 sm:rounded">
         <Typography variant="h2">{t('CREATE_PRODUCT_page_title')}</Typography>
         <Formik
           initialValues={
@@ -74,7 +59,7 @@ export const CreateNewProduct = ({
         >
           {(props) => (
             <form onSubmit={props.handleSubmit}>
-              <Box sx={{ pt: 5, pb: 2, display: 'grid' }}>
+              <Box className="grid pt-10 pb-4">
                 <TextField
                   label={t('CREATE_PRODUCT_upload')}
                   onChange={props.handleChange}
@@ -92,7 +77,7 @@ export const CreateNewProduct = ({
                   name="title"
                   error={!!props.errors.title}
                   helperText={props.errors.title}
-                  sx={{ mt: 2 }}
+                  className="mt-4"
                 />
                 <TextField
                   label={t('CREATE_PRODUCT_description')}
@@ -102,7 +87,7 @@ export const CreateNewProduct = ({
                   name="description"
                   error={!!props.errors.description}
                   helperText={props.errors.description}
-                  sx={{ mt: 2 }}
+                  className="mt-4"
                 />
                 <TextField
                   multiline
@@ -113,7 +98,7 @@ export const CreateNewProduct = ({
                   name="lead"
                   error={!!props.errors.lead}
                   helperText={props.errors.lead}
-                  sx={{ mt: 2 }}
+                  className="mt-4"
                 />
                 <TextField
                   multiline
@@ -124,12 +109,12 @@ export const CreateNewProduct = ({
                   name="text"
                   error={!!props.errors.text}
                   helperText={props.errors.text}
-                  sx={{ mt: 2 }}
+                  className="mt-4"
                 />
                 <Button
                   type="submit"
                   variant="contained"
-                  sx={{ ml: 'auto', mt: 2 }}
+                  className="ml-auto mt-4"
                   disabled={loading}
                 >
                   {loading && t('CREATE_PRODUCT_loading')}
