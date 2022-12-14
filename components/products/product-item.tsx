@@ -16,6 +16,7 @@ import Link from 'next/link'
 import { ProductType } from './types'
 import { useRouter } from 'next/router'
 import { User } from '../user/types'
+import clsx from 'clsx'
 
 export const ProductItem: FC<{
   product: ProductType
@@ -28,9 +29,10 @@ export const ProductItem: FC<{
   return (
     <Card
       variant={product.isAvailable ? undefined : 'outlined'}
-      className={`flex h-full flex-col bg-[${
-        product.isAvailable ? undefined : 'background.paper'
-      }]`}
+      className={clsx(
+        'flex h-full flex-col',
+        product.isAvailable && 'bg-white'
+      )}
     >
       <CardHeader
         title={product.title}
@@ -45,9 +47,8 @@ export const ProductItem: FC<{
       {product.imgSrc && (
         <CardMedia component="img" height={194} src={product.imgSrc} />
       )}
-      {!product.imgSrc && (
-        <Box className={`bg-[secondary.light] w-full grow`} />
-      )}
+
+      {!product.imgSrc && <Box className={`w-full grow bg-slate-200`} />}
       <CardContent className="mt-auto">
         {product.description && (
           <Typography variant="body2">{product.description}</Typography>

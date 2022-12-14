@@ -2,6 +2,7 @@ import { Box, Typography } from '@mui/material'
 import dayjs from 'dayjs'
 import React from 'react'
 import { ChatMessage } from './types'
+import clsx from 'clsx'
 
 const mayHasDate = (
   entry: ChatMessage,
@@ -44,29 +45,27 @@ export const ProductChat = ({
           <Box key={index} className="&:not(:first-of-type:mt-4) flex flex-col">
             <Box className="flex flex-col items-center">
               {hasDate && (
-                <Typography variant="body2" className="text-[text.disabled]">
+                <Typography variant="body2" className="text-slate-400">
                   {dayjs(entry.dateTime).format('D.MM.YYYY, HH:MM:ss')}
                 </Typography>
               )}
               <Typography
                 variant="body2"
-                className={`text-[text.disabled] ml-${
-                  alignLeft ? 'auto' : undefined
-                } mr-${!alignLeft ? 'auto' : undefined}`}
+                className={clsx(
+                  'text-slate-400',
+                  alignLeft ? 'ml-auto' : 'mr-auto'
+                )}
               >
                 {entry.fromOwner ? productOwnerName : userName}
               </Typography>
             </Box>
             <Box
-              className={`border-[divider] relative max-w-[80%] rounded border ml-${
-                alignLeft ? 'auto' : 0
-              } mr-${alignLeft ? 0 : 'auto'} ${
-                alignLeft ? undefined : 'rounded-tl'
-              } ${alignLeft ? 'rounded-tr' : undefined} text-[${
-                alignLeft ? 'right' : 'left'
-              }] text-[${alignLeft ? 'primary.contrastText' : undefined}] bg-[${
-                alignLeft ? 'primary.main' : undefined
-              }]`}
+              className={clsx(
+                'relative max-w-[80%] rounded border border-slate-200',
+                alignLeft
+                  ? 'ml-auto mr-0 rounded-tl rounded-tr bg-violetRed-600 text-right text-white'
+                  : 'auto ml-0 text-left'
+              )}
             >
               <Box className="p-4">{entry.message}</Box>
             </Box>

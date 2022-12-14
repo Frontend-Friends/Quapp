@@ -66,12 +66,12 @@ export const ProductDetail = ({
       disablePortal
     >
       {product ? (
-        <CondensedContainer className="bg-[background.paper] relative m-0 max-h-full overflow-auto p-8 sm:rounded">
+        <CondensedContainer className="relative m-0 max-h-full overflow-auto bg-white p-8 sm:rounded">
           <Box className="sticky top-0 z-10 flex h-0 w-full justify-end">
             <Link href={backUrl} passHref shallow>
               <IconButton
                 title={t('BUTTON_close')}
-                className="bg-[background.paper] border-[divider] -mt-6 -mr-6 h-12 w-12 border"
+                className="-mt-6 -mr-6 h-12 w-12 border border-slate-200 bg-white"
               >
                 <CloseIcon />
               </IconButton>
@@ -93,7 +93,7 @@ export const ProductDetail = ({
           </Typography>
           {userId !== product.owner.id && (
             <Box className="relative flex flex-col">
-              <Box className="bg-[background.paper] border-[divider] absolute top-0 ml-4 rounded border p-2">
+              <Box className="absolute top-0 ml-4 rounded border border-slate-200 bg-white p-2">
                 <Typography variant="body2"> {t('BUTTON_borrow')}</Typography>
               </Box>
               <Card variant="outlined" className="mt-6">

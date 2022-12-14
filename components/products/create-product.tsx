@@ -27,7 +27,7 @@ export const CreateNewProduct = ({
       onClose={() => onClose(false)}
       className="flex items-center justify-center sm:p-10"
     >
-      <CondensedContainer className="bg-[background.paper] relative m-0 max-h-full overflow-auto p-8 sm:rounded">
+      <CondensedContainer className="relative m-0 max-h-full overflow-auto bg-white p-8 sm:rounded">
         <Typography variant="h2">{t('CREATE_PRODUCT_page_title')}</Typography>
         <Formik
           initialValues={
