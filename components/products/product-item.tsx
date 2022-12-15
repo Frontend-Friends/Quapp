@@ -16,6 +16,7 @@ import Link from 'next/link'
 import { ProductType } from './types'
 import { useRouter } from 'next/router'
 import { User } from '../user/types'
+import clsx from 'clsx'
 
 export const ProductItem: FC<{
   product: ProductType
@@ -28,12 +29,10 @@ export const ProductItem: FC<{
   return (
     <Card
       variant={product.isAvailable ? undefined : 'outlined'}
-      sx={{
-        backgroundColor: product.isAvailable ? undefined : 'background.paper',
-        display: 'flex',
-        flexFlow: 'column',
-        height: '100%',
-      }}
+      className={clsx(
+        'flex h-full flex-col',
+        product.isAvailable && 'bg-white'
+      )}
     >
       <CardHeader
         title={product.title}
@@ -48,17 +47,14 @@ export const ProductItem: FC<{
       {product.imgSrc && (
         <CardMedia component="img" height={194} src={product.imgSrc} />
       )}
-      {!product.imgSrc && (
-        <Box
-          sx={{ width: '100%', flexGrow: '1', bgcolor: 'secondary.light' }}
-        />
-      )}
-      <CardContent sx={{ mt: 'auto' }}>
+
+      {!product.imgSrc && <Box className={`w-full grow bg-slate-200`} />}
+      <CardContent className="mt-auto">
         {product.description && (
           <Typography variant="body2">{product.description}</Typography>
         )}
       </CardContent>
-      <CardActions sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+      <CardActions className="flex justify-end">
         {!product.isAvailable && (
           <Box p={1} color="red">
             {t('PRODUCT_not_available')}

@@ -2,6 +2,7 @@ import { Box, Typography } from '@mui/material'
 import dayjs from 'dayjs'
 import React from 'react'
 import { ChatMessage } from './types'
+import clsx from 'clsx'
 
 const mayHasDate = (
   entry: ChatMessage,
@@ -41,59 +42,32 @@ export const ProductChat = ({
         const hasDate = mayHasDate(entry, history, index)
         const alignLeft = isOwner ? entry.fromOwner : !entry.fromOwner
         return (
-          <Box
-            key={index}
-            sx={{
-              display: 'flex',
-              flexFlow: 'column',
-              '&:not(:first-of-type)': { mt: 2 },
-            }}
-          >
-            <Box
-              sx={{
-                display: 'flex',
-                flexFlow: 'column',
-                alignItems: 'center',
-              }}
-            >
+          <Box key={index} className="&:not(:first-of-type:mt-4) flex flex-col">
+            <Box className="flex flex-col items-center">
               {hasDate && (
-                <Typography
-                  variant="body2"
-                  sx={{
-                    color: 'text.disabled',
-                  }}
-                >
+                <Typography variant="body2" className="text-slate-400">
                   {dayjs(entry.dateTime).format('D.MM.YYYY, HH:MM:ss')}
                 </Typography>
               )}
               <Typography
                 variant="body2"
-                sx={{
-                  color: 'text.disabled',
-                  ml: alignLeft ? 'auto' : undefined,
-                  mr: !alignLeft ? 'auto' : undefined,
-                }}
+                className={clsx(
+                  'text-slate-400',
+                  alignLeft ? 'ml-auto' : 'mr-auto'
+                )}
               >
                 {entry.fromOwner ? productOwnerName : userName}
               </Typography>
             </Box>
             <Box
-              sx={{
-                position: 'relative',
-                ml: alignLeft ? 'auto' : 0,
-                mr: alignLeft ? 0 : 'auto',
-                maxWidth: '80%',
-                border: 1,
-                borderColor: 'divider',
-                borderRadius: 2,
-                borderTopLeftRadius: alignLeft ? undefined : 2,
-                borderTopRightRadius: alignLeft ? 2 : undefined,
-                textAlign: alignLeft ? 'right' : 'left',
-                color: alignLeft ? 'primary.contrastText' : undefined,
-                backgroundColor: alignLeft ? 'primary.main' : undefined,
-              }}
+              className={clsx(
+                'relative max-w-[80%] rounded border border-slate-200',
+                alignLeft
+                  ? 'ml-auto mr-0 rounded-tl rounded-tr bg-violetRed-600 text-right text-white'
+                  : 'auto ml-0 text-left'
+              )}
             >
-              <Box sx={{ p: 2 }}>{entry.message}</Box>
+              <Box className="p-4">{entry.message}</Box>
             </Box>
           </Box>
         )

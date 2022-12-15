@@ -48,7 +48,7 @@ const Dashboard: FC<InferGetServerSidePropsType<typeof getServerSideProps>> = ({
   const t = useTranslation()
 
   return (
-    <CondensedContainer sx={{ position: 'relative' }}>
+    <CondensedContainer className="relative">
       <Header title={t('SPACES_title')} />
       {!!spaces?.length ? (
         <Grid container columns={{ md: 1 }} spacing={{ xs: 4 }} pt={4}>
@@ -60,8 +60,8 @@ const Dashboard: FC<InferGetServerSidePropsType<typeof getServerSideProps>> = ({
         <Typography variant="body2">{t('SPACES_no_entries')}</Typography>
       )}
 
-      <Fab color="primary" aria-label="add" variant="extended" sx={{ mt: 4 }}>
-        <AddIcon sx={{ mr: 1 }} /> {t('SPACES_add_space')}
+      <Fab color="primary" aria-label="add" variant="extended" className="mt-8">
+        <AddIcon className="mr-2" /> {t('SPACES_add_space')}
       </Fab>
     </CondensedContainer>
   )
