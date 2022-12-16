@@ -11,7 +11,7 @@ import { withIronSessionSsr } from 'iron-session/next'
 import { ironOptions } from '../../lib/config'
 import { fetchJson } from '../../lib/helpers/fetch-json'
 
-const formGroupSX = { mb: 2 }
+const twFormGroup = 'mb-4'
 
 export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
   const { user } = req.session
@@ -63,7 +63,7 @@ const Login: FC = () => {
 
   return (
     <CondensedContainer>
-      <Typography variant="h1" sx={{ my: 3 }}>
+      <Typography variant="h1" className="my-6">
         {t('LOGIN_title')}
       </Typography>
       <Formik
@@ -80,9 +80,9 @@ const Login: FC = () => {
       >
         {(props) => (
           <form onSubmit={props.handleSubmit}>
-            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+            <Box className="flex flex-col">
               <TextField
-                sx={formGroupSX}
+                className={twFormGroup}
                 name="email"
                 value={props.values.email}
                 onChange={props.handleChange}
@@ -95,7 +95,7 @@ const Login: FC = () => {
               />
 
               <TextField
-                sx={formGroupSX}
+                className={twFormGroup}
                 name="password"
                 value={props.values.password}
                 onChange={props.handleChange}
@@ -110,13 +110,13 @@ const Login: FC = () => {
             <LoadingButton
               type="submit"
               variant="contained"
-              sx={{ mr: 2 }}
+              className="mr-4"
               loading={isLoading}
             >
               {t('LOGIN_login')}
             </LoadingButton>
-            <Box sx={{ mt: 3 }}>
-              <Link underline="hover" href="#" sx={{ mr: 2 }}>
+            <Box className="mt-6">
+              <Link underline="hover" href="#" className="mr-4">
                 {t('LOGIN_forgot_password')}
               </Link>
               <Link underline="hover" href="/auth/signup">

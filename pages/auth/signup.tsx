@@ -10,7 +10,7 @@ import { CondensedContainer } from '../../components/condensed-container'
 import { LoadingButton } from '@mui/lab'
 import { useRouter } from 'next/router'
 
-const formGroupSX = { mb: 2 }
+const twFormGroup = 'mb-4'
 
 const Signup: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false)
@@ -54,7 +54,7 @@ const Signup: React.FC = () => {
   const t = useTranslation()
   return (
     <CondensedContainer>
-      <Typography variant="h1" sx={{ my: 3 }}>
+      <Typography variant="h1" className="my-6">
         {t('SIGNUP_title')}
       </Typography>
       <Formik
@@ -72,9 +72,9 @@ const Signup: React.FC = () => {
       >
         {(props) => (
           <form onSubmit={props.handleSubmit}>
-            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+            <Box className="flex flex-col">
               <TextField
-                sx={formGroupSX}
+                className={twFormGroup}
                 name="firstName"
                 onChange={props.handleChange}
                 onBlur={props.handleBlur}
@@ -87,7 +87,7 @@ const Signup: React.FC = () => {
               />
 
               <TextField
-                sx={formGroupSX}
+                className={twFormGroup}
                 name="email"
                 onChange={props.handleChange}
                 onBlur={props.handleBlur}
@@ -100,7 +100,7 @@ const Signup: React.FC = () => {
               />
 
               <TextField
-                sx={formGroupSX}
+                className={twFormGroup}
                 name="password"
                 onChange={props.handleChange}
                 onBlur={props.handleBlur}
@@ -121,7 +121,7 @@ const Signup: React.FC = () => {
               {t('SIGNUP_signup')}
             </LoadingButton>
 
-            <Box sx={{ mt: 3 }}>
+            <Box className="mt-6">
               <Link underline="hover" href="/auth/login">
                 {t('LOGIN_has_account')}
               </Link>

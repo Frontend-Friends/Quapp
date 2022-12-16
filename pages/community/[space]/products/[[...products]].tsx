@@ -69,7 +69,7 @@ export const Product = ({
         color="secondary"
         aria-label={t('PRODUCT_add')}
         title={t('PRODUCT_add')}
-        sx={{ position: 'fixed', top: 72, right: 12, zIndex: 10 }}
+        className=" fixed top-[72px] right-[12px] z-10"
         onClick={() => {
           setShowCreateProduct(true)
         }}
@@ -83,7 +83,7 @@ export const Product = ({
         )}
         {!!products?.length &&
           products.map((item, index) => (
-            <Grid item xs={1} key={index} sx={{ flexGrow: '1' }}>
+            <Grid item xs={1} key={index} className="grow">
               <ProductItem product={item} userId={userId} />
             </Grid>
           ))}

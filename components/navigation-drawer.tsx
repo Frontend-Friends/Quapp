@@ -18,7 +18,7 @@ export const NavigationDrawer: FC<{
         sx: { minWidth: '240px' },
       }}
     >
-      <Box py={2} px={4} sx={{ display: 'grid', gap: '4px' }}>
+      <Box py={2} px={4} className="grid gap-1">
         {list.map((item, index) => (
           <Link href={item.href} passHref key={index}>
             <MuiLink underline="none">{item.label}</MuiLink>
