@@ -43,7 +43,7 @@ export function FileUpload<T extends CreateProduct>({
           component="span"
           className={`absolute inset-0 hover:bg-black/20 ${
             inputFocus ? 'bg-black/20' : 'bg-black/10'
-          } border-2 border-black/40 rounded-md flex items-center justify-between p-4 cursor-pointer`}
+          } flex cursor-pointer items-center justify-between rounded-md border-2 border-black/40 p-4`}
           aria-label={t('CREATE_PRODUCT_upload')}
         >
           {uploadText ? uploadText : t('CREATE_PRODUCT_upload')}

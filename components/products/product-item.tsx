@@ -44,21 +44,21 @@ export const ProductItem: FC<{
             variant="outlined"
             className={clsx(
               !product.isAvailable && 'bg-white',
-              'flex justify-start h-full'
+              'flex h-full justify-start'
             )}
           >
             {product.imgSrc && (
               <CardMedia
                 component="img"
                 height={100}
-                className="w-24 h-24 overflow-hidden object-cover flex-shrink-0"
+                className="h-24 w-24 flex-shrink-0 overflow-hidden object-cover"
                 src={product.imgSrc}
               />
             )}
             {!product.imgSrc && (
               <Box
                 component="span"
-                className="w-24 h-24 overflow-hidden object-cover bg-mintGreen-300 flex-shrink-0"
+                className="h-24 w-24 flex-shrink-0 overflow-hidden bg-mintGreen-300 object-cover"
               />
             )}
             <CardContent component="span">
@@ -93,10 +93,10 @@ export const ProductItem: FC<{
         aria-labelledby="delete-title"
         aria-describedby="delete-description"
       >
-        <CondensedContainer className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] bg-white drop-shadow-2xl m-0 p-8 rounded-2xl">
+        <CondensedContainer className="absolute top-1/2 left-1/2 m-0 w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-white p-8 drop-shadow-2xl">
           <h3 id="delete-title">{`${t('DELETE_title')} ${product.title}`}</h3>
           <p id="delete-description">{t('DELETE_text')}</p>
-          <Box className="grid gap-4 grid-cols-2">
+          <Box className="grid grid-cols-2 gap-4">
             <Button
               onClick={() => {
                 setOpenDeleteModal(false)

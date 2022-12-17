@@ -43,9 +43,9 @@ export const ProductForm = ({
     >
       {(props) => (
         <form onSubmit={props.handleSubmit}>
-          <Box className="pt-10 pb-4 grid relative">
+          <Box className="relative grid pt-10 pb-4">
             {product?.imgSrc && (
-              <Box className="w-full pt-[56%] overflow-hidden relative mb-8">
+              <Box className="relative mb-8 w-full overflow-hidden pt-[56%]">
                 <Image
                   src={product.imgSrc}
                   alt={t('PRODUCT_image')}

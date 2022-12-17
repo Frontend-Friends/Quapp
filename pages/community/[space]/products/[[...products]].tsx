@@ -105,7 +105,7 @@ export const Product = ({
         )}
         {!!productList?.length &&
           productList.map((item, index) => (
-            <Grid item xs={1} key={index} className="flex-grow w-full">
+            <Grid item xs={1} key={index} className="w-full flex-grow">
               <ProductItem
                 product={item}
                 userId={userId}
