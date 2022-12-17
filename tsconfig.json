@@ -17,5 +17,5 @@
   },
 
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules", "lint-staged.config.js"]
+  "exclude": ["node_modules", "lint-staged.config.js", "tailwind.config.js"]
 }
