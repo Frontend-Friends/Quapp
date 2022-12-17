@@ -1,24 +1,24 @@
 import { Box, Typography } from '@mui/material'
 import { FC } from 'react'
 import Image from 'next/image'
+import { useTranslation } from '../hooks/use-translation'
 
 export const Header: FC<{
   title: string
   lead?: string
   imgSrc?: string
 }> = ({ title, lead, imgSrc }) => {
+  const t = useTranslation()
   return (
     <header>
       <Typography variant="h1">{title}</Typography>
       {imgSrc && (
-        <Box
-          sx={{ position: 'relative', width: '100%', paddingTop: '50%', mt: 2 }}
-        >
+        <Box className="relative mt-4 w-full pt-[50%]">
           <Image
             src={imgSrc}
             layout="fill"
             objectFit="cover"
-            alt="Product Image"
+            alt={t('PRODUCT_image')}
           />
         </Box>
       )}

@@ -46,12 +46,12 @@ export const NavBar: FC<{
             edge="start"
             color="inherit"
             aria-label="menu"
-            sx={{ mr: 2 }}
+            className="mr-4"
             onClick={toggleDrawer}
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography variant="h6" component="div" className="grow">
             QUAPP
           </Typography>
 

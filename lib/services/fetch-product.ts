@@ -8,9 +8,9 @@ import {
 import { db } from '../../config/firebase'
 import { ProductChatType, ProductType } from '../../components/products/types'
 import { sortChatByTime } from '../scripts/sort-chat-by-time'
+import { getProduct } from './get-product'
 
 export const fetchProduct = async (space: string, productsQuery: string) => {
-  const ref = doc(db, 'spaces', space, 'products', productsQuery || '')
   const chatCollection = collection(
     db,
     'spaces',
@@ -19,14 +19,7 @@ export const fetchProduct = async (space: string, productsQuery: string) => {
     productsQuery || '',
     'chats'
   )
-  const productDetailSnap = await getDoc(ref).then(
-    (r) =>
-      ({
-        ...r.data(),
-        id: r.id,
-      } as DocumentData)
-  )
-
+  const [productDetailSnap] = await getProduct(productsQuery, space)
   if (Object.keys(productDetailSnap).length <= 1) {
     return undefined
   }
@@ -39,8 +32,15 @@ export const fetchProduct = async (space: string, productsQuery: string) => {
       chatUserId: chatItem.id,
     })
   })
-  const chats = await Promise.all(
-    chatData.map(async ({ chat, chatUserId }) => {
+  const [owner, ...chats] = await Promise.all([
+    await getDoc(productDetailSnap.owner).then<{
+      id: string | null
+      userName: string | null
+    }>((r) => ({
+      userName: (r.data() as { userName: string }).userName || null,
+      id: r.id || null,
+    })),
+    ...chatData.map(async ({ chat, chatUserId }) => {
       const userRef = doc(db, 'user', chatUserId)
       const user = await getDoc(userRef).then((r) => r.data())
       return {
@@ -48,15 +48,8 @@ export const fetchProduct = async (space: string, productsQuery: string) => {
         chatUserId,
         history: chat.history || [],
       } as ProductChatType
-    })
-  )
-  const owner = await getDoc(productDetailSnap.owner).then<{
-    id: string | null
-    userName: string | null
-  }>((r) => ({
-    userName: (r.data() as { userName: string }).userName || null,
-    id: r.id || null,
-  }))
+    }),
+  ])
 
   const sortedChats = chats.map((item) => {
     const sortedHistory = sortChatByTime(item.history)
@@ -65,7 +58,7 @@ export const fetchProduct = async (space: string, productsQuery: string) => {
 
   return {
     ...productDetailSnap,
-    owner: { userName: owner.userName, id: owner.id },
+    owner: { userName: owner.userName || null, id: owner.id },
     chats: sortedChats,
   } as ProductType
 }

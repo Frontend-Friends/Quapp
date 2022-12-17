@@ -1,5 +1,12 @@
-import { useState } from 'react'
-import { Alert, Fab, Grid, Snackbar, Typography } from '@mui/material'
+import { ReactNode, useState } from 'react'
+import {
+  Alert,
+  AlertColor,
+  Fab,
+  Grid,
+  Snackbar,
+  Typography,
+} from '@mui/material'
 import { useTranslation } from '../../../../hooks/use-translation'
 import { InferGetServerSidePropsType } from 'next'
 import { ProductItem } from '../../../../components/products/product-item'
@@ -9,10 +16,15 @@ import { ProductType } from '../../../../components/products/types'
 import { fetchProduct } from '../../../../lib/services/fetch-product'
 import { fetchProductList } from '../../../../lib/services/fetch-product-list'
 import AddIcon from '@mui/icons-material/Add'
-import { CreateNewProduct } from '../../../../components/products/create-product'
-import { useFetchProductDetail } from '../../../../hooks/use-fetch-product-detail'
+import { CreateEditProduct } from '../../../../components/products/create-product'
+import {
+  deleteProduct,
+  fetchProduct as fetchProductOnClient,
+  useFetchProductDetail,
+} from '../../../../hooks/use-fetch-product-detail'
 import { withIronSessionSsr } from 'iron-session/next'
 import { sessionOptions } from '../../../../config/session-config'
+import { useRouter } from 'next/router'
 import { User } from '../../../../components/user/types'
 
 export const getServerSideProps = withIronSessionSsr<{
@@ -50,26 +62,36 @@ export const getServerSideProps = withIronSessionSsr<{
   }
 }, sessionOptions)
 
+const useAlert = () => {
+  return useState<{ severity: AlertColor; children: ReactNode }>()
+}
+
 export const Product = ({
   userId,
   products,
   productDetail,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const t = useTranslation()
+  const { query } = useRouter()
+
+  const [alert, setAlert] = useAlert()
+
+  const [productList, setProductList] = useState(products)
 
   const [showCreateProduct, setShowCreateProduct] = useState(false)
-  const [hasError, setHasError] = useState(false)
+  const [productToEdit, setProductToEdit] = useState<ProductType | null>(null)
+  const [openSnackbar, setOpenSnackbar] = useState(false)
 
   const product = useFetchProductDetail(productDetail)
 
   return (
-    <>
+    <div className="mx-auto px-5 py-10">
       <Fab
         size="medium"
         color="secondary"
         aria-label={t('PRODUCT_add')}
         title={t('PRODUCT_add')}
-        sx={{ position: 'fixed', top: 72, right: 12, zIndex: 10 }}
+        className=" fixed top-[72px] right-[12px] z-10"
         onClick={() => {
           setShowCreateProduct(true)
         }}
@@ -77,35 +99,81 @@ export const Product = ({
         <AddIcon />
       </Fab>
       <Header title={t('PRODUCTS_title')} />
-      <Grid container columns={{ sm: 2, md: 3 }} spacing={{ xs: 4 }} pt={4}>
-        {!products?.length && (
+      <Grid container columns={{ md: 2, lg: 3 }} spacing={{ xs: 4 }} pt={4}>
+        {!productList?.length && (
           <Typography variant="body2">{t('PRODUCTS_no_entries')}</Typography>
         )}
-        {!!products?.length &&
-          products.map((item, index) => (
-            <Grid item xs={1} key={index} sx={{ flexGrow: '1' }}>
-              <ProductItem product={item} userId={userId} />
+        {!!productList?.length &&
+          productList.map((item, index) => (
+            <Grid item xs={1} key={index} className="w-full flex-grow">
+              <ProductItem
+                product={item}
+                userId={userId}
+                onDelete={async (id) => {
+                  await deleteProduct(id, query.space as string)
+                  setProductList((state) =>
+                    state?.filter((entry) => entry.id !== id)
+                  )
+                  setAlert({
+                    severity: 'success',
+                    children: t('DELETE_PRODUCT_success_text'),
+                  })
+                  setOpenSnackbar(true)
+                }}
+                onEdit={async (id) => {
+                  const fetchedProduct = await fetchProductOnClient(
+                    id,
+                    query.space as string
+                  )
+                  setProductToEdit(fetchedProduct || null)
+                  setShowCreateProduct(true)
+                }}
+              />
             </Grid>
           ))}
       </Grid>
       <ProductDetail product={product} userId={userId} />
-      <CreateNewProduct
+      <CreateEditProduct
+        onUpdateProduct={(updatedProduct) => {
+          setProductList((state) => {
+            const foundIndex = state?.findIndex(
+              (item) => item.id === updatedProduct.id
+            )
+            if (state && foundIndex !== undefined && foundIndex > -1) {
+              state[foundIndex] = updatedProduct
+            } else {
+              state?.unshift(updatedProduct)
+            }
+            return state ? [...state] : state
+          })
+          setAlert({
+            severity: 'success',
+            children: `${t('PRODUCT_updated_info')} ${updatedProduct.title}`,
+          })
+          setOpenSnackbar(true)
+        }}
         showModal={showCreateProduct}
-        onClose={setShowCreateProduct}
-        onError={() => {
-          setHasError(true)
+        onClose={(state) => {
+          setProductToEdit(null)
+          setShowCreateProduct(state)
+        }}
+        product={productToEdit}
+        onError={(error) => {
+          setAlert({ severity: 'error', children: error })
+          setOpenSnackbar(true)
         }}
       />
       <Snackbar
-        open={hasError}
+        open={openSnackbar}
         autoHideDuration={6000}
         onClose={() => {
-          setHasError(false)
+          setOpenSnackbar(false)
         }}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       >
-        <Alert severity="error">${t('FORM_submitting_error')}</Alert>
+        <Alert {...alert} />
       </Snackbar>
-    </>
+    </div>
   )
 }
 

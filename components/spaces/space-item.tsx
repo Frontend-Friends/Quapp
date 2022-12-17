@@ -35,8 +35,8 @@ const SpaceItem: FC<Props> = ({ space }) => {
   const t = useTranslation()
 
   return (
-    <Grid item xs={1} sx={{ flexGrow: '1' }}>
-      <Card variant="outlined" sx={{ position: 'relative' }}>
+    <Grid item xs={1} className="grow">
+      <Card variant="outlined" className="relative">
         <Link href={`${space.id}/products`} passHref>
           <MuiLink
             title={`${t('GLOBAL_open')} ${space.name}`}
@@ -60,7 +60,7 @@ const SpaceItem: FC<Props> = ({ space }) => {
               aria-haspopup="true"
               aria-expanded={open ? 'true' : undefined}
               onClick={handleClick}
-              sx={{ position: 'relative' }}
+              className="relative"
             >
               <MoreVertIcon />
             </IconButton>
@@ -78,23 +78,14 @@ const SpaceItem: FC<Props> = ({ space }) => {
           <MenuItem onClick={handleClose}>{t('GLOBAL_edit')}</MenuItem>
           <MenuItem onClick={handleClose}>{t('GLOBAL_delete')}</MenuItem>
         </Menu>
-        <CardContent
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-          }}
-        >
+        <CardContent className="flex items-center">
           {space.memberCount && (
             <Typography
               align="justify"
               variant="body2"
-              sx={{
-                mr: 3,
-                display: 'flex',
-                alignItems: 'center',
-              }}
+              className="mr-6 flex items-center"
             >
-              <GroupsIcon sx={{ mr: 1 }} />
+              <GroupsIcon className="mr-2" />
               {space.memberCount}
             </Typography>
           )}
@@ -102,13 +93,9 @@ const SpaceItem: FC<Props> = ({ space }) => {
             <Typography
               align="justify"
               variant="body2"
-              sx={{
-                mr: 3,
-                display: 'flex',
-                alignItems: 'center',
-              }}
+              className="mr-6 flex items-center"
             >
-              <CategoryIcon sx={{ mr: 1 }} /> {space.itemCount}
+              <CategoryIcon className="mr-2" /> {space.itemCount}
             </Typography>
           )}
         </CardContent>

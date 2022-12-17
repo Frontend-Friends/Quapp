@@ -1,144 +1,80 @@
-import React, { Dispatch, SetStateAction, useState } from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from '../../hooks/use-translation'
-import { Box, Button, Modal, TextField, Typography } from '@mui/material'
+import { Box, IconButton, Modal, Typography } from '@mui/material'
 import { CondensedContainer } from '../condensed-container'
-import { Formik } from 'formik'
-import { createProductSchema } from '../../lib/schema/create-product-schema'
-import { CreateProduct } from './types'
+import { ProductType } from './types'
 import { sendFormData } from '../../lib/helpers/send-form-data'
 import { useRouter } from 'next/router'
+import CloseIcon from '@mui/icons-material/Close'
+import { ProductForm } from './product-form'
 
-export const CreateNewProduct = ({
+export const CreateEditProduct = ({
   showModal,
   onClose,
   onError,
+  product,
+  onUpdateProduct,
 }: {
   showModal: boolean
-  onClose: Dispatch<SetStateAction<boolean>>
-  onError?: () => void
+  onClose: (state: boolean) => void
+  onError?: (error: string) => void
+  product: ProductType | null
+  onUpdateProduct: (product: ProductType) => void
 }) => {
   const t = useTranslation()
   const [loading, setLoading] = useState(false)
-  const [onSuccess, setOnSuccess] = useState(false)
-  const { push } = useRouter()
+  const { query } = useRouter()
+
   return (
     <Modal
-      open={showModal && !onSuccess}
-      onClose={() => onClose(false)}
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        p: { sm: 5 },
+      open={showModal}
+      onClose={() => {
+        onClose(false)
       }}
+      className="flex items-center justify-center sm:p-10"
     >
-      <CondensedContainer
-        sx={{
-          position: 'relative',
-          backgroundColor: 'background.paper',
-          p: 4,
-          m: 0,
-          maxHeight: '100%',
-          overflow: 'auto',
-          borderRadius: { sm: 2 },
-        }}
-      >
-        <Typography variant="h2">{t('CREATE_PRODUCT_page_title')}</Typography>
-        <Formik
-          initialValues={
-            {
-              title: '',
-              description: '',
-              lead: '',
-              text: '',
-              img: undefined,
-            } as CreateProduct
-          }
-          validationSchema={createProductSchema}
-          validateOnChange={false}
-          validateOnBlur={false}
+      <CondensedContainer className="relative m-0 max-h-full overflow-auto bg-white p-8 sm:rounded-2xl">
+        <Box className="sticky top-0 z-10 flex h-0 w-full justify-end">
+          <IconButton
+            title={t('BUTTON_close')}
+            className="-mt-6 -mr-6 h-12 w-12 border border-gray-100 bg-white"
+            onClick={() => {
+              onClose(false)
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </Box>
+        <Typography variant="h2">
+          {product
+            ? t('EDIT_PRODUCT_page_title')
+            : t('CREATE_PRODUCT_page_title')}
+        </Typography>
+        <ProductForm
+          product={product}
+          isLoading={loading}
           onSubmit={async (values) => {
             setLoading(true)
+            const createAPi = `/api/create-product?space=${query.space}`
+            const updateAPi = `/api/update-product?space=${query.space}&id=${
+              product?.id || ''
+            }`
             const response = await sendFormData<{
               isOk: boolean
               productId: string
-            }>('/api/create-product', values)
+              product: ProductType
+            }>(product ? updateAPi : createAPi, values)
             if (!response.isOk) {
-              if (onError) onError()
+              if (onError) onError(t('FORM_submitting_error'))
             }
             setLoading(false)
-            setOnSuccess(true)
 
-            if (response.isOk) push(response.productId)
+            if (response.isOk) {
+              onUpdateProduct({ ...product, ...response.product })
+              onClose(false)
+            }
           }}
-        >
-          {(props) => (
-            <form onSubmit={props.handleSubmit}>
-              <Box sx={{ pt: 5, pb: 2, display: 'grid' }}>
-                <TextField
-                  label={t('CREATE_PRODUCT_upload')}
-                  onChange={props.handleChange}
-                  value={props.values.img}
-                  name="img"
-                  type="file"
-                  error={!!props.errors.img}
-                  helperText={props.errors.img as string}
-                />
-                <TextField
-                  label={t('CREATE_PRODUCT_title')}
-                  onChange={props.handleChange}
-                  onBlur={props.handleBlur}
-                  value={props.values.title}
-                  name="title"
-                  error={!!props.errors.title}
-                  helperText={props.errors.title}
-                  sx={{ mt: 2 }}
-                />
-                <TextField
-                  label={t('CREATE_PRODUCT_description')}
-                  onChange={props.handleChange}
-                  onBlur={props.handleBlur}
-                  value={props.values.description}
-                  name="description"
-                  error={!!props.errors.description}
-                  helperText={props.errors.description}
-                  sx={{ mt: 2 }}
-                />
-                <TextField
-                  multiline
-                  label={t('CREATE_PRODUCT_lead')}
-                  onChange={props.handleChange}
-                  onBlur={props.handleBlur}
-                  value={props.values.lead}
-                  name="lead"
-                  error={!!props.errors.lead}
-                  helperText={props.errors.lead}
-                  sx={{ mt: 2 }}
-                />
-                <TextField
-                  multiline
-                  label={t('CREATE_PRODUCT_text')}
-                  onChange={props.handleChange}
-                  onBlur={props.handleBlur}
-                  value={props.values.text}
-                  name="text"
-                  error={!!props.errors.text}
-                  helperText={props.errors.text}
-                  sx={{ mt: 2 }}
-                />
-                <Button
-                  type="submit"
-                  variant="contained"
-                  sx={{ ml: 'auto', mt: 2 }}
-                  disabled={loading}
-                >
-                  {loading && t('CREATE_PRODUCT_loading')}
-                  {!loading && t('CREATE_PRODUCT_submit')}
-                </Button>
-              </Box>
-            </form>
-          )}
-        </Formik>
+        />
       </CondensedContainer>
     </Modal>
   )

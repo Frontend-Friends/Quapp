@@ -1,18 +1,13 @@
 import { forwardRef } from 'react'
 import { Box, BoxProps } from '@mui/material'
+import clsx from 'clsx'
 
 export const CondensedContainer = forwardRef<HTMLDivElement, BoxProps>(
   (props, ref) => {
     return (
       <Box
         {...props}
-        sx={{
-          width: '100%',
-          maxWidth: '768px',
-          mx: 'auto',
-          my: '10%',
-          ...props.sx,
-        }}
+        className={clsx('mx-auto my-[10%] w-full max-w-3xl', props.className)}
         ref={ref}
       />
     )
