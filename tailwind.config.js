@@ -28,6 +28,7 @@ module.exports = {
           900: '#2F2E41',
           contrastText: '#fff',
         },
+
       },
     },
   },
