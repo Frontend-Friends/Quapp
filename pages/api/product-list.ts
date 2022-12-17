@@ -14,7 +14,7 @@ export default withIronSessionApiRoute(
 
       res.status(200).json(product || null)
     } catch (err) {
-      res.status(500).json(err)
+      res.status(500).json({ message: 'SERVER_error' })
     }
   },
   sessionOptions
