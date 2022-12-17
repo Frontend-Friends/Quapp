@@ -44,7 +44,7 @@ export const ProductItem: FC<{
             variant="outlined"
             className={clsx(
               !product.isAvailable && 'bg-white',
-              'flex h-full justify-start'
+              'flex h-full items-start justify-start normal-case'
             )}
           >
             {product.imgSrc && (
@@ -66,7 +66,7 @@ export const ProductItem: FC<{
                 <Typography variant="h3">{product.title}</Typography>
               )}
               {product.description && (
-                <Typography variant="body2" className="pt-10">
+                <Typography variant="body2" className="pt-1 text-gray-500">
                   {product.description}
                 </Typography>
               )}
