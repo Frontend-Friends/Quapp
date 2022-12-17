@@ -2,5 +2,6 @@
   "extends": "./tsconfig.json",
   "include": ["./**/*.ts", "./**/*.js", "./.*.js"],
   "singleQuote": true,
-  "semi": false
+  "semi": false,
+  "plugins": ["prettier-plugin-tailwindcss"]
 }

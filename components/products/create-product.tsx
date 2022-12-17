@@ -33,11 +33,11 @@ export const CreateEditProduct = ({
       }}
       className="flex items-center justify-center sm:p-10"
     >
-      <CondensedContainer className="relative bg-white p-8 m-0 max-h-full overflow-auto sm:rounded-2xl">
-        <Box className="sticky top-0 h-0 w-full flex justify-end z-10">
+      <CondensedContainer className="relative m-0 max-h-full overflow-auto bg-white p-8 sm:rounded-2xl">
+        <Box className="sticky top-0 z-10 flex h-0 w-full justify-end">
           <IconButton
             title={t('BUTTON_close')}
-            className="bg-white border border-gray-100 -mt-6 -mr-6 w-12 h-12"
+            className="-mt-6 -mr-6 h-12 w-12 border border-gray-100 bg-white"
             onClick={() => {
               onClose(false)
             }}
