@@ -12,6 +12,8 @@ export const translations: Record<string, string> = {
   GLOBAL_options: 'Optionen',
   GLOBAL_back_to_login: 'Zurück zum Login',
   GLOBAL_hello: 'Hallo',
+  GLOBAL_go_to_account_settings: 'Zu den Account Einstellungen',
+  GLOBAL_settings: 'Einstellungen',
 
   GLOBAL_back_to_home: 'Zurück zur Startseite',
 
@@ -78,4 +80,7 @@ export const translations: Record<string, string> = {
   CHAT_message: 'Nachricht',
   CHAT_message_error: 'Die Nachricht darf nicht leer sein',
   CHAT_message_required: 'Das Feld ist pflicht',
+
+  SETTINGS_title: 'Einstellungen',
+  SETTINGS_change_settings: 'Einstellungen ändern',
 }

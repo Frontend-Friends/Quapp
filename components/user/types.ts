@@ -8,3 +8,9 @@ export type User = {
   id: string | null
   uid: string
 }
+
+export type SettingType = {
+  firstName: string
+  lastName: string
+  phone: string
+}
