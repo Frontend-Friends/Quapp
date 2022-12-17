@@ -51,14 +51,14 @@ export const ProductItem: FC<{
               <CardMedia
                 component="img"
                 height={100}
-                className="w-full h-full overflow-hidden object-cover flex-shrink-0"
+                className="w-24 h-24 overflow-hidden object-cover flex-shrink-0"
                 src={product.imgSrc}
               />
             )}
             {!product.imgSrc && (
               <Box
                 component="span"
-                className="w-full h-full overflow-hidden object-cover bg-mintGreen-300 flex-shrink-0"
+                className="w-24 h-24 overflow-hidden object-cover bg-mintGreen-300 flex-shrink-0"
               />
             )}
             <CardContent component="span">

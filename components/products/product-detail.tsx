@@ -62,11 +62,11 @@ export const ProductDetail = ({
       }}
       aria-labelledby="parent-modal-title"
       aria-describedby="parent-modal-description"
-      className="flex items-center justify-center sm:p-10"
+      className="flex items-center justify-center md:p-10"
       disablePortal
     >
       {product ? (
-        <CondensedContainer className="min-h-screen sm:min-h-max relative bg-white p-8 m-0 max-h-full overflow-auto rounded-2xl">
+        <CondensedContainer className="min-h-screen md:min-h-max relative bg-white p-8 m-0 max-h-full overflow-auto md:rounded-2xl">
           <Box className="sticky top-0 h-0 w-full flex justify-end z-10">
             <Link href={backUrl} passHref shallow>
               <IconButton

@@ -85,7 +85,7 @@ export const Product = ({
   const product = useFetchProductDetail(productDetail)
 
   return (
-    <>
+    <div className="mx-auto px-5 py-10">
       <Fab
         size="medium"
         color="secondary"
@@ -173,7 +173,7 @@ export const Product = ({
       >
         <Alert {...alert} />
       </Snackbar>
-    </>
+    </div>
   )
 }
 

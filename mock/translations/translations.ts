@@ -61,6 +61,7 @@ export const translations: Record<string, string> = {
   BORROW_TEXTFIELD_label: 'Nachricht',
   BORROW_TEXTFIELD_default_value: 'Schreibe eine Nachricht',
   BORROW_DATEPICKER_label: 'Ausleihdatum',
+  BORROW_button_submit: 'Anfrage senden',
 
   CREATE_PRODUCT_detail: 'Produkt Detail',
   CREATE_PRODUCT_upload: 'Bild hochladen',

@@ -59,7 +59,7 @@ const Home: FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
         </div>
         <WaveWhiteSVG
           preserveAspectRatio="none"
-          className="absolute bottom-0 w-full"
+          className="absolute bottom-0 w-full touch-none pointer-events-none"
         />
       </section>
       <section>
