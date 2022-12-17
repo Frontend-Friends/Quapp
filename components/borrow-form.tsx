@@ -33,7 +33,7 @@ export const BorrowForm = ({ onSubmit }: { onSubmit: OnBorrowSubmit }) => {
     >
       {(props) => (
         <form onSubmit={props.handleSubmit}>
-          <Box sx={{ pt: 5, pb: 2, display: 'grid' }}>
+          <Box className="grid pt-10 pb-4">
             <TextField
               multiline
               label={t('BORROW_TEXTFIELD_label')}
@@ -67,7 +67,7 @@ export const BorrowForm = ({ onSubmit }: { onSubmit: OnBorrowSubmit }) => {
                   <>
                     <TextField
                       {...params}
-                      sx={{ mt: 2 }}
+                      className="mt-4"
                       error={!!props.errors.borrowDate}
                       helperText={props.errors.borrowDate}
                     />
@@ -75,11 +75,7 @@ export const BorrowForm = ({ onSubmit }: { onSubmit: OnBorrowSubmit }) => {
                 )}
               />
             </LocalizationProvider>
-            <Button
-              type="submit"
-              variant="contained"
-              sx={{ ml: 'auto', mt: 2 }}
-            >
+            <Button type="submit" variant="contained" className="ml-auto mt-4">
               {t('BORROW_button_submit')}
             </Button>
           </Box>

@@ -10,12 +10,30 @@ export const translations: Record<string, string> = {
   GLOBAL_delete: 'Löschen',
   GLOBAL_open: 'Öffne',
   GLOBAL_options: 'Optionen',
+  GLOBAL_back_to_home: 'Zurück zur Startseite',
+
+  HOME_signup_free: 'Jetzt kostenlos Registrieren',
+  HOME_subtitle: 'Die App die Nachbarn verbindet.',
+  HOME_intro:
+    'Du brauchst ein Werkzeug oder eine helfende Hand? Quapp ermöglicht dir einfachen Kontakt zu deinen Nachbarn!',
+  HOME_support_title: 'Sich gegenseitig unterstützen.',
+  HOME_support_text:
+    'Wer kennt es nicht: Man braucht mal eben kurz eine Bohrmaschine oder jemanden der einem fünf Minuten hilft einen Tisch zu tragen, aber man kennt die Nachbarn nocht nicht und hat niemanden zum Fragen.',
+  HOME_spaces_title: 'Spaces.',
+  HOME_spaces_text:
+    'Indem du selbst einen Space erstellst oder einem vorhandenen Space mit einer Einladung beitrittst, wirst du Teil der Gemeinschaft.',
+  HOME_offers_title: 'Angebote.',
+  HOME_offers_text:
+    'Logge dich ein und durchsuche die Angebote deiner Nachbarn oder stelle einfach selbst ein Angebot für andere ein.',
+  HOME_together_title: 'Gemeinsam Nachbarn sein.',
+  HOME_together_text:
+    'Sharing is caring - nach dieser Devise sollte unserer Meinung nach, jede Nachbarschaft leben! Quapp ermöglicht es dir ganz einfach Kontakt zu deiner Nachbarschaft aufzubauen und sich gegenseitig zu unterstützen.',
 
   LOGIN_title: 'Login',
   LOGIN_login: 'Anmelden',
   LOGIN_forgot_password: 'Passwort vergessen?',
-  LOGIN_has_no_account: 'Sie haben noch keinen Account?',
-  LOGIN_has_account: 'Sie haben schon einen Account?',
+  LOGIN_has_no_account: 'Du hast noch keinen Account?',
+  LOGIN_has_account: 'Du hast schon einen Account?',
 
   LOGOUT_logout: 'Abmelden',
 
@@ -73,4 +91,20 @@ export const translations: Record<string, string> = {
   CHAT_message: 'Nachricht',
   CHAT_message_error: 'Die Nachricht darf nicht leer sein',
   CHAT_message_required: 'Das Feld ist pflicht',
+
+  SVG_logo: 'Das Quapp Logo mit Link auf die Startseite',
+  SVG_appartment:
+    'Eine rein Dekorative Illustration die ein Wohngebäude zeigt.',
+  SVG_collaborator:
+    'Eine rein Dekorative Illustration die zusammenarbeitende Menschen zeigt.',
+  SVG_hangout:
+    'Eine rein Dekorative Illustration die zwei Personen zeigt, welche zusammen an einem Tisch einen Kaffe trinken.',
+  SVG_windowneighbours:
+    'Eine rein Dekorative Illustration die zwei sich unterhaltende Nachbarn zeigt.',
+
+  FOOTER_contact: 'Kontakt',
+  FOOTER_imprint: 'Impressum',
+  FOOTER_privacy: 'Datenschutz',
+
+  HTML_TITLE_general: 'Quapp - Die App die Nachbarn verbindet',
 }

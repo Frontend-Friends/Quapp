@@ -1,4 +1,6 @@
+// @ts-nocheck
 import { createTheme } from '@mui/material/styles'
+import { theme as twTheme } from '../tailwind.config'
 
 // Create a theme instance.
 // Theme tree structure: https://mui.com/material-ui/customization/default-theme/?expand-path=$.palette
@@ -6,20 +8,22 @@ const theme = createTheme({
   spacing: 8,
   palette: {
     primary: {
-      main: '#D80062',
-      light: '#338eff',
-      dark: '#005fd4',
+      main: twTheme.extend.colors.violetRed[600],
+      light: twTheme.extend.colors.violetRed[300],
+      dark: twTheme.extend.colors.violetRed[900],
+      contrastText: twTheme.extend.colors.violetRed.contrastText,
     },
     secondary: {
-      main: '#57B894',
-      light: '#21ff94',
-      dark: '#00b45c',
+      main: twTheme.extend.colors.mintGreen[600],
+      light: twTheme.extend.colors.mintGreen[300],
+      dark: twTheme.extend.colors.mintGreen[900],
+      contrastText: twTheme.extend.colors.mintGreen.contrastText,
     },
     error: {
       main: '#d53030',
     },
     background: {
-      default: '#F3FAFD',
+      default: '#FFFFFF',
     },
   },
   shape: {

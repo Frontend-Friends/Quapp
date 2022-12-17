@@ -8,7 +8,7 @@ export default async function signupRoute(
   res: NextApiResponse
 ) {
   try {
-    const { email, firstName, lastName, phone } = req.body
+    const { email, firstName } = req.body
     const password = req.body.password
     const credentials = await createUserWithEmailAndPassword(
       auth,
@@ -20,8 +20,6 @@ export default async function signupRoute(
     await setDoc(userRef, {
       email,
       firstName,
-      lastName,
-      phone,
     })
 
     //no session here, because we don't want to log in the user after signup

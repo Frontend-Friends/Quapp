@@ -1,0 +1,3 @@
+public/
+tailwind.config.js
+lint-staged.config.js

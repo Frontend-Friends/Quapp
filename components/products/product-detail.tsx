@@ -18,6 +18,7 @@ import { Header } from '../header'
 import { BorrowForm, OnBorrowSubmit } from '../borrow-form'
 import { ProductType } from './types'
 import { ProductChats } from './product-chats'
+import { User } from '../user/types'
 
 const handleSubmit: OnBorrowSubmit = async (values, setSubittming) => {
   const fetchedData = await fetch('/api/borrow', {
@@ -37,7 +38,7 @@ export const ProductDetail = ({
   product,
   userId,
 }: {
-  userId?: string | null
+  userId?: User['id']
   product?: ProductType | null
 }) => {
   const { asPath, query, push } = useRouter()
@@ -61,12 +62,7 @@ export const ProductDetail = ({
       }}
       aria-labelledby="parent-modal-title"
       aria-describedby="parent-modal-description"
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        p: { sm: 5 },
-      }}
+      className="flex items-center justify-center sm:p-10"
       disablePortal
     >
       {product ? (
@@ -96,15 +92,7 @@ export const ProductDetail = ({
             <Link href={backUrl} passHref shallow>
               <IconButton
                 title={t('BUTTON_close')}
-                sx={{
-                  backgroundColor: 'background.paper',
-                  border: 1,
-                  borderColor: 'divider',
-                  marginTop: -3,
-                  marginRight: -3,
-                  width: '48px',
-                  height: '48px',
-                }}
+                className="-mt-6 -mr-6 h-12 w-12 border border-slate-200 bg-white"
               >
                 <CloseIcon />
               </IconButton>
@@ -115,38 +103,21 @@ export const ProductDetail = ({
             lead={product.description}
             imgSrc={product.imgSrc}
           />
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, py: 4 }}>
-            <Avatar
-              alt={product.owner.userName}
-              src=""
-              sx={{ width: 56, height: 56 }}
-            >
+          <Box className="flex items-center gap-4 py-8">
+            <Avatar alt={product.owner.userName} src="" className="h-14 w-14">
               {product.owner.userName?.slice(0, 2)}
             </Avatar>
             <p>{product.owner.userName}</p>
           </Box>
-          <Typography variant="body1" sx={{ mb: 4 }}>
+          <Typography variant="body1" className="mb-8">
             {product.text}
           </Typography>
           {userId !== product.owner.id && (
-            <Box
-              sx={{ position: 'relative', display: 'flex', flexFlow: 'column' }}
-            >
-              <Box
-                sx={{
-                  position: 'absolute',
-                  top: 0,
-                  ml: 2,
-                  backgroundColor: 'background.paper',
-                  p: 1,
-                  borderRadius: 1,
-                  border: 1,
-                  borderColor: 'divider',
-                }}
-              >
+            <Box className="relative flex flex-col">
+              <Box className="absolute top-0 ml-4 rounded border border-slate-200 bg-white p-2">
                 <Typography variant="body2"> {t('BUTTON_borrow')}</Typography>
               </Box>
-              <Card variant="outlined" sx={{ mt: 2.5 }}>
+              <Card variant="outlined" className="mt-6">
                 <CardContent>
                   <BorrowForm onSubmit={handleSubmit} />
                 </CardContent>

@@ -35,7 +35,7 @@ async function createProduct(req: NextApiRequest, res: NextApiResponse) {
 
     const docRef = collection(db, 'spaces', space as string, 'products')
 
-    const userRef = doc(db, 'user', user.id)
+    const userRef = doc(db, 'user', user.id as string)
     const productId = await addDoc(docRef, {
       ...formData.fields,
       createdAt: new Date().getTime(),

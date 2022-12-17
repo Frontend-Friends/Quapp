@@ -9,7 +9,7 @@ const SignupSuccess: React.FC = () => {
 
   return (
     <CondensedContainer>
-      <Typography variant="h1" sx={{ my: 3 }}>
+      <Typography variant="h1" className="my-6">
         {t('SIGNUP_title_success')}
       </Typography>
       <p>

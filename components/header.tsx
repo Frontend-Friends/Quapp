@@ -13,9 +13,7 @@ export const Header: FC<{
     <header>
       <Typography variant="h1">{title}</Typography>
       {imgSrc && (
-        <Box
-          sx={{ position: 'relative', width: '100%', paddingTop: '50%', mt: 2 }}
-        >
+        <Box className="relative mt-4 w-full pt-[50%]">
           <Image
             src={imgSrc}
             layout="fill"

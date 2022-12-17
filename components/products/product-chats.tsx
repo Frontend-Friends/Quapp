@@ -4,6 +4,7 @@ import { ChatMessage, ProductChatType } from './types'
 import { useTranslation } from '../../hooks/use-translation'
 import { ProductChat } from './product-chat'
 import { ChatForm } from '../chat-form'
+import { User } from '../user/types'
 
 export const ProductChats = ({
   userId,
@@ -12,7 +13,7 @@ export const ProductChats = ({
   productOwnerName,
 }: {
   isOwner: boolean
-  userId: string
+  userId: User['id']
   chats: ProductChatType[]
   productOwnerName: string
 }) => {
@@ -21,7 +22,7 @@ export const ProductChats = ({
     chats.filter((chat) => chat.chatUserId === userId || isOwner)
   )
 
-  const updateChat = useCallback((chatId: string) => {
+  const updateChat = useCallback((chatId: string | null) => {
     return (history: ChatMessage[]) => {
       setSelectedChats((state) => {
         const foundIndex = state.findIndex((item) => item.chatUserId === chatId)
@@ -34,15 +35,7 @@ export const ProductChats = ({
   }, [])
 
   return (
-    <Box
-      sx={{
-        p: 3,
-        mt: 2,
-        border: 1,
-        borderRadius: 2,
-        borderColor: 'divider',
-      }}
-    >
+    <Box className="mt-4 rounded border border-slate-200 p-6">
       <Typography variant="h6">{t('CHAT_title')}</Typography>
       {!isOwner && (
         <ChatForm

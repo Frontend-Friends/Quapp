@@ -5,6 +5,6 @@ export type User = {
   userName: string
   email: string
   lastName: string
-  id: string
+  id: string | null
   uid: string
 }

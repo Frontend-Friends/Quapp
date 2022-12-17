@@ -7,7 +7,7 @@ export type ChatMessage = {
 }
 
 export type ProductChatType = {
-  chatUserId: string
+  chatUserId: string | null
   chatUserName: string | null
   history: ChatMessage[]
 }
@@ -35,6 +35,12 @@ export type SpaceItemType = {
   creationDate: Date
   memberCount: number
   itemCount: number
+}
+
+export type SignupType = {
+  firstName: string
+  email: string
+  password: string
 }
 
 export type CreateProduct = Pick<

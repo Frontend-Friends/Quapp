@@ -25,9 +25,10 @@ import {
 import { withIronSessionSsr } from 'iron-session/next'
 import { sessionOptions } from '../../../../config/session-config'
 import { useRouter } from 'next/router'
+import { User } from '../../../../components/user/types'
 
 export const getServerSideProps = withIronSessionSsr<{
-  userId?: string | null
+  userId?: User['id']
   products?: ProductType[]
   productDetail?: ProductType | null
 }>(async ({ query, req }) => {
@@ -90,7 +91,7 @@ export const Product = ({
         color="secondary"
         aria-label={t('PRODUCT_add')}
         title={t('PRODUCT_add')}
-        sx={{ position: 'fixed', top: 72, right: 12, zIndex: 10 }}
+        className=" fixed top-[72px] right-[12px] z-10"
         onClick={() => {
           setShowCreateProduct(true)
         }}
