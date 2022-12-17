@@ -62,7 +62,7 @@ export const ProductForm = ({
               name="title"
               error={!!props.errors.title}
               helperText={props.errors.title}
-              sx={{ mt: 2 }}
+              className="mt-4"
             />
             <TextField
               label={t('CREATE_PRODUCT_description')}
@@ -72,7 +72,7 @@ export const ProductForm = ({
               name="description"
               error={!!props.errors.description}
               helperText={props.errors.description}
-              sx={{ mt: 2 }}
+              className="mt-4"
             />
             <TextField
               multiline
@@ -83,7 +83,7 @@ export const ProductForm = ({
               name="text"
               error={!!props.errors.text}
               helperText={props.errors.text}
-              sx={{ mt: 2 }}
+              className="mt-4"
             />
             <FileUpload props={props} />
             {!!product && (
@@ -105,7 +105,7 @@ export const ProductForm = ({
             <LoadingButton
               type="submit"
               variant="contained"
-              sx={{ ml: 'auto', mt: 2 }}
+              className="ml-auto mt-4"
               disabled={isLoading}
               loading={isLoading}
             >

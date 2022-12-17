@@ -66,29 +66,8 @@ export const ProductDetail = ({
       disablePortal
     >
       {product ? (
-        <CondensedContainer
-          className="min-h-screen sm:min-h-max"
-          sx={{
-            position: 'relative',
-            backgroundColor: 'background.paper',
-            p: 4,
-            m: 0,
-            maxHeight: '100%',
-            overflow: 'auto',
-            borderRadius: { sm: 2 },
-          }}
-        >
-          <Box
-            sx={{
-              position: 'sticky',
-              top: 0,
-              height: 0,
-              width: '100%',
-              display: 'flex',
-              justifyContent: 'flex-end',
-              zIndex: 10,
-            }}
-          >
+        <CondensedContainer className="min-h-screen sm:min-h-max relative bg-white p-8 m-0 max-h-full overflow-auto rounded-2xl">
+          <Box className="sticky top-0 h-0 w-full flex justify-end z-10">
             <Link href={backUrl} passHref shallow>
               <IconButton
                 title={t('BUTTON_close')}

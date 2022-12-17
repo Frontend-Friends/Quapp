@@ -31,47 +31,13 @@ export const CreateEditProduct = ({
       onClose={() => {
         onClose(false)
       }}
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        p: { sm: 5 },
-      }}
+      className="flex items-center justify-center sm:p-10"
     >
-      <CondensedContainer
-        sx={{
-          position: 'relative',
-          backgroundColor: 'background.paper',
-          p: 4,
-          m: 0,
-          height: { xs: '100%', sm: 'auto' },
-          maxHeight: '100%',
-          overflow: 'auto',
-          borderRadius: { sm: 2 },
-        }}
-      >
-        <Box
-          sx={{
-            position: 'sticky',
-            top: 0,
-            height: 0,
-            width: '100%',
-            display: 'flex',
-            justifyContent: 'flex-end',
-            zIndex: 10,
-          }}
-        >
+      <CondensedContainer className="relative bg-white p-8 m-0 max-h-full overflow-auto sm:rounded-2xl">
+        <Box className="sticky top-0 h-0 w-full flex justify-end z-10">
           <IconButton
             title={t('BUTTON_close')}
-            sx={{
-              backgroundColor: 'background.paper',
-              border: 1,
-              borderColor: 'divider',
-              marginTop: -3,
-              marginRight: -3,
-              width: '48px',
-              height: '48px',
-            }}
+            className="bg-white border border-gray-100 -mt-6 -mr-6 w-12 h-12"
             onClick={() => {
               onClose(false)
             }}
