@@ -1,14 +1,53 @@
-import { collection, DocumentData, getDoc, getDocs } from 'firebase/firestore'
+import {
+  collection,
+  DocumentData,
+  getDoc,
+  getDocs,
+  limit,
+  orderBy,
+  query,
+  startAfter,
+} from 'firebase/firestore'
 import { db } from '../../config/firebase'
 import { ProductType } from '../../components/products/types'
 import { User } from '../../components/user/types'
+import { pageLimit } from '../../pages/community/[space]/products/[[...products]]'
 
-export const fetchProductList = async (space: string) => {
+export const fetchProductList = async (space: string, skip?: number) => {
   const productCollection = collection(db, 'spaces', space, 'products')
 
-  const productSnapshot = await getDocs(productCollection)
+  const limited = pageLimit
+
+  const offset = pageLimit * (skip || 0)
+
+  const firstProductQuery = query(
+    productCollection,
+    orderBy('title'),
+    limit(offset || limited)
+  )
+
+  const countQuery = query(productCollection, orderBy('title'))
+
+  const firstProducts = await getDocs(firstProductQuery)
+
+  const productCount = await getDocs(countQuery)
+
+  const lastIndex = firstProducts.docs.length - 1
+
+  const lastProductRef = firstProducts.docs[lastIndex]
 
   const productsData: DocumentData[] = []
+
+  const productQuery = query(
+    productCollection,
+    orderBy('title'),
+    startAfter(lastProductRef),
+    limit(limited)
+  )
+
+  const skippedProducts = await getDocs(productQuery)
+
+  const productSnapshot = skip ? skippedProducts : firstProducts
 
   productSnapshot.forEach((productDoc) => {
     const docData = productDoc.data()
@@ -41,5 +80,8 @@ export const fetchProductList = async (space: string) => {
     return a.createdAt > b.createdAt ? -1 : 1
   })
 
-  return products as ProductType[]
+  return {
+    products: products as ProductType[],
+    count: productCount.docs.length,
+  }
 }

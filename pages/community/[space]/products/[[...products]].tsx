@@ -1,9 +1,11 @@
-import { ReactNode, useState } from 'react'
+import { ReactNode, useMemo, useState } from 'react'
 import {
   Alert,
   AlertColor,
+  Box,
   Fab,
   Grid,
+  Pagination,
   Snackbar,
   Typography,
 } from '@mui/material'
@@ -26,11 +28,15 @@ import { withIronSessionSsr } from 'iron-session/next'
 import { sessionOptions } from '../../../../config/session-config'
 import { useRouter } from 'next/router'
 import { User } from '../../../../components/user/types'
+import { fetchJson } from '../../../../lib/helpers/fetch-json'
+
+export const pageLimit = 5
 
 export const getServerSideProps = withIronSessionSsr<{
   userId?: User['id']
   products?: ProductType[]
   productDetail?: ProductType | null
+  count?: number
 }>(async ({ query, req }) => {
   const { user } = req.session
 
@@ -40,7 +46,7 @@ export const getServerSideProps = withIronSessionSsr<{
 
   const { products: productsQuery, space } = query
   let productDetail: ProductType | undefined = undefined
-  const productsData = await fetchProductList((space as string) || '')
+  const { products, count } = await fetchProductList((space as string) || '')
 
   if (productsQuery) {
     productDetail = await fetchProduct(
@@ -56,7 +62,8 @@ export const getServerSideProps = withIronSessionSsr<{
   return {
     props: {
       userId: user.id || null,
-      products: productsData,
+      products,
+      count,
       productDetail: productDetail || null,
     },
   }
@@ -69,6 +76,7 @@ const useAlert = () => {
 export const Product = ({
   userId,
   products,
+  count,
   productDetail,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const t = useTranslation()
@@ -77,6 +85,9 @@ export const Product = ({
   const [alert, setAlert] = useAlert()
 
   const [productList, setProductList] = useState(products)
+  const [pageCount, setPageCount] = useState(count || 0)
+
+  const maxPages = useMemo(() => Math.ceil(pageCount / pageLimit), [pageCount])
 
   const [showCreateProduct, setShowCreateProduct] = useState(false)
   const [productToEdit, setProductToEdit] = useState<ProductType | null>(null)
@@ -85,7 +96,7 @@ export const Product = ({
   const product = useFetchProductDetail(productDetail)
 
   return (
-    <div className="mx-auto px-5 py-10">
+    <div className="mx-auto px-5 pt-10">
       <Fab
         size="medium"
         color="secondary"
@@ -163,6 +174,24 @@ export const Product = ({
           setOpenSnackbar(true)
         }}
       />
+      <Box className="py-4">
+        {count && (
+          <Pagination
+            count={maxPages}
+            size="large"
+            onChange={async (...props) => {
+              const value = props[1]
+              const fetchedProductList = await fetchJson<{
+                products: ProductType[]
+                count: number
+              }>(`/api/product-list?space=${query.space}&skip=${value - 1}`)
+              console.log(value - 1)
+              setProductList(fetchedProductList.products)
+              setPageCount(fetchedProductList.count)
+            }}
+          />
+        )}
+      </Box>
       <Snackbar
         open={openSnackbar}
         autoHideDuration={6000}
