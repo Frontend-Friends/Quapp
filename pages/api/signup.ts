@@ -10,11 +10,10 @@ export default async function signupRoute(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  // todo export fn:
+  const { protocol, host } = req.body
   const actionCodeSettings = {
     // URL must be in the authorized domains list in the Firebase Console.
-    //todo add name
-    url: `http://localhost:3000/auth/login?name=${req.body.name}`,
+    url: `${protocol}//${host}/auth/login?name=${req.body.name}`,
     // This must be true.
     handleCodeInApp: true,
   }
@@ -27,9 +26,8 @@ export default async function signupRoute(
       password
     )
     await sendEmailVerification(credentials.user, actionCodeSettings).catch(
-      (error) => {
-        const errorMessage = error.message
-        console.error('errorMessage:', errorMessage)
+      () => {
+        res.send({ session: false, message: 'SIGNUP_something_went_wrong' })
       }
     )
     const userRef = doc(db, 'user', credentials.user.uid)
@@ -41,9 +39,8 @@ export default async function signupRoute(
     // //no session here, because we don't want to log in the user after signup
     res.status(200).json({ isSignedUp: true })
   } catch (error) {
-    console.error(error, 'error in signupRoute')
     res
       .status(500)
-      .json({ message: (error as Error).message, isSignedUp: false })
+      .json({ message: 'SIGNUP_something_went_wrong', isSignedUp: false })
   }
 }

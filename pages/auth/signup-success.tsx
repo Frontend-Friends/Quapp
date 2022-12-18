@@ -16,12 +16,7 @@ const SignupSuccess: React.FC = () => {
         {t('GLOBAL_hello')} {name}!
       </Typography>
       {/*todo translate*/}
-      <p>
-        Vielen Dank für deine Registrierung! Wir haben dir eine E-Mail mit einem
-        Verifizierungslink geschickt. <br />
-        Bitte klicke diesen um die Registrierung abzuschliessen. <br />
-        Dein Quapp Team
-      </p>
+      <p>{t('SIGNUP_success_page_text')}</p>
       <Link href="login">
         <Button color="primary" variant="contained">
           {t('GLOBAL_back_to_login')}
