@@ -37,11 +37,17 @@ export const translations: Record<string, string> = {
   LOGIN_forgot_password: 'Passwort vergessen?',
   LOGIN_has_no_account: 'Sie haben noch keinen Account?',
   LOGIN_has_account: 'Sie haben schon einen Account?',
+  LOGIN_something_went_wrong:
+    'Etwas ist schief gelaufen. Bitte versuchen Sie es erneut.',
 
   LOGOUT_logout: 'Abmelden',
 
   SIGNUP_title: 'Registration',
   SIGNUP_signup: 'Registrieren',
+  SIGNUP_something_went_wrong:
+    'Bei der Registrierung ist etwas schief gelaufen. Bitte versuchen Sie es erneut.',
+  SIGNUP_success_page_text:
+    'Vielen Dank für deine Registrierung! Wir haben dir eine E-Mail mit einem Verifizierungslink geschickt. Bitte klicke diesen um die Registrierung abzuschliessen. Dein Quapp Team',
 
   PRODUCTS_title: 'Produkte',
   PRODUCTS_no_entries: 'Leider gibt es noch keine Einträge.',

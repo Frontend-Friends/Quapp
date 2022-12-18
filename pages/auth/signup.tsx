@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { FC, useState } from 'react'
 import { Box, Link, Snackbar, TextField, Typography } from '@mui/material'
 
 import { Formik } from 'formik'
@@ -12,7 +12,7 @@ import { useRouter } from 'next/router'
 
 const twFormGroup = 'mb-4'
 
-const Signup: React.FC = () => {
+const Signup: FC = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [open, setOpen] = React.useState(false)
   const [message, setMessage] = useState('')
@@ -30,7 +30,11 @@ const Signup: React.FC = () => {
           accept: 'application.json',
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ ...values }),
+        body: JSON.stringify({
+          ...values,
+          protocol: window.location.protocol,
+          host: window.location.host,
+        }),
         cache: 'default',
       })
 
