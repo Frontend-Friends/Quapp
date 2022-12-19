@@ -4,11 +4,11 @@ import { Box, Link, Snackbar, TextField, Typography } from '@mui/material'
 import { Formik } from 'formik'
 import { useTranslation } from '../../hooks/use-translation'
 import { SignupType } from '../../components/products/types'
-import { fetchJson } from '../../lib/helpers/fetch-json'
 import { signupFormSchema } from '../../lib/schema/signup-form-schema'
 import { CondensedContainer } from '../../components/condensed-container'
 import { LoadingButton } from '@mui/lab'
 import { useRouter } from 'next/router'
+import { sendFormData } from '../../lib/helpers/send-form-data'
 
 const twFormGroup = 'mb-4'
 
@@ -21,22 +21,10 @@ const Signup: FC = () => {
   const handleSignup = async (values: SignupType) => {
     setIsLoading(true)
     try {
-      const fetchedSignup = await fetchJson<{
+      const fetchedSignup = await sendFormData<{
         isSignedUp: boolean
         message: string
-      }>('/api/signup', {
-        method: 'POST',
-        headers: {
-          accept: 'application.json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...values,
-          protocol: window.location.protocol,
-          host: window.location.host,
-        }),
-        cache: 'default',
-      })
+      }>('/api/signup', values)
 
       if (fetchedSignup.isSignedUp) {
         setIsLoading(false)
