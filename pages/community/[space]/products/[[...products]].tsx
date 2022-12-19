@@ -1,9 +1,11 @@
-import { ReactNode, useState } from 'react'
+import { ReactNode, useMemo, useState } from 'react'
 import {
   Alert,
   AlertColor,
+  Box,
   Fab,
   Grid,
+  Pagination,
   Snackbar,
   Typography,
 } from '@mui/material'
@@ -26,11 +28,16 @@ import { withIronSessionSsr } from 'iron-session/next'
 import { sessionOptions } from '../../../../config/session-config'
 import { useRouter } from 'next/router'
 import { User } from '../../../../components/user/types'
+import { fetchJson } from '../../../../lib/helpers/fetch-json'
+import { getQueryAsNumber } from '../../../../lib/helpers/get-query-as-number'
+
+export const pageLimit = 5
 
 export const getServerSideProps = withIronSessionSsr<{
   userId?: User['id']
   products?: ProductType[]
   productDetail?: ProductType | null
+  count?: number
 }>(async ({ query, req }) => {
   const { user } = req.session
 
@@ -38,9 +45,13 @@ export const getServerSideProps = withIronSessionSsr<{
     return { props: {} }
   }
 
-  const { products: productsQuery, space } = query
+  const { products: productsQuery, space, skip } = query
+
   let productDetail: ProductType | undefined = undefined
-  const productsData = await fetchProductList((space as string) || '')
+  const { products, count } = await fetchProductList(
+    (space as string) || '',
+    getQueryAsNumber(skip)
+  )
 
   if (productsQuery) {
     productDetail = await fetchProduct(
@@ -56,7 +67,8 @@ export const getServerSideProps = withIronSessionSsr<{
   return {
     props: {
       userId: user.id || null,
-      products: productsData,
+      products,
+      count,
       productDetail: productDetail || null,
     },
   }
@@ -69,14 +81,18 @@ const useAlert = () => {
 export const Product = ({
   userId,
   products,
+  count,
   productDetail,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const t = useTranslation()
-  const { query } = useRouter()
+  const { query, push, pathname } = useRouter()
 
   const [alert, setAlert] = useAlert()
 
   const [productList, setProductList] = useState(products)
+  const [pageCount, setPageCount] = useState(count || 0)
+
+  const maxPages = useMemo(() => Math.ceil(pageCount / pageLimit), [pageCount])
 
   const [showCreateProduct, setShowCreateProduct] = useState(false)
   const [productToEdit, setProductToEdit] = useState<ProductType | null>(null)
@@ -85,7 +101,7 @@ export const Product = ({
   const product = useFetchProductDetail(productDetail)
 
   return (
-    <div className="mx-auto px-5 py-10">
+    <div className="mx-auto grid gap-4 px-5 pt-10">
       <Fab
         size="medium"
         color="secondary"
@@ -99,7 +115,7 @@ export const Product = ({
         <AddIcon />
       </Fab>
       <Header title={t('PRODUCTS_title')} />
-      <Grid container columns={{ md: 2, lg: 3 }} spacing={{ xs: 4 }} pt={4}>
+      <div className="grid justify-evenly gap-4 md:grid-cols-2">
         {!productList?.length && (
           <Typography variant="body2">{t('PRODUCTS_no_entries')}</Typography>
         )}
@@ -131,7 +147,7 @@ export const Product = ({
               />
             </Grid>
           ))}
-      </Grid>
+      </div>
       <ProductDetail product={product} userId={userId} />
       <CreateEditProduct
         onUpdateProduct={(updatedProduct) => {
@@ -163,6 +179,38 @@ export const Product = ({
           setOpenSnackbar(true)
         }}
       />
+      <Box className="py-4">
+        {count && (
+          <Pagination
+            count={maxPages}
+            size="large"
+            page={getQueryAsNumber(query.skip) + 1}
+            onChange={async (...props) => {
+              const value = props[1]
+
+              push({ query: { ...query, skip: value - 1 } }, pathname, {
+                shallow: true,
+              })
+              const fetchedProductList = await fetchJson<{
+                products: ProductType[]
+                count: number
+                ok: boolean
+                message: string
+              }>(`/api/product-list?space=${query.space}&skip=${value - 1}`)
+              if (fetchedProductList.ok) {
+                setProductList(fetchedProductList.products)
+                setPageCount(fetchedProductList.count)
+              } else {
+                setAlert({
+                  severity: 'error',
+                  children: fetchedProductList.message,
+                })
+                setOpenSnackbar(true)
+              }
+            }}
+          />
+        )}
+      </Box>
       <Snackbar
         open={openSnackbar}
         autoHideDuration={6000}
