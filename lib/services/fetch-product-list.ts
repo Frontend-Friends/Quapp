@@ -7,26 +7,42 @@ import {
   orderBy,
   query,
   startAfter,
+  where,
 } from 'firebase/firestore'
 import { db } from '../../config/firebase'
 import { ProductType } from '../../components/products/types'
 import { User } from '../../components/user/types'
 import { pageLimit } from '../../pages/community/[space]/products/[[...products]]'
 
-export const fetchProductList = async (space: string, skip?: number) => {
+export const fetchProductList = async (
+  space: string,
+  skip?: number,
+  filter?: number
+) => {
   const productCollection = collection(db, 'spaces', space, 'products')
 
   const limited = pageLimit
 
   const offset = pageLimit * (skip || 0)
 
-  const firstProductQuery = query(
-    productCollection,
-    orderBy('title'),
-    limit(offset || limited)
-  )
+  const firstProductQuery =
+    filter !== undefined
+      ? query(
+          productCollection,
+          where('category', '==', filter),
+          orderBy('createdAt'),
+          limit(offset || limited)
+        )
+      : query(productCollection, orderBy('createdAt'), limit(offset || limited))
 
-  const countQuery = query(productCollection, orderBy('title'))
+  const countQuery =
+    filter !== undefined
+      ? query(
+          productCollection,
+          where('category', '==', filter),
+          orderBy('createdAt')
+        )
+      : query(productCollection, orderBy('createdAt'))
 
   const firstProducts = await getDocs(firstProductQuery)
 
@@ -38,12 +54,21 @@ export const fetchProductList = async (space: string, skip?: number) => {
 
   const productsData: DocumentData[] = []
 
-  const productQuery = query(
-    productCollection,
-    orderBy('title'),
-    startAfter(lastProductRef),
-    limit(limited)
-  )
+  const productQuery =
+    filter !== undefined
+      ? query(
+          productCollection,
+          where('category', '==', filter),
+          orderBy('createdAt'),
+          startAfter(lastProductRef),
+          limit(limited)
+        )
+      : query(
+          productCollection,
+          orderBy('createdAt'),
+          startAfter(lastProductRef),
+          limit(limited)
+        )
 
   const skippedProducts = await getDocs(productQuery)
 

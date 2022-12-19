@@ -6,11 +6,16 @@ import { getQueryAsNumber } from '../../lib/helpers/get-query-as-number'
 
 export default withIronSessionApiRoute(
   async (req: NextApiRequest, res: NextApiResponse) => {
-    const { skip, space } = req.query
+    const { skip, space, filter } = req.query as {
+      skip?: string
+      space: string
+      filter?: string
+    }
     try {
       const productList = await fetchProductList(
-        space as string,
-        getQueryAsNumber(skip)
+        space,
+        getQueryAsNumber(skip),
+        filter === undefined ? undefined : getQueryAsNumber(filter)
       )
 
       res.status(200).json({
@@ -19,6 +24,7 @@ export default withIronSessionApiRoute(
         count: productList.count,
       })
     } catch (err) {
+      console.log(err)
       res.status(500).json({ ok: false, message: 'SERVER_error' })
     }
   },

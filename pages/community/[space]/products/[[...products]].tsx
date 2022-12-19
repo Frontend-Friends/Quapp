@@ -1,11 +1,16 @@
-import { ReactNode, useMemo, useState } from 'react'
+import React, { ReactNode, useCallback, useMemo, useRef, useState } from 'react'
 import {
   Alert,
   AlertColor,
   Box,
   Fab,
+  FormControl,
   Grid,
+  InputLabel,
+  MenuItem,
   Pagination,
+  Select,
+  SelectChangeEvent,
   Snackbar,
   Typography,
 } from '@mui/material'
@@ -30,6 +35,10 @@ import { useRouter } from 'next/router'
 import { User } from '../../../../components/user/types'
 import { fetchJson } from '../../../../lib/helpers/fetch-json'
 import { getQueryAsNumber } from '../../../../lib/helpers/get-query-as-number'
+import { doc, getDoc } from 'firebase/firestore'
+import { db } from '../../../../config/firebase'
+import { deleteObjectKey } from '../../../../lib/helpers/delete-object-key'
+import { useAsync } from 'react-use'
 
 export const pageLimit = 5
 
@@ -38,6 +47,7 @@ export const getServerSideProps = withIronSessionSsr<{
   products?: ProductType[]
   productDetail?: ProductType | null
   count?: number
+  categories?: string[]
 }>(async ({ query, req }) => {
   const { user } = req.session
 
@@ -45,12 +55,13 @@ export const getServerSideProps = withIronSessionSsr<{
     return { props: {} }
   }
 
-  const { products: productsQuery, space, skip } = query
+  const { products: productsQuery, space, skip, filter } = query
 
   let productDetail: ProductType | undefined = undefined
   const { products, count } = await fetchProductList(
     (space as string) || '',
-    getQueryAsNumber(skip)
+    getQueryAsNumber(skip),
+    filter === undefined ? undefined : getQueryAsNumber(filter)
   )
 
   if (productsQuery) {
@@ -64,12 +75,17 @@ export const getServerSideProps = withIronSessionSsr<{
     }
   }
 
+  const spaceRef = doc(db, 'spaces', space as string)
+
+  const spaceData = await getDoc(spaceRef).then((r) => r.data())
+
   return {
     props: {
       userId: user.id || null,
       products,
       count,
       productDetail: productDetail || null,
+      categories: spaceData?.categories || [],
     },
   }
 }, sessionOptions)
@@ -78,14 +94,31 @@ const useAlert = () => {
   return useState<{ severity: AlertColor; children: ReactNode }>()
 }
 
+const getProducts = async (space: string, skip?: string, filter?: string) => {
+  const filterNumber = parseInt(filter || '')
+  const filterQuery = isNaN(filterNumber) ? '' : `&filter=${filterNumber}`
+  const skipQuery = skip === undefined ? '' : `&skip=${skip}`
+  return fetchJson<{
+    products: ProductType[]
+    count: number
+    ok: boolean
+    message: string
+  }>(`/api/product-list?space=${space}${skipQuery}${filterQuery}`)
+}
+
 export const Product = ({
   userId,
   products,
   count,
   productDetail,
+  categories,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const t = useTranslation()
-  const { query, push, pathname } = useRouter()
+  const { query, push, asPath } = useRouter()
+  const [categoryFilter, setCategoryFilter] = useState<string | number>(
+    (query.filter as string) ?? ''
+  )
+  const lastPathname = useRef(asPath)
 
   const [alert, setAlert] = useAlert()
 
@@ -99,6 +132,46 @@ export const Product = ({
   const [openSnackbar, setOpenSnackbar] = useState(false)
 
   const product = useFetchProductDetail(productDetail)
+
+  const handleFilterChange = useCallback(
+    (event: SelectChangeEvent<string | number>) => {
+      const urlQuery = { ...query, filter: event.target.value }
+
+      if (typeof event.target.value === 'string') {
+        deleteObjectKey(urlQuery, 'filter')
+      }
+
+      setCategoryFilter(event.target.value)
+
+      push({ query: urlQuery }, undefined, {
+        shallow: true,
+      })
+    },
+    [push, query]
+  )
+
+  useAsync(async () => {
+    if (lastPathname.current === asPath) {
+      return
+    }
+    lastPathname.current = asPath
+    const { space, skip, filter } = query as {
+      space: string
+      skip?: string
+      filter?: string
+    }
+    const fetchedProductList = await getProducts(space, skip, filter)
+    if (fetchedProductList.ok) {
+      setProductList(fetchedProductList.products)
+      setPageCount(fetchedProductList.count)
+    } else {
+      setAlert({
+        severity: 'error',
+        children: fetchedProductList.message,
+      })
+      setOpenSnackbar(true)
+    }
+  }, [query, asPath])
 
   return (
     <div className="mx-auto grid gap-4 px-5 pt-10">
@@ -115,6 +188,26 @@ export const Product = ({
         <AddIcon />
       </Fab>
       <Header title={t('PRODUCTS_title')} />
+      {categories && (
+        <FormControl>
+          <InputLabel id="filter-select">
+            {t('PRODUCTS_filter_category_label')}
+          </InputLabel>
+          <Select
+            labelId="filter-select"
+            label={t('PRODUCTS_filter_category_label')}
+            value={categoryFilter}
+            onChange={handleFilterChange}
+          >
+            <MenuItem value="">{t('PRODUCTS_reset_category_filter')}</MenuItem>
+            {categories.map((category, index) => (
+              <MenuItem value={index} key={index}>
+                {category}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      )}
       <div className="grid justify-evenly gap-4 md:grid-cols-2">
         {!productList?.length && (
           <Typography variant="body2">{t('PRODUCTS_no_entries')}</Typography>
@@ -123,6 +216,7 @@ export const Product = ({
           productList.map((item, index) => (
             <Grid item xs={1} key={index} className="w-full flex-grow">
               <ProductItem
+                categories={categories}
                 product={item}
                 userId={userId}
                 onDelete={async (id) => {
@@ -150,6 +244,7 @@ export const Product = ({
       </div>
       <ProductDetail product={product} userId={userId} />
       <CreateEditProduct
+        categories={categories}
         onUpdateProduct={(updatedProduct) => {
           setProductList((state) => {
             const foundIndex = state?.findIndex(
@@ -180,7 +275,7 @@ export const Product = ({
         }}
       />
       <Box className="py-4">
-        {count && (
+        {maxPages && (
           <Pagination
             count={maxPages}
             size="large"
@@ -188,25 +283,15 @@ export const Product = ({
             onChange={async (...props) => {
               const value = props[1]
 
-              push({ query: { ...query, skip: value - 1 } }, pathname, {
+              const urlQuery = { ...query, skip: value - 1 }
+
+              if (value - 1 === 0) {
+                deleteObjectKey(urlQuery, 'skip')
+              }
+
+              push({ query: urlQuery }, undefined, {
                 shallow: true,
               })
-              const fetchedProductList = await fetchJson<{
-                products: ProductType[]
-                count: number
-                ok: boolean
-                message: string
-              }>(`/api/product-list?space=${query.space}&skip=${value - 1}`)
-              if (fetchedProductList.ok) {
-                setProductList(fetchedProductList.products)
-                setPageCount(fetchedProductList.count)
-              } else {
-                setAlert({
-                  severity: 'error',
-                  children: fetchedProductList.message,
-                })
-                setOpenSnackbar(true)
-              }
             }}
           />
         )}
