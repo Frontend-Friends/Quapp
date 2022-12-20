@@ -23,6 +23,7 @@ export type ProductType = {
     id: string
     userName: string
   }
+  category: number | string
   createdAt: string
   chats: ProductChatType[]
 }
@@ -35,6 +36,7 @@ export type SpaceItemType = {
   creationDate: Date
   memberCount: number
   itemCount: number
+  categories?: string[]
 }
 
 export type SignupType = {
@@ -45,8 +47,8 @@ export type SignupType = {
 
 export type CreateProduct = Pick<
   ProductType,
-  'title' | 'text' | 'description' | 'isAvailable'
-> & { img?: File }
+  'title' | 'text' | 'description' | 'isAvailable' | 'category'
+> & { img?: File; newCategory: string }
 
 export type ProductFormData = {
   fields: Omit<CreateProduct, 'img'>

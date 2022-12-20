@@ -13,12 +13,14 @@ export const CreateEditProduct = ({
   onClose,
   onError,
   product,
+  categories,
   onUpdateProduct,
 }: {
   showModal: boolean
   onClose: (state: boolean) => void
   onError?: (error: string) => void
   product: ProductType | null
+  categories?: string[]
   onUpdateProduct: (product: ProductType) => void
 }) => {
   const t = useTranslation()
@@ -51,6 +53,7 @@ export const CreateEditProduct = ({
             : t('CREATE_PRODUCT_page_title')}
         </Typography>
         <ProductForm
+          categories={categories}
           product={product}
           isLoading={loading}
           onSubmit={async (values) => {

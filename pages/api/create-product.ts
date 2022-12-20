@@ -8,6 +8,8 @@ import { withIronSessionApiRoute } from 'iron-session/next'
 import { sessionOptions } from '../../config/session-config'
 import { parsedForm } from '../../lib/helpers/parsed-form'
 import { fetchProduct } from '../../lib/services/fetch-product'
+import { createNewCategory } from '../../lib/helpers/create_new_category'
+import { deleteObjectKey } from '../../lib/helpers/delete-object-key'
 
 export const config = {
   api: {
@@ -17,7 +19,7 @@ export const config = {
 
 async function createProduct(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const { space } = req.query
+    const { space } = req.query as { space: string }
     const { user } = req.session
     if (!user) {
       res.redirect('/auth/login')
@@ -31,11 +33,21 @@ async function createProduct(req: NextApiRequest, res: NextApiResponse) {
       ...formData.files,
     })
 
+    if (!!formData.fields.newCategory) {
+      formData.fields.category = await createNewCategory(
+        space,
+        formData.fields.newCategory
+      )
+    }
+
     const imgSrc = await uploadFileToStorage(formData.files?.img)
 
-    const docRef = collection(db, 'spaces', space as string, 'products')
+    const docRef = collection(db, 'spaces', space, 'products')
 
     const userRef = doc(db, 'user', user.id as string)
+
+    deleteObjectKey(formData.fields, 'newCategory')
+
     const productId = await addDoc(docRef, {
       ...formData.fields,
       createdAt: new Date().getTime(),
@@ -44,7 +56,7 @@ async function createProduct(req: NextApiRequest, res: NextApiResponse) {
       owner: userRef,
     }).then((r) => r.id)
 
-    const productData = await fetchProduct(space as string, productId)
+    const productData = await fetchProduct(space, productId)
 
     res.status(200).json({ isOk: true, productId, product: productData })
   } catch (err) {
