@@ -39,8 +39,10 @@ import { doc, getDoc } from 'firebase/firestore'
 import { db } from '../../../../config/firebase'
 import { deleteObjectKey } from '../../../../lib/helpers/delete-object-key'
 import { useAsync } from 'react-use'
+import { ParsedUrlQuery } from 'querystring'
+import { PageLoader } from '../../../../components/page-loader'
 
-export const pageLimit = 5
+export const maxProductsPerPage = 20
 
 export const getServerSideProps = withIronSessionSsr<{
   userId?: User['id']
@@ -115,17 +117,31 @@ export const Product = ({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const t = useTranslation()
   const { query, push, asPath } = useRouter()
+
+  const { skip, filter, space } = query as {
+    space: string
+    skip?: string
+    filter?: string
+  }
   const [categoryFilter, setCategoryFilter] = useState<string | number>(
-    (query.filter as string) ?? ''
+    filter ?? ''
   )
-  const lastPathname = useRef(asPath)
+  const lastPage = useRef(skip)
+  const lastFilter = useRef(filter)
 
   const [alert, setAlert] = useAlert()
 
   const [productList, setProductList] = useState(products)
   const [pageCount, setPageCount] = useState(count || 0)
+  const [isLoading, setIsLoading] = useState(false)
 
-  const maxPages = useMemo(() => Math.ceil(pageCount / pageLimit), [pageCount])
+  const maxPages = useMemo(
+    () =>
+      pageCount > maxProductsPerPage
+        ? Math.ceil(pageCount / maxProductsPerPage)
+        : 0,
+    [pageCount]
+  )
 
   const [showCreateProduct, setShowCreateProduct] = useState(false)
   const [productToEdit, setProductToEdit] = useState<ProductType | null>(null)
@@ -133,13 +149,23 @@ export const Product = ({
 
   const product = useFetchProductDetail(productDetail)
 
+  const currentPage = useMemo(() => {
+    const page = getQueryAsNumber(skip) + 1
+    return page > maxPages ? maxPages : page
+  }, [skip, maxPages])
+
   const handleFilterChange = useCallback(
     (event: SelectChangeEvent<string | number>) => {
-      const urlQuery = { ...query, filter: event.target.value }
+      const urlQuery = {
+        ...query,
+        filter: event.target.value,
+      } as ParsedUrlQuery
 
       if (typeof event.target.value === 'string') {
         deleteObjectKey(urlQuery, 'filter')
       }
+
+      deleteObjectKey(urlQuery, 'skip')
 
       setCategoryFilter(event.target.value)
 
@@ -151,19 +177,17 @@ export const Product = ({
   )
 
   useAsync(async () => {
-    if (lastPathname.current === asPath) {
+    if (lastPage.current === skip && lastFilter.current === filter) {
       return
     }
-    lastPathname.current = asPath
-    const { space, skip, filter } = query as {
-      space: string
-      skip?: string
-      filter?: string
-    }
+    setIsLoading(true)
+    lastPage.current = skip
+    lastFilter.current = filter
     const fetchedProductList = await getProducts(space, skip, filter)
     if (fetchedProductList.ok) {
       setProductList(fetchedProductList.products)
       setPageCount(fetchedProductList.count)
+      window.scrollTo({ top: 0 })
     } else {
       setAlert({
         severity: 'error',
@@ -171,7 +195,8 @@ export const Product = ({
       })
       setOpenSnackbar(true)
     }
-  }, [query, asPath])
+    setIsLoading(false)
+  }, [space, skip, filter, asPath])
 
   return (
     <div className="mx-auto grid gap-4 px-5 pt-10">
@@ -208,7 +233,7 @@ export const Product = ({
           </Select>
         </FormControl>
       )}
-      <div className="grid justify-evenly gap-4 md:grid-cols-2">
+      <div className="relative grid justify-evenly gap-4 md:grid-cols-2">
         {!productList?.length && (
           <Typography variant="body2">{t('PRODUCTS_no_entries')}</Typography>
         )}
@@ -220,7 +245,7 @@ export const Product = ({
                 product={item}
                 userId={userId}
                 onDelete={async (id) => {
-                  await deleteProduct(id, query.space as string)
+                  await deleteProduct(id, space as string)
                   setProductList((state) =>
                     state?.filter((entry) => entry.id !== id)
                   )
@@ -233,7 +258,7 @@ export const Product = ({
                 onEdit={async (id) => {
                   const fetchedProduct = await fetchProductOnClient(
                     id,
-                    query.space as string
+                    space as string
                   )
                   setProductToEdit(fetchedProduct || null)
                   setShowCreateProduct(true)
@@ -241,6 +266,7 @@ export const Product = ({
               />
             </Grid>
           ))}
+        <PageLoader isLoading={isLoading} className="fixed inset-0 z-10" />
       </div>
       <ProductDetail product={product} userId={userId} />
       <CreateEditProduct
@@ -275,11 +301,11 @@ export const Product = ({
         }}
       />
       <Box className="py-4">
-        {maxPages && (
+        {!!maxPages && (
           <Pagination
             count={maxPages}
             size="large"
-            page={getQueryAsNumber(query.skip) + 1}
+            page={currentPage}
             onChange={async (...props) => {
               const value = props[1]
 

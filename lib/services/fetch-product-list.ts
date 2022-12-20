@@ -6,13 +6,12 @@ import {
   limit,
   orderBy,
   query,
-  startAfter,
   where,
 } from 'firebase/firestore'
 import { db } from '../../config/firebase'
 import { ProductType } from '../../components/products/types'
 import { User } from '../../components/user/types'
-import { pageLimit } from '../../pages/community/[space]/products/[[...products]]'
+import { maxProductsPerPage } from '../../pages/community/[space]/products/[[...products]]'
 
 export const fetchProductList = async (
   space: string,
@@ -21,20 +20,7 @@ export const fetchProductList = async (
 ) => {
   const productCollection = collection(db, 'spaces', space, 'products')
 
-  const limited = pageLimit
-
-  const offset = pageLimit * (skip || 0)
-
-  const firstProductQuery =
-    filter !== undefined
-      ? query(
-          productCollection,
-          where('category', '==', filter),
-          orderBy('createdAt'),
-          limit(offset || limited)
-        )
-      : query(productCollection, orderBy('createdAt'), limit(offset || limited))
-
+  // Query to count all the products
   const countQuery =
     filter !== undefined
       ? query(
@@ -44,37 +30,42 @@ export const fetchProductList = async (
         )
       : query(productCollection, orderBy('createdAt'))
 
-  const firstProducts = await getDocs(firstProductQuery)
+  // fetch the products to count
+  const productCountDocs = await getDocs(countQuery)
 
-  const productCount = await getDocs(countQuery)
+  // get the numbers of products
+  const productCount = productCountDocs.docs.length
 
-  const lastIndex = firstProducts.docs.length - 1
+  const maxPages = Math.floor(productCount / maxProductsPerPage)
 
-  const lastProductRef = firstProducts.docs[lastIndex]
+  // If skip exists and skip is bigger than maxPages, return maxPages
+  // If skip does not exist return 0
+  const offsetMultiplier = skip && skip > maxPages ? maxPages : skip || 0
 
-  const productsData: DocumentData[] = []
+  const offset = maxProductsPerPage * offsetMultiplier
 
-  const productQuery =
+  // make sure we always have a number
+  const maxProducts = maxProductsPerPage + maxProductsPerPage * offsetMultiplier
+
+  // Query to get all Products from 0 to current page with or without filter
+  const firstProductQuery =
     filter !== undefined
       ? query(
           productCollection,
           where('category', '==', filter),
           orderBy('createdAt'),
-          startAfter(lastProductRef),
-          limit(limited)
+          limit(maxProducts)
         )
-      : query(
-          productCollection,
-          orderBy('createdAt'),
-          startAfter(lastProductRef),
-          limit(limited)
-        )
+      : query(productCollection, orderBy('createdAt'), limit(maxProducts))
 
-  const skippedProducts = await getDocs(productQuery)
+  // get the products
+  const firstProducts = await getDocs(firstProductQuery)
 
-  const productSnapshot = skip ? skippedProducts : firstProducts
+  // remove all products except the ones on the current page
+  const productsOnPage = firstProducts.docs.slice(offset)
+  const productsData: DocumentData[] = []
 
-  productSnapshot.forEach((productDoc) => {
+  productsOnPage.forEach((productDoc) => {
     const docData = productDoc.data()
     productsData.push({
       ...docData,
@@ -82,6 +73,7 @@ export const fetchProductList = async (
     })
   })
 
+  // get The owner of the product by the user
   const products = await Promise.all(
     productsData.map(async (product) => {
       const user = await getDoc<User>(product.owner).then((r) => ({
@@ -95,18 +87,8 @@ export const fetchProductList = async (
     })
   )
 
-  products.sort((a, b) => {
-    if (!a.createdAt) {
-      return 1
-    }
-    if (!b.createdAt) {
-      return -1
-    }
-    return a.createdAt > b.createdAt ? -1 : 1
-  })
-
   return {
     products: products as ProductType[],
-    count: productCount.docs.length,
+    count: productCount,
   }
 }
