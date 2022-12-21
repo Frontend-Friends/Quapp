@@ -26,25 +26,28 @@ const theme = createTheme({
       default: '#FFFFFF',
     },
   },
+  shape: {
+    borderRadius: 6,
+  },
   typography: {
     fontFamily: 'Jost, Helvetica, Arial, sans-serif',
     h1: {
-      fontSize: '3rem',
+      fontSize: '1.5rem',
       letterSpacing: '0',
       lineHeight: '1em',
-      fontWeight: '700',
+      fontWeight: '500',
     },
     h2: {
-      fontSize: '2.5rem',
+      fontSize: '1.25rem',
       letterSpacing: '0',
       lineHeight: '1em',
-      fontWeight: '700',
+      fontWeight: '500',
     },
     h3: {
-      fontSize: '2rem',
+      fontSize: '1rem',
       letterSpacing: '0',
       lineHeight: '1em',
-      fontWeight: '700',
+      fontWeight: '500',
     },
   },
 })

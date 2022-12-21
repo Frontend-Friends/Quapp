@@ -4,6 +4,18 @@ import { useRef, useState } from 'react'
 import { useAsync } from 'react-use'
 import { fetchJson } from '../lib/helpers/fetch-json'
 
+export const fetchProduct = async (productId: string, space: string) => {
+  return fetchJson<ProductType>(
+    `/api/product?productId=${productId}&space=${space}`
+  )
+}
+export const deleteProduct = async (productId: string, space: string) => {
+  return fetchJson<ProductType>(
+    `/api/delete-product?productId=${productId}&space=${space}`,
+    { method: 'DELETE' }
+  )
+}
+
 export const useFetchProductDetail = (
   initialProductDetail?: ProductType | null
 ) => {
@@ -18,8 +30,9 @@ export const useFetchProductDetail = (
       !isInitial.current &&
       currentQuery.current !== productQuery[0]
     ) {
-      const fetchedProduct = await fetchJson<ProductType>(
-        `/api/product?productId=${productQuery[0]}&space=${space}`
+      const fetchedProduct = await fetchProduct(
+        productQuery[0],
+        space as string
       )
       setProduct(fetchedProduct)
     }

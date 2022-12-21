@@ -31,6 +31,6 @@ module.exports = {
       },
     },
   },
-  important: '#__next',
+  important: 'body',
   plugins: ['tailwindcss', 'postcss-preset-env'],
 }

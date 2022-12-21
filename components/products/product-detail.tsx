@@ -62,11 +62,11 @@ export const ProductDetail = ({
       }}
       aria-labelledby="parent-modal-title"
       aria-describedby="parent-modal-description"
-      className="flex items-center justify-center sm:p-10"
+      className="flex items-center justify-center md:p-10"
       disablePortal
     >
       {product ? (
-        <CondensedContainer className="relative m-0 max-h-full overflow-auto bg-white p-8 sm:rounded">
+        <CondensedContainer className="relative m-0 max-h-full min-h-screen overflow-auto bg-white p-8 md:min-h-max md:rounded-2xl">
           <Box className="sticky top-0 z-10 flex h-0 w-full justify-end">
             <Link href={backUrl} passHref shallow>
               <IconButton
@@ -79,7 +79,7 @@ export const ProductDetail = ({
           </Box>
           <Header
             title={product.title}
-            lead={product.lead}
+            lead={product.description}
             imgSrc={product.imgSrc}
           />
           <Box className="flex items-center gap-4 py-8">
