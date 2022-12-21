@@ -5,21 +5,34 @@ import {
 } from 'firebase/auth'
 import { auth, db } from '../../config/firebase'
 import { doc, setDoc } from 'firebase/firestore'
+import { parsedForm } from '../../lib/helpers/parsed-form'
+import { SignupType } from '../../components/products/types'
+
+export const config = {
+  api: {
+    bodyParser: false, // Disallow body parsing, consume as stream
+  },
+}
 
 export default async function signupRoute(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { protocol, host } = req.body
-  const actionCodeSettings = {
-    // URL must be in the authorized domains list in the Firebase Console.
-    url: `${protocol}//${host}/auth/login?name=${req.body.name}`,
-    // This must be true.
-    handleCodeInApp: true,
-  }
+  const referer = req.headers.referer
+  const refUrl = referer ? new URL(referer) : undefined
+  const { fields } = await parsedForm<{ fields: SignupType }>(req)
   try {
-    const { email, firstName } = req.body
-    const password = req.body.password
+    if (!refUrl) {
+      new Error(`We didn't send any referer`)
+      return
+    }
+    const actionCodeSettings = {
+      // URL must be in the authorized domains list in the Firebase Console.
+      url: `${refUrl.protocol}//${refUrl.host}/auth/login?name=${fields.firstName}`,
+      // This must be true.
+      handleCodeInApp: true,
+    }
+    const { email, firstName, password } = fields
     const credentials = await createUserWithEmailAndPassword(
       auth,
       email,

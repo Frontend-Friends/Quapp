@@ -41,6 +41,8 @@ export const translations: Record<string, string> = {
   LOGIN_has_account: 'Sie haben schon einen Account?',
   LOGIN_something_went_wrong:
     'Etwas ist schief gelaufen. Bitte versuchen Sie es erneut.',
+  LOGIN_password_has_been_reset:
+    'Ihr Passwort wurde zurückgesetzt. Bitte überprüfen Sie Ihre E-Mail.',
 
   LOGOUT_logout: 'Abmelden',
 
