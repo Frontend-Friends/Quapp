@@ -8,7 +8,7 @@ export const createProduct = async (
   fields: Pick<ProductFormData, 'fields'>,
   imgSrc: string | null
 ) => {
-  const docRef = collection(db, 'spaces', user.spaces[0], 'products')
+  const docRef = collection(db, 'spaces', user?.spaces?.[0] ?? '', 'products')
 
   const userRef = doc(db, 'user', user.uid)
 

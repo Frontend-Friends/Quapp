@@ -10,6 +10,11 @@ export const translations: Record<string, string> = {
   GLOBAL_delete: 'Löschen',
   GLOBAL_open: 'Öffne',
   GLOBAL_options: 'Optionen',
+  GLOBAL_back_to_login: 'Zurück zum Login',
+  GLOBAL_hello: 'Hallo',
+  GLOBAL_go_to_account_settings: 'Zu den Account Einstellungen',
+  GLOBAL_settings: 'Einstellungen',
+
   GLOBAL_back_to_home: 'Zurück zur Startseite',
 
   HOME_signup_free: 'Jetzt kostenlos Registrieren',
@@ -32,13 +37,21 @@ export const translations: Record<string, string> = {
   LOGIN_title: 'Login',
   LOGIN_login: 'Anmelden',
   LOGIN_forgot_password: 'Passwort vergessen?',
-  LOGIN_has_no_account: 'Du hast noch keinen Account?',
-  LOGIN_has_account: 'Du hast schon einen Account?',
+  LOGIN_has_no_account: 'Sie haben noch keinen Account?',
+  LOGIN_has_account: 'Sie haben schon einen Account?',
+  LOGIN_something_went_wrong:
+    'Etwas ist schief gelaufen. Bitte versuchen Sie es erneut.',
+  LOGIN_password_has_been_reset:
+    'Ihr Passwort wurde zurückgesetzt. Bitte überprüfen Sie Ihre E-Mail.',
 
   LOGOUT_logout: 'Abmelden',
 
   SIGNUP_title: 'Registration',
   SIGNUP_signup: 'Registrieren',
+  SIGNUP_something_went_wrong:
+    'Bei der Registrierung ist etwas schief gelaufen. Bitte versuchen Sie es erneut.',
+  SIGNUP_success_page_text:
+    'Vielen Dank für deine Registrierung! Wir haben dir eine E-Mail mit einem Verifizierungslink geschickt. Bitte klicke diesen um die Registrierung abzuschliessen. Dein Quapp Team',
 
   PRODUCTS_title: 'Produkte',
   PRODUCTS_no_entries: 'Leider gibt es noch keine Einträge.',
@@ -93,19 +106,6 @@ export const translations: Record<string, string> = {
   CHAT_message_error: 'Die Nachricht darf nicht leer sein',
   CHAT_message_required: 'Das Feld ist pflicht',
 
-  SVG_logo: 'Das Quapp Logo mit Link auf die Startseite',
-  SVG_appartment:
-    'Eine rein Dekorative Illustration die ein Wohngebäude zeigt.',
-  SVG_collaborator:
-    'Eine rein Dekorative Illustration die zusammenarbeitende Menschen zeigt.',
-  SVG_hangout:
-    'Eine rein Dekorative Illustration die zwei Personen zeigt, welche zusammen an einem Tisch einen Kaffe trinken.',
-  SVG_windowneighbours:
-    'Eine rein Dekorative Illustration die zwei sich unterhaltende Nachbarn zeigt.',
-
-  FOOTER_contact: 'Kontakt',
-  FOOTER_imprint: 'Impressum',
-  FOOTER_privacy: 'Datenschutz',
-
-  HTML_TITLE_general: 'Quapp - Die App die Nachbarn verbindet',
+  SETTINGS_title: 'Einstellungen',
+  SETTINGS_change_settings: 'Einstellungen ändern',
 }

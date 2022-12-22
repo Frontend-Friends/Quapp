@@ -1,28 +1,48 @@
-import React from 'react'
-import { Box, Button, Link, TextField, Typography } from '@mui/material'
+import React, { FC, useState } from 'react'
+import { Box, Link, Snackbar, TextField, Typography } from '@mui/material'
 
 import { Formik } from 'formik'
 import { useTranslation } from '../../hooks/use-translation'
 import { SignupType } from '../../components/products/types'
-import { fetchJson } from '../../lib/helpers/fetch-json'
 import { signupFormSchema } from '../../lib/schema/signup-form-schema'
 import { CondensedContainer } from '../../components/condensed-container'
+import { LoadingButton } from '@mui/lab'
+import { useRouter } from 'next/router'
+import { sendFormData } from '../../lib/helpers/send-form-data'
 
 const twFormGroup = 'mb-4'
 
-const Signup: React.FC = () => {
-  const handleSignup = async (values: SignupType) => {
-    await fetchJson('/api/signup', {
-      method: 'POST',
-      headers: {
-        accept: 'application.json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ ...values }),
-      cache: 'default',
-    })
-  }
+const Signup: FC = () => {
+  const [isLoading, setIsLoading] = useState(false)
+  const [open, setOpen] = React.useState(false)
+  const [message, setMessage] = useState('')
+  const router = useRouter()
 
+  const handleSignup = async (values: SignupType) => {
+    setIsLoading(true)
+    try {
+      const fetchedSignup = await sendFormData<{
+        isSignedUp: boolean
+        message: string
+      }>('/api/signup', values)
+
+      if (fetchedSignup.isSignedUp) {
+        setIsLoading(false)
+        await router.push({
+          pathname: '/auth/signup-success',
+          query: { name: values.firstName },
+        })
+      } else {
+        setOpen(true)
+        setMessage(fetchedSignup.message)
+        setIsLoading(false)
+      }
+    } catch {
+      setIsLoading(false)
+      setOpen(true)
+      setMessage('SIGNUP_failed')
+    }
+  }
   const t = useTranslation()
   return (
     <CondensedContainer>
@@ -85,9 +105,13 @@ const Signup: React.FC = () => {
               />
             </Box>
 
-            <Button type="submit" variant="contained">
+            <LoadingButton
+              type="submit"
+              variant="contained"
+              loading={isLoading}
+            >
               {t('SIGNUP_signup')}
-            </Button>
+            </LoadingButton>
 
             <Box className="mt-6">
               <Link underline="hover" href="/auth/login">
@@ -97,6 +121,16 @@ const Signup: React.FC = () => {
           </form>
         )}
       </Formik>
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center',
+        }}
+        open={open}
+        autoHideDuration={3000}
+        onClose={() => setOpen(false)}
+        message={t(message)}
+      />
     </CondensedContainer>
   )
 }
