@@ -9,6 +9,7 @@ import createEmotionCache from '../config/create-emotion-cache'
 import '../styles/globals.scss'
 import { useTranslation } from '../hooks/use-translation'
 import Footer from '../components/footer'
+import NavigationBar from '../components/navigation/navigation-bar'
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
@@ -34,9 +35,12 @@ export default function App({
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className="flex min-h-screen flex-col justify-between">
-          <Component {...pageProps} />
+          <div className="p-3">
+            <Component {...pageProps} />
+          </div>
           <Footer />
         </div>
+        <NavigationBar />
       </ThemeProvider>
     </CacheProvider>
   )

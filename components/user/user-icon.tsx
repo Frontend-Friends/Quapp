@@ -1,10 +1,14 @@
 import React, { useRef } from 'react'
-import { Button } from '@mui/material'
+import { Button, Divider, ListItemText, MenuList } from '@mui/material'
 import { useTranslation } from '../../hooks/use-translation'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import { fetchJson } from '../../lib/helpers/fetch-json'
 import { useRouter } from 'next/router'
+import { twNavbarButton } from '../navigation/navigation-bar'
+import Person2RoundedIcon from '@mui/icons-material/Person2Rounded'
+import { LogoutRounded, SettingsRounded } from '@mui/icons-material'
+import ListItemIcon from '@mui/material/ListItemIcon'
 
 const UserIcon: React.FC = () => {
   const [open, setOpen] = React.useState<boolean>(false)
@@ -26,44 +30,58 @@ const UserIcon: React.FC = () => {
   return (
     <>
       <Button
+        className={twNavbarButton}
         ref={ref}
         onClick={() => {
           setAnchorEl(ref.current)
           setOpen(true)
         }}
       >
-        {t('GLOBAL_settings')}
+        <Person2RoundedIcon fontSize="large" />
       </Button>
       <Menu
         id="basic-menu"
-        anchorEl={anchorEl}
         open={open}
         onClose={() => setOpen(false)}
         onClick={handleClick}
         MenuListProps={{
           'aria-labelledby': 'basic-button',
         }}
-        // anchorOrigin={{
-        //   vertical: 'top',
-        //   horizontal: 'right',
-        // }}
+        anchorEl={anchorEl}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        transformOrigin={{
+          vertical: 'bottom',
+          horizontal: 'right',
+        }}
       >
-        <MenuItem
-          onClick={async () => {
-            setOpen(false)
-            await router.push('/user/account-settings')
-          }}
-        >
-          {t('GLOBAL_go_to_account_settings')}
-        </MenuItem>
-        <MenuItem
-          onClick={async () => {
-            setOpen(false)
-            await handleLogout()
-          }}
-        >
-          {t('LOGOUT_logout')}
-        </MenuItem>
+        <MenuList>
+          <MenuItem
+            onClick={async () => {
+              setOpen(false)
+              await router.push('/user/account-settings')
+            }}
+          >
+            <ListItemIcon>
+              <SettingsRounded fontSize="small" />
+            </ListItemIcon>
+            {t('GLOBAL_go_to_account_settings')}
+          </MenuItem>
+          <Divider />
+          <MenuItem
+            onClick={async () => {
+              setOpen(false)
+              await handleLogout()
+            }}
+          >
+            <ListItemIcon>
+              <LogoutRounded fontSize="small" />
+            </ListItemIcon>
+            <ListItemText>{t('LOGOUT_logout')}</ListItemText>
+          </MenuItem>
+        </MenuList>
       </Menu>
     </>
   )

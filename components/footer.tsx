@@ -2,12 +2,11 @@ import { Link } from '@mui/material'
 import React, { FC } from 'react'
 import { useTranslation } from '../hooks/use-translation'
 import { LogoSVG } from './svg/quapp_logo'
-import UserIcon from './user/user-icon'
 
 const Footer: FC = () => {
   const t = useTranslation()
   return (
-    <footer className="bg-blueishGray-900 p-5 text-lg font-light text-white">
+    <footer className="bg-blueishGray-900 p-5 pb-24 text-lg font-light text-white md:pb-1">
       <div className="flex">
         <ul className="m-0 mb-5 flex-1 list-none p-0">
           <li className="py-1">
@@ -37,7 +36,6 @@ const Footer: FC = () => {
             className="mx-auto block w-full"
           />
         </Link>
-        <UserIcon />
       </div>
       <hr className="h-[1px] border-0 bg-blueishGray-300" />
       <p className="text-center text-blueishGray-300">
