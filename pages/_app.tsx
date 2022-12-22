@@ -34,8 +34,10 @@ export default function App({
       </Head>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Component {...pageProps} />
-        <Footer />
+        <div className="flex min-h-screen flex-col justify-between">
+          <Component {...pageProps} />
+          <Footer />
+        </div>
         <BottomNavigation />
       </ThemeProvider>
     </CacheProvider>

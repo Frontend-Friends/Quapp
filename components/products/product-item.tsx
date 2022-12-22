@@ -19,10 +19,11 @@ import clsx from 'clsx'
 
 export const ProductItem: FC<{
   product: ProductType
+  categories?: string[]
   userId?: User['id']
   onEdit: (id: string) => void
   onDelete: (id: string) => void
-}> = ({ product, userId, onEdit, onDelete }) => {
+}> = ({ categories, product, userId, onEdit, onDelete }) => {
   const t = useTranslation()
   const { query } = useRouter()
   const [openDeleteModal, setOpenDeleteModal] = useState(false)
@@ -44,21 +45,21 @@ export const ProductItem: FC<{
             variant="outlined"
             className={clsx(
               !product.isAvailable && 'bg-white',
-              'flex h-full items-start justify-start normal-case'
+              'flex h-full min-h-[100px] items-stretch justify-start p-0 normal-case'
             )}
           >
             {product.imgSrc && (
               <CardMedia
                 component="img"
                 height={100}
-                className="h-24 w-24 flex-shrink-0 overflow-hidden object-cover"
+                className="w-[100px] flex-shrink-0 overflow-hidden object-cover"
                 src={product.imgSrc}
               />
             )}
             {!product.imgSrc && (
               <Box
                 component="span"
-                className="h-24 w-24 flex-shrink-0 overflow-hidden bg-mintGreen-300 object-cover"
+                className="w-[100px] flex-shrink-0 overflow-hidden bg-mintGreen-300 object-cover"
               />
             )}
             <CardContent component="span">
@@ -68,6 +69,14 @@ export const ProductItem: FC<{
               {product.description && (
                 <Typography variant="body2" className="pt-1 text-gray-500">
                   {product.description}
+                </Typography>
+              )}
+              {categories && product.category !== undefined && (
+                <Typography
+                  variant="body2"
+                  className="mt-4 inline-flex h-6 items-center rounded-2xl bg-blueishGray-600 px-3 py-1 text-white"
+                >
+                  {categories?.[product.category as number]}
                 </Typography>
               )}
             </CardContent>
