@@ -9,7 +9,7 @@ import createEmotionCache from '../config/create-emotion-cache'
 import '../styles/globals.scss'
 import { useTranslation } from '../hooks/use-translation'
 import Footer from '../components/footer'
-import BottomNavigation from '../components/bottom-navigation'
+import NavigationBar from '../components/navigation/navigation-bar'
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
@@ -38,7 +38,7 @@ export default function App({
           <Component {...pageProps} />
           <Footer />
         </div>
-        <BottomNavigation />
+        <NavigationBar />
       </ThemeProvider>
     </CacheProvider>
   )
