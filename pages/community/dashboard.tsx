@@ -5,14 +5,13 @@ import { Fab, Grid, Typography } from '@mui/material'
 import { Header } from '../../components/header'
 import AddIcon from '@mui/icons-material/Add'
 import { InferGetServerSidePropsType } from 'next'
-import { AddSpaceType, SpaceItemType } from '../../components/products/types'
+import { SpaceItemType } from '../../components/products/types'
 import { doc, getDoc } from 'firebase/firestore'
 import { db } from '../../config/firebase'
 import SpaceItem from '../../components/spaces/space-item'
 import { withIronSessionSsr } from 'iron-session/next'
 import { sessionOptions } from '../../config/session-config'
 import SpaceForm from './space-form'
-import { sendFormData } from '../../lib/helpers/send-form-data'
 
 export const getServerSideProps = withIronSessionSsr<{
   spaces?: SpaceItemType[]
@@ -52,27 +51,6 @@ const Dashboard: FC<InferGetServerSidePropsType<typeof getServerSideProps>> = ({
   const [isLoading, setIsLoading] = useState(false)
   const [message, setMessage] = useState('')
 
-  const handleAddSpace = async (values: AddSpaceType) => {
-    setIsLoading(true)
-    try {
-      const fetchedAddSpace = await sendFormData<{
-        isSignedUp: boolean
-        message: string
-      }>('/api/signup', values)
-
-      if (fetchedAddSpace.isSignedUp) {
-        setIsLoading(false)
-      } else {
-        setOpen(true)
-        setMessage(fetchedAddSpace.message)
-        setIsLoading(false)
-      }
-    } catch {
-      setIsLoading(false)
-      setOpen(true)
-      setMessage('SIGNUP_failed')
-    }
-  }
   console.log(message)
   return (
     <CondensedContainer className="relative">
@@ -99,8 +77,9 @@ const Dashboard: FC<InferGetServerSidePropsType<typeof getServerSideProps>> = ({
         <SpaceForm
           setOpen={setOpen}
           open={open}
-          handleAddSpace={handleAddSpace}
           isLoading={isLoading}
+          setIsLoading={setIsLoading}
+          setMessage={setMessage}
           // onClose={() => setOpen(false)}
         />
       )}

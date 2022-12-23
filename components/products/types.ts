@@ -44,14 +44,8 @@ export type SignupType = {
   email: string
   password: string
 }
-export type AddSpaceType = {
-  categories: string[]
-  creationDate: string
-  creatorId: string
-  itemCount: number
-  memberCount: number
-  name: string
-  ownerId: string
+export type SpaceFormData = {
+  fields: SpaceItemType
 }
 
 export type CreateProduct = Pick<
