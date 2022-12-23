@@ -1,16 +1,18 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { CondensedContainer } from '../../components/condensed-container'
 import { useTranslation } from '../../hooks/use-translation'
 import { Fab, Grid, Typography } from '@mui/material'
 import { Header } from '../../components/header'
 import AddIcon from '@mui/icons-material/Add'
 import { InferGetServerSidePropsType } from 'next'
-import { SpaceItemType } from '../../components/products/types'
+import { AddSpaceType, SpaceItemType } from '../../components/products/types'
 import { doc, getDoc } from 'firebase/firestore'
 import { db } from '../../config/firebase'
 import SpaceItem from '../../components/spaces/space-item'
 import { withIronSessionSsr } from 'iron-session/next'
 import { sessionOptions } from '../../config/session-config'
+import SpaceForm from './space-form'
+import { sendFormData } from '../../lib/helpers/send-form-data'
 
 export const getServerSideProps = withIronSessionSsr<{
   spaces?: SpaceItemType[]
@@ -46,7 +48,32 @@ const Dashboard: FC<InferGetServerSidePropsType<typeof getServerSideProps>> = ({
   spaces,
 }) => {
   const t = useTranslation()
+  const [open, setOpen] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [message, setMessage] = useState('')
 
+  const handleAddSpace = async (values: AddSpaceType) => {
+    setIsLoading(true)
+    try {
+      const fetchedAddSpace = await sendFormData<{
+        isSignedUp: boolean
+        message: string
+      }>('/api/signup', values)
+
+      if (fetchedAddSpace.isSignedUp) {
+        setIsLoading(false)
+      } else {
+        setOpen(true)
+        setMessage(fetchedAddSpace.message)
+        setIsLoading(false)
+      }
+    } catch {
+      setIsLoading(false)
+      setOpen(true)
+      setMessage('SIGNUP_failed')
+    }
+  }
+  console.log(message)
   return (
     <CondensedContainer className="relative">
       <Header title={t('SPACES_title')} />
@@ -59,10 +86,24 @@ const Dashboard: FC<InferGetServerSidePropsType<typeof getServerSideProps>> = ({
       ) : (
         <Typography variant="body2">{t('SPACES_no_entries')}</Typography>
       )}
-
-      <Fab color="primary" aria-label="add" variant="extended" className="mt-8">
+      <Fab
+        color="primary"
+        aria-label="add"
+        variant="extended"
+        className="mt-8"
+        onClick={() => setOpen((state) => !state)}
+      >
         <AddIcon className="mr-2" /> {t('SPACES_add_space')}
       </Fab>
+      {open && (
+        <SpaceForm
+          setOpen={setOpen}
+          open={open}
+          handleAddSpace={handleAddSpace}
+          isLoading={isLoading}
+          // onClose={() => setOpen(false)}
+        />
+      )}
     </CondensedContainer>
   )
 }

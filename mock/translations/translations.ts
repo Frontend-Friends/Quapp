@@ -99,6 +99,7 @@ export const translations: Record<string, string> = {
   SPACES_no_entries: 'Es gibt noch keine Spaces.',
   SPACES_members: 'Mitglieder',
   SPACES_items: 'Einträge',
+  SPACES_add_space: 'Space hinzufügen',
 
   CHAT_button_send: 'Nachricht senden',
   CHAT_button_loading: 'wird gesendet',
