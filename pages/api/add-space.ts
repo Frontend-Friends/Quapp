@@ -1,10 +1,16 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { addDoc, collection } from 'firebase/firestore'
+import {
+  addDoc,
+  arrayUnion,
+  collection,
+  doc,
+  updateDoc,
+} from 'firebase/firestore'
 import { withIronSessionApiRoute } from 'iron-session/next'
 import { sessionOptions } from '../../config/session-config'
 import { parsedForm } from '../../lib/helpers/parsed-form'
 import { db } from '../../config/firebase'
-import { AddSpaceType } from '../../components/products/types'
+import { SpaceFormData } from '../../components/products/types'
 
 export const config = {
   api: {
@@ -22,21 +28,37 @@ async function addSpace(req: NextApiRequest, res: NextApiResponse) {
     }
     const uid = req.session.user?.uid
     const spaceRef = collection(db, 'spaces', '/')
+    const userRef = doc(db, `user/${uid}`)
 
-    const formData = await parsedForm<AddSpaceType>(req)
-    const data = {
+    const formData = await parsedForm<SpaceFormData>(req)
+    const spaceData = {
       ...formData.fields,
     }
-    await addDoc(spaceRef, {
-      ...data,
+    // add space to spaces collection
+    const spacesAdd = addDoc(spaceRef, {
+      ...spaceData,
       ownerId: `/user/${uid}`,
       creatorId: `/user/${uid}`,
+      creationDate: new Date(),
     })
 
-    res.status(200).json({ isOk: true, space: { ...data } })
+    // add space-id to spaces property of user
+    const userUpdate = await updateDoc(userRef, {
+      spaces: arrayUnion(spaceData.name),
+    })
+
+    await Promise.all([spacesAdd, userUpdate])
+    res.status(200).json({
+      isOk: true,
+      space: { ...spaceData },
+      message: `The space ${spaceData.name} is added to spaces and to your profile.`,
+    })
   } catch (err) {
     console.error(err)
-    res.status(500).json({ isOk: false })
+    res.status(500).json({
+      isOk: false,
+      message: 'An error occurred when trying to set data',
+    })
   }
 }
 
