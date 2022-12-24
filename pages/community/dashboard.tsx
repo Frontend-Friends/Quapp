@@ -51,7 +51,6 @@ const Dashboard: FC<InferGetServerSidePropsType<typeof getServerSideProps>> = ({
   const [isLoading, setIsLoading] = useState(false)
   const [message, setMessage] = useState('')
 
-  console.log(message)
   return (
     <CondensedContainer className="relative">
       <Header title={t('SPACES_title')} />
@@ -80,7 +79,7 @@ const Dashboard: FC<InferGetServerSidePropsType<typeof getServerSideProps>> = ({
           isLoading={isLoading}
           setIsLoading={setIsLoading}
           setMessage={setMessage}
-          // onClose={() => setOpen(false)}
+          message={message}
         />
       )}
     </CondensedContainer>
