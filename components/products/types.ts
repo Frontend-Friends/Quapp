@@ -37,6 +37,7 @@ export type SpaceItemType = {
   memberCount?: number
   itemCount?: number
   categories?: string[]
+  spaces?: string[]
 }
 
 export type SignupType = {
