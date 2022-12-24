@@ -12,7 +12,9 @@ export const middleware = async (req: NextRequest) => {
   const session = await getIronSession(req, res, sessionOptions)
   const { user } = session
   if (!user) {
-    return NextResponse.redirect(new URL('/auth/login', req.url))
+    if (req.nextUrl.pathname !== '/auth/login') {
+      return NextResponse.redirect(new URL('/auth/login', req.url))
+    }
   }
   return res
 }
