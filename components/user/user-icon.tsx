@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import { useCallback, useRef, FC, useState } from 'react'
 import { Button, Divider, ListItemText, MenuList } from '@mui/material'
 import { useTranslation } from '../../hooks/use-translation'
 import Menu from '@mui/material/Menu'
@@ -10,21 +10,21 @@ import Person2RoundedIcon from '@mui/icons-material/Person2Rounded'
 import { LogoutRounded, SettingsRounded } from '@mui/icons-material'
 import ListItemIcon from '@mui/material/ListItemIcon'
 
-const UserIcon: React.FC = () => {
-  const [open, setOpen] = React.useState<boolean>(false)
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+const UserIcon: FC = () => {
+  const [open, setOpen] = useState<boolean>(false)
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const ref = useRef<HTMLButtonElement | null>(null)
-  const handleClick = () => {
-    setOpen(!open)
-  }
+  const handleClick = useCallback(() => {
+    setOpen((state) => !state)
+  }, [])
   const router = useRouter()
 
-  const handleLogout = async () => {
+  const handleLogout = useCallback(async () => {
     const result = await fetchJson<{ isLoggedOut: boolean }>('/api/logout')
     if (result.isLoggedOut) {
       await router.push('/auth/login')
     }
-  }
+  }, [router])
 
   const t = useTranslation()
   return (
