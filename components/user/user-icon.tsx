@@ -1,20 +1,13 @@
-import { useCallback, useRef, FC, useState } from 'react'
-import { Button, Divider, ListItemText, MenuList } from '@mui/material'
-import { useTranslation } from '../../hooks/use-translation'
-import Menu from '@mui/material/Menu'
-import MenuItem from '@mui/material/MenuItem'
-import { fetchJson } from '../../lib/helpers/fetch-json'
-import { useRouter } from 'next/router'
+import { FC, useRef } from 'react'
+import { Button } from '@mui/material'
 import { twNavbarButton } from '../navigation/navigation-bar'
 import Person2RoundedIcon from '@mui/icons-material/Person2Rounded'
-import { LogoutRounded, SettingsRounded } from '@mui/icons-material'
-import ListItemIcon from '@mui/material/ListItemIcon'
 
 const UserIcon: FC = () => {
-  const [open, setOpen] = useState<boolean>(false)
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  // const [open, setOpen] = useState<boolean>(false)
+  // const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const ref = useRef<HTMLButtonElement | null>(null)
-  const handleClick = useCallback(() => {
+  /*const handleClick = useCallback(() => {
     setOpen((state) => !state)
   }, [])
   const router = useRouter()
@@ -26,20 +19,20 @@ const UserIcon: FC = () => {
     }
   }, [router])
 
-  const t = useTranslation()
+  const t = useTranslation()*/
   return (
     <>
       <Button
         className={twNavbarButton}
         ref={ref}
-        onClick={() => {
+        /*onClick={() => {
           setAnchorEl(ref.current)
           setOpen(true)
-        }}
+        }}*/
       >
         <Person2RoundedIcon fontSize="large" />
       </Button>
-      <Menu
+      {/*<Menu
         id="basic-menu"
         open={open}
         onClose={() => setOpen(false)}
@@ -82,7 +75,7 @@ const UserIcon: FC = () => {
             <ListItemText>{t('LOGOUT_logout')}</ListItemText>
           </MenuItem>
         </MenuList>
-      </Menu>
+      </Menu>*/}
     </>
   )
 }
