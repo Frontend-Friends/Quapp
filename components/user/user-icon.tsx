@@ -14,9 +14,9 @@ const UserIcon: FC = () => {
   const [open, setOpen] = useState<boolean>(false)
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const ref = useRef<HTMLButtonElement | null>(null)
-  const handleClick = () => {
-    setOpen(!open)
-  }
+  const handleClick = useCallback(() => {
+    setOpen((state) => !state)
+  }, [])
   const router = useRouter()
 
   const handleLogout = useCallback(async () => {
