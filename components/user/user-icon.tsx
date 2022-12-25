@@ -1,14 +1,19 @@
-import { useCallback, useRef, FC, useState } from 'react'
-import { Button, Divider, ListItemText, MenuList } from '@mui/material'
-import { useTranslation } from '../../hooks/use-translation'
-import Menu from '@mui/material/Menu'
-import MenuItem from '@mui/material/MenuItem'
-import { fetchJson } from '../../lib/helpers/fetch-json'
-import { useRouter } from 'next/router'
+import { FC, useCallback, useRef, useState } from 'react'
+import {
+  Button,
+  Divider,
+  ListItemIcon,
+  ListItemText,
+  Menu,
+  MenuItem,
+  MenuList,
+} from '@mui/material'
 import { twNavbarButton } from '../navigation/navigation-bar'
 import Person2RoundedIcon from '@mui/icons-material/Person2Rounded'
+import { useRouter } from 'next/router'
+import { fetchJson } from '../../lib/helpers/fetch-json'
+import { useTranslation } from '../../hooks/use-translation'
 import { LogoutRounded, SettingsRounded } from '@mui/icons-material'
-import ListItemIcon from '@mui/material/ListItemIcon'
 
 const UserIcon: FC = () => {
   const [open, setOpen] = useState<boolean>(false)
@@ -59,9 +64,9 @@ const UserIcon: FC = () => {
       >
         <MenuList>
           <MenuItem
-            onClick={async () => {
+            onClick={() => {
               setOpen(false)
-              await router.push('/user/account-settings')
+              router.push('/user/account-settings')
             }}
           >
             <ListItemIcon>
