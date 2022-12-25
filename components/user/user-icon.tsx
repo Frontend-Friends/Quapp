@@ -1,13 +1,25 @@
-import { FC, useRef } from 'react'
-import { Button } from '@mui/material'
+import { FC, useCallback, useRef, useState } from 'react'
+import {
+  Button,
+  Divider,
+  ListItemIcon,
+  ListItemText,
+  Menu,
+  MenuItem,
+  MenuList,
+} from '@mui/material'
 import { twNavbarButton } from '../navigation/navigation-bar'
 import Person2RoundedIcon from '@mui/icons-material/Person2Rounded'
+import { useRouter } from 'next/router'
+import { fetchJson } from '../../lib/helpers/fetch-json'
+import { useTranslation } from '../../hooks/use-translation'
+import { LogoutRounded, SettingsRounded } from '@mui/icons-material'
 
 const UserIcon: FC = () => {
-  // const [open, setOpen] = useState<boolean>(false)
-  // const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const [open, setOpen] = useState<boolean>(false)
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const ref = useRef<HTMLButtonElement | null>(null)
-  /*const handleClick = useCallback(() => {
+  const handleClick = useCallback(() => {
     setOpen((state) => !state)
   }, [])
   const router = useRouter()
@@ -19,20 +31,20 @@ const UserIcon: FC = () => {
     }
   }, [router])
 
-  const t = useTranslation()*/
+  const t = useTranslation()
   return (
     <>
       <Button
         className={twNavbarButton}
         ref={ref}
-        /*onClick={() => {
+        onClick={() => {
           setAnchorEl(ref.current)
           setOpen(true)
-        }}*/
+        }}
       >
         <Person2RoundedIcon fontSize="large" />
       </Button>
-      {/*<Menu
+      <Menu
         id="basic-menu"
         open={open}
         onClose={() => setOpen(false)}
@@ -52,9 +64,9 @@ const UserIcon: FC = () => {
       >
         <MenuList>
           <MenuItem
-            onClick={async () => {
+            onClick={() => {
               setOpen(false)
-              await router.push('/user/account-settings')
+              router.push('/user/account-settings')
             }}
           >
             <ListItemIcon>
@@ -75,7 +87,7 @@ const UserIcon: FC = () => {
             <ListItemText>{t('LOGOUT_logout')}</ListItemText>
           </MenuItem>
         </MenuList>
-      </Menu>*/}
+      </Menu>
     </>
   )
 }
