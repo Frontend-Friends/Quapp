@@ -4,7 +4,6 @@ import HomeRoundedIcon from '@mui/icons-material/HomeRounded'
 import React, { FC } from 'react'
 import { Button } from '@mui/material'
 import { useRouter } from 'next/router'
-import UserIcon from '../user/user-icon'
 import { LogoSVG } from '../svg/quapp_logo'
 
 export const twNavbarButton =
@@ -48,7 +47,6 @@ const NavigationBar: FC = () => {
         >
           <HomeRoundedIcon fontSize="large" />
         </Button>
-        <UserIcon />
       </div>
     </nav>
   )
