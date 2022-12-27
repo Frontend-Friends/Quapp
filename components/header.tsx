@@ -11,7 +11,9 @@ export const Header: FC<{
   const t = useTranslation()
   return (
     <header>
-      <Typography variant="h1">{title}</Typography>
+      <Typography variant="h1" className="text-violetRed-600">
+        {title}
+      </Typography>
       {imgSrc && (
         <Box className="relative mt-4 w-full pt-[50%]">
           <Image
