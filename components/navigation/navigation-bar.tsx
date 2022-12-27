@@ -28,7 +28,7 @@ const NavigationBar: FC = () => {
       md:bottom-[unset]
       "
     >
-      <div className="min-w-4 mx-auto flex max-w-7xl items-center justify-around md:justify-end md:gap-6">
+      <div className="min-w-4 mx-auto flex max-w-7xl items-center justify-between md:justify-end md:gap-6">
         <LogoSVG
           aria-labelledby="logoTitle"
           className="hidden md:mr-auto md:inline-block md:max-h-12"
