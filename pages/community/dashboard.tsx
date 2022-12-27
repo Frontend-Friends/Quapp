@@ -12,6 +12,7 @@ import SpaceItem from '../../components/spaces/space-item'
 import { withIronSessionSsr } from 'iron-session/next'
 import { sessionOptions } from '../../config/session-config'
 import SpaceForm from './space-form'
+import { fetchUser } from '../../lib/services/fetch-user'
 
 export const getServerSideProps = withIronSessionSsr<{
   spaces?: SpaceItemType[]
@@ -20,8 +21,9 @@ export const getServerSideProps = withIronSessionSsr<{
   if (!user) {
     return { props: {} }
   }
+  const fetchedUser = await fetchUser(user.id ?? '')
   const spaces = await Promise.all<SpaceItemType>(
-    user.spaces?.map(
+    fetchedUser.spaces?.map(
       (space) =>
         new Promise(async (resolve) => {
           const ref = doc(db, 'spaces', space)
@@ -30,17 +32,13 @@ export const getServerSideProps = withIronSessionSsr<{
             return {
               ...data,
               id: result.id,
-              creatorId: data?.creatorId?.id ?? '',
-              ownerId: data?.ownerId?.id ?? '',
-              creationDate: data?.creationDate?.seconds ?? 0,
+              creationDate: data?.creationDate?.seconds,
             } as SpaceItemType
           })
           resolve(fetchedDoc)
         })
     ) || []
   )
-  console.log(user, '----', spaces)
-
   return { props: { spaces } }
 }, sessionOptions)
 const Dashboard: FC<InferGetServerSidePropsType<typeof getServerSideProps>> = ({
