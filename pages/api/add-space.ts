@@ -35,16 +35,16 @@ async function addSpace(req: NextApiRequest, res: NextApiResponse) {
       ...formData.fields,
     }
     // add space to spaces collection
-    const spacesAdd = addDoc(spaceRef, {
+    const spacesAdd = await addDoc(spaceRef, {
       ...spaceData,
       ownerId: `/user/${uid}`,
       creatorId: `/user/${uid}`,
       creationDate: new Date(),
-    })
+    }).then((result) => result.id)
 
     // add space-id to spaces property of user
     const userUpdate = await updateDoc(userRef, {
-      spaces: arrayUnion(spaceData.name),
+      spaces: arrayUnion(spacesAdd),
     })
 
     await Promise.all([spacesAdd, userUpdate])
