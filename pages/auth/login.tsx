@@ -45,9 +45,7 @@ const Login: FC = () => {
           cache: 'default',
         })
         if (fetchedLogin.session) {
-          setIsLoading(false)
           await router.push('/community/dashboard')
-          await setIsLoading(false)
         } else {
           setOpen(true)
           setMessage(fetchedLogin.message)
