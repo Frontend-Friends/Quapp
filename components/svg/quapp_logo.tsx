@@ -5,8 +5,8 @@ export const LogoSVG = (props: SVGProps<SVGSVGElement>) => {
   const t = useTranslation()
   return (
     <svg
-      width="196"
-      height="66"
+      width="160"
+      height="48"
       viewBox="0 0 196 66"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
