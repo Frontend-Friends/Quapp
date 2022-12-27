@@ -41,7 +41,7 @@ import { ParsedUrlQuery } from 'querystring'
 import { PageLoader } from '../../../../components/page-loader'
 import { AddRounded } from '@mui/icons-material'
 
-export const maxProductsPerPage = 20
+export const maxProductsPerPage = 10
 
 export const getServerSideProps = withIronSessionSsr<{
   userId?: User['id']
@@ -198,7 +198,7 @@ export const Product = ({
   }, [space, skip, filter, asPath])
 
   return (
-    <div className="mx-auto grid gap-3 p-3">
+    <main className="m mx-auto grid w-full max-w-7xl gap-4 p-3">
       <Fab
         size="large"
         color="secondary"
@@ -213,7 +213,7 @@ export const Product = ({
       </Fab>
       <Header title={t('PRODUCTS_title')} />
       {categories && (
-        <FormControl>
+        <FormControl className="lg:max-w-[32.5%]">
           <InputLabel id="filter-select">
             {t('PRODUCTS_filter_category_label')}
           </InputLabel>
@@ -232,13 +232,13 @@ export const Product = ({
           </Select>
         </FormControl>
       )}
-      <div className="relative grid justify-evenly gap-4 md:grid-cols-2">
+      <section className="relative grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {!productList?.length && (
           <Typography variant="body2">{t('PRODUCTS_no_entries')}</Typography>
         )}
         {!!productList?.length &&
           productList.map((item, index) => (
-            <div key={index} className="w-full flex-grow">
+            <article key={index}>
               <ProductItem
                 categories={categories}
                 product={item}
@@ -263,10 +263,10 @@ export const Product = ({
                   setShowCreateProduct(true)
                 }}
               />
-            </div>
+            </article>
           ))}
         <PageLoader isLoading={isLoading} className="fixed inset-0 z-10" />
-      </div>
+      </section>
       <ProductDetail product={product} userId={userId} />
       <CreateEditProduct
         categories={categories}
@@ -331,7 +331,7 @@ export const Product = ({
       >
         <Alert {...alert} />
       </Snackbar>
-    </div>
+    </main>
   )
 }
 
