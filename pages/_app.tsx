@@ -29,6 +29,7 @@ export default function App({
   return (
     <CacheProvider value={emotionCache}>
       <Head>
+        <meta name="viewport" content="initial-scale=1, width=device-width" />
         <title>{t('HTML_TITLE_general')}</title>
       </Head>
       <ThemeProvider theme={theme}>
