@@ -4,7 +4,7 @@ import { getIronSession } from 'iron-session/edge'
 import { sessionOptions } from './config/session-config'
 
 export const config = {
-  matcher: ['/community/:path*'],
+  matcher: ['/community/:path*', '/user/:path*'],
 }
 
 export const middleware = async (req: NextRequest) => {

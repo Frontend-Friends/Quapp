@@ -1,6 +1,5 @@
 import React, { FC, useState } from 'react'
 import { Box, Link, Snackbar, TextField, Typography } from '@mui/material'
-
 import { Formik } from 'formik'
 import { useTranslation } from '../../hooks/use-translation'
 import { SignupType } from '../../components/products/types'
@@ -9,8 +8,7 @@ import { CondensedContainer } from '../../components/condensed-container'
 import { LoadingButton } from '@mui/lab'
 import { useRouter } from 'next/router'
 import { sendFormData } from '../../lib/helpers/send-form-data'
-
-const twFormGroup = 'mb-4'
+import { twFormGroup } from '../../constants/constants-css-classes'
 
 const Signup: FC = () => {
   const [isLoading, setIsLoading] = useState(false)

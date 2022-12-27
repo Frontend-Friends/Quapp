@@ -30,19 +30,23 @@ export type ProductType = {
 
 export type SpaceItemType = {
   name: string
-  id: string
-  ownerId: string
-  creatorId: string
-  creationDate: Date
-  memberCount: number
-  itemCount: number
+  id?: string
+  ownerId?: string
+  creatorId?: string
+  creationDate?: Date
+  memberCount?: number
+  itemCount?: number
   categories?: string[]
+  spaces?: string[]
 }
 
 export type SignupType = {
   firstName: string
   email: string
   password: string
+}
+export type SpaceFormData = {
+  fields: SpaceItemType
 }
 
 export type CreateProduct = Pick<
