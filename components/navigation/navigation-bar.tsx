@@ -4,8 +4,8 @@ import HomeRoundedIcon from '@mui/icons-material/HomeRounded'
 import React, { FC } from 'react'
 import { Button } from '@mui/material'
 import { useRouter } from 'next/router'
-import UserIcon from '../user/user-icon'
 import { LogoSVG } from '../svg/quapp_logo'
+import UserIcon from '../user/user-icon'
 
 export const twNavbarButton =
   'aspect-square border-0 rounded-full bg-white text-violetRed-600 hover:bg-white md:min-w-[32px]'
