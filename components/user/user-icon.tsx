@@ -19,9 +19,9 @@ const UserIcon: FC = () => {
   const [open, setOpen] = useState<boolean>(false)
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const ref = useRef<HTMLButtonElement | null>(null)
-  const handleClick = useCallback(() => {
+  const handleClick = () => {
     setOpen((state) => !state)
-  }, [])
+  }
   const router = useRouter()
 
   const handleLogout = useCallback(async () => {
@@ -47,8 +47,7 @@ const UserIcon: FC = () => {
       <Menu
         id="basic-menu"
         open={open}
-        onClose={() => setOpen(false)}
-        onClick={handleClick}
+        onClick={() => handleClick()}
         MenuListProps={{
           'aria-labelledby': 'basic-button',
         }}
@@ -65,7 +64,6 @@ const UserIcon: FC = () => {
         <MenuList>
           <MenuItem
             onClick={() => {
-              setOpen(false)
               router.push('/user/account-settings')
             }}
           >
@@ -77,7 +75,6 @@ const UserIcon: FC = () => {
           <Divider />
           <MenuItem
             onClick={async () => {
-              setOpen(false)
               await handleLogout()
             }}
           >
