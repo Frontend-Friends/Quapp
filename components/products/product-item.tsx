@@ -29,7 +29,7 @@ export const ProductItem: FC<{
   const [openDeleteModal, setOpenDeleteModal] = useState(false)
   return (
     <>
-      <Box className="relative">
+      <Box className="relative h-full">
         <Link
           href={{
             href: product.id,
@@ -45,36 +45,40 @@ export const ProductItem: FC<{
             variant="outlined"
             className={clsx(
               !product.isAvailable && 'bg-white',
-              'flex h-full min-h-[100px] items-stretch justify-start p-0 normal-case'
+              'flex h-full items-stretch justify-start p-0 normal-case'
             )}
           >
             {product.imgSrc && (
               <CardMedia
                 component="img"
-                height={100}
-                className="w-[100px] flex-shrink-0 overflow-hidden object-cover"
+                className="aspect-square h-full w-1/3 max-w-[165px] object-cover"
                 src={product.imgSrc}
               />
             )}
             {!product.imgSrc && (
               <Box
                 component="span"
-                className="w-[100px] flex-shrink-0 overflow-hidden bg-mintGreen-300 object-cover"
+                className="aspect-square h-full w-1/3 max-w-[150px] bg-mintGreen-300 object-cover"
               />
             )}
             <CardContent component="span">
               {product.title && (
-                <Typography variant="h3">{product.title}</Typography>
+                <Typography variant="h3" className="line-clamp-2 md:text-lg">
+                  {product.title}
+                </Typography>
               )}
               {product.description && (
-                <Typography variant="body2" className="pt-1 text-gray-500">
+                <Typography
+                  variant="body2"
+                  className="pt-1 text-gray-500 line-clamp-2"
+                >
                   {product.description}
                 </Typography>
               )}
               {categories && product.category !== undefined && (
                 <Typography
                   variant="body2"
-                  className="mt-4 inline-flex h-6 items-center rounded-2xl bg-blueishGray-600 px-3 py-1 text-white"
+                  className="mt-2 inline-flex h-6 items-center rounded-2xl bg-blueishGray-600 px-3 py-1 text-white"
                 >
                   {categories?.[product.category as number]}
                 </Typography>
