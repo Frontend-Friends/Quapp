@@ -27,8 +27,8 @@ async function addSpace(req: NextApiRequest, res: NextApiResponse) {
       return
     }
     const uid = req.session.user?.uid
-    const spaceRef = collection(db, 'spaces', '/')
-    const userRef = doc(db, `user/${uid}`)
+    const spaceRef = collection(db, 'spaces')
+    const userRef = doc(db, 'user', uid ?? '')
 
     const formData = await parsedForm<SpaceFormData>(req)
     const spaceData = {

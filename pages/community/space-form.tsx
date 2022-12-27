@@ -1,4 +1,4 @@
-import React from 'react'
+import { FC, useState } from 'react'
 import { SpaceItemType } from '../../components/products/types'
 import { Box, Snackbar, TextField } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
@@ -17,7 +17,7 @@ interface Props {
   message: string
 }
 
-const SpaceForm: React.FC<Props> = ({
+const SpaceForm: FC<Props> = ({
   setOpen,
   open,
   isLoading,
@@ -25,9 +25,9 @@ const SpaceForm: React.FC<Props> = ({
   setMessage,
   message,
 }) => {
-  const t = useTranslation()
-  const [isSnackbarOpen, setIsSnackbarOpen] = React.useState(false)
   console.log(open)
+  const t = useTranslation()
+  const [isSnackbarOpen, setIsSnackbarOpen] = useState(false)
   const handleAddSpace = async (values: SpaceItemType) => {
     setIsLoading(true)
     try {

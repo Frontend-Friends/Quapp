@@ -20,7 +20,6 @@ export const getServerSideProps = withIronSessionSsr<{
   if (!user) {
     return { props: {} }
   }
-
   const spaces = await Promise.all<SpaceItemType>(
     user.spaces?.map(
       (space) =>
@@ -31,15 +30,16 @@ export const getServerSideProps = withIronSessionSsr<{
             return {
               ...data,
               id: result.id,
-              creatorId: data?.creatorId.id,
-              ownerId: data?.ownerId.id,
-              creationDate: data?.creationDate.seconds,
+              creatorId: data?.creatorId?.id ?? '',
+              ownerId: data?.ownerId?.id ?? '',
+              creationDate: data?.creationDate?.seconds ?? 0,
             } as SpaceItemType
           })
           resolve(fetchedDoc)
         })
     ) || []
   )
+  console.log(user, '----', spaces)
 
   return { props: { spaces } }
 }, sessionOptions)
