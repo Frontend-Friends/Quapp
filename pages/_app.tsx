@@ -29,12 +29,11 @@ export default function App({
   return (
     <CacheProvider value={emotionCache}>
       <Head>
-        <meta name="viewport" content="initial-scale=1, width=device-width" />
         <title>{t('HTML_TITLE_general')}</title>
       </Head>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <div className="flex min-h-screen flex-col justify-between md:mt-[83px]">
+        <div className="flex min-h-screen min-w-[360px] flex-col justify-between md:mt-[83px]">
           <Component {...pageProps} />
           <Footer />
         </div>
