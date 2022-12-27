@@ -51,6 +51,7 @@ class MyDocument extends Document<{ emotionStyleTags: ReactNode[] }> {
           />
           <link rel="manifest" href="/site.webmanifest" />
           <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#d80062" />
+          <meta name="viewport" content="initial-scale=1, width=device-width" />
           <meta name="msapplication-TileColor" content="#d80062" />
           <meta name="theme-color" content="#ffffff" />
           <meta
