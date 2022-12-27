@@ -5,7 +5,6 @@ import {
   Box,
   Fab,
   FormControl,
-  Grid,
   InputLabel,
   MenuItem,
   Pagination,
@@ -22,7 +21,6 @@ import { ProductDetail } from '../../../../components/products/product-detail'
 import { ProductType } from '../../../../components/products/types'
 import { fetchProduct } from '../../../../lib/services/fetch-product'
 import { fetchProductList } from '../../../../lib/services/fetch-product-list'
-import AddIcon from '@mui/icons-material/Add'
 import { CreateEditProduct } from '../../../../components/products/create-product'
 import {
   deleteProduct,
@@ -41,6 +39,7 @@ import { deleteObjectKey } from '../../../../lib/helpers/delete-object-key'
 import { useAsync } from 'react-use'
 import { ParsedUrlQuery } from 'querystring'
 import { PageLoader } from '../../../../components/page-loader'
+import { AddRounded } from '@mui/icons-material'
 
 export const maxProductsPerPage = 20
 
@@ -199,18 +198,18 @@ export const Product = ({
   }, [space, skip, filter, asPath])
 
   return (
-    <div className="mx-auto grid gap-4 px-5 pt-10">
+    <div className="mx-auto grid gap-3 p-3">
       <Fab
-        size="medium"
+        size="large"
         color="secondary"
         aria-label={t('PRODUCT_add')}
         title={t('PRODUCT_add')}
-        className=" fixed top-[72px] right-[12px] z-10"
+        className="fixed bottom-[115px] right-[16px] z-10 p-8"
         onClick={() => {
           setShowCreateProduct(true)
         }}
       >
-        <AddIcon />
+        <AddRounded fontSize="large" />
       </Fab>
       <Header title={t('PRODUCTS_title')} />
       {categories && (
@@ -239,7 +238,7 @@ export const Product = ({
         )}
         {!!productList?.length &&
           productList.map((item, index) => (
-            <Grid item xs={1} key={index} className="w-full flex-grow">
+            <div key={index} className="w-full flex-grow">
               <ProductItem
                 categories={categories}
                 product={item}
@@ -264,7 +263,7 @@ export const Product = ({
                   setShowCreateProduct(true)
                 }}
               />
-            </Grid>
+            </div>
           ))}
         <PageLoader isLoading={isLoading} className="fixed inset-0 z-10" />
       </div>
