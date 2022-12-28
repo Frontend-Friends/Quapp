@@ -7,7 +7,15 @@ export default withIronSessionApiRoute(
   async (req: NextApiRequest, res: NextApiResponse) => {
     const { productId, space } = req.query
     try {
-      const product = await fetchProduct(space as string, productId as string)
+      const { user } = req.session
+      if (!user) {
+        throw Error('no user')
+      }
+      const product = await fetchProduct(
+        space as string,
+        productId as string,
+        user.id || ''
+      )
 
       res.status(200).json(product || null)
     } catch (err) {

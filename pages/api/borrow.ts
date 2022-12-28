@@ -2,11 +2,17 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { doc, setDoc } from 'firebase/firestore'
 import { withIronSessionApiRoute } from 'iron-session/next'
 import { sessionOptions } from '../../config/session-config'
-import { db } from '../../config/firebase'
+import { parsedForm } from '../../lib/helpers/parsed-form'
+import { BorrowProductType } from '../../components/products/types'
+import { getUserRef } from '../../lib/helpers/refs/get-user-ref'
+
+export const config = {
+  api: {
+    bodyParser: false, // Disallow body parsing, consume as stream
+  },
+}
 
 export async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const value = req.body
-
   const { user } = req.session
 
   if (!user || !user.id) {
@@ -14,18 +20,31 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
     return
   }
 
-  const parsedValue = { ...JSON.parse(value), status: 'pending' }
+  const parsedValue = await parsedForm<{ fields: BorrowProductType }>(req).then(
+    (r) => ({
+      ...r.fields,
+      borrowRequester: user.id,
+      status: 'pending',
+    })
+  )
+
+  const [, userRef] = getUserRef(parsedValue.productOwner)
 
   const messageRef = doc(
-    db,
-    'inbox',
-    user.id,
+    ...userRef,
     'messages',
     new Date().getTime().toString()
   )
 
-  const send = await setDoc(messageRef, parsedValue).then((r) => r)
-  console.log(send)
+  await setDoc(messageRef, {
+    borrowDate: parsedValue.borrowDate,
+    productId: parsedValue.productId,
+    requesterId: user.id,
+    space: parsedValue.space,
+    status: parsedValue.status,
+    message: parsedValue.message,
+    type: 'borrowRequest',
+  })
 
   res.status(200).json({ ok: true })
 }

@@ -3,10 +3,11 @@ import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
 } from 'firebase/auth'
-import { auth, db } from '../../config/firebase'
-import { doc, setDoc } from 'firebase/firestore'
+import { auth } from '../../config/firebase'
+import { setDoc } from 'firebase/firestore'
 import { parsedForm } from '../../lib/helpers/parsed-form'
 import { SignupType } from '../../components/products/types'
+import { getUserRef } from '../../lib/helpers/refs/get-user-ref'
 
 export const config = {
   api: {
@@ -43,7 +44,7 @@ export default async function signupRoute(
         res.send({ session: false, message: 'SIGNUP_something_went_wrong' })
       }
     )
-    const userRef = doc(db, 'user', credentials.user.uid)
+    const [userRef] = getUserRef(credentials.user.uid)
     await setDoc(userRef, {
       email,
       firstName,

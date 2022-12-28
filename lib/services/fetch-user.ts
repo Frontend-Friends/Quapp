@@ -1,9 +1,9 @@
-import { doc, getDoc } from 'firebase/firestore'
-import { db } from '../../config/firebase'
+import { getDoc } from 'firebase/firestore'
 import { User } from '../../components/user/types'
+import { getUserRef } from '../helpers/refs/get-user-ref'
 
 export const fetchUser = async (uid: string): Promise<User> => {
-  const docRef = doc(db, 'user', uid)
+  const [docRef] = getUserRef(uid)
   return getDoc(docRef).then(
     (result) =>
       ({

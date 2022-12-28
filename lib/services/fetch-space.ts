@@ -1,9 +1,9 @@
-import { doc, getDoc } from 'firebase/firestore'
-import { db } from '../../config/firebase'
+import { getDoc } from 'firebase/firestore'
 import { SpaceItemType } from '../../components/products/types'
+import { getSpaceRef } from '../helpers/refs/get-space-ref'
 
 export const fetchSpace = async (space: string) => {
-  const spaceRef = doc(db, 'spaces', space as string)
+  const [spaceRef] = getSpaceRef(space as string)
 
   return getDoc(spaceRef).then((r) => ({
     id: r.id,
