@@ -3,6 +3,7 @@ import {
   Alert,
   AlertColor,
   Box,
+  Button,
   Fab,
   FormControl,
   Grid,
@@ -19,7 +20,10 @@ import { InferGetServerSidePropsType } from 'next'
 import { ProductItem } from '../../../../components/products/product-item'
 import { Header } from '../../../../components/header'
 import { ProductDetail } from '../../../../components/products/product-detail'
-import { ProductType } from '../../../../components/products/types'
+import {
+  InvitationType,
+  ProductType,
+} from '../../../../components/products/types'
 import { fetchProduct } from '../../../../lib/services/fetch-product'
 import { fetchProductList } from '../../../../lib/services/fetch-product-list'
 import AddIcon from '@mui/icons-material/Add'
@@ -41,6 +45,8 @@ import { deleteObjectKey } from '../../../../lib/helpers/delete-object-key'
 import { useAsync } from 'react-use'
 import { ParsedUrlQuery } from 'querystring'
 import { PageLoader } from '../../../../components/page-loader'
+import { sendFormData } from '../../../../lib/helpers/send-form-data'
+import InvitationModal from './InvitationModal'
 
 export const maxProductsPerPage = 20
 
@@ -134,6 +140,7 @@ export const Product = ({
   const [productList, setProductList] = useState(products)
   const [pageCount, setPageCount] = useState(count || 0)
   const [isLoading, setIsLoading] = useState(false)
+  const [openModal, setOpenModal] = useState(false)
 
   const maxPages = useMemo(
     () =>
@@ -146,6 +153,7 @@ export const Product = ({
   const [showCreateProduct, setShowCreateProduct] = useState(false)
   const [productToEdit, setProductToEdit] = useState<ProductType | null>(null)
   const [openSnackbar, setOpenSnackbar] = useState(false)
+  const [message, setMessage] = useState('')
 
   const product = useFetchProductDetail(productDetail)
 
@@ -198,6 +206,25 @@ export const Product = ({
     setIsLoading(false)
   }, [space, skip, filter, asPath])
 
+  const handleInvitation = async (values: InvitationType) => {
+    setIsLoading(true)
+    try {
+      const invitation = await sendFormData<{
+        isInvitationOk: boolean
+        message: string
+      }>('/api/invitation', { ...values, space: space })
+      setMessage(invitation.message)
+      setOpenSnackbar(true)
+      setOpenModal(false)
+      setIsLoading(false)
+    } catch {
+      setMessage(t('INVITATION_server_error'))
+      setOpenSnackbar(false)
+      setOpenModal(true)
+      setIsLoading(false)
+    }
+  }
+
   return (
     <div className="mx-auto grid gap-4 px-5 pt-10">
       <Fab
@@ -212,6 +239,9 @@ export const Product = ({
       >
         <AddIcon />
       </Fab>
+      <Button onClick={() => setOpenModal(true)} variant="contained">
+        {t('BUTTON_invite_member')}
+      </Button>
       <Header title={t('PRODUCTS_title')} />
       {categories && (
         <FormControl>
@@ -332,6 +362,16 @@ export const Product = ({
       >
         <Alert {...alert} />
       </Snackbar>
+      <InvitationModal
+        setOpenModal={setOpenModal}
+        message={message}
+        openSnackbar={openSnackbar}
+        space={space}
+        setOpenSnackbar={setOpenSnackbar}
+        openModal={openModal}
+        isLoading={isLoading}
+        handleInvitation={handleInvitation}
+      />
     </div>
   )
 }
