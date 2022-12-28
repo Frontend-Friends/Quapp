@@ -1,6 +1,4 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { withIronSessionApiRoute } from 'iron-session/next'
-import { sessionOptions } from '../../config/session-config'
 import { parsedForm } from '../../lib/helpers/parsed-form'
 import { UserFormData } from '../../components/products/types'
 import sgMail from '@sendgrid/mail'
@@ -24,7 +22,7 @@ async function invitation(req: NextApiRequest, res: NextApiResponse) {
         fields.firstName
       },\n\nYour space: /auth/login?invitation=${'uid - of - invite - doc'}\n\n${
         fields.space
-      }\n\nBest regards,\n\nYour team`,
+      }\n\nBest regards,\n\nYour QUAPP team`,
     }
     await sgMail
       .send(msg)
@@ -40,4 +38,4 @@ async function invitation(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-export default withIronSessionApiRoute(invitation, sessionOptions)
+export default invitation
