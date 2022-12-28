@@ -12,18 +12,15 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (!user || !user.id) {
       throw new Error('no User')
     }
-    const { productId, space, userId, messageId, accept, date } = JSON.parse(
+    const { productId, space, messageId, accept, date } = JSON.parse(
       req.body
     ) as {
-      userId: string
       productId: string
       space: string
       messageId: string
       accept: boolean
       date: string
     }
-
-    console.log(productId, space, userId, messageId, accept, date)
 
     const [prodRef] = getProductRef(space, productId)
 
@@ -44,7 +41,7 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
       ok: true,
     })
   } catch (err) {
-    console.log(err)
+    console.error(err)
     res.status(500).json({ ok: false })
   }
 }

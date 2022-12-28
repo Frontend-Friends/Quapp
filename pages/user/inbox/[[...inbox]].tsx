@@ -38,8 +38,6 @@ export const getServerSideProps: GetServerSideProps<{ messages?: Message[] }> =
                 ? await fetchProduct(message.space, message.productId)
                 : null
 
-            console.log(message.productId, message.space)
-
             const requester = await fetchUser(message.requesterId)
             return resolve({
               ...message,
