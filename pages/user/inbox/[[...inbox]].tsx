@@ -2,16 +2,14 @@ import { CondensedContainer } from '../../../components/condensed-container'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { withIronSessionSsr } from 'iron-session/next'
 import { sessionOptions } from '../../../config/session-config'
-import { collection, getDocs } from 'firebase/firestore'
-import { db } from '../../../config/firebase'
 import { useRouter } from 'next/router'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { fetchJson } from '../../../lib/helpers/fetch-json'
 import { Message } from '../../../components/message/type'
 import { MessageDrawer } from '../../../components/message/message-drawer'
 import { MessageLink } from '../../../components/message/message-link'
-import { fetchUser } from '../../../lib/services/fetch-user'
-import { fetchProduct } from '../../../lib/services/fetch-product'
+import { fetchMessages } from '../../../lib/services/fetch-messages'
+import { useAsync } from 'react-use'
 
 export const getServerSideProps: GetServerSideProps<{ messages?: Message[] }> =
   withIronSessionSsr(async ({ req }) => {
@@ -19,36 +17,7 @@ export const getServerSideProps: GetServerSideProps<{ messages?: Message[] }> =
     if (!user || !user.id) {
       return { notFound: true }
     }
-    const messageCollection = collection(db, 'user', user.id, 'messages')
-
-    const messagesRef = await getDocs(messageCollection)
-
-    const messages = await Promise.all<Message>(
-      messagesRef.docs.map(
-        (item) =>
-          new Promise(async (resolve) => {
-            const message = {
-              id: item.id,
-              date: item.id,
-              ...item.data(),
-            } as Message
-
-            const product =
-              message.type === 'borrowRequest'
-                ? await fetchProduct(message.space, message.productId)
-                : null
-
-            const requester = await fetchUser(message.requesterId)
-            return resolve({
-              ...message,
-              userName: requester.userName || '',
-              product: product || null,
-            })
-          })
-      )
-    )
-
-    messages.sort((a, b) => b.date.localeCompare(a.date))
+    const messages = await fetchMessages(user.id)
 
     return { props: { messages } }
   }, sessionOptions)
@@ -59,6 +28,23 @@ export default function Inbox({
   const { query, push } = useRouter()
   const [mutateMessages, setMutateMessages] = useState(messages)
   const [message, setMessage] = useState<Message | undefined>(undefined)
+  const [requestInterval, setRequestInterval] = useState(0)
+
+  useAsync(async () => {
+    const { messages: fetchedMessages, ok } = await fetchJson<{
+      messages: Message[]
+      ok: boolean
+    }>('/api/messages')
+    if (ok) {
+      setMutateMessages(fetchedMessages)
+    }
+    const delay = setTimeout(() => {
+      setRequestInterval(requestInterval + 1)
+    }, 5000)
+    return () => {
+      clearTimeout(delay)
+    }
+  }, [requestInterval])
 
   useEffect(() => {
     const messageDelay = setTimeout(async () => {
@@ -91,11 +77,11 @@ export default function Inbox({
   const isOpen = useMemo(() => !!query.inbox, [query])
 
   const updateMessage = useCallback(async (updatedMessage: Message) => {
-    setMessage(updatedMessage)
     setMutateMessages((state) => {
-      const foundIndex =
-        state?.findIndex((item) => item.date === updatedMessage.date) || -1
-      if (foundIndex > -1 && state) {
+      const foundIndex = state?.findIndex(
+        (item) => item.date === updatedMessage.date
+      )
+      if (foundIndex !== undefined && foundIndex > -1 && state) {
         state[foundIndex] = updatedMessage
       }
       return state ? [...state] : state
