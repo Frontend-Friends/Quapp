@@ -13,7 +13,7 @@ import Person2RoundedIcon from '@mui/icons-material/Person2Rounded'
 import { useRouter } from 'next/router'
 import { fetchJson } from '../../lib/helpers/fetch-json'
 import { useTranslation } from '../../hooks/use-translation'
-import { LogoutRounded, SettingsRounded } from '@mui/icons-material'
+import { LogoutRounded } from '@mui/icons-material'
 
 export const UserIcon: FC = () => {
   const [open, setOpen] = useState<boolean>(false)
@@ -79,9 +79,6 @@ export const UserIcon: FC = () => {
               router.push('/user/account-settings')
             }}
           >
-            <ListItemIcon>
-              <SettingsRounded fontSize="small" />
-            </ListItemIcon>
             {t('GLOBAL_go_to_account_settings')}
           </MenuItem>
           <Divider />
