@@ -45,7 +45,6 @@ const Login: FC = () => {
           cache: 'default',
         })
         if (fetchedLogin.session) {
-          setIsLoading(false)
           await router.push('/community/dashboard')
         } else {
           setOpen(true)
@@ -57,20 +56,6 @@ const Login: FC = () => {
         setMessage('LOGIN_server_error')
         setIsLoading(false)
       }
-
-      // const response = await sendFormData<{
-      //   session: boolean
-      //   message: string
-      // }>('/api/login', values)
-      //
-      // if (!response.session) {
-      //   setOpen(true)
-      //   setMessage(response.message)
-      //   setIsLoading(false)
-      // } else {
-      //   setIsLoading(false)
-      //   await router.push('/community/dashboard')
-      // }
     },
 
     [router]

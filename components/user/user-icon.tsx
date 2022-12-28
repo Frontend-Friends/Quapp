@@ -1,34 +1,51 @@
-import React, { useRef } from 'react'
-import { Button, Divider, ListItemText, MenuList } from '@mui/material'
-import { useTranslation } from '../../hooks/use-translation'
-import Menu from '@mui/material/Menu'
-import MenuItem from '@mui/material/MenuItem'
-import { fetchJson } from '../../lib/helpers/fetch-json'
-import { useRouter } from 'next/router'
+import { FC, useEffect, useRef, useState } from 'react'
+import {
+  Button,
+  Divider,
+  ListItemIcon,
+  ListItemText,
+  Menu,
+  MenuItem,
+  MenuList,
+} from '@mui/material'
 import { twNavbarButton } from '../navigation/navigation-bar'
 import Person2RoundedIcon from '@mui/icons-material/Person2Rounded'
+import { useRouter } from 'next/router'
+import { fetchJson } from '../../lib/helpers/fetch-json'
+import { useTranslation } from '../../hooks/use-translation'
 import { LogoutRounded, SettingsRounded } from '@mui/icons-material'
-import ListItemIcon from '@mui/material/ListItemIcon'
 
-const UserIcon: React.FC = () => {
-  const [open, setOpen] = React.useState<boolean>(false)
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+export const UserIcon: FC = () => {
+  const [open, setOpen] = useState<boolean>(false)
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const ref = useRef<HTMLButtonElement | null>(null)
-  const handleClick = () => {
-    setOpen(!open)
-  }
+  const t = useTranslation()
   const router = useRouter()
+  const [isUser, setIsUser] = useState(false)
 
+  const userExists = async () => {
+    const user: { isUser: boolean } = await fetchJson(' /api/cookie')
+    return user.isUser
+  }
+
+  useEffect(() => {
+    const user = userExists().then((res) => res)
+    user.then((res) => setIsUser(res))
+  }, [router])
+
+  const handleClick = () => {
+    setOpen((state) => !state)
+  }
   const handleLogout = async () => {
     const result = await fetchJson<{ isLoggedOut: boolean }>('/api/logout')
     if (result.isLoggedOut) {
       await router.push('/auth/login')
     }
   }
+  if (!isUser) return null
 
-  const t = useTranslation()
   return (
-    <>
+    <div>
       <Button
         className={twNavbarButton}
         ref={ref}
@@ -42,8 +59,7 @@ const UserIcon: React.FC = () => {
       <Menu
         id="basic-menu"
         open={open}
-        onClose={() => setOpen(false)}
-        onClick={handleClick}
+        onClick={() => handleClick()}
         MenuListProps={{
           'aria-labelledby': 'basic-button',
         }}
@@ -59,9 +75,8 @@ const UserIcon: React.FC = () => {
       >
         <MenuList>
           <MenuItem
-            onClick={async () => {
-              setOpen(false)
-              await router.push('/user/account-settings')
+            onClick={() => {
+              router.push('/user/account-settings')
             }}
           >
             <ListItemIcon>
@@ -72,7 +87,6 @@ const UserIcon: React.FC = () => {
           <Divider />
           <MenuItem
             onClick={async () => {
-              setOpen(false)
               await handleLogout()
             }}
           >
@@ -83,8 +97,6 @@ const UserIcon: React.FC = () => {
           </MenuItem>
         </MenuList>
       </Menu>
-    </>
+    </div>
   )
 }
-
-export default UserIcon

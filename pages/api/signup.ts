@@ -48,6 +48,7 @@ export default async function signupRoute(
     await setDoc(userRef, {
       email,
       firstName,
+      userName: firstName,
     })
 
     // //no session here, because we don't want to log in the user after signup

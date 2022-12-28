@@ -23,6 +23,10 @@ const AccountSettings: React.FC<{ isLoggedIn: boolean; user: User }> = ({
   const [open, setOpen] = React.useState(false)
   const [message, setMessage] = useState('')
   const t = useTranslation()
+  if (!props.user) {
+    alert('middleware richtig konfigurieren')
+    return null
+  }
   const handleChangeSettings = async (values: SettingType) => {
     try {
       setIsLoading({ ...isLoading, updateAccount: true })
@@ -169,7 +173,7 @@ const AccountSettings: React.FC<{ isLoggedIn: boolean; user: User }> = ({
 export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
   const { user } = req.session
   return {
-    props: { isLoggedIn: !!user, user },
+    props: { isLoggedIn: !!user, user: user || null },
   }
 }, ironOptions)
 
