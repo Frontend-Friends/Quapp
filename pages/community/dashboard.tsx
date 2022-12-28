@@ -32,6 +32,8 @@ export const getServerSideProps = withIronSessionSsr<{
             return {
               ...data,
               id: result.id,
+              ownerId: data?.ownerId.id || '',
+              creatorId: data?.creatorId.id || '',
               creationDate: data?.creationDate?.seconds ?? 0,
             } as SpaceItemType
           })
