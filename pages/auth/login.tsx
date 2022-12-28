@@ -20,6 +20,7 @@ export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
   }
 }, ironOptions)
 
+//todo : if req has invitation query string: check if user is already signed up ... getdoc with referenz of uid of invitation: get thereof email firstName and space id)
 const Login: FC = () => {
   const router = useRouter()
   const t = useTranslation()
