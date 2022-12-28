@@ -49,6 +49,7 @@ const Login: FC = () => {
         } else {
           setOpen(true)
           setMessage(fetchedLogin.message)
+          setIsLoading(false)
         }
       } catch {
         setOpen(true)
