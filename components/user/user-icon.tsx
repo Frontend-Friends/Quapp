@@ -2,6 +2,7 @@ import { FC, useEffect, useRef, useState } from 'react'
 import {
   Button,
   Divider,
+  ListItemIcon,
   ListItemText,
   Menu,
   MenuItem,
@@ -12,6 +13,8 @@ import Person2RoundedIcon from '@mui/icons-material/Person2Rounded'
 import { useRouter } from 'next/router'
 import { fetchJson } from '../../lib/helpers/fetch-json'
 import { useTranslation } from '../../hooks/use-translation'
+import LogoutRounded from '@mui/icons-material/LogoutRounded'
+import SettingsRounded from '@mui/icons-material/SettingsRounded'
 
 export const UserIcon: FC = () => {
   const [open, setOpen] = useState<boolean>(false)
@@ -77,6 +80,9 @@ export const UserIcon: FC = () => {
               router.push('/user/account-settings')
             }}
           >
+            <ListItemIcon>
+              <SettingsRounded fontSize="small" />
+            </ListItemIcon>
             {t('GLOBAL_go_to_account_settings')}
           </MenuItem>
           <Divider />
@@ -85,6 +91,9 @@ export const UserIcon: FC = () => {
               await handleLogout()
             }}
           >
+            <ListItemIcon>
+              <LogoutRounded fontSize="small" />
+            </ListItemIcon>
             <ListItemText>{t('LOGOUT_logout')}</ListItemText>
           </MenuItem>
         </MenuList>
