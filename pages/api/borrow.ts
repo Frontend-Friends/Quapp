@@ -44,6 +44,7 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
     status: parsedValue.status,
     message: parsedValue.message,
     type: 'borrowRequest',
+    read: false,
   })
 
   res.status(200).json({ ok: true })

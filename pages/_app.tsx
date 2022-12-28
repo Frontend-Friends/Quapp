@@ -10,6 +10,7 @@ import '../styles/globals.scss'
 import { useTranslation } from '../hooks/use-translation'
 import Footer from '../components/footer'
 import NavigationBar from '../components/navigation/navigation-bar'
+import { Notifications } from '../components/notifications'
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
@@ -39,6 +40,7 @@ export default function App({
           <Footer />
         </div>
         <NavigationBar />
+        <Notifications />
       </ThemeProvider>
     </CacheProvider>
   )

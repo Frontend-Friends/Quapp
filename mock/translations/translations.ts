@@ -120,4 +120,6 @@ export const translations: Record<string, string> = {
 
   SETTINGS_title: 'Einstellungen',
   SETTINGS_change_settings: 'Einstellungen ändern',
+
+  NOTIFICATION_unread_message: 'Ungelesene Nachricht',
 }
