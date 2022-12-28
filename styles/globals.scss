@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+ol,
+ul {
+  @apply m-0 list-none p-0;
+}
+
 // START - MIGHT BE DEPRECATED AND SHOULD BE INTEGRATED WITH TAILWIND
 .code {
   background: #fafafa;

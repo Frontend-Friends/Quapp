@@ -1,4 +1,5 @@
 import { File } from 'formidable'
+import { Message } from '../message/type'
 
 export type ChatMessage = {
   dateTime: string
@@ -26,6 +27,8 @@ export type ProductType = {
   category: number | string
   createdAt: string
   chats: ProductChatType[]
+  borrowDates?: string[]
+  messages: Message[]
 }
 
 export type SpaceItemType = {
@@ -57,4 +60,14 @@ export type CreateProduct = Pick<
 export type ProductFormData = {
   fields: Omit<CreateProduct, 'img'>
   files?: { img?: File | null } | null
+}
+
+export type BorrowProductType = {
+  message: string
+  productOwner: string
+  borrowRequester: string
+  productId: string
+  status: string
+  borrowDate: string
+  space: string
 }

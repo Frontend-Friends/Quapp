@@ -3,8 +3,8 @@ import { withIronSessionApiRoute } from 'iron-session/next'
 import { sessionOptions } from '../../config/session-config'
 import { parsedForm } from '../../lib/helpers/parsed-form'
 import { doc, getDoc, setDoc } from 'firebase/firestore'
-import { db } from '../../config/firebase'
 import { sortChatByTime } from '../../lib/scripts/sort-chat-by-time'
+import { getProductRef } from '../../lib/helpers/refs/get-product-ref'
 
 export const config = {
   api: {
@@ -33,15 +33,9 @@ async function sendChat(req: NextApiRequest, res: NextApiResponse) {
 
   const { productId, chatId } = formData.fields
 
-  const docRef = doc(
-    db,
-    'spaces',
-    (space as string) || '',
-    'products',
-    productId,
-    'chats',
-    chatId
-  )
+  const [, productPath] = getProductRef(space as string, productId)
+
+  const docRef = doc(...productPath, 'chats', chatId)
 
   const fetchedChat = await getDoc(docRef).then((r) => r.data())
   const currentHistory = fetchedChat?.history || []
