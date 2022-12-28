@@ -1,9 +1,8 @@
-export const deleteObjectKey = <
-  T extends Record<string, unknown>,
-  P extends keyof T
->(
+export const deleteObjectKey = <T extends Record<string, unknown>>(
   obj: T,
-  key: P
+  ...keys: (keyof T)[]
 ) => {
-  delete obj[key]
+  keys.forEach((key) => {
+    delete obj[key]
+  })
 }

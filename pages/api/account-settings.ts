@@ -1,10 +1,11 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { parsedForm } from '../../lib/helpers/parsed-form'
-import { doc, getDoc, setDoc } from 'firebase/firestore'
-import { db } from '../../config/firebase'
+import { setDoc } from 'firebase/firestore'
 import { SettingType, User } from '../../components/user/types'
 import { withIronSessionApiRoute } from 'iron-session/next'
 import { ironOptions } from '../../lib/config'
+import { fetchUser } from '../../lib/services/fetch-user'
+import { getUserRef } from '../../lib/helpers/refs/get-user-ref'
 
 export const config = {
   api: {
@@ -18,9 +19,9 @@ async function accountSettings(req: NextApiRequest, res: NextApiResponse) {
   }>(req)
 
   const userFields = formData.fields
-  const id = req.session.user?.id
-  const docRef = doc(db, `user/${id}`)
-  const fetchedSettings = await getDoc(docRef).then((r) => r.data())
+  const id = req.session.user?.id || ''
+  const [docRef] = getUserRef(id)
+  const fetchedSettings = await fetchUser(id)
 
   const updatedFields = { ...fetchedSettings, ...userFields }
   await setDoc(docRef, {

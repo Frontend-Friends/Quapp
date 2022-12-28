@@ -1,21 +1,44 @@
-import { Box, Button, TextField } from '@mui/material'
+import { Box, TextField } from '@mui/material'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { Formik } from 'formik'
-import React from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from '../hooks/use-translation'
 import { useRouter } from 'next/router'
 import { DatePicker } from '@mui/x-date-pickers'
 import { borrowFormSchema } from '../lib/schema/borrow-form-schema'
+import { ProductType } from './products/types'
+import dayjs from 'dayjs'
+import { fetchProductApi } from '../lib/services/fetch-product-api'
+import { useAsync } from 'react-use'
+import { LoadingButton } from '@mui/lab'
 
 export type OnBorrowSubmit = (
   values: { message: string; borrowDate: Date | null },
   setIsSubmitting: (isSubmitting: boolean) => void
 ) => void
 
-export const BorrowForm = ({ onSubmit }: { onSubmit: OnBorrowSubmit }) => {
-  const { locale } = useRouter()
+export const BorrowForm = ({
+  onSubmit,
+  product,
+}: {
+  onSubmit: OnBorrowSubmit
+  product: ProductType
+}) => {
+  const { query, locale } = useRouter()
   const t = useTranslation()
+  const [datePickerIsOpen, setDatePickerIsOpen] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+
+  const borrowDates = useAsync(async () => {
+    if (datePickerIsOpen) {
+      return fetchProductApi(query.space as string, product.id).then(
+        (r) => r.borrowDates
+      )
+    }
+    return []
+  }, [datePickerIsOpen, query, product])
+
   return (
     <Formik
       initialValues={
@@ -27,8 +50,10 @@ export const BorrowForm = ({ onSubmit }: { onSubmit: OnBorrowSubmit }) => {
       validationSchema={borrowFormSchema}
       validateOnChange={false}
       validateOnBlur={false}
-      onSubmit={(values, actions) => {
-        onSubmit(values, actions.setSubmitting)
+      onSubmit={async (values, actions) => {
+        setIsLoading(true)
+        await onSubmit(values, actions.setSubmitting)
+        setIsLoading(false)
       }}
     >
       {(props) => (
@@ -54,13 +79,37 @@ export const BorrowForm = ({ onSubmit }: { onSubmit: OnBorrowSubmit }) => {
                 label={t('BORROW_DATEPICKER_label')}
                 value={props.values.borrowDate}
                 onChange={(state) => {
-                  props.setFieldValue('borrowDate', state)
+                  const isInvalid = borrowDates.value?.some(
+                    (item) =>
+                      dayjs(item).format('DD.MM.YYYY') ===
+                      dayjs(state?.$d).format('DD.MM.YYYY')
+                  )
+
+                  if (isInvalid) {
+                    props.setFieldError('borrowDate', t('BORROW_date_assigned'))
+                    return
+                  }
+
+                  props.setFieldError('borrowDate', '')
+
+                  props.setFieldValue(
+                    'borrowDate',
+                    state?.$d.toString() || null
+                  )
+                }}
+                onClose={() => {
+                  setDatePickerIsOpen(false)
+                }}
+                onOpen={() => {
+                  setDatePickerIsOpen(true)
                 }}
                 shouldDisableDate={(calendarDate: { $d: Date } | undefined) => {
-                  return (
-                    calendarDate?.$d.toISOString().split('T')[0] ===
-                    new Date('2022-10-10').toISOString().split('T')[0]
-                  )
+                  const date = dayjs(calendarDate?.$d).format('DD.MM.YYYY')
+                  const disabledDates =
+                    borrowDates.value?.map((value) => {
+                      return dayjs(value).format('DD.MM.YYYY')
+                    }) || []
+                  return disabledDates.some((value) => value === date)
                 }}
                 inputFormat="DD.MM.YYYY"
                 renderInput={(params) => (
@@ -70,14 +119,25 @@ export const BorrowForm = ({ onSubmit }: { onSubmit: OnBorrowSubmit }) => {
                       className="mt-4"
                       error={!!props.errors.borrowDate}
                       helperText={props.errors.borrowDate}
+                      onFocus={() => {
+                        setDatePickerIsOpen(true)
+                      }}
+                      onBlur={() => {
+                        setDatePickerIsOpen(false)
+                      }}
                     />
                   </>
                 )}
               />
             </LocalizationProvider>
-            <Button type="submit" variant="contained" className="ml-auto mt-4">
+            <LoadingButton
+              type="submit"
+              variant="contained"
+              className="ml-auto mt-4"
+              loading={isLoading}
+            >
               {t('BORROW_button_submit')}
-            </Button>
+            </LoadingButton>
           </Box>
         </form>
       )}

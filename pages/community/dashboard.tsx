@@ -6,11 +6,11 @@ import { Header } from '../../components/header'
 import AddIcon from '@mui/icons-material/Add'
 import { InferGetServerSidePropsType } from 'next'
 import { SpaceItemType } from '../../components/products/types'
-import { doc, getDoc } from 'firebase/firestore'
-import { db } from '../../config/firebase'
+import { getDoc } from 'firebase/firestore'
 import SpaceItem from '../../components/spaces/space-item'
 import { withIronSessionSsr } from 'iron-session/next'
 import { sessionOptions } from '../../config/session-config'
+import { getSpaceRef } from '../../lib/helpers/refs/get-space-ref'
 import SpaceForm from './space-form'
 import { fetchUser } from '../../lib/services/fetch-user'
 
@@ -26,12 +26,14 @@ export const getServerSideProps = withIronSessionSsr<{
     fetchedUser.spaces?.map(
       (space) =>
         new Promise(async (resolve) => {
-          const ref = doc(db, 'spaces', space)
+          const [ref] = getSpaceRef(space)
           const fetchedDoc = await getDoc(ref).then((result) => {
             const data = result.data()
             return {
               ...data,
               id: result.id,
+              ownerId: data?.ownerId.id || '',
+              creatorId: data?.creatorId.id || '',
               creationDate: data?.creationDate?.seconds ?? 0,
             } as SpaceItemType
           })

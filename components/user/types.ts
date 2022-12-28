@@ -1,3 +1,5 @@
+import { DocumentReference } from 'firebase/firestore'
+
 export type User = {
   firstName: string
   email: string
@@ -5,6 +7,7 @@ export type User = {
   uid: string
   phone?: string
   spaces?: string[]
+  requestedProducts?: DocumentReference[]
   userName?: string
   lastName?: string
 }

@@ -33,15 +33,15 @@ import { useRouter } from 'next/router'
 import { User } from '../../../../components/user/types'
 import { fetchJson } from '../../../../lib/helpers/fetch-json'
 import { getQueryAsNumber } from '../../../../lib/helpers/get-query-as-number'
-import { doc, getDoc } from 'firebase/firestore'
-import { db } from '../../../../config/firebase'
+import { getDoc } from 'firebase/firestore'
 import { deleteObjectKey } from '../../../../lib/helpers/delete-object-key'
 import { useAsync } from 'react-use'
 import { ParsedUrlQuery } from 'querystring'
 import { PageLoader } from '../../../../components/page-loader'
+import { getSpaceRef } from '../../../../lib/helpers/refs/get-space-ref'
 import { AddRounded } from '@mui/icons-material'
 
-export const maxProductsPerPage = 10
+export const maxProductsPerPage = 20
 
 export const getServerSideProps = withIronSessionSsr<{
   userId?: User['id']
@@ -68,7 +68,8 @@ export const getServerSideProps = withIronSessionSsr<{
   if (productsQuery) {
     productDetail = await fetchProduct(
       (space as string) || '',
-      productsQuery[0]
+      productsQuery[0],
+      user.id || ''
     )
 
     if (!productDetail) {
@@ -76,7 +77,7 @@ export const getServerSideProps = withIronSessionSsr<{
     }
   }
 
-  const spaceRef = doc(db, 'spaces', space as string)
+  const [spaceRef] = getSpaceRef(space as string)
 
   const spaceData = await getDoc(spaceRef).then((r) => r.data())
 
