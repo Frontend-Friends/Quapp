@@ -5,6 +5,7 @@ import { useTranslation } from '../../hooks/use-translation'
 import { Message } from './type'
 import { Url } from 'url'
 import { BorrowRequestMessage } from './borrow-request-message'
+import { BorrowResponseMessage } from './borrow-response-message'
 
 export const MessageDrawer = ({
   open,
@@ -46,6 +47,9 @@ export const MessageDrawer = ({
             message={message}
             updateMessage={updateMessage}
           />
+        )}
+        {message && message.type === 'borrowResponse' && (
+          <BorrowResponseMessage message={message} />
         )}
       </div>
     </Drawer>

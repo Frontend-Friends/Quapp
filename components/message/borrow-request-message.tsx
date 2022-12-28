@@ -19,14 +19,14 @@ export const BorrowRequestMessage = ({
     async (accept: boolean) => {
       setIsLoading(true)
       const fetchedData = await fetchJson<{ ok: boolean }>(
-        `/api/borrow-response?`,
+        `/api/borrow-response`,
         {
           method: 'POST',
           body: JSON.stringify({
             messageId: message.date,
             productId: message.productId,
             accept,
-            userId: message.requesterId,
+            requesterId: message.requesterId,
             space: message.space,
             date: message.borrowDate,
           }),
