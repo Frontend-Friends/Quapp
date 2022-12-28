@@ -1,4 +1,4 @@
-import { FC, useCallback, useRef, useState } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 import {
   Button,
   Divider,
@@ -15,25 +15,37 @@ import { fetchJson } from '../../lib/helpers/fetch-json'
 import { useTranslation } from '../../hooks/use-translation'
 import { LogoutRounded, SettingsRounded } from '@mui/icons-material'
 
-const UserIcon: FC = () => {
+export const UserIcon: FC = () => {
   const [open, setOpen] = useState<boolean>(false)
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const ref = useRef<HTMLButtonElement | null>(null)
+  const t = useTranslation()
+  const router = useRouter()
+  const [isUser, setIsUser] = useState(false)
+
+  const userExists = async () => {
+    const user: { isUser: boolean } = await fetchJson(' /api/cookie')
+    return user.isUser
+  }
+
+  useEffect(() => {
+    const user = userExists().then((res) => res)
+    user.then((res) => setIsUser(res))
+  }, [router])
+
   const handleClick = () => {
     setOpen((state) => !state)
   }
-  const router = useRouter()
-
-  const handleLogout = useCallback(async () => {
+  const handleLogout = async () => {
     const result = await fetchJson<{ isLoggedOut: boolean }>('/api/logout')
     if (result.isLoggedOut) {
       await router.push('/auth/login')
     }
-  }, [router])
+  }
+  if (!isUser) return null
 
-  const t = useTranslation()
   return (
-    <>
+    <div>
       <Button
         className={twNavbarButton}
         ref={ref}
@@ -85,8 +97,6 @@ const UserIcon: FC = () => {
           </MenuItem>
         </MenuList>
       </Menu>
-    </>
+    </div>
   )
 }
-
-export default UserIcon
