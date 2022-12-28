@@ -32,7 +32,7 @@ export const getServerSideProps = withIronSessionSsr<{
             return {
               ...data,
               id: result.id,
-              creationDate: data?.creationDate?.seconds,
+              creationDate: data?.creationDate?.seconds ?? 0,
             } as SpaceItemType
           })
           resolve(fetchedDoc)
