@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from 'react'
+import { FC, useCallback, useEffect, useRef, useState } from 'react'
 import {
   Button,
   Divider,
@@ -16,33 +16,34 @@ import { useTranslation } from '../../hooks/use-translation'
 import LogoutRounded from '@mui/icons-material/LogoutRounded'
 import SettingsRounded from '@mui/icons-material/SettingsRounded'
 
+const userExists = async () => {
+  const user: { isUser: boolean } = await fetchJson(' /api/cookie')
+  return user.isUser
+}
+
 export const UserIcon: FC = () => {
   const [open, setOpen] = useState<boolean>(false)
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const ref = useRef<HTMLButtonElement | null>(null)
   const t = useTranslation()
-  const router = useRouter()
+  const { push, asPath } = useRouter()
   const [isUser, setIsUser] = useState(false)
-
-  const userExists = async () => {
-    const user: { isUser: boolean } = await fetchJson(' /api/cookie')
-    return user.isUser
-  }
 
   useEffect(() => {
     const user = userExists().then((res) => res)
     user.then((res) => setIsUser(res))
-  }, [router])
+  }, [asPath])
 
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     setOpen((state) => !state)
-  }
-  const handleLogout = async () => {
+  }, [])
+  const handleLogout = useCallback(async () => {
     const result = await fetchJson<{ isLoggedOut: boolean }>('/api/logout')
     if (result.isLoggedOut) {
-      await router.push('/auth/login')
+      await push('/auth/login')
     }
-  }
+  }, [push])
+
   if (!isUser) return null
 
   return (
@@ -60,7 +61,7 @@ export const UserIcon: FC = () => {
       <Menu
         id="basic-menu"
         open={open}
-        onClick={() => handleClick()}
+        onClick={handleClick}
         MenuListProps={{
           'aria-labelledby': 'basic-button',
         }}
@@ -77,7 +78,7 @@ export const UserIcon: FC = () => {
         <MenuList>
           <MenuItem
             onClick={() => {
-              router.push('/user/account-settings')
+              push('/user/account-settings')
             }}
           >
             <ListItemIcon>
@@ -86,11 +87,7 @@ export const UserIcon: FC = () => {
             {t('GLOBAL_go_to_account_settings')}
           </MenuItem>
           <Divider />
-          <MenuItem
-            onClick={async () => {
-              await handleLogout()
-            }}
-          >
+          <MenuItem onClick={handleLogout}>
             <ListItemIcon>
               <LogoutRounded fontSize="small" />
             </ListItemIcon>
