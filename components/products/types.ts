@@ -45,6 +45,10 @@ export type SignupType = {
   email: string
   password: string
 }
+export type InvitationType = {
+  firstName: string
+  email: string
+}
 export type SpaceFormData = {
   fields: SpaceItemType
 }
