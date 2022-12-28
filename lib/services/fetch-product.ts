@@ -29,7 +29,11 @@ export const fetchProduct = async (
   const messages: Message[] = []
   if (ownerPath && userId === productDetailSnap.owner.id) {
     const messagesCollection = collection(...ownerPath, 'messages')
-    const q = query(messagesCollection, where('type', '==', 'borrowRequest'))
+    const q = query(
+      messagesCollection,
+      where('type', '==', 'borrowRequest'),
+      where('productId', '==', productsQuery)
+    )
     const messagesSnap = await getDocs(q)
 
     await Promise.all(

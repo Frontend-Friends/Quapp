@@ -21,11 +21,16 @@ export const fetchMessages = async (userId: string) => {
           } as Message
 
           const product =
-            message.type === 'borrowRequest'
+            message.type === 'borrowRequest' ||
+            message.type === 'borrowResponse'
               ? await fetchProduct(message.space, message.productId)
               : null
 
-          const requester = await fetchUser(message.requesterId)
+          const requester = await fetchUser(
+            message.type === 'borrowRequest'
+              ? message.requesterId
+              : message.productOwnerId
+          )
           return resolve({
             ...message,
             userName: requester.userName || '',

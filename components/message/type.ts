@@ -1,12 +1,21 @@
 import { ProductType } from '../products/types'
 
 type BorrowRequestMessage = {
-  type: 'borrowRequest'
   productId: string
   space: string
   borrowDate: string
   accept: boolean
   product: ProductType | null
+  requesterId: string
+}
+
+type BorrowResponseMessage = {
+  productId: string
+  space: string
+  borrowDate: string
+  accept: boolean
+  product: ProductType | null
+  productOwnerId: string
 }
 
 export type Message = {
@@ -14,8 +23,8 @@ export type Message = {
   read: boolean
   message: string
   date: string
-  type: 'borrowRequest'
   status: 'pending' | 'replied'
-  requesterId: string
   userName: string
-} & BorrowRequestMessage
+  type: 'borrowRequest' | 'borrowResponse'
+} & BorrowRequestMessage &
+  BorrowResponseMessage

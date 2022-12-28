@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from '../../hooks/use-translation'
 import {
   Avatar,
@@ -69,6 +69,11 @@ export const ProductDetail = ({
 
   const [productMessage, setProductMessage] = useState(product?.messages)
 
+  useEffect(() => {
+    console.log(product?.messages)
+    setProductMessage(product ? [...product.messages] : undefined)
+  }, [product])
+
   const [borrowRequestSubmitted, setBorrowRequestSubmitted] = useState(false)
 
   const handleRequest = useCallback(
@@ -81,7 +86,7 @@ export const ProductDetail = ({
             messageId: message.date,
             productId: message.productId,
             accept,
-            userId: message.requesterId,
+            requesterId: message.requesterId,
             space: message.space,
             date: message.borrowDate,
           }),
