@@ -77,6 +77,9 @@ export const translations: Record<string, string> = {
   BORROW_button_submit: 'Anfrage senden',
   BORROW_request_text:
     '{USER} möchte das Produkt {PRODUCT_TITLE} am {DATE} ausleihen',
+  BORROW_response_text:
+    'Du kannst das Produkt {PRODUCT_TITLE} von {USER} am {DATE} {ACCEPT} ausleihen',
+  BORROW_response_not: 'nicht',
   BORROW_message_title: 'Ausleihanfrage für: ',
   BORROW_response_accept_text: 'Du hast zugesagt',
   BORROW_response_declined_text: 'Du hast abgelehnt',
@@ -120,4 +123,6 @@ export const translations: Record<string, string> = {
 
   SETTINGS_title: 'Einstellungen',
   SETTINGS_change_settings: 'Einstellungen ändern',
+
+  NOTIFICATION_unread_message: 'Ungelesene Nachricht',
 }

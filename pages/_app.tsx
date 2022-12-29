@@ -10,6 +10,7 @@ import '../styles/globals.scss'
 import { useTranslation } from '../hooks/use-translation'
 import Footer from '../components/footer'
 import NavigationBar from '../components/navigation/navigation-bar'
+import { Notifications } from '../components/notifications'
 import { useRouter } from 'next/router'
 import { useMemo } from 'react'
 import clsx from 'clsx'
@@ -52,6 +53,7 @@ export default function App({
           <Footer />
         </div>
         {showNavbar && <NavigationBar />}
+        <Notifications />
       </ThemeProvider>
     </CacheProvider>
   )

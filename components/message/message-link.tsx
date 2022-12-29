@@ -26,6 +26,8 @@ export const MessageLink = ({
         <span className="text-gray-500">{dateFormate}</span>
         <span>
           {message.type === 'borrowRequest' && t('BORROW_message_title')}
+          {message.type === 'borrowResponse' &&
+            t('BORROW_message_response_title')}
           {message.product && message.product.title}
         </span>
         {!message.read && (
