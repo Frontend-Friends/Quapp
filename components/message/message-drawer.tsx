@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { Drawer, IconButton } from '@mui/material'
-import { ChevronLeft } from '@mui/icons-material'
+import ChevronLeft from '@mui/icons-material/ChevronLeft'
 import { useTranslation } from '../../hooks/use-translation'
 import { Message } from './type'
 import { Url } from 'url'

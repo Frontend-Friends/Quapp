@@ -39,7 +39,7 @@ import { useAsync } from 'react-use'
 import { ParsedUrlQuery } from 'querystring'
 import { PageLoader } from '../../../../components/page-loader'
 import { getSpaceRef } from '../../../../lib/helpers/refs/get-space-ref'
-import { AddRounded } from '@mui/icons-material'
+import AddRounded from '@mui/icons-material/AddRounded'
 
 export const maxProductsPerPage = 20
 
