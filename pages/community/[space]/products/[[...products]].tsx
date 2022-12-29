@@ -5,7 +5,6 @@ import {
   Box,
   Fab,
   FormControl,
-  Grid,
   InputLabel,
   MenuItem,
   Pagination,
@@ -22,7 +21,6 @@ import { ProductDetail } from '../../../../components/products/product-detail'
 import { ProductType } from '../../../../components/products/types'
 import { fetchProduct } from '../../../../lib/services/fetch-product'
 import { fetchProductList } from '../../../../lib/services/fetch-product-list'
-import AddIcon from '@mui/icons-material/Add'
 import { CreateEditProduct } from '../../../../components/products/create-product'
 import {
   deleteProduct,
@@ -41,6 +39,7 @@ import { useAsync } from 'react-use'
 import { ParsedUrlQuery } from 'querystring'
 import { PageLoader } from '../../../../components/page-loader'
 import { getSpaceRef } from '../../../../lib/helpers/refs/get-space-ref'
+import { AddRounded } from '@mui/icons-material'
 
 export const maxProductsPerPage = 20
 
@@ -200,22 +199,22 @@ export const Product = ({
   }, [space, skip, filter, asPath])
 
   return (
-    <div className="mx-auto grid gap-4 px-5 pt-10">
+    <main className="m mx-auto grid w-full max-w-7xl gap-4 p-3">
       <Fab
-        size="medium"
+        size="large"
         color="secondary"
         aria-label={t('PRODUCT_add')}
         title={t('PRODUCT_add')}
-        className=" fixed top-[72px] right-[12px] z-10"
+        className="fixed bottom-[115px] right-[16px] z-10 p-8 md:bottom-[50px] md:right-[24px]"
         onClick={() => {
           setShowCreateProduct(true)
         }}
       >
-        <AddIcon />
+        <AddRounded fontSize="large" />
       </Fab>
       <Header title={t('PRODUCTS_title')} />
       {categories && (
-        <FormControl>
+        <FormControl className="lg:max-w-[32.5%]">
           <InputLabel id="filter-select">
             {t('PRODUCTS_filter_category_label')}
           </InputLabel>
@@ -234,13 +233,13 @@ export const Product = ({
           </Select>
         </FormControl>
       )}
-      <div className="relative grid justify-evenly gap-4 md:grid-cols-2">
+      <section className="relative grid gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
         {!productList?.length && (
           <Typography variant="body2">{t('PRODUCTS_no_entries')}</Typography>
         )}
         {!!productList?.length &&
           productList.map((item, index) => (
-            <Grid item xs={1} key={index} className="w-full flex-grow">
+            <article key={index}>
               <ProductItem
                 categories={categories}
                 product={item}
@@ -265,10 +264,10 @@ export const Product = ({
                   setShowCreateProduct(true)
                 }}
               />
-            </Grid>
+            </article>
           ))}
         <PageLoader isLoading={isLoading} className="fixed inset-0 z-10" />
-      </div>
+      </section>
       <ProductDetail product={product} userId={userId} />
       <CreateEditProduct
         categories={categories}
@@ -333,7 +332,7 @@ export const Product = ({
       >
         <Alert {...alert} />
       </Snackbar>
-    </div>
+    </main>
   )
 }
 

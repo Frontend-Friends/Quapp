@@ -11,6 +11,9 @@ import { useTranslation } from '../hooks/use-translation'
 import Footer from '../components/footer'
 import NavigationBar from '../components/navigation/navigation-bar'
 import { Notifications } from '../components/notifications'
+import { useRouter } from 'next/router'
+import { useMemo } from 'react'
+import clsx from 'clsx'
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
@@ -26,6 +29,11 @@ export default function App({
   pageProps,
 }: MyAppProps) {
   const t = useTranslation()
+  const { asPath } = useRouter()
+
+  const showNavbar = useMemo(() => {
+    return asPath.startsWith('/community') || asPath.startsWith('/user')
+  }, [asPath])
 
   return (
     <CacheProvider value={emotionCache}>
@@ -35,11 +43,16 @@ export default function App({
       </Head>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <div className="flex min-h-screen flex-col justify-between md:mt-[83px]">
+        <div
+          className={clsx(
+            'flex min-h-screen min-w-[340px] flex-col justify-between',
+            showNavbar && 'md:mt-[83px]'
+          )}
+        >
           <Component {...pageProps} />
           <Footer />
         </div>
-        <NavigationBar />
+        {showNavbar && <NavigationBar />}
         <Notifications />
       </ThemeProvider>
     </CacheProvider>

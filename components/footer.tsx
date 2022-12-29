@@ -7,7 +7,7 @@ const Footer: FC = () => {
   const t = useTranslation()
   return (
     <footer className="bg-blueishGray-900 p-5 pb-24 text-lg font-light text-white md:pb-1">
-      <div className="flex">
+      <div className="mx-auto flex  max-w-7xl p-3">
         <ul className="m-0 mb-5 flex-1 list-none p-0">
           <li className="py-1">
             <Link underline="hover" href="#" className="text-white">
