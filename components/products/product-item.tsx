@@ -16,6 +16,7 @@ import { ProductMenu } from './product-menu'
 import { CondensedContainer } from '../condensed-container'
 import { User } from '../user/types'
 import clsx from 'clsx'
+import ImageNotSupportedRoundedIcon from '@mui/icons-material/ImageNotSupportedRounded'
 
 export const ProductItem: FC<{
   product: ProductType
@@ -56,10 +57,9 @@ export const ProductItem: FC<{
               />
             )}
             {!product.imgSrc && (
-              <Box
-                component="span"
-                className="aspect-square h-full w-1/3 max-w-[150px] bg-mintGreen-300 object-cover"
-              />
+              <Box className="grid aspect-square h-full w-1/3 max-w-[165px] items-center justify-center bg-slate-300 object-cover">
+                <ImageNotSupportedRoundedIcon className="text-5xl text-slate-400 md:text-6xl" />
+              </Box>
             )}
             <CardContent component="span">
               {product.title && (
