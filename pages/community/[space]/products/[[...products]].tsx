@@ -205,7 +205,7 @@ export const Product = ({
         color="secondary"
         aria-label={t('PRODUCT_add')}
         title={t('PRODUCT_add')}
-        className="fixed bottom-[115px] right-[16px] z-10 p-8"
+        className="fixed bottom-[115px] right-[16px] z-10 p-8 md:bottom-[50px] md:right-[24px]"
         onClick={() => {
           setShowCreateProduct(true)
         }}
@@ -233,7 +233,7 @@ export const Product = ({
           </Select>
         </FormControl>
       )}
-      <section className="relative grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <section className="relative grid gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
         {!productList?.length && (
           <Typography variant="body2">{t('PRODUCTS_no_entries')}</Typography>
         )}
