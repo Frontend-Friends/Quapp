@@ -27,8 +27,6 @@ const mayHasDate = (
 
 export const ProductChat = ({
   history,
-  productOwnerName,
-  userName,
   isOwner,
 }: {
   history: ChatMessage[]
@@ -42,32 +40,31 @@ export const ProductChat = ({
         const hasDate = mayHasDate(entry, history, index)
         const alignLeft = isOwner ? entry.fromOwner : !entry.fromOwner
         return (
-          <Box key={index} className="&:not(:first-of-type:mt-4) flex flex-col">
+          <Box key={index} className="mt-2 flex flex-col">
             <Box className="flex flex-col items-center">
               {hasDate && (
-                <Typography variant="body2" className="text-slate-400">
-                  {dayjs(entry.dateTime).format('D.MM.YYYY, HH:MM:ss')}
+                <Typography
+                  variant="body2"
+                  className="mt-3 mb-1 text-slate-400"
+                >
+                  {dayjs(entry.dateTime).format('D. MMMM YYYY')}
                 </Typography>
               )}
-              <Typography
-                variant="body2"
-                className={clsx(
-                  'text-slate-400',
-                  alignLeft ? 'ml-auto' : 'mr-auto'
-                )}
-              >
-                {entry.fromOwner ? productOwnerName : userName}
-              </Typography>
             </Box>
             <Box
               className={clsx(
-                'relative max-w-[80%] rounded border border-slate-200',
+                'relative max-w-[80%]',
                 alignLeft
-                  ? 'ml-auto mr-0 rounded-tl rounded-tr bg-violetRed-600 text-right text-white'
-                  : 'auto ml-0 text-left'
+                  ? 'ml-auto mr-0 rounded-tl-lg rounded-tr-lg rounded-bl-lg bg-blueishGray-600 text-right text-white'
+                  : 'auto ml-0 rounded-tl-lg rounded-tr-lg rounded-br-lg bg-slate-200 text-left'
               )}
             >
-              <Box className="p-4">{entry.message}</Box>
+              <Box className="p-3">
+                <p className="m-0">{entry.message}</p>
+                <small className="text-xs text-blueishGray-200">
+                  {dayjs(entry.dateTime).format('HH:MM')}
+                </small>
+              </Box>
             </Box>
           </Box>
         )
