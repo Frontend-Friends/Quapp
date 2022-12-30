@@ -18,7 +18,10 @@ import { InferGetServerSidePropsType } from 'next'
 import { ProductItem } from '../../../../components/products/product-item'
 import { Header } from '../../../../components/header'
 import { ProductDetail } from '../../../../components/products/product-detail'
-import { ProductType } from '../../../../components/products/types'
+import {
+  ProductType,
+  SpaceItemType,
+} from '../../../../components/products/types'
 import { fetchProduct } from '../../../../lib/services/fetch-product'
 import { fetchProductList } from '../../../../lib/services/fetch-product-list'
 import { CreateEditProduct } from '../../../../components/products/create-product'
@@ -48,6 +51,7 @@ export const getServerSideProps = withIronSessionSsr<{
   products?: ProductType[]
   productDetail?: ProductType | null
   count?: number
+  spaceName?: string
   categories?: string[]
 }>(async ({ query, req }) => {
   const { user } = req.session
@@ -78,6 +82,9 @@ export const getServerSideProps = withIronSessionSsr<{
   }
 
   const [spaceRef] = getSpaceRef(space as string)
+  const fetchedSpace = await getDoc(spaceRef).then(
+    (result) => result.data() as SpaceItemType
+  )
 
   const spaceData = await getDoc(spaceRef).then((r) => r.data())
 
@@ -88,6 +95,7 @@ export const getServerSideProps = withIronSessionSsr<{
       count,
       productDetail: productDetail || null,
       categories: spaceData?.categories || [],
+      spaceName: fetchedSpace.name,
     },
   }
 }, sessionOptions)
@@ -112,6 +120,7 @@ export const Product = ({
   userId,
   products,
   count,
+  spaceName,
   productDetail,
   categories,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
@@ -123,6 +132,7 @@ export const Product = ({
     skip?: string
     filter?: string
   }
+
   const [categoryFilter, setCategoryFilter] = useState<string | number>(
     filter ?? ''
   )
@@ -212,7 +222,7 @@ export const Product = ({
       >
         <AddRounded fontSize="large" />
       </Fab>
-      <Header title={t('PRODUCTS_title')} />
+      {spaceName && <Header title={spaceName} />}
       {categories && (
         <FormControl className="lg:max-w-[32.5%]">
           <InputLabel id="filter-select">

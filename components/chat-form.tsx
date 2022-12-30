@@ -48,7 +48,7 @@ export const ChatForm = ({
       }}
     >
       {({ values, handleSubmit, handleBlur, handleChange, errors }) => (
-        <form onSubmit={handleSubmit} className="mt-10 flex flex-col gap-4">
+        <form onSubmit={handleSubmit} className="mb-8 flex flex-col gap-4">
           <TextField
             label={t('CHAT_message')}
             value={values.message}
@@ -61,7 +61,7 @@ export const ChatForm = ({
           <LoadingButton
             type="submit"
             variant="contained"
-            color="secondary"
+            color="primary"
             loading={isLoading}
             disabled={isLoading || !values.message}
           >

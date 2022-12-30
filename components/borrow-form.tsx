@@ -58,7 +58,7 @@ export const BorrowForm = ({
     >
       {(props) => (
         <form onSubmit={props.handleSubmit}>
-          <Box className="grid pt-10 pb-4">
+          <Box className="grid py-2">
             <TextField
               multiline
               label={t('BORROW_TEXTFIELD_label')}

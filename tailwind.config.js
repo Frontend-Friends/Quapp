@@ -23,6 +23,7 @@ module.exports = {
           contrastText: '#fff',
         },
         blueishGray: {
+          200: '#a29eb2',
           300: '#66647B',
           600: '#3F3D56',
           900: '#2F2E41',
