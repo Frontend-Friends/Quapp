@@ -6,7 +6,7 @@ import { sendError } from '../../lib/helpers/send-error'
 
 async function resetPassword(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const email = req.body.email
+    const { email } = JSON.parse(req.body)
     await sendPasswordResetEmail(auth, email)
     sendResponse(res)
   } catch (error) {

@@ -13,8 +13,8 @@ const login = async (email: string, password: string) => {
 
 async function sessionLogin(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const email = req.body.email
-    const password = req.body.password
+    const { password, email } = JSON.parse(req.body)
+
     const credentials = await login(email, password)
 
     const uid = credentials?.user.uid
