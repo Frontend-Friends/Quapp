@@ -32,23 +32,15 @@ const Login: FC = () => {
       setIsLoading(true)
 
       try {
-        const fetchedLogin = await fetchJson<{
-          session: boolean
-          message: string
-        }>('/api/login', {
+        const fetchedLogin = await fetchJson('/api/login', {
           method: 'POST',
-          headers: {
-            accept: 'application.json',
-            'Content-Type': 'application/json',
-          },
           body: JSON.stringify({ ...values }),
-          cache: 'default',
         })
-        if (fetchedLogin.session) {
+        if (fetchedLogin.ok) {
           await router.push('/community/dashboard')
         } else {
           setOpen(true)
-          setMessage(fetchedLogin.message)
+          setMessage(fetchedLogin.errorMessage)
           setIsLoading(false)
         }
       } catch {

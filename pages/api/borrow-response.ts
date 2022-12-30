@@ -5,13 +5,16 @@ import { arrayUnion, doc, setDoc } from 'firebase/firestore'
 import { updateMessage } from '../../lib/services/update-message'
 import { getProductRef } from '../../lib/helpers/refs/get-product-ref'
 import { getUserRef } from '../../lib/helpers/refs/get-user-ref'
+import { sendError } from '../../lib/helpers/send-error'
+import { sendResponse } from '../../lib/helpers/send-response'
 
 export async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { user } = req.session
 
   try {
     if (!user || !user.id) {
-      throw new Error('no User')
+      sendError(res)
+      return
     }
     const { productId, space, messageId, accept, date, requesterId } =
       JSON.parse(req.body) as {
@@ -54,12 +57,10 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
       productOwnerId: user.id,
     })
 
-    res.status(200).json({
-      ok: true,
-    })
+    sendResponse(res)
   } catch (err) {
     console.error(err)
-    res.status(500).json({ ok: false })
+    sendError(res)
   }
 }
 

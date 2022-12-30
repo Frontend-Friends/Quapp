@@ -30,10 +30,8 @@ const AccountSettings: React.FC<{ isLoggedIn: boolean; user: User }> = ({
   const handleChangeSettings = async (values: SettingType) => {
     try {
       setIsLoading({ ...isLoading, updateAccount: true })
-      const result = await sendFormData<{
-        isOk: boolean
-      }>(`/api/account-settings`, values)
-      if (result.isOk) {
+      const result = await sendFormData(`/api/account-settings`, values)
+      if (result.ok) {
         setIsLoading({ ...isLoading, updateAccount: false })
         setOpen(true)
         setMessage('SETTINGS_updated')
@@ -47,19 +45,12 @@ const AccountSettings: React.FC<{ isLoggedIn: boolean; user: User }> = ({
   const handleResetPassword = async (email: string) => {
     const body = { email: email }
     const bodyString = JSON.stringify(body)
-    const fetchedResetPassword = await fetchJson<{
-      isOk: boolean
-    }>('/api/reset-password', {
-      method: 'POST',
-      headers: {
-        accept: 'application.json',
-        'Content-Type': 'application/json',
-      },
-      body: bodyString,
-      cache: 'default',
-    })
     try {
-      if (fetchedResetPassword.isOk) {
+      const fetchedResetPassword = await fetchJson('/api/reset-password', {
+        method: 'POST',
+        body: bodyString,
+      })
+      if (fetchedResetPassword.ok) {
         setIsLoading({ ...isLoading, updateAccount: false })
       } else {
         setOpen(true)

@@ -27,7 +27,6 @@ import { fetchProductList } from '../../../../lib/services/fetch-product-list'
 import { CreateEditProduct } from '../../../../components/products/create-product'
 import {
   deleteProduct,
-  fetchProduct as fetchProductOnClient,
   useFetchProductDetail,
 } from '../../../../hooks/use-fetch-product-detail'
 import { withIronSessionSsr } from 'iron-session/next'
@@ -43,6 +42,7 @@ import { ParsedUrlQuery } from 'querystring'
 import { PageLoader } from '../../../../components/page-loader'
 import { getSpaceRef } from '../../../../lib/helpers/refs/get-space-ref'
 import AddRounded from '@mui/icons-material/AddRounded'
+import { fetchProductApi } from '../../../../lib/helpers/fetch-product-api'
 
 export const maxProductsPerPage = 20
 
@@ -111,8 +111,6 @@ const getProducts = async (space: string, skip?: string, filter?: string) => {
   return fetchJson<{
     products: ProductType[]
     count: number
-    ok: boolean
-    message: string
   }>(`/api/product-list?space=${space}${skipQuery}${filterQuery}`)
 }
 
@@ -201,7 +199,7 @@ export const Product = ({
     } else {
       setAlert({
         severity: 'error',
-        children: fetchedProductList.message,
+        children: fetchedProductList.errorMessage,
       })
       setOpenSnackbar(true)
     }
@@ -266,9 +264,9 @@ export const Product = ({
                   setOpenSnackbar(true)
                 }}
                 onEdit={async (id) => {
-                  const fetchedProduct = await fetchProductOnClient(
-                    id,
-                    space as string
+                  const fetchedProduct = await fetchProductApi(
+                    space as string,
+                    id
                   )
                   setProductToEdit(fetchedProduct || null)
                   setShowCreateProduct(true)

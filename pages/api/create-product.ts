@@ -11,6 +11,8 @@ import { fetchProduct } from '../../lib/services/fetch-product'
 import { createNewCategory } from '../../lib/helpers/create_new_category'
 import { deleteObjectKey } from '../../lib/helpers/delete-object-key'
 import { getUserRef } from '../../lib/helpers/refs/get-user-ref'
+import { sendError } from '../../lib/helpers/send-error'
+import { sendResponse } from '../../lib/helpers/send-response'
 
 export const config = {
   api: {
@@ -23,7 +25,7 @@ async function createProduct(req: NextApiRequest, res: NextApiResponse) {
     const { space } = req.query as { space: string }
     const { user } = req.session
     if (!user) {
-      res.redirect('/auth/login')
+      sendError(res)
       return
     }
 
@@ -59,10 +61,10 @@ async function createProduct(req: NextApiRequest, res: NextApiResponse) {
 
     const productData = await fetchProduct(space, productId, user.id || '')
 
-    res.status(200).json({ isOk: true, productId, product: productData })
+    sendResponse(res, { productId, product: productData })
   } catch (err) {
     console.error(err)
-    res.status(500).json({ isOk: false })
+    sendError(res)
   }
 }
 

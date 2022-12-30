@@ -63,16 +63,15 @@ export const CreateEditProduct = ({
               product?.id || ''
             }`
             const response = await sendFormData<{
-              isOk: boolean
               productId: string
               product: ProductType
             }>(product ? updateAPi : createAPi, values)
-            if (!response.isOk) {
+            if (!response.ok) {
               if (onError) onError(t('FORM_submitting_error'))
             }
             setLoading(false)
 
-            if (response.isOk) {
+            if (response.ok) {
               onUpdateProduct({ ...product, ...response.product })
               onClose(false)
             }

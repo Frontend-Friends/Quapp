@@ -10,6 +10,8 @@ import { deleteFileInStorage } from '../../lib/scripts/delete-file-in-storage'
 import { getProduct } from '../../lib/services/get-product'
 import { createNewCategory } from '../../lib/helpers/create_new_category'
 import { deleteObjectKey } from '../../lib/helpers/delete-object-key'
+import { sendError } from '../../lib/helpers/send-error'
+import { sendResponse } from '../../lib/helpers/send-response'
 
 export const config = {
   api: {
@@ -22,7 +24,8 @@ async function createProduct(req: NextApiRequest, res: NextApiResponse) {
     const { space, id } = req.query as { space: string; id: string }
     const { user } = req.session
     if (!user) {
-      res.redirect('/auth/login')
+      console.error('No User')
+      sendError(res)
       return
     }
     const formData = await parsedForm<ProductFormData>(req)
@@ -56,10 +59,10 @@ async function createProduct(req: NextApiRequest, res: NextApiResponse) {
 
     await setDoc(docRef, data, { merge: true })
 
-    res.status(200).json({ isOk: true, product: { ...data } })
+    sendResponse(res, { product: { ...data } })
   } catch (err) {
     console.error(err)
-    res.status(500).json({ isOk: false })
+    sendError(res)
   }
 }
 

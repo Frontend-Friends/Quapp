@@ -6,6 +6,8 @@ import { withIronSessionApiRoute } from 'iron-session/next'
 import { ironOptions } from '../../lib/config'
 import { fetchUser } from '../../lib/services/fetch-user'
 import { getUserRef } from '../../lib/helpers/refs/get-user-ref'
+import { sendResponse } from '../../lib/helpers/send-response'
+import { sendError } from '../../lib/helpers/send-error'
 
 export const config = {
   api: {
@@ -14,24 +16,29 @@ export const config = {
 }
 
 async function accountSettings(req: NextApiRequest, res: NextApiResponse) {
-  const formData = await parsedForm<{
-    fields: SettingType
-  }>(req)
+  try {
+    const formData = await parsedForm<{
+      fields: SettingType
+    }>(req)
 
-  const userFields = formData.fields
-  const id = req.session.user?.id || ''
-  const [docRef] = getUserRef(id)
-  const fetchedSettings = await fetchUser(id)
+    const userFields = formData.fields
+    const id = req.session.user?.id || ''
+    const [docRef] = getUserRef(id)
+    const fetchedSettings = await fetchUser(id)
 
-  const updatedFields = { ...fetchedSettings, ...userFields }
-  await setDoc(docRef, {
-    ...updatedFields,
-  })
-  req.session.user = {
-    ...(updatedFields as User),
+    const updatedFields = { ...fetchedSettings, ...userFields }
+    await setDoc(docRef, {
+      ...updatedFields,
+    })
+    req.session.user = {
+      ...(updatedFields as User),
+    }
+    await req.session.save()
+    sendResponse(res)
+  } catch (error) {
+    console.error(error)
+    sendError(res)
   }
-  await req.session.save()
-  res.json({ isOk: true })
 }
 
 export default withIronSessionApiRoute(accountSettings, ironOptions)

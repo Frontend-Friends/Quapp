@@ -18,20 +18,17 @@ export const BorrowRequestMessage = ({
   const handleRequest = useCallback(
     async (accept: boolean) => {
       setIsLoading(true)
-      const fetchedData = await fetchJson<{ ok: boolean }>(
-        `/api/borrow-response`,
-        {
-          method: 'POST',
-          body: JSON.stringify({
-            messageId: message.date,
-            productId: message.productId,
-            accept,
-            requesterId: message.requesterId,
-            space: message.space,
-            date: message.borrowDate,
-          }),
-        }
-      )
+      const fetchedData = await fetchJson(`/api/borrow-response`, {
+        method: 'POST',
+        body: JSON.stringify({
+          messageId: message.date,
+          productId: message.productId,
+          accept,
+          requesterId: message.requesterId,
+          space: message.space,
+          date: message.borrowDate,
+        }),
+      })
       if (fetchedData.ok) {
         updateMessage({
           ...message,

@@ -3,6 +3,8 @@ import { withIronSessionApiRoute } from 'iron-session/next'
 import { sessionOptions } from '../../config/session-config'
 import { fetchProductList } from '../../lib/services/fetch-product-list'
 import { getQueryAsNumber } from '../../lib/helpers/get-query-as-number'
+import { sendResponse } from '../../lib/helpers/send-response'
+import { sendError } from '../../lib/helpers/send-error'
 
 export default withIronSessionApiRoute(
   async (req: NextApiRequest, res: NextApiResponse) => {
@@ -18,14 +20,13 @@ export default withIronSessionApiRoute(
         filter === undefined ? undefined : getQueryAsNumber(filter)
       )
 
-      res.status(200).json({
-        ok: true,
+      sendResponse(res, {
         products: productList.products || [],
         count: productList.count,
       })
     } catch (err) {
-      console.log(err)
-      res.status(500).json({ ok: false, message: 'SERVER_error' })
+      console.error(err)
+      sendError(res)
     }
   },
   sessionOptions

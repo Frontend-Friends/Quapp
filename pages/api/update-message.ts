@@ -3,20 +3,28 @@ import { withIronSessionApiRoute } from 'iron-session/next'
 import { sessionOptions } from '../../config/session-config'
 import { updateMessage } from '../../lib/services/update-message'
 import { Message } from '../../components/message/type'
+import { sendError } from '../../lib/helpers/send-error'
+import { sendResponse } from '../../lib/helpers/send-response'
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { user } = req.session
+  try {
+    const { user } = req.session
 
-  if (!user || !user.id) {
-    res.status(500).json({ ok: false })
-    return
+    if (!user || !user.id) {
+      console.error('No User or User Id')
+      sendError(res)
+      return
+    }
+
+    const data = JSON.parse(req.body) as Message
+
+    await updateMessage(user.id, data)
+
+    sendResponse(res)
+  } catch (error) {
+    console.error(error)
+    sendError(res)
   }
-
-  const data = JSON.parse(req.body) as Message
-
-  await updateMessage(user.id, data)
-
-  res.status(200).json({ ok: true })
 }
 
 export default withIronSessionApiRoute(handler, sessionOptions)

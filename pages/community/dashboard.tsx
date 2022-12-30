@@ -75,7 +75,6 @@ const Dashboard: FC<InferGetServerSidePropsType<typeof getServerSideProps>> = ({
       {open && (
         <SpaceForm
           setOpen={setOpen}
-          open={open}
           isLoading={isLoading}
           setIsLoading={setIsLoading}
           setMessage={setMessage}

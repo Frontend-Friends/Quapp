@@ -16,7 +16,7 @@ export const Notifications = () => {
     if (asPath.startsWith('/user/inbox')) {
       return
     }
-    const { messages } = await fetchJson<{ messages: Message[]; ok: boolean }>(
+    const { messages } = await fetchJson<{ messages: Message[] }>(
       '/api/unread-messages'
     )
 

@@ -3,6 +3,8 @@ import { sessionOptions } from '../../config/session-config'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { getUserRef } from '../../lib/helpers/refs/get-user-ref'
 import { collection, getDocs, query, where } from 'firebase/firestore'
+import { sendError } from '../../lib/helpers/send-error'
+import { sendResponse } from '../../lib/helpers/send-response'
 
 export async function unreadMessages(
   req: NextApiRequest,
@@ -11,21 +13,24 @@ export async function unreadMessages(
   const { user } = req.session
   try {
     if (!user || !user.id) {
-      throw new Error('no User')
+      console.error('No User or User Id')
+      sendError(res)
+      return
     }
     const [, userPath] = getUserRef(user.id)
     const messageCollection = collection(...userPath, 'messages')
     const q = query(messageCollection, where('read', '==', false))
     const messages = await getDocs(q)
-    res.status(200).json({
+    sendResponse(res, {
       messages: messages.docs.map((doc) => ({
         id: doc.id,
         date: doc.id,
         ...doc.data(),
       })),
     })
-  } catch {
-    res.status(500).json({ ok: false })
+  } catch (error) {
+    console.error(error)
+    sendError(res)
   }
 }
 

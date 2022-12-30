@@ -11,6 +11,8 @@ import { sessionOptions } from '../../config/session-config'
 import { parsedForm } from '../../lib/helpers/parsed-form'
 import { db } from '../../config/firebase'
 import { SpaceFormData } from '../../components/products/types'
+import { sendResponse } from '../../lib/helpers/send-response'
+import { sendError } from '../../lib/helpers/send-error'
 
 export const config = {
   api: {
@@ -49,17 +51,13 @@ async function addSpace(req: NextApiRequest, res: NextApiResponse) {
     })
 
     await Promise.all([spacesAdd, userUpdate])
-    res.status(200).json({
-      isOk: true,
+    sendResponse(res, {
       space: { ...spaceData },
       message: `The space ${spaceData.name} is added to spaces and to your profile.`,
     })
   } catch (err) {
     console.error(err)
-    res.status(500).json({
-      isOk: false,
-      message: 'An error occurred when trying to set data',
-    })
+    sendError(res)
   }
 }
 
