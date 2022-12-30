@@ -28,6 +28,10 @@ const Login: FC = () => {
   const [message, setMessage] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
+  const invitation = router.query.invitation as string
+
+  fetchJson(`/api/get-invitation?invitation=${invitation}`).then((r) => r)
+
   const handleLogin = useCallback(
     async (values: { email: string; password: string }) => {
       setIsLoading(true)
