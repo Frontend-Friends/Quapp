@@ -30,7 +30,6 @@ export function FileUpload<T extends CreateProduct>({
         className="w-full opacity-0"
         id="file-upload"
         onFocus={() => {
-          console.log('focus')
           setInputFocus(true)
         }}
         onBlur={() => {

@@ -75,6 +75,20 @@ export const translations: Record<string, string> = {
   BORROW_TEXTFIELD_default_value: 'Schreibe eine Nachricht',
   BORROW_DATEPICKER_label: 'Ausleihdatum',
   BORROW_button_submit: 'Anfrage senden',
+  BORROW_request_text:
+    '{USER} möchte das Produkt {PRODUCT_TITLE} am {DATE} ausleihen',
+  BORROW_response_text:
+    'Du kannst das Produkt {PRODUCT_TITLE} von {USER} am {DATE} {ACCEPT} ausleihen',
+  BORROW_response_not: 'nicht',
+  BORROW_message_title: 'Ausleihanfrage für: ',
+  BORROW_response_accept_text: 'Du hast zugesagt',
+  BORROW_response_declined_text: 'Du hast abgelehnt',
+  BORROW_REQUEST_accept: 'akzeptieren',
+  BORROW_REQUEST_decline: 'ablehnen',
+  BORROW_date_assigned: 'Das Datum ist schon vergeben',
+  BORROW_success_title: 'Deine Anfrage wurde versendet.',
+  BORROW_success_text: 'Willst Du eine neue Anfrage',
+  REQUEST_product_link: 'Link zum Produkt',
 
   CREATE_PRODUCT_detail: 'Produkt Detail',
   CREATE_PRODUCT_upload: 'Bild hochladen',
@@ -109,4 +123,6 @@ export const translations: Record<string, string> = {
 
   SETTINGS_title: 'Einstellungen',
   SETTINGS_change_settings: 'Einstellungen ändern',
+
+  NOTIFICATION_unread_message: 'Ungelesene Nachricht',
 }

@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import React, { FC, useCallback, useState } from 'react'
+import React, { FC, useCallback, useEffect, useState } from 'react'
 import LoadingButton from '@mui/lab/LoadingButton'
 
 import { Box, Link, Snackbar, TextField, Typography } from '@mui/material'
@@ -20,7 +20,6 @@ export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
   }
 }, ironOptions)
 
-//todo : if req has invitation query string: check if user is already signed up ... getdoc with referenz of uid of invitation: get thereof email firstName and space id)
 const Login: FC = () => {
   const router = useRouter()
   const t = useTranslation()
@@ -30,7 +29,30 @@ const Login: FC = () => {
 
   const invitation = router.query.invitation as string
 
-  fetchJson(`/api/get-invitation?invitation=${invitation}`).then((r) => r)
+  useEffect(() => {
+    if (invitation)
+      fetchJson<{
+        message: string
+        isOk: boolean
+        space: string
+        isSignedUp?: boolean
+      }>(`/api/get-invitation?invitation=${invitation}`).then((r) => {
+        if (r.isOk) {
+          setMessage(r.message)
+          setOpen(true)
+          setTimeout(() => {
+            router.push(`/community/${r.space}/products`)
+          }, 2000)
+        }
+        if (!r.isSignedUp) {
+          setMessage(r.message)
+          setOpen(true)
+          setTimeout(() => {
+            router.push(`/auth/signup?invitation=${invitation}`)
+          }, 2000)
+        }
+      })
+  }, [router, invitation])
 
   const handleLogin = useCallback(
     async (values: { email: string; password: string }) => {

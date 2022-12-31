@@ -1,9 +1,10 @@
 import { useRouter } from 'next/router'
-import React, { useMemo } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from '../../hooks/use-translation'
 import {
   Avatar,
   Box,
+  Button,
   Card,
   CardContent,
   CircularProgress,
@@ -19,19 +20,32 @@ import { BorrowForm, OnBorrowSubmit } from '../borrow-form'
 import { ProductType } from './types'
 import { ProductChats } from './product-chats'
 import { User } from '../user/types'
+import { sendFormData } from '../../lib/helpers/send-form-data'
+import { Message } from '../message/type'
+import { fetchJson } from '../../lib/helpers/fetch-json'
+import { ProductMessage } from './product-message'
 
-const handleSubmit: OnBorrowSubmit = async (values, setSubittming) => {
-  const fetchedData = await fetch('/api/borrow', {
-    method: 'POST',
-    body: JSON.stringify(values),
+type HandleSubmit = (
+  ...args: [...Parameters<OnBorrowSubmit>, ProductType, string]
+) => void
+
+const handleSubmit: HandleSubmit = async (
+  values,
+  setSubmitting,
+  product,
+  space
+) => {
+  const fetchedData = await sendFormData<{ status: number }>('/api/borrow', {
+    ...values,
+    productId: product.id,
+    productOwner: product.owner.id,
+    space,
   })
-    .then((r) => r.json())
-    .then((r) => r)
 
   if (fetchedData.status === 500) {
     return
   }
-  setSubittming(false)
+  setSubmitting(false)
 }
 
 export const ProductDetail = ({
@@ -52,6 +66,52 @@ export const ProductDetail = ({
   const modalIsOpen = useMemo(() => {
     return !!query.products
   }, [query])
+
+  const [productMessage, setProductMessage] = useState(product?.messages)
+
+  useEffect(() => {
+    console.log(product?.messages)
+    setProductMessage(product ? [...product.messages] : undefined)
+  }, [product])
+
+  const [borrowRequestSubmitted, setBorrowRequestSubmitted] = useState(false)
+
+  const handleRequest = useCallback(
+    async (accept: boolean, message: Message) => {
+      const fetchedData = await fetchJson<{ ok: boolean }>(
+        `/api/borrow-response`,
+        {
+          method: 'POST',
+          body: JSON.stringify({
+            messageId: message.date,
+            productId: message.productId,
+            accept,
+            requesterId: message.requesterId,
+            space: message.space,
+            date: message.borrowDate,
+          }),
+        }
+      )
+      if (fetchedData.ok) {
+        setProductMessage((state) => {
+          if (!state) {
+            return state
+          }
+          const foundIndex = state.findIndex(
+            (item) => item.date === message.date
+          )
+          state[foundIndex] = {
+            ...message,
+            accept,
+            read: true,
+            status: 'replied',
+          }
+          return [...state]
+        })
+      }
+    },
+    []
+  )
 
   const t = useTranslation()
   return (
@@ -91,6 +151,24 @@ export const ProductDetail = ({
           <Typography variant="body1" className="mb-8">
             {product.text}
           </Typography>
+          {!!productMessage?.length && (
+            <table className="w-full">
+              <tbody>
+                {productMessage.map((message, index) => (
+                  <ProductMessage
+                    message={message}
+                    key={index}
+                    onAccept={async () => {
+                      await handleRequest(true, message)
+                    }}
+                    onDecline={async () => {
+                      await handleRequest(false, message)
+                    }}
+                  />
+                ))}
+              </tbody>
+            </table>
+          )}
           {userId !== product.owner.id && (
             <Box className="relative flex flex-col">
               <Box className="absolute top-0 ml-4 rounded border border-slate-200 bg-white p-2">
@@ -98,7 +176,36 @@ export const ProductDetail = ({
               </Box>
               <Card variant="outlined" className="mt-6">
                 <CardContent>
-                  <BorrowForm onSubmit={handleSubmit} />
+                  {borrowRequestSubmitted && (
+                    <div className="grid gap-4">
+                      <p className="m-0">{t('BORROW_success_title')}</p>
+                      <p className="m-0">
+                        {t('BORROW_success_text')}
+                        stellen?
+                      </p>
+                      <Button
+                        onClick={() => {
+                          setBorrowRequestSubmitted(false)
+                        }}
+                      >
+                        {t(`BORROW_new_request`)}
+                      </Button>
+                    </div>
+                  )}
+                  {!borrowRequestSubmitted && (
+                    <BorrowForm
+                      onSubmit={async (values, setIsSubmitting) => {
+                        await handleSubmit(
+                          values,
+                          setIsSubmitting,
+                          product,
+                          query.space as string
+                        )
+                        setBorrowRequestSubmitted(true)
+                      }}
+                      product={product}
+                    />
+                  )}
                 </CardContent>
               </Card>
             </Box>

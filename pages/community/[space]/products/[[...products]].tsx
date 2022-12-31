@@ -6,7 +6,6 @@ import {
   Button,
   Fab,
   FormControl,
-  Grid,
   InputLabel,
   MenuItem,
   Pagination,
@@ -26,7 +25,6 @@ import {
 } from '../../../../components/products/types'
 import { fetchProduct } from '../../../../lib/services/fetch-product'
 import { fetchProductList } from '../../../../lib/services/fetch-product-list'
-import AddIcon from '@mui/icons-material/Add'
 import { CreateEditProduct } from '../../../../components/products/create-product'
 import {
   deleteProduct,
@@ -39,12 +37,13 @@ import { useRouter } from 'next/router'
 import { User } from '../../../../components/user/types'
 import { fetchJson } from '../../../../lib/helpers/fetch-json'
 import { getQueryAsNumber } from '../../../../lib/helpers/get-query-as-number'
-import { doc, getDoc } from 'firebase/firestore'
-import { db } from '../../../../config/firebase'
+import { getDoc } from 'firebase/firestore'
 import { deleteObjectKey } from '../../../../lib/helpers/delete-object-key'
 import { useAsync } from 'react-use'
 import { ParsedUrlQuery } from 'querystring'
 import { PageLoader } from '../../../../components/page-loader'
+import { getSpaceRef } from '../../../../lib/helpers/refs/get-space-ref'
+import AddRounded from '@mui/icons-material/AddRounded'
 import { sendFormData } from '../../../../lib/helpers/send-form-data'
 import InvitationModal from './InvitationModal'
 
@@ -75,7 +74,8 @@ export const getServerSideProps = withIronSessionSsr<{
   if (productsQuery) {
     productDetail = await fetchProduct(
       (space as string) || '',
-      productsQuery[0]
+      productsQuery[0],
+      user.id || ''
     )
 
     if (!productDetail) {
@@ -83,7 +83,7 @@ export const getServerSideProps = withIronSessionSsr<{
     }
   }
 
-  const spaceRef = doc(db, 'spaces', space as string)
+  const [spaceRef] = getSpaceRef(space as string)
 
   const spaceData = await getDoc(spaceRef).then((r) => r.data())
 
@@ -226,25 +226,25 @@ export const Product = ({
   }
 
   return (
-    <div className="mx-auto grid gap-4 px-5 pt-10">
+    <main className="m mx-auto grid w-full max-w-7xl gap-4 p-3">
       <Fab
-        size="medium"
+        size="large"
         color="secondary"
         aria-label={t('PRODUCT_add')}
         title={t('PRODUCT_add')}
-        className=" fixed top-[72px] right-[12px] z-10"
+        className="fixed bottom-[115px] right-[16px] z-10 p-8 md:bottom-[50px] md:right-[24px]"
         onClick={() => {
           setShowCreateProduct(true)
         }}
       >
-        <AddIcon />
+        <AddRounded fontSize="large" />
       </Fab>
       <Button onClick={() => setOpenModal(true)} variant="contained">
         {t('BUTTON_invite_member')}
       </Button>
       <Header title={t('PRODUCTS_title')} />
       {categories && (
-        <FormControl>
+        <FormControl className="lg:max-w-[32.5%]">
           <InputLabel id="filter-select">
             {t('PRODUCTS_filter_category_label')}
           </InputLabel>
@@ -263,13 +263,13 @@ export const Product = ({
           </Select>
         </FormControl>
       )}
-      <div className="relative grid justify-evenly gap-4 md:grid-cols-2">
+      <section className="relative grid gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
         {!productList?.length && (
           <Typography variant="body2">{t('PRODUCTS_no_entries')}</Typography>
         )}
         {!!productList?.length &&
           productList.map((item, index) => (
-            <Grid item xs={1} key={index} className="w-full flex-grow">
+            <article key={index}>
               <ProductItem
                 categories={categories}
                 product={item}
@@ -294,10 +294,10 @@ export const Product = ({
                   setShowCreateProduct(true)
                 }}
               />
-            </Grid>
+            </article>
           ))}
         <PageLoader isLoading={isLoading} className="fixed inset-0 z-10" />
-      </div>
+      </section>
       <ProductDetail product={product} userId={userId} />
       <CreateEditProduct
         categories={categories}
@@ -362,6 +362,7 @@ export const Product = ({
       >
         <Alert {...alert} />
       </Snackbar>
+
       <InvitationModal
         setOpenModal={setOpenModal}
         message={message}
@@ -372,7 +373,7 @@ export const Product = ({
         isLoading={isLoading}
         handleInvitation={handleInvitation}
       />
-    </div>
+    </main>
   )
 }
 

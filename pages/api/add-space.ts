@@ -40,6 +40,7 @@ async function addSpace(req: NextApiRequest, res: NextApiResponse) {
       ownerId: `/user/${uid}`,
       creatorId: `/user/${uid}`,
       creationDate: new Date(),
+      users: [uid],
     }).then((result) => result.id)
 
     // add space-id to spaces property of user

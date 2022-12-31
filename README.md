@@ -5,9 +5,8 @@ Quapp ermöglich es Quartiervereinen, Siedlungen, Gebäuden oder einfach Nachbar
 Um den Server zu starten, gelten folgende Kommandos:
 
 ```bash
+nvm use
 npm run dev
-# oder
-yarn dev
 ```
 Der Server läuft dann regulär mit Hot-Reload unter http://localhost:3000/
 

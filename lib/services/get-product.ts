@@ -1,16 +1,17 @@
-import { doc, DocumentData, getDoc } from 'firebase/firestore'
-import { db } from '../../config/firebase'
+import { getDoc } from 'firebase/firestore'
+import { getProductRef } from '../helpers/refs/get-product-ref'
+import { ProductType } from '../../components/products/types'
 
 export const getProduct = async (productId: string, space: string) => {
-  const productRef = doc(db, 'spaces', space, 'products', productId)
+  const [ref] = getProductRef(space, productId)
   return Promise.all([
-    await getDoc(productRef).then(
+    await getDoc(ref).then(
       (r) =>
         ({
           ...r.data(),
           id: r.id,
-        } as DocumentData)
+        } as ProductType)
     ),
-    productRef,
+    ref,
   ])
 }
