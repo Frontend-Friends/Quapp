@@ -62,7 +62,7 @@ async function getInvitation(req: NextApiRequest, res: NextApiResponse) {
             ])
             if (resolvedPromise) {
               res.status(200).send({
-                message: 'Space added to user and user added to space',
+                message: 'Your profile is now linked to the space',
                 isOk: true,
                 space: invitedPerson?.space,
                 isSignedUp: true,
@@ -74,9 +74,9 @@ async function getInvitation(req: NextApiRequest, res: NextApiResponse) {
               })
             }
           } else {
-            console.log('user does not exist in user docs')
             res.status(200).send({
-              message: 'You are not yet signed up. Redirecting to signup ...',
+              message:
+                'You are not yet signed up. You are being redirected to signup ...',
               isOk: false,
               isSignedUp: false,
             })

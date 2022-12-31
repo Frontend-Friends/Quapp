@@ -52,39 +52,37 @@ const Dashboard: FC<InferGetServerSidePropsType<typeof getServerSideProps>> = ({
   const [message, setMessage] = useState('')
 
   return (
-    <>
-      <CondensedContainer className="relative">
-        <Header title={t('SPACES_title')} />
-        {!!spaces?.length ? (
-          <Grid container columns={{ md: 1 }} spacing={{ xs: 4 }} pt={4}>
-            {spaces.map((space) => (
-              <SpaceItem key={space.id} space={space} />
-            ))}
-          </Grid>
-        ) : (
-          <Typography variant="body2">{t('SPACES_no_entries')}</Typography>
-        )}
-        <Fab
-          color="primary"
-          aria-label="add"
-          variant="extended"
-          className="mt-8"
-          onClick={() => setOpen((state) => !state)}
-        >
-          <AddIcon className="mr-2" /> {t('SPACES_add_space')}
-        </Fab>
-        {open && (
-          <SpaceForm
-            setOpen={setOpen}
-            open={open}
-            isLoading={isLoading}
-            setIsLoading={setIsLoading}
-            setMessage={setMessage}
-            message={message}
-          />
-        )}
-      </CondensedContainer>
-    </>
+    <CondensedContainer className="relative">
+      <Header title={t('SPACES_title')} />
+      {!!spaces?.length ? (
+        <Grid container columns={{ md: 1 }} spacing={{ xs: 4 }} pt={4}>
+          {spaces.map((space) => (
+            <SpaceItem key={space.id} space={space} />
+          ))}
+        </Grid>
+      ) : (
+        <Typography variant="body2">{t('SPACES_no_entries')}</Typography>
+      )}
+      <Fab
+        color="primary"
+        aria-label="add"
+        variant="extended"
+        className="mt-8"
+        onClick={() => setOpen((state) => !state)}
+      >
+        <AddIcon className="mr-2" /> {t('SPACES_add_space')}
+      </Fab>
+      {open && (
+        <SpaceForm
+          setOpen={setOpen}
+          open={open}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+          setMessage={setMessage}
+          message={message}
+        />
+      )}
+    </CondensedContainer>
   )
 }
 
