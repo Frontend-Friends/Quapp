@@ -5,6 +5,8 @@ import { sessionOptions } from '../../config/session-config'
 import { parsedForm } from '../../lib/helpers/parsed-form'
 import { BorrowProductType } from '../../components/products/types'
 import { getUserRef } from '../../lib/helpers/refs/get-user-ref'
+import { sendResponse } from '../../lib/helpers/send-response'
+import { sendError } from '../../lib/helpers/send-error'
 
 export const config = {
   api: {
@@ -13,41 +15,46 @@ export const config = {
 }
 
 export async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { user } = req.session
+  try {
+    const { user } = req.session
 
-  if (!user || !user.id) {
-    res.status(500).json({ ok: false })
-    return
-  }
+    if (!user || !user.id) {
+      sendError(res)
+      return
+    }
 
-  const parsedValue = await parsedForm<{ fields: BorrowProductType }>(req).then(
-    (r) => ({
+    const parsedValue = await parsedForm<{ fields: BorrowProductType }>(
+      req
+    ).then((r) => ({
       ...r.fields,
       borrowRequester: user.id,
       status: 'pending',
+    }))
+
+    const [, userRef] = getUserRef(parsedValue.productOwner)
+
+    const messageRef = doc(
+      ...userRef,
+      'messages',
+      new Date().getTime().toString()
+    )
+
+    await setDoc(messageRef, {
+      borrowDate: parsedValue.borrowDate,
+      productId: parsedValue.productId,
+      requesterId: user.id,
+      space: parsedValue.space,
+      status: parsedValue.status,
+      message: parsedValue.message,
+      type: 'borrowRequest',
+      read: false,
     })
-  )
 
-  const [, userRef] = getUserRef(parsedValue.productOwner)
-
-  const messageRef = doc(
-    ...userRef,
-    'messages',
-    new Date().getTime().toString()
-  )
-
-  await setDoc(messageRef, {
-    borrowDate: parsedValue.borrowDate,
-    productId: parsedValue.productId,
-    requesterId: user.id,
-    space: parsedValue.space,
-    status: parsedValue.status,
-    message: parsedValue.message,
-    type: 'borrowRequest',
-    read: false,
-  })
-
-  res.status(200).json({ ok: true })
+    sendResponse(res)
+  } catch (error) {
+    console.error(error)
+    sendError(res)
+  }
 }
 
 export default withIronSessionApiRoute(handler, sessionOptions)

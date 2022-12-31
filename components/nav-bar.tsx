@@ -30,9 +30,9 @@ export const NavBar: FC<{
   const handleLogout = async (e: FormEvent) => {
     e.preventDefault()
 
-    const result = await fetchJson<{ isLoggedOut: boolean }>(' /api/logout')
+    const result = await fetchJson(' /api/logout')
 
-    if (result.isLoggedOut) {
+    if (result.ok) {
       await router.push('/auth/login')
     }
   }

@@ -1,20 +1,17 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { sendPasswordResetEmail } from 'firebase/auth'
 import { auth } from '../../config/firebase'
+import { sendResponse } from '../../lib/helpers/send-response'
+import { sendError } from '../../lib/helpers/send-error'
 
 async function resetPassword(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const email = req.body.email
-    sendPasswordResetEmail(auth, email)
-      .then(() => {
-        res.send({ isOk: true })
-      })
-      .catch((error) => {
-        const errorMessage = error.message
-        res.send({ isOk: false, message: errorMessage })
-      })
+    const { email } = JSON.parse(req.body)
+    await sendPasswordResetEmail(auth, email)
+    sendResponse(res)
   } catch (error) {
-    res.send({ message: 'THE RESET EMAIL COULD NOT BEEN SENT TO YOU' })
+    console.error(error)
+    sendError(res)
   }
 }
 

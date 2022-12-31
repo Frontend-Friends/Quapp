@@ -17,7 +17,6 @@ export const useFetchBorrowRequestMessage: (message: Message | undefined) => [
       return {}
     }
     const data = await fetchJson<{
-      ok: boolean
       userName: string
       product: ProductType | null
     }>(`/api/borrow-request-message`, {

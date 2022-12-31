@@ -10,7 +10,6 @@ import { addSpaceFormSchema } from '../../lib/schema/add-space-form-schema'
 
 interface Props {
   setOpen: (isOpen: boolean) => void
-  open: boolean
   isLoading?: boolean
   setIsLoading: (isLoading: boolean) => void
   setMessage: (message: string) => void
@@ -19,31 +18,28 @@ interface Props {
 
 const SpaceForm: FC<Props> = ({
   setOpen,
-  open,
   isLoading,
   setIsLoading,
   setMessage,
   message,
 }) => {
-  console.log(open)
   const t = useTranslation()
   const [isSnackbarOpen, setIsSnackbarOpen] = useState(false)
   const handleAddSpace = async (values: SpaceItemType) => {
     setIsLoading(true)
     try {
       const fetchedAddSpace = await sendFormData<{
-        isOk: boolean
         message: string
       }>('/api/add-space', values)
 
-      if (fetchedAddSpace.isOk) {
+      if (fetchedAddSpace.ok) {
         setIsLoading(false)
         setMessage(fetchedAddSpace.message)
         setIsSnackbarOpen(true)
         setOpen(false)
       } else {
         setOpen(true)
-        setMessage(fetchedAddSpace.message)
+        setMessage(t(fetchedAddSpace.errorMessage))
         setIsLoading(false)
         setIsLoading(false)
         setIsSnackbarOpen(true)

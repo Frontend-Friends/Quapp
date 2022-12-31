@@ -1,27 +1,26 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { withIronSessionApiRoute } from 'iron-session/next'
 import { sessionOptions } from '../../config/session-config'
+import { sendResponse } from '../../lib/helpers/send-response'
+import { sendError } from '../../lib/helpers/send-error'
 
 async function cookie(req: NextApiRequest, res: NextApiResponse) {
   try {
     const { user } = req.session
     if (user) {
       res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate')
-      res.status(200).json({
+      sendResponse(res, {
         isUser: true,
       })
     } else {
       res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate')
-      res.send({
+      sendResponse(res, {
         isUser: false,
       })
     }
   } catch (err) {
     console.error(err)
-    res.status(500).json({
-      isUser: false,
-      message: 'An error occurred when trying checking for cookie',
-    })
+    sendError(res)
   }
 }
 

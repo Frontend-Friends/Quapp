@@ -19,12 +19,9 @@ const Signup: FC = () => {
   const handleSignup = async (values: SignupType) => {
     setIsLoading(true)
     try {
-      const fetchedSignup = await sendFormData<{
-        isSignedUp: boolean
-        message: string
-      }>('/api/signup', values)
+      const fetchedSignup = await sendFormData('/api/signup', values)
 
-      if (fetchedSignup.isSignedUp) {
+      if (fetchedSignup.ok) {
         setIsLoading(false)
         await router.push({
           pathname: '/auth/signup-success',
@@ -32,7 +29,7 @@ const Signup: FC = () => {
         })
       } else {
         setOpen(true)
-        setMessage(fetchedSignup.message)
+        setMessage(fetchedSignup.errorMessage)
         setIsLoading(false)
       }
     } catch {

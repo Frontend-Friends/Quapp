@@ -5,9 +5,8 @@ import {
   Avatar,
   Box,
   Button,
-  Card,
-  CardContent,
   CircularProgress,
+  Divider,
   IconButton,
   Modal,
   Typography,
@@ -24,6 +23,7 @@ import { sendFormData } from '../../lib/helpers/send-form-data'
 import { Message } from '../message/type'
 import { fetchJson } from '../../lib/helpers/fetch-json'
 import { ProductMessage } from './product-message'
+import Image from 'next/image'
 
 type HandleSubmit = (
   ...args: [...Parameters<OnBorrowSubmit>, ProductType, string]
@@ -35,14 +35,14 @@ const handleSubmit: HandleSubmit = async (
   product,
   space
 ) => {
-  const fetchedData = await sendFormData<{ status: number }>('/api/borrow', {
+  const fetchedData = await sendFormData('/api/borrow', {
     ...values,
     productId: product.id,
     productOwner: product.owner.id,
     space,
   })
 
-  if (fetchedData.status === 500) {
+  if (!fetchedData.ok) {
     return
   }
   setSubmitting(false)
@@ -78,20 +78,17 @@ export const ProductDetail = ({
 
   const handleRequest = useCallback(
     async (accept: boolean, message: Message) => {
-      const fetchedData = await fetchJson<{ ok: boolean }>(
-        `/api/borrow-response`,
-        {
-          method: 'POST',
-          body: JSON.stringify({
-            messageId: message.date,
-            productId: message.productId,
-            accept,
-            requesterId: message.requesterId,
-            space: message.space,
-            date: message.borrowDate,
-          }),
-        }
-      )
+      const fetchedData = await fetchJson(`/api/borrow-response`, {
+        method: 'POST',
+        body: JSON.stringify({
+          messageId: message.date,
+          productId: message.productId,
+          accept,
+          requesterId: message.requesterId,
+          space: message.space,
+          date: message.borrowDate,
+        }),
+      })
       if (fetchedData.ok) {
         setProductMessage((state) => {
           if (!state) {
@@ -126,31 +123,39 @@ export const ProductDetail = ({
       disablePortal
     >
       {product ? (
-        <CondensedContainer className="relative m-0 max-h-full min-h-screen overflow-auto bg-white p-8 md:min-h-max md:rounded-2xl">
+        <CondensedContainer className="relative m-0 max-h-full min-h-screen overflow-auto bg-white md:min-h-max">
           <Box className="sticky top-0 z-10 flex h-0 w-full justify-end">
             <Link href={backUrl} passHref shallow>
               <IconButton
                 title={t('BUTTON_close')}
-                className="-mt-6 -mr-6 h-12 w-12 border border-slate-200 bg-white"
+                className="z-10 -mt-2 -mr-2 h-12 w-12 border border-slate-200 bg-white shadow hover:bg-slate-200"
               >
                 <CloseIcon />
               </IconButton>
             </Link>
           </Box>
-          <Header
-            title={product.title}
-            lead={product.description}
-            imgSrc={product.imgSrc}
-          />
-          <Box className="flex items-center gap-4 py-8">
-            <Avatar alt={product.owner.userName} src="" className="h-14 w-14">
+          <Header title={product.title} titleSpacingClasses="mt-1 mb-1 pr-10" />
+          <Box className="flex items-center gap-2 py-1">
+            <Avatar alt={product.owner.userName} src="" className="h-8 w-8">
               {product.owner.userName?.slice(0, 2)}
             </Avatar>
-            <p>{product.owner.userName}</p>
+            <p className="m-0">{product.owner.userName}</p>
           </Box>
-          <Typography variant="body1" className="mb-8">
-            {product.text}
+          {product.imgSrc && (
+            <Box className="relative -mx-2 mt-3 mb-5 pt-[50%]">
+              <Image
+                src={product.imgSrc}
+                layout="fill"
+                objectFit="cover"
+                alt={t('PRODUCT_image')}
+              />
+            </Box>
+          )}
+          <Typography variant="h2" className="mb-2">
+            {t('PRODUCT_description')}
           </Typography>
+          <Typography variant="body1">{product.text}</Typography>
+          <Divider className="my-6 -mx-2" />
           {!!productMessage?.length && (
             <table className="w-full">
               <tbody>
@@ -171,43 +176,37 @@ export const ProductDetail = ({
           )}
           {userId !== product.owner.id && (
             <Box className="relative flex flex-col">
-              <Box className="absolute top-0 ml-4 rounded border border-slate-200 bg-white p-2">
-                <Typography variant="body2"> {t('BUTTON_borrow')}</Typography>
-              </Box>
-              <Card variant="outlined" className="mt-6">
-                <CardContent>
-                  {borrowRequestSubmitted && (
-                    <div className="grid gap-4">
-                      <p className="m-0">{t('BORROW_success_title')}</p>
-                      <p className="m-0">
-                        {t('BORROW_success_text')}
-                        stellen?
-                      </p>
-                      <Button
-                        onClick={() => {
-                          setBorrowRequestSubmitted(false)
-                        }}
-                      >
-                        {t(`BORROW_new_request`)}
-                      </Button>
-                    </div>
-                  )}
-                  {!borrowRequestSubmitted && (
-                    <BorrowForm
-                      onSubmit={async (values, setIsSubmitting) => {
-                        await handleSubmit(
-                          values,
-                          setIsSubmitting,
-                          product,
-                          query.space as string
-                        )
-                        setBorrowRequestSubmitted(true)
-                      }}
-                      product={product}
-                    />
-                  )}
-                </CardContent>
-              </Card>
+              <Typography variant="h2" className="mb-2">
+                {t('BUTTON_borrow')}
+              </Typography>
+              {borrowRequestSubmitted && (
+                <div className="grid gap-4">
+                  <p className="m-0">{t('BORROW_success_title')}</p>
+                  <p className="m-0">{t('BORROW_success_text')}</p>
+                  <Button
+                    onClick={() => {
+                      setBorrowRequestSubmitted(false)
+                    }}
+                  >
+                    {t(`BORROW_new_request`)}
+                  </Button>
+                </div>
+              )}
+              {!borrowRequestSubmitted && (
+                <BorrowForm
+                  onSubmit={async (values, setIsSubmitting) => {
+                    await handleSubmit(
+                      values,
+                      setIsSubmitting,
+                      product,
+                      query.space as string
+                    )
+                    setBorrowRequestSubmitted(true)
+                  }}
+                  product={product}
+                />
+              )}
+              <Divider className="my-6 -mx-2" />
             </Box>
           )}
           {userId && (

@@ -9,7 +9,7 @@ import { DatePicker } from '@mui/x-date-pickers'
 import { borrowFormSchema } from '../lib/schema/borrow-form-schema'
 import { ProductType } from './products/types'
 import dayjs from 'dayjs'
-import { fetchProductApi } from '../lib/services/fetch-product-api'
+import { fetchProductApi } from '../lib/helpers/fetch-product-api'
 import { useAsync } from 'react-use'
 import { LoadingButton } from '@mui/lab'
 
@@ -32,8 +32,8 @@ export const BorrowForm = ({
 
   const borrowDates = useAsync(async () => {
     if (datePickerIsOpen) {
-      return fetchProductApi(query.space as string, product.id).then(
-        (r) => r.borrowDates
+      return fetchProductApi(query.space as string, product.id).then((r) =>
+        r.ok ? r.borrowDates : []
       )
     }
     return []
@@ -58,7 +58,7 @@ export const BorrowForm = ({
     >
       {(props) => (
         <form onSubmit={props.handleSubmit}>
-          <Box className="grid pt-10 pb-4">
+          <Box className="grid py-2">
             <TextField
               multiline
               label={t('BORROW_TEXTFIELD_label')}

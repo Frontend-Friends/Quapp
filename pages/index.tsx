@@ -19,9 +19,8 @@ export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
   }
 }, ironOptions)
 
-const Home: FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
+const Home: FC<{ isLoggedIn: boolean }> = () => {
   const t = useTranslation()
-  console.log(isLoggedIn)
   return (
     <main className="mx-auto max-w-[680px] text-blueishGray-600">
       <section className="relative bg-gradient-to-br from-violetRed-600 via-violetRed-600 to-violetRed-900 pb-10 text-white">

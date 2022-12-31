@@ -40,14 +40,7 @@ const SpaceItem: FC<Props> = ({ space }) => {
         <Link href={`${space.id}/products`} passHref>
           <MuiLink
             title={`${t('GLOBAL_open')} ${space.name}`}
-            style={{
-              position: 'absolute',
-              top: 0,
-              bottom: 0,
-              left: 0,
-              right: 0,
-              display: 'block',
-            }}
+            className="absolute top-0 bottom-0 left-0 right-0 block"
           />
         </Link>
         <CardHeader

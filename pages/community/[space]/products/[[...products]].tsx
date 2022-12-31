@@ -22,13 +22,13 @@ import { ProductDetail } from '../../../../components/products/product-detail'
 import {
   InvitationType,
   ProductType,
+  SpaceItemType,
 } from '../../../../components/products/types'
 import { fetchProduct } from '../../../../lib/services/fetch-product'
 import { fetchProductList } from '../../../../lib/services/fetch-product-list'
 import { CreateEditProduct } from '../../../../components/products/create-product'
 import {
   deleteProduct,
-  fetchProduct as fetchProductOnClient,
   useFetchProductDetail,
 } from '../../../../hooks/use-fetch-product-detail'
 import { withIronSessionSsr } from 'iron-session/next'
@@ -44,8 +44,11 @@ import { ParsedUrlQuery } from 'querystring'
 import { PageLoader } from '../../../../components/page-loader'
 import { getSpaceRef } from '../../../../lib/helpers/refs/get-space-ref'
 import AddRounded from '@mui/icons-material/AddRounded'
+
 import { sendFormData } from '../../../../lib/helpers/send-form-data'
 import InvitationModal from './InvitationModal'
+
+import { fetchProductApi } from '../../../../lib/helpers/fetch-product-api'
 
 export const maxProductsPerPage = 20
 
@@ -54,6 +57,7 @@ export const getServerSideProps = withIronSessionSsr<{
   products?: ProductType[]
   productDetail?: ProductType | null
   count?: number
+  spaceName?: string
   categories?: string[]
 }>(async ({ query, req }) => {
   const { user } = req.session
@@ -84,6 +88,9 @@ export const getServerSideProps = withIronSessionSsr<{
   }
 
   const [spaceRef] = getSpaceRef(space as string)
+  const fetchedSpace = await getDoc(spaceRef).then(
+    (result) => result.data() as SpaceItemType
+  )
 
   const spaceData = await getDoc(spaceRef).then((r) => r.data())
 
@@ -94,6 +101,7 @@ export const getServerSideProps = withIronSessionSsr<{
       count,
       productDetail: productDetail || null,
       categories: spaceData?.categories || [],
+      spaceName: fetchedSpace.name,
     },
   }
 }, sessionOptions)
@@ -109,8 +117,6 @@ const getProducts = async (space: string, skip?: string, filter?: string) => {
   return fetchJson<{
     products: ProductType[]
     count: number
-    ok: boolean
-    message: string
   }>(`/api/product-list?space=${space}${skipQuery}${filterQuery}`)
 }
 
@@ -118,6 +124,7 @@ export const Product = ({
   userId,
   products,
   count,
+  spaceName,
   productDetail,
   categories,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
@@ -129,6 +136,7 @@ export const Product = ({
     skip?: string
     filter?: string
   }
+
   const [categoryFilter, setCategoryFilter] = useState<string | number>(
     filter ?? ''
   )
@@ -199,7 +207,7 @@ export const Product = ({
     } else {
       setAlert({
         severity: 'error',
-        children: fetchedProductList.message,
+        children: fetchedProductList.errorMessage,
       })
       setOpenSnackbar(true)
     }
@@ -239,10 +247,14 @@ export const Product = ({
       >
         <AddRounded fontSize="large" />
       </Fab>
+
       <Button onClick={() => setOpenModal(true)} variant="contained">
         {t('BUTTON_invite_member')}
       </Button>
       <Header title={t('PRODUCTS_title')} />
+
+      {spaceName && <Header title={spaceName} />}
+
       {categories && (
         <FormControl className="lg:max-w-[32.5%]">
           <InputLabel id="filter-select">
@@ -286,9 +298,9 @@ export const Product = ({
                   setOpenSnackbar(true)
                 }}
                 onEdit={async (id) => {
-                  const fetchedProduct = await fetchProductOnClient(
-                    id,
-                    space as string
+                  const fetchedProduct = await fetchProductApi(
+                    space as string,
+                    id
                   )
                   setProductToEdit(fetchedProduct || null)
                   setShowCreateProduct(true)

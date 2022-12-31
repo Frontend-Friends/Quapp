@@ -2,6 +2,8 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { fetchProduct } from '../../lib/services/fetch-product'
 import { withIronSessionApiRoute } from 'iron-session/next'
 import { sessionOptions } from '../../config/session-config'
+import { sendResponse } from '../../lib/helpers/send-response'
+import { sendError } from '../../lib/helpers/send-error'
 
 export default withIronSessionApiRoute(
   async (req: NextApiRequest, res: NextApiResponse) => {
@@ -17,9 +19,10 @@ export default withIronSessionApiRoute(
         user.id || ''
       )
 
-      res.status(200).json(product || null)
+      sendResponse(res, product)
     } catch (err) {
-      res.status(500).json({ message: 'SERVER_error' })
+      console.error(err)
+      sendError(res)
     }
   },
   sessionOptions

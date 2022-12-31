@@ -5,6 +5,8 @@ import { parsedForm } from '../../lib/helpers/parsed-form'
 import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { sortChatByTime } from '../../lib/scripts/sort-chat-by-time'
 import { getProductRef } from '../../lib/helpers/refs/get-product-ref'
+import { sendError } from '../../lib/helpers/send-error'
+import { sendResponse } from '../../lib/helpers/send-response'
 
 export const config = {
   api: {
@@ -13,42 +15,47 @@ export const config = {
 }
 
 async function sendChat(req: NextApiRequest, res: NextApiResponse) {
-  const { user } = req.session
+  try {
+    const { user } = req.session
 
-  const { space } = req.query
+    const { space } = req.query
 
-  if (!user) {
-    res.redirect('/auth/login')
-    return
-  }
-
-  const formData = await parsedForm<{
-    fields: {
-      message: string
-      productId: string
-      fromOwner: boolean
-      chatId: string
+    if (!user) {
+      sendError(res)
+      return
     }
-  }>(req)
 
-  const { productId, chatId } = formData.fields
+    const formData = await parsedForm<{
+      fields: {
+        message: string
+        productId: string
+        fromOwner: boolean
+        chatId: string
+      }
+    }>(req)
 
-  const [, productPath] = getProductRef(space as string, productId)
+    const { productId, chatId } = formData.fields
 
-  const docRef = doc(...productPath, 'chats', chatId)
+    const [, productPath] = getProductRef(space as string, productId)
 
-  const fetchedChat = await getDoc(docRef).then((r) => r.data())
-  const currentHistory = fetchedChat?.history || []
-  const history = [
-    ...currentHistory,
-    { dateTime: new Date().toISOString(), ...formData.fields },
-  ].filter((item) => !!item)
+    const docRef = doc(...productPath, 'chats', chatId)
 
-  await setDoc(docRef, {
-    history,
-  })
+    const fetchedChat = await getDoc(docRef).then((r) => r.data())
+    const currentHistory = fetchedChat?.history || []
+    const history = [
+      ...currentHistory,
+      { dateTime: new Date().toISOString(), ...formData.fields },
+    ].filter((item) => !!item)
 
-  res.json({ isOk: true, history: sortChatByTime(history) })
+    await setDoc(docRef, {
+      history,
+    })
+
+    sendResponse(res, { history: sortChatByTime(history) })
+  } catch (error) {
+    console.error(error)
+    sendError(res)
+  }
 }
 
 export default withIronSessionApiRoute(sendChat, sessionOptions)

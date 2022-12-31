@@ -35,8 +35,10 @@ export const ProductChats = ({
   }, [])
 
   return (
-    <Box className="mt-4 rounded border border-slate-200 p-6">
-      <Typography variant="h6">{t('CHAT_title')}</Typography>
+    <Box className="rounded border border-slate-200">
+      <Typography variant="h2" className="mb-4">
+        {t('CHAT_title')}
+      </Typography>
       {!isOwner && (
         <ChatForm
           isOwner={isOwner}
