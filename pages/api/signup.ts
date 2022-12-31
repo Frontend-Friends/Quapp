@@ -8,6 +8,8 @@ import { setDoc } from 'firebase/firestore'
 import { parsedForm } from '../../lib/helpers/parsed-form'
 import { SignupType } from '../../components/products/types'
 import { getUserRef } from '../../lib/helpers/refs/get-user-ref'
+import { sendResponse } from '../../lib/helpers/send-response'
+import { sendError } from '../../lib/helpers/send-error'
 
 export const config = {
   api: {
@@ -24,7 +26,8 @@ export default async function signupRoute(
   const { fields } = await parsedForm<{ fields: SignupType }>(req)
   try {
     if (!refUrl) {
-      new Error(`We didn't send any referer`)
+      console.error(`We didn't send any referer`)
+      sendError(res)
       return
     }
     const actionCodeSettings = {
@@ -52,10 +55,9 @@ export default async function signupRoute(
     })
 
     // //no session here, because we don't want to log in the user after signup
-    res.status(200).json({ isSignedUp: true })
+    sendResponse(res)
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: 'SIGNUP_something_went_wrong', isSignedUp: false })
+    console.error(error)
+    sendError(res)
   }
 }

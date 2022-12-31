@@ -38,8 +38,8 @@ export const UserIcon: FC = () => {
     setOpen((state) => !state)
   }, [])
   const handleLogout = useCallback(async () => {
-    const result = await fetchJson<{ isLoggedOut: boolean }>('/api/logout')
-    if (result.isLoggedOut) {
+    const result = await fetchJson('/api/logout')
+    if (result.ok) {
       await push('/auth/login')
     }
   }, [push])

@@ -2,6 +2,8 @@ import { withIronSessionApiRoute } from 'iron-session/next'
 import { sessionOptions } from '../../config/session-config'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { fetchMessages } from '../../lib/services/fetch-messages'
+import { sendResponse } from '../../lib/helpers/send-response'
+import { sendError } from '../../lib/helpers/send-error'
 
 export const messages = async (req: NextApiRequest, res: NextApiResponse) => {
   const { user } = req.session
@@ -10,9 +12,10 @@ export const messages = async (req: NextApiRequest, res: NextApiResponse) => {
       throw new Error('no User')
     }
     const fetchedMessages = await fetchMessages(user.id)
-    res.status(200).json({ messages: fetchedMessages, ok: true })
-  } catch {
-    res.status(500).json({ ok: false })
+    sendResponse(res, { messages: fetchedMessages })
+  } catch (error) {
+    console.error(error)
+    sendError(res)
   }
 }
 

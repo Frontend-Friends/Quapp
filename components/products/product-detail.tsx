@@ -35,14 +35,14 @@ const handleSubmit: HandleSubmit = async (
   product,
   space
 ) => {
-  const fetchedData = await sendFormData<{ status: number }>('/api/borrow', {
+  const fetchedData = await sendFormData('/api/borrow', {
     ...values,
     productId: product.id,
     productOwner: product.owner.id,
     space,
   })
 
-  if (fetchedData.status === 500) {
+  if (!fetchedData.ok) {
     return
   }
   setSubmitting(false)
@@ -78,20 +78,17 @@ export const ProductDetail = ({
 
   const handleRequest = useCallback(
     async (accept: boolean, message: Message) => {
-      const fetchedData = await fetchJson<{ ok: boolean }>(
-        `/api/borrow-response`,
-        {
-          method: 'POST',
-          body: JSON.stringify({
-            messageId: message.date,
-            productId: message.productId,
-            accept,
-            requesterId: message.requesterId,
-            space: message.space,
-            date: message.borrowDate,
-          }),
-        }
-      )
+      const fetchedData = await fetchJson(`/api/borrow-response`, {
+        method: 'POST',
+        body: JSON.stringify({
+          messageId: message.date,
+          productId: message.productId,
+          accept,
+          requesterId: message.requesterId,
+          space: message.space,
+          date: message.borrowDate,
+        }),
+      })
       if (fetchedData.ok) {
         setProductMessage((state) => {
           if (!state) {

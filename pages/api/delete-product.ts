@@ -4,13 +4,15 @@ import { withIronSessionApiRoute } from 'iron-session/next'
 import { sessionOptions } from '../../config/session-config'
 import { deleteFileInStorage } from '../../lib/scripts/delete-file-in-storage'
 import { getProduct } from '../../lib/services/get-product'
+import { sendError } from '../../lib/helpers/send-error'
+import { sendResponse } from '../../lib/helpers/send-response'
 
 async function deleteProduct(req: NextApiRequest, res: NextApiResponse) {
   try {
     const { space, productId } = req.query
     const { user } = req.session
     if (!user) {
-      res.redirect('/auth/login')
+      sendError(res)
       return
     }
 
@@ -23,10 +25,10 @@ async function deleteProduct(req: NextApiRequest, res: NextApiResponse) {
 
     await deleteDoc(productRef)
 
-    res.status(200).json({ isOk: true, productId })
+    sendResponse(res, { productId })
   } catch (err) {
     console.error(err)
-    res.status(500).json({ isOk: false })
+    sendError(res)
   }
 }
 

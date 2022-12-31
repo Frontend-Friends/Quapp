@@ -30,7 +30,6 @@ export const ChatForm = ({
       onSubmit={async (values, { resetForm, setSubmitting, setValues }) => {
         setIsLoading(true)
         const result = await sendFormData<{
-          isOk: boolean
           history: ChatMessage[]
         }>(`/api/send-chat?space=${query.space}`, {
           productId,
@@ -38,7 +37,7 @@ export const ChatForm = ({
           fromOwner: isOwner,
           ...values,
         })
-        if (result.isOk && setChat) {
+        if (result.ok && setChat) {
           setValues({ message: '' })
           setSubmitting(false)
           resetForm({ values: { message: '' } })

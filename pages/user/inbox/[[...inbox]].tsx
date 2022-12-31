@@ -33,7 +33,6 @@ export default function Inbox({
   useAsync(async () => {
     const { messages: fetchedMessages, ok } = await fetchJson<{
       messages: Message[]
-      ok: boolean
     }>('/api/messages')
     if (ok) {
       setMutateMessages(fetchedMessages)

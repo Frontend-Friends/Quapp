@@ -3,12 +3,8 @@ import { useRouter } from 'next/router'
 import { useRef, useState } from 'react'
 import { useAsync } from 'react-use'
 import { fetchJson } from '../lib/helpers/fetch-json'
+import { fetchProductApi } from '../lib/helpers/fetch-product-api'
 
-export const fetchProduct = async (productId: string, space: string) => {
-  return fetchJson<ProductType>(
-    `/api/product?productId=${productId}&space=${space}`
-  )
-}
 export const deleteProduct = async (productId: string, space: string) => {
   return fetchJson<ProductType>(
     `/api/delete-product?productId=${productId}&space=${space}`,
@@ -30,9 +26,9 @@ export const useFetchProductDetail = (
       !isInitial.current &&
       currentQuery.current !== productQuery[0]
     ) {
-      const fetchedProduct = await fetchProduct(
-        productQuery[0],
-        space as string
+      const fetchedProduct = await fetchProductApi(
+        space as string,
+        productQuery[0]
       )
       setProduct(fetchedProduct)
     }
