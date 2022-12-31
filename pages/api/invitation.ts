@@ -23,8 +23,6 @@ async function invitation(req: NextApiRequest, res: NextApiResponse) {
     const addInvitation = await addDoc(invitationRef, {
       ...fields,
     })
-
-    //get id of the invitation
     const invitationId = addInvitation.id
 
     const spaceRef = doc(db, 'spaces', fields?.space)
@@ -41,10 +39,10 @@ async function invitation(req: NextApiRequest, res: NextApiResponse) {
        ${user?.firstName} invited you to join the space ${space?.name}. Join this space:  ${process.env.URL}/auth/login?invitation=${invitationId}\n\n
       Best regards,\n\nYour QUAPP team`,
     }
-    const sendMail = await sgMail.send(msg)
+    await sgMail.send(msg)
 
-    await Promise.all([sendMail, addInvitation])
-    sendResponse(res, { message: 'Email sent successfully' })
+    // await Promise.all([sendMail, addInvitation])
+    sendResponse(res, { message: 'Invitation email sent successfully' })
   } catch (err) {
     console.error(err)
     sendError(res, { invitationIsOk: false, message: 'An error occurred' })

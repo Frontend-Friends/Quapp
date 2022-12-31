@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import React, { FC, useCallback, useEffect, useState } from 'react'
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react'
 import LoadingButton from '@mui/lab/LoadingButton'
 
 import { Box, Link, Snackbar, TextField, Typography } from '@mui/material'
@@ -29,17 +29,24 @@ const Login: FC = () => {
 
   const invitation = router.query.invitation as string
 
+  const calledOnce = useRef(false)
+
   useEffect(() => {
+    if (calledOnce.current) {
+      return
+    }
     if (invitation)
       fetchJson<{
         message: string
         ok: boolean
         space: string
         isSignedUp?: boolean
+        invitationId?: string
       }>(`/api/get-invitation?invitation=${invitation}`).then((r) => {
         if (r.ok) {
           setMessage(r.message)
           setOpen(true)
+          fetchJson(`/api/delete-invitation?invitation=${invitation}`).then()
           setTimeout(() => {
             router.push(`/community/${r.space}/products`)
           }, 2000)
@@ -52,6 +59,8 @@ const Login: FC = () => {
           }, 2000)
         }
       })
+    // make sure the useEffect is called only once
+    calledOnce.current = true
   }, [router, invitation])
 
   const handleLogin = useCallback(

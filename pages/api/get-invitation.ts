@@ -39,8 +39,9 @@ async function getInvitation(req: NextApiRequest, res: NextApiResponse) {
           })
         )
         .then(async (userData) => {
+          const user = userData[0]
           //invited user already exists in db
-          if (userData[0]?.email) {
+          if (user?.email) {
             const userRef = doc(db, 'user', userId)
             const spaceRef = doc(db, 'spaces', invitedPerson?.space)
 
@@ -69,6 +70,7 @@ async function getInvitation(req: NextApiRequest, res: NextApiResponse) {
                 ok: true,
                 space: invitedPerson?.space,
                 isSignedUp: true,
+                invitationId: r.id,
               })
             } else {
               sendResponse(res, { message: 'Invitation failed', ok: false })
