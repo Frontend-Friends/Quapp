@@ -27,7 +27,6 @@ async function getInvitation(req: NextApiRequest, res: NextApiResponse) {
       const invitedPerson = r.data()
       const email = invitedPerson?.email
       // check if the invited person is already a user by searching email in db
-
       const userCollection = collection(db, 'user')
       const q = query(userCollection, where('email', '==', email))
       let userId = ''
@@ -40,14 +39,16 @@ async function getInvitation(req: NextApiRequest, res: NextApiResponse) {
           })
         )
         .then(async (userData) => {
-          //user exists
+          //invited user already exists in db
           if (userData[0]?.email) {
             const userRef = doc(db, 'user', userId)
             const spaceRef = doc(db, 'spaces', invitedPerson?.space)
 
             // add space-id to user
             const addSpaceToUser = await updateDoc(userRef, {
-              spaces: arrayUnion(userId ?? 'no user provided in invitation'),
+              spaces: arrayUnion(
+                invitedPerson?.space ?? 'no user provided in invitation'
+              ),
             })
               .then(() => true)
               .catch(() => false)
@@ -73,6 +74,7 @@ async function getInvitation(req: NextApiRequest, res: NextApiResponse) {
               sendResponse(res, { message: 'Invitation failed', ok: false })
             }
           } else {
+            //todo how to handle not-signed-up users (how to assign spaces to them)?
             sendResponse(res, {
               message:
                 'You are not yet signed up. You are being redirected to signup ...',
@@ -87,7 +89,7 @@ async function getInvitation(req: NextApiRequest, res: NextApiResponse) {
     console.error(err)
     sendError(res, {
       ok: false,
-      message: 'Invitation not found. You are being redirected ...',
+      message: 'Invitation not found. You are being redirected to signup..',
     })
   }
 }
