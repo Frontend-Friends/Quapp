@@ -44,7 +44,10 @@ export default async function signupRoute(
     )
     await sendEmailVerification(credentials.user, actionCodeSettings).catch(
       () => {
-        res.send({ session: false, message: 'SIGNUP_something_went_wrong' })
+        sendError(res, {
+          session: false,
+          message: 'SIGNUP_something_went_wrong',
+        })
       }
     )
     const [userRef] = getUserRef(credentials.user.uid)

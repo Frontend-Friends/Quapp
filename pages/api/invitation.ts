@@ -4,6 +4,8 @@ import { UserFormData } from '../../components/products/types'
 import sgMail from '@sendgrid/mail'
 import { addDoc, collection } from 'firebase/firestore'
 import { db } from '../../config/firebase'
+import { sendResponse } from '../../lib/helpers/send-response'
+import { sendError } from '../../lib/helpers/send-error'
 
 export const config = {
   api: {
@@ -33,13 +35,10 @@ async function invitation(req: NextApiRequest, res: NextApiResponse) {
       ...fields,
     })
     await Promise.all([sendMail, addInvitation])
-    res.status(200).send({ message: 'Email sent successfully' })
+    sendResponse(res, { message: 'Email sent successfully' })
   } catch (err) {
     console.error(err)
-    res.status(500).json({
-      invitationIsOk: false,
-      message: 'An error occurred',
-    })
+    sendError(res, { invitationIsOk: false, message: 'An error occurred' })
   }
 }
 

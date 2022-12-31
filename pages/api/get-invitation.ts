@@ -10,6 +10,8 @@ import {
   where,
 } from 'firebase/firestore'
 import { db } from '../../config/firebase'
+import { sendResponse } from '../../lib/helpers/send-response'
+import { sendError } from '../../lib/helpers/send-error'
 
 export const config = {
   api: {
@@ -61,23 +63,20 @@ async function getInvitation(req: NextApiRequest, res: NextApiResponse) {
               addUserToSpace,
             ])
             if (resolvedPromise) {
-              res.status(200).send({
+              sendResponse(res, {
                 message: 'Your profile is now linked to the space',
-                isOk: true,
+                ok: true,
                 space: invitedPerson?.space,
                 isSignedUp: true,
               })
             } else {
-              res.status(200).send({
-                message: 'Invitation failed',
-                isOk: false,
-              })
+              sendResponse(res, { message: 'Invitation failed', ok: false })
             }
           } else {
-            res.status(200).send({
+            sendResponse(res, {
               message:
                 'You are not yet signed up. You are being redirected to signup ...',
-              isOk: false,
+              ok: false,
               isSignedUp: false,
             })
             return false
@@ -86,8 +85,8 @@ async function getInvitation(req: NextApiRequest, res: NextApiResponse) {
     })
   } catch (err) {
     console.error(err)
-    res.status(500).json({
-      isOk: false,
+    sendError(res, {
+      ok: false,
       message: 'Invitation not found. You are being redirected ...',
     })
   }

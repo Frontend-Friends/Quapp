@@ -33,11 +33,11 @@ const Login: FC = () => {
     if (invitation)
       fetchJson<{
         message: string
-        isOk: boolean
+        ok: boolean
         space: string
         isSignedUp?: boolean
       }>(`/api/get-invitation?invitation=${invitation}`).then((r) => {
-        if (r.isOk) {
+        if (r.ok) {
           setMessage(r.message)
           setOpen(true)
           setTimeout(() => {
