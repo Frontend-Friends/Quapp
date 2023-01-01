@@ -28,7 +28,7 @@ const Signup: FC = () => {
           ok: boolean
           invitationId: string
         }>(`/api/get-invitation-id?email=${values.email}`)
-        if (invitationRes.ok) {
+        if (invitationRes?.invitationId) {
           const invitationId = invitationRes.invitationId
           await fetchJson(`/api/get-invitation?invitation=${invitationId}`)
           await fetchJson(
