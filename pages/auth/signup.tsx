@@ -9,6 +9,7 @@ import { LoadingButton } from '@mui/lab'
 import { useRouter } from 'next/router'
 import { sendFormData } from '../../lib/helpers/send-form-data'
 import { twFormGroup } from '../../constants/constants-css-classes'
+import { fetchJson } from '../../lib/helpers/fetch-json'
 
 const Signup: FC = () => {
   const [isLoading, setIsLoading] = useState(false)
@@ -23,6 +24,15 @@ const Signup: FC = () => {
 
       if (fetchedSignup.ok) {
         setIsLoading(false)
+        const invitationRes = await fetchJson<{
+          ok: boolean
+          invitationId: string
+        }>(`/api/get-invitation-id?email=${values.email}`)
+        if (invitationRes.ok) {
+          await fetchJson(
+            `/api/get-invitation?invitation=${invitationRes.invitationId}`
+          )
+        }
         await router.push({
           pathname: '/auth/signup-success',
           query: { name: values.firstName },
