@@ -39,7 +39,7 @@ async function getInvitation(req: NextApiRequest, res: NextApiResponse) {
           })
         )
         .then(async (userData) => {
-          const user = userData[0]
+          const user = userData?.[0]
           //invited user already exists in db
           if (user?.email) {
             const userRef = doc(db, 'user', userId)
@@ -75,6 +75,7 @@ async function getInvitation(req: NextApiRequest, res: NextApiResponse) {
             } else {
               sendResponse(res, { message: 'Invitation failed', ok: false })
             }
+            sendResponse(res, { message: 'unknown case' })
           } else {
             //todo how to handle not-signed-up users (how to assign spaces to them)?
             sendResponse(res, {
