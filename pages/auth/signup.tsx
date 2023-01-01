@@ -29,9 +29,11 @@ const Signup: FC = () => {
           invitationId: string
         }>(`/api/get-invitation-id?email=${values.email}`)
         if (invitationRes.ok) {
+          const invitationId = invitationRes.invitationId
+          await fetchJson(`/api/get-invitation?invitation=${invitationId}`)
           await fetchJson(
-            `/api/get-invitation?invitation=${invitationRes.invitationId}`
-          )
+            `/api/delete-invitation?invitation=${invitationId}`
+          ).then()
         }
         await router.push({
           pathname: '/auth/signup-success',
