@@ -68,7 +68,6 @@ const Login: FC = () => {
       setIsLoading(true)
 
       try {
-        console.log(values)
         const fetchedLogin = await fetchJson('/api/login', {
           method: 'POST',
           body: JSON.stringify({ ...values }),
