@@ -77,7 +77,6 @@ async function getInvitation(req: NextApiRequest, res: NextApiResponse) {
             }
             sendResponse(res, { message: 'unknown case' })
           } else {
-            //todo how to handle not-signed-up users (how to assign spaces to them)?
             sendResponse(res, {
               message:
                 'You are not yet signed up. You are being redirected to signup ...',
