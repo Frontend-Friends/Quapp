@@ -15,7 +15,6 @@ const SignupSuccess: React.FC = () => {
       <Typography variant="h1" sx={{ my: 3 }}>
         {t('GLOBAL_hello')} {name}!
       </Typography>
-      {/*todo translate*/}
       <p>{t('SIGNUP_success_page_text')}</p>
       <Link href="login">
         <Button color="primary" variant="contained">
