@@ -36,8 +36,9 @@ async function invitation(req: NextApiRequest, res: NextApiResponse) {
       from: process.env.EMAIL ?? '',
       subject: 'You are invited to join a space',
       text: `Hi ${fields.firstName},\n\n
-       ${user?.firstName} invited you to join the space ${space?.name}. Join this space:  ${process.env.URL}/auth/login?invitation=${invitationId}\n\n
+       ${user?.firstName} invited you to join the space ${space?.name}. Join this space to get access:  ${process.env.URL}/auth/login?invitation=${invitationId}\n\n
       Best regards,\n\nYour QUAPP team`,
+      html: `Hello ${fields.firstName} <br> ${user?.firstName} invited you to join the space ${space?.name}. <a href="Join this space to get access">  ${process.env.URL}/auth/login?invitation=${invitationId}</a> <br> Best regards, <br> Your QUAPP team`,
     }
     await sgMail.send(msg)
 
