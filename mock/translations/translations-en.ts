@@ -110,5 +110,7 @@ export const translationsEn: Record<string, string> = {
   FOOTER_imprint: 'Imprint',
   FOOTER_privacy: 'Privacy policy',
 
+  RESPONSE_SERVER_ERROR: 'An error occurred while sending the request',
+
   HTML_TITLE_general: 'Quapp - The app that connects neighbors',
 }
