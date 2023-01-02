@@ -81,7 +81,7 @@ const Login: FC = () => {
         }
       } catch {
         setOpen(true)
-        setMessage('LOGIN_server_error')
+        setMessage('RESPONSE_SERVER_ERROR')
         setIsLoading(false)
       }
     },
