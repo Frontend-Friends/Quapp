@@ -101,7 +101,7 @@ export const getServerSideProps = withIronSessionSsr<{
       count,
       productDetail: productDetail || null,
       categories: spaceData?.categories || [],
-      spaceName: fetchedSpace.name,
+      spaceName: fetchedSpace?.name,
     },
   }
 }, sessionOptions)
