@@ -26,7 +26,6 @@ const Footer: FC = () => {
           </li>
         </ul>
         <Link
-          underline="hover"
           href="/"
           className="block flex-[0_0_100px] text-white"
           title={t('GLOBAL_back_to_home')}

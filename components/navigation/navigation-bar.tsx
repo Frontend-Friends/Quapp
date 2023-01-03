@@ -1,11 +1,12 @@
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded'
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded'
-import HomeRoundedIcon from '@mui/icons-material/HomeRounded'
+import GridViewRoundedIcon from '@mui/icons-material/GridViewRounded'
 import React, { FC } from 'react'
 import { Button } from '@mui/material'
 import { useRouter } from 'next/router'
 import { LogoSVG } from '../svg/quapp_logo'
 import { UserIcon } from '../user/user-icon'
+import { Link } from '@mui/material'
 import { useTranslation } from '../../hooks/use-translation'
 
 export const twNavbarButton =
@@ -31,11 +32,14 @@ const NavigationBar: FC = () => {
       "
     >
       <div className="min-w-4 mx-auto flex max-w-7xl items-center justify-between md:justify-end md:gap-6">
-        <LogoSVG
-          aria-labelledby="logoTitle"
+        <Link
           className="hidden md:mr-auto md:inline-block md:max-h-12"
-          title={t('SVG_logo')}
-        />
+          underline="hover"
+          href="/"
+          title={t('GLOBAL_back_to_home')}
+        >
+          <LogoSVG aria-labelledby="logoTitle" title={t('SVG_logo')} />
+        </Link>
         <Button
           className={`${twNavbarButton} md:hidden`}
           onClick={() => router.back()}
@@ -49,7 +53,7 @@ const NavigationBar: FC = () => {
           className={twNavbarButton}
           onClick={() => router.push('/community/dashboard')}
         >
-          <HomeRoundedIcon fontSize="large" />
+          <GridViewRoundedIcon fontSize="large" />
         </Button>
         <UserIcon />
       </div>

@@ -123,7 +123,7 @@ export const ProductDetail = ({
       disablePortal
     >
       {product ? (
-        <CondensedContainer className="relative m-0 max-h-full min-h-screen overflow-auto bg-white md:min-h-max">
+        <CondensedContainer className="relative m-0 max-h-full min-h-screen overflow-auto bg-white shadow-2xl md:min-h-max">
           <Box className="sticky top-0 z-10 flex h-0 w-full justify-end">
             <Link href={backUrl} passHref shallow>
               <IconButton
@@ -135,14 +135,14 @@ export const ProductDetail = ({
             </Link>
           </Box>
           <Header title={product.title} titleSpacingClasses="mt-1 mb-1 pr-10" />
-          <Box className="flex items-center gap-2 py-1">
+          <Box className="mb-3 flex items-center gap-2 py-1">
             <Avatar alt={product.owner.userName} src="" className="h-8 w-8">
               {product.owner.userName?.slice(0, 2)}
             </Avatar>
             <p className="m-0">{product.owner.userName}</p>
           </Box>
           {product.imgSrc && (
-            <Box className="relative -mx-2 mt-3 mb-5 pt-[50%]">
+            <Box className="relative -mx-2 mb-5 pt-[50%] md:-mx-8">
               <Image
                 src={product.imgSrc}
                 layout="fill"
@@ -155,9 +155,20 @@ export const ProductDetail = ({
             {t('PRODUCT_description')}
           </Typography>
           <Typography variant="body1">{product.text}</Typography>
-          <Divider className="my-6 -mx-2" />
+          <Divider className="my-6 -mx-2 md:-mx-8" />
           {!!productMessage?.length && (
-            <table className="w-full">
+            <table cellPadding="0" cellSpacing="0" className="mb-4 w-full">
+              <thead>
+                <tr>
+                  <th className="text-left font-medium">
+                    {t('PRODUCT_request_from')}
+                  </th>
+                  <th className="text-left font-medium">{t('GLOBAL_date')}</th>
+                  <th className="text-right font-medium">
+                    {t('GLOBAL_status')}
+                  </th>
+                </tr>
+              </thead>
               <tbody>
                 {productMessage.map((message, index) => (
                   <ProductMessage
@@ -206,7 +217,7 @@ export const ProductDetail = ({
                   product={product}
                 />
               )}
-              <Divider className="my-6 -mx-2" />
+              <Divider className="my-6 -mx-2 md:-mx-8" />
             </Box>
           )}
           {userId && (

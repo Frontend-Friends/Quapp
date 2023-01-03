@@ -53,7 +53,7 @@ export const ProductForm = ({
     >
       {(props) => (
         <form onSubmit={props.handleSubmit}>
-          <Box className="relative grid pt-10 pb-4">
+          <Box className="relative grid py-4">
             {product?.imgSrc && (
               <Box className="relative mb-8 w-full overflow-hidden pt-[56%]">
                 <Image
@@ -103,6 +103,7 @@ export const ProductForm = ({
                 labelId="category-select"
                 value={props.values.category}
                 name="category"
+                label={t('CREATE_PRODUCT_category_label')}
                 inputProps={{ className: 'flex items-center' }}
                 onChange={(event) => {
                   props.setFieldValue(
@@ -139,7 +140,7 @@ export const ProductForm = ({
             )}
             <FileUpload props={props} />
             {!!product && (
-              <FormGroup>
+              <FormGroup className="mt-4">
                 <FormControlLabel
                   control={
                     <Switch
