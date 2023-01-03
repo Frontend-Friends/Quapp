@@ -1,9 +1,6 @@
 import { SVGProps } from 'react'
 
-export const LogoSVG = ({
-  title,
-  ...props
-}: SVGProps<SVGSVGElement> & { title: string }) => {
+export const LogoSVG = (props: SVGProps<SVGSVGElement>) => {
   return (
     <svg
       width="160"
@@ -14,7 +11,6 @@ export const LogoSVG = ({
       role="img"
       {...props}
     >
-      <title id="logoTitle">{title}</title>
       <g filter="url(#filter0_d_672_120)">
         <path
           d="M3.99998 20.3488C3.99998 9.03552 12.9855 3.57393 22.6736 3.57393C32.3617 3.57393 41.3473 9.03552 41.3473 20.3488C41.3473 31.6621 32.3617 37.1237 22.6736 37.1237C12.9855 37.1237 3.99998 31.6621 3.99998 20.3488ZM28.8457 20.3488C28.8457 11.1434 27.283 5.13438 22.6736 5.13438C18.0643 5.13438 16.5016 11.1434 16.5016 20.3488C16.5016 29.5542 18.0643 35.4846 22.6736 35.4846C27.283 35.4846 28.8457 29.5542 28.8457 20.3488Z"

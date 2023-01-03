@@ -38,7 +38,7 @@ const NavigationBar: FC = () => {
           href="/"
           title={t('GLOBAL_back_to_home')}
         >
-          <LogoSVG aria-labelledby="logoTitle" title={t('SVG_logo')} />
+          <LogoSVG aria-label={t('SVG_logo')} />
         </Link>
         <Button
           className={`${twNavbarButton} md:hidden`}

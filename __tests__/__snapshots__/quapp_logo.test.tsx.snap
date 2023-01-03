@@ -6,15 +6,11 @@ exports[`renders Quapp Logo unchanged 1`] = `
     fill="none"
     height="48"
     role="img"
+    title="Quapp Logo"
     viewBox="0 0 196 66"
     width="160"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <title
-      id="logoTitle"
-    >
-      Quapp Logo
-    </title>
     <g
       filter="url(#filter0_d_672_120)"
     >

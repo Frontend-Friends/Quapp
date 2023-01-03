@@ -31,7 +31,7 @@ const Footer: FC = () => {
           title={t('GLOBAL_back_to_home')}
         >
           <LogoSVG
-            aria-labelledby="logoTitle"
+            aria-label={t('SVG_logo')}
             className="mx-auto block w-full"
             title={t('SVG_logo')}
           />
