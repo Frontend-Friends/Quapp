@@ -34,6 +34,7 @@ const Footer: FC = () => {
           <LogoSVG
             aria-labelledby="logoTitle"
             className="mx-auto block w-full"
+            title={t('SVG_logo')}
           />
         </Link>
       </div>

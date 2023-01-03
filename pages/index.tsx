@@ -28,6 +28,7 @@ const Home: FC<{ isLoggedIn: boolean }> = () => {
           <LogoSVG
             aria-labelledby="logoTitle"
             className="mx-auto block w-1/2"
+            title={t('SVG_logo')}
           />
           <h1 className="text-center text-lg font-medium">
             {t('HOME_subtitle')}

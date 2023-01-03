@@ -6,11 +6,13 @@ import { Button } from '@mui/material'
 import { useRouter } from 'next/router'
 import { LogoSVG } from '../svg/quapp_logo'
 import { UserIcon } from '../user/user-icon'
+import { useTranslation } from '../../hooks/use-translation'
 
 export const twNavbarButton =
   'aspect-square border-0 rounded-full bg-white text-violetRed-600 hover:bg-white md:min-w-[32px]'
 const NavigationBar: FC = () => {
   const router = useRouter()
+  const t = useTranslation()
 
   return (
     <nav
@@ -32,6 +34,7 @@ const NavigationBar: FC = () => {
         <LogoSVG
           aria-labelledby="logoTitle"
           className="hidden md:mr-auto md:inline-block md:max-h-12"
+          title={t('SVG_logo')}
         />
         <Button
           className={`${twNavbarButton} md:hidden`}
