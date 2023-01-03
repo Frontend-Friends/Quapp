@@ -25,10 +25,7 @@ const Home: FC<{ isLoggedIn: boolean }> = () => {
     <main className="mx-auto max-w-[680px] text-blueishGray-600">
       <section className="relative bg-gradient-to-br from-violetRed-600 via-violetRed-600 to-violetRed-900 pb-10 text-white">
         <div className="p-3">
-          <LogoSVG
-            aria-labelledby="logoTitle"
-            className="mx-auto block w-1/2"
-          />
+          <LogoSVG aria-label={t('SVG_logo')} className="mx-auto block w-1/2" />
           <h1 className="text-center text-lg font-medium">
             {t('HOME_subtitle')}
           </h1>
