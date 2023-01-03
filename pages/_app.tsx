@@ -48,6 +48,15 @@ export default function App({
         />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.quapp.org" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta property="twitter:domain" content="quapp.org" />
+        <meta property="twitter:url" content="https://www.quapp.org" />
+        <meta name="twitter:title" content={t('HTML_TITLE_general')} />
+        <meta name="twitter:description" content={t('HTML_META_description')} />
+        <meta
+          name="twitter:image"
+          content="https://www.quapp.org/og_screenshot.jpg"
+        />
 
         <title>{t('HTML_TITLE_general')}</title>
       </Head>
