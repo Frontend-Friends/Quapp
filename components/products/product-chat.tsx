@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material'
+import { Box, Divider, Typography } from '@mui/material'
 import dayjs from 'dayjs'
 import React from 'react'
 import { ChatMessage } from './types'
@@ -36,6 +36,13 @@ export const ProductChat = ({
 }) => {
   return (
     <>
+      <Typography
+        variant="body1"
+        className="mt-3 mb-1 text-center text-slate-600"
+      >
+        Nachrichtenverlauf
+      </Typography>
+      <Divider className="-mx-2 mt-2 mb-4 md:-mx-8" />
       {history.map((entry, index) => {
         const hasDate = mayHasDate(entry, history, index)
         const alignLeft = isOwner ? entry.fromOwner : !entry.fromOwner
@@ -55,8 +62,8 @@ export const ProductChat = ({
               className={clsx(
                 'relative max-w-[80%]',
                 alignLeft
-                  ? 'ml-auto mr-0 rounded-tl-lg rounded-tr-lg rounded-bl-lg bg-blueishGray-600 text-right text-white'
-                  : 'auto ml-0 rounded-tl-lg rounded-tr-lg rounded-br-lg bg-slate-200 text-left'
+                  ? 'ml-auto mr-0 rounded-tl-lg rounded-tr-lg rounded-bl-lg bg-blueishGray-600 pl-2 text-right text-white'
+                  : 'mr-auto ml-0 rounded-tl-lg rounded-tr-lg rounded-br-lg bg-slate-200 pr-2 text-left'
               )}
             >
               <Box className="p-3">
