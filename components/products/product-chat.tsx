@@ -3,6 +3,7 @@ import dayjs from 'dayjs'
 import React from 'react'
 import { ChatMessage } from './types'
 import clsx from 'clsx'
+import { useTranslation } from '../../hooks/use-translation'
 
 const mayHasDate = (
   entry: ChatMessage,
@@ -34,13 +35,15 @@ export const ProductChat = ({
   userName: string | null
   isOwner: boolean
 }) => {
+  const t = useTranslation()
+
   return (
     <>
       <Typography
         variant="body1"
         className="mt-3 mb-1 text-center text-slate-600"
       >
-        Nachrichtenverlauf
+        {t('CHAT_message_history')}
       </Typography>
       <Divider className="-mx-2 mt-2 mb-4 md:-mx-8" />
       {history.map((entry, index) => {
