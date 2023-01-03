@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import { useTranslation } from '../../hooks/use-translation'
-import { Box, IconButton, Modal, Typography } from '@mui/material'
+import { Box, IconButton, Modal } from '@mui/material'
 import { CondensedContainer } from '../condensed-container'
 import { ProductType } from './types'
 import { sendFormData } from '../../lib/helpers/send-form-data'
 import { useRouter } from 'next/router'
 import CloseIcon from '@mui/icons-material/Close'
 import { ProductForm } from './product-form'
+import { Header } from '../header'
 
 export const CreateEditProduct = ({
   showModal,
@@ -33,13 +34,13 @@ export const CreateEditProduct = ({
       onClose={() => {
         onClose(false)
       }}
-      className="flex items-center justify-center sm:p-10"
+      className="flex items-center justify-center md:p-10"
     >
-      <CondensedContainer className="relative m-0 max-h-full overflow-auto bg-white p-8 sm:rounded-2xl">
+      <CondensedContainer className="relative m-0 max-h-full min-h-screen overflow-auto bg-white shadow-2xl md:min-h-max">
         <Box className="sticky top-0 z-10 flex h-0 w-full justify-end">
           <IconButton
             title={t('BUTTON_close')}
-            className="-mt-6 -mr-6 h-12 w-12 border border-gray-100 bg-white"
+            className="z-10 -mt-2 -mr-2 h-12 w-12 border border-slate-200 bg-white shadow hover:bg-slate-200"
             onClick={() => {
               onClose(false)
             }}
@@ -47,11 +48,14 @@ export const CreateEditProduct = ({
             <CloseIcon />
           </IconButton>
         </Box>
-        <Typography variant="h2">
-          {product
-            ? t('EDIT_PRODUCT_page_title')
-            : t('CREATE_PRODUCT_page_title')}
-        </Typography>
+        <Header
+          title={
+            product
+              ? t('EDIT_PRODUCT_page_title')
+              : t('CREATE_PRODUCT_page_title')
+          }
+          titleSpacingClasses="mt-1 mb-1 pr-10"
+        />
         <ProductForm
           categories={categories}
           product={product}

@@ -63,6 +63,7 @@ export const ChatForm = ({
             color="primary"
             loading={isLoading}
             disabled={isLoading || !values.message}
+            className="ml-auto"
           >
             {t('CHAT_button_send')}
           </LoadingButton>
