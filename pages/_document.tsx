@@ -53,10 +53,6 @@ class MyDocument extends Document<{ emotionStyleTags: ReactNode[] }> {
           <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#d80062" />
           <meta name="msapplication-TileColor" content="#d80062" />
           <meta name="theme-color" content="#ffffff" />
-          <meta
-            name="description"
-            content="Quapp hilft dir Kontakt mit deiner Nachbarschaft herzustellen und sich gegenseitig mit Hilfe oder Leihgaben zu unterstützen."
-          />
           {this.props.emotionStyleTags}
         </Head>
         <body>

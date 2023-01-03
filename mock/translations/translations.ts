@@ -125,4 +125,8 @@ export const translations: Record<string, string> = {
   SETTINGS_change_settings: 'Einstellungen ändern',
 
   NOTIFICATION_unread_message: 'Ungelesene Nachricht',
+
+  HTML_TITLE_general: 'Quapp - Die App die Nachbarn verbindet',
+  HTML_META_description:
+    'Quapp hilft dir Kontakt mit deiner Nachbarschaft herzustellen und sich gegenseitig mit Hilfe oder Leihgaben zu unterstützen.',
 }

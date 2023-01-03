@@ -39,6 +39,16 @@ export default function App({
     <CacheProvider value={emotionCache}>
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
+        <meta property="og:title" content={t('HTML_TITLE_general')} />
+        <meta property="og:description" content={t('HTML_META_description')} />
+        <meta name="description" content={t('HTML_META_description')} />
+        <meta
+          property="og:image"
+          content="https://www.quapp.org/og_screenshot.jpg"
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.quapp.org" />
+
         <title>{t('HTML_TITLE_general')}</title>
       </Head>
       <ThemeProvider theme={theme}>
