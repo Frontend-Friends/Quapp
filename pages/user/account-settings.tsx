@@ -10,8 +10,7 @@ import { fetchJson } from '../../lib/helpers/fetch-json'
 import { withIronSessionSsr } from 'iron-session/next'
 import { ironOptions } from '../../lib/config'
 import { sendFormData } from '../../lib/helpers/send-form-data'
-
-const twFormGroup = 'mb-4'
+import { twFormGroup } from '../../lib/constants/css-classes'
 
 const AccountSettings: React.FC<{ isLoggedIn: boolean; user: User }> = ({
   ...props
