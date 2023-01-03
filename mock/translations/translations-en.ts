@@ -35,6 +35,11 @@ export const translationsEn: Record<string, string> = {
   LOGIN_has_no_account: 'You don`t have an account yet?',
   LOGIN_has_account: 'You already have an account?',
 
+  RESET_reset_password: 'Reset password',
+  RESET_title: 'Reset password',
+  RESET_text: 'Enter your email address to reset your password.',
+  RESET_submit_button: 'Reset password',
+
   LOGOUT_logout: 'Log out',
 
   SIGNUP_title: 'Registration',
