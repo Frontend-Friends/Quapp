@@ -14,7 +14,9 @@ export const translations: Record<string, string> = {
   GLOBAL_hello: 'Hallo',
   GLOBAL_go_to_account_settings: 'Account Einstellungen',
   GLOBAL_settings: 'Einstellungen',
+  GLOBAL_date: 'Datum',
   GLOBAL_back_to_home: 'Zurück zur Startseite',
+  GLOBAL_status: 'Status',
 
   RESET_reset_password: 'Password zurücksetzen',
   RESET_title: 'Password zurücksetzen',
@@ -67,6 +69,7 @@ export const translations: Record<string, string> = {
   PRODUCT_delete: 'löschen',
   PRODUCT_updated_info: 'Der Eintrag wurde gespeichert:',
   PRODUCT_settings: 'Produkteinstellungen',
+  PRODUCT_request_from: 'Anfrage von',
 
   DELETE_cancel_button: 'abbrechen',
   DELETE_confirm_button: 'löschen',
@@ -113,6 +116,7 @@ export const translations: Record<string, string> = {
   BUTTON_remove_upload: 'Hochgeladenes Bild entfernen',
 
   CHAT_title: 'Nachrichten',
+  CHAT_no_messages: 'Derzeit sind keine Chat-Nachrichten vorhanden.',
 
   SPACES_title: 'Deine Spaces',
   SPACES_no_entries: 'Es gibt noch keine Spaces.',
@@ -123,6 +127,7 @@ export const translations: Record<string, string> = {
   CHAT_button_send: 'Nachricht senden',
   CHAT_button_loading: 'wird gesendet',
   CHAT_message: 'Nachricht',
+  CHAT_message_history: 'Nachrichtenverlauf',
   CHAT_message_error: 'Die Nachricht darf nicht leer sein',
   CHAT_message_required: 'Das Feld ist pflicht',
 
@@ -130,4 +135,8 @@ export const translations: Record<string, string> = {
   SETTINGS_change_settings: 'Einstellungen ändern',
 
   NOTIFICATION_unread_message: 'Ungelesene Nachricht',
+
+  HTML_TITLE_general: 'Quapp - Die App die Nachbarn verbindet',
+  HTML_META_description:
+    'Quapp hilft dir Kontakt mit deiner Nachbarschaft herzustellen und sich gegenseitig mit Hilfe oder Leihgaben zu unterstützen.',
 }

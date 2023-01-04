@@ -4,9 +4,9 @@ import { Box, Snackbar, TextField } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 import { Formik } from 'formik'
 import { useTranslation } from '../../hooks/use-translation'
-import { twFormGroup } from '../../constants/constants-css-classes'
 import { sendFormData } from '../../lib/helpers/send-form-data'
 import { addSpaceFormSchema } from '../../lib/schema/add-space-form-schema'
+import { twFormGroup } from '../../lib/constants/css-classes'
 
 interface Props {
   setOpen: (isOpen: boolean) => void

@@ -15,12 +15,14 @@ import { useRouter } from 'next/router'
 import { useMemo } from 'react'
 import clsx from 'clsx'
 
+const domain = 'quapp.org'
+const protocolSubdomain = 'https://www.'
+
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
 
-interface MyAppProps extends AppProps<{ isLoggedIn: boolean }> {
+interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache
-  pageProps: { isLoggedIn: boolean }
 }
 
 export default function App({
@@ -32,13 +34,32 @@ export default function App({
   const { asPath } = useRouter()
 
   const showNavbar = useMemo(() => {
-    return asPath.startsWith('/community') || asPath.startsWith('/user')
+    return asPath != '/'
   }, [asPath])
 
   return (
     <CacheProvider value={emotionCache}>
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
+        <meta property="og:title" content={t('HTML_TITLE_general')} />
+        <meta property="og:description" content={t('HTML_META_description')} />
+        <meta name="description" content={t('HTML_META_description')} />
+        <meta
+          property="og:image"
+          content={`${protocolSubdomain + domain}/og_screenshot.jpg`}
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={protocolSubdomain + domain} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta property="twitter:domain" content={domain} />
+        <meta property="twitter:url" content={protocolSubdomain + domain} />
+        <meta name="twitter:title" content={t('HTML_TITLE_general')} />
+        <meta name="twitter:description" content={t('HTML_META_description')} />
+        <meta
+          name="twitter:image"
+          content={`${protocolSubdomain + domain}/og_screenshot.jpg`}
+        />
+
         <title>{t('HTML_TITLE_general')}</title>
       </Head>
       <ThemeProvider theme={theme}>
