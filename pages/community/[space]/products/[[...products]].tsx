@@ -48,6 +48,7 @@ export const maxProductsPerPage = 20
 
 export const getServerSideProps = withIronSessionSsr<{
   userId?: User['id']
+  userName?: User['userName']
   products?: ProductType[]
   productDetail?: ProductType | null
   count?: number
@@ -91,6 +92,7 @@ export const getServerSideProps = withIronSessionSsr<{
   return {
     props: {
       userId: user.id || null,
+      userName: user.userName || '',
       products,
       count,
       productDetail: productDetail || null,
@@ -115,6 +117,7 @@ const getProducts = async (space: string, skip?: string, filter?: string) => {
 }
 
 export const Product = ({
+  userName,
   userId,
   products,
   count,
@@ -276,7 +279,7 @@ export const Product = ({
           ))}
         <PageLoader isLoading={isLoading} className="fixed inset-0 z-10" />
       </section>
-      <ProductDetail product={product} userId={userId} />
+      <ProductDetail product={product} userId={userId} userName={userName} />
       <CreateEditProduct
         categories={categories}
         onUpdateProduct={(updatedProduct) => {
