@@ -1,4 +1,5 @@
 import { File } from 'formidable'
+import { User } from '../user/types'
 import { Message } from '../message/type'
 
 export type ChatMessage = {
@@ -48,10 +49,16 @@ export type SignupType = {
   email: string
   password: string
 }
+export type InvitationType = {
+  firstName: string
+  email: string
+}
 export type SpaceFormData = {
   fields: SpaceItemType
 }
-
+export type UserFormData = {
+  fields: Partial<User> & { space: string }
+}
 export type CreateProduct = Pick<
   ProductType,
   'title' | 'text' | 'description' | 'isAvailable' | 'category'

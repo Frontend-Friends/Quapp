@@ -37,7 +37,7 @@ async function addSpace(req: NextApiRequest, res: NextApiResponse) {
       ...formData.fields,
     }
     // add space to spaces collection
-    const spacesAdd = await addDoc(spaceRef, {
+    const addNewSpace = await addDoc(spaceRef, {
       ...spaceData,
       ownerId: `/user/${uid}`,
       creatorId: `/user/${uid}`,
@@ -47,10 +47,10 @@ async function addSpace(req: NextApiRequest, res: NextApiResponse) {
 
     // add space-id to spaces property of user
     const userUpdate = await updateDoc(userRef, {
-      spaces: arrayUnion(spacesAdd),
+      spaces: arrayUnion(addNewSpace),
     })
 
-    await Promise.all([spacesAdd, userUpdate])
+    await Promise.all([addNewSpace, userUpdate])
     sendResponse(res, {
       space: { ...spaceData },
       message: `The space ${spaceData.name} is added to spaces and to your profile.`,

@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import React, { FC, useCallback, useState } from 'react'
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react'
 import LoadingButton from '@mui/lab/LoadingButton'
 import {
   Box,
@@ -36,6 +36,42 @@ const Login: FC = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [openModal, setOpenModal] = useState(false)
 
+  const invitation = router.query.invitation as string
+
+  const calledOnce = useRef(false)
+
+  useEffect(() => {
+    if (calledOnce.current) {
+      return
+    }
+    if (invitation)
+      fetchJson<{
+        message: string
+        ok: boolean
+        space: string
+        isSignedUp?: boolean
+        invitationId?: string
+      }>(`/api/get-invitation?invitation=${invitation}`).then((r) => {
+        if (r.ok) {
+          setMessage(r.message)
+          setOpen(true)
+          fetchJson(`/api/delete-invitation?invitation=${invitation}`).then()
+          setTimeout(() => {
+            router.push(`/community/${r.space}/products`)
+          }, 2000)
+        }
+        if (!r.isSignedUp) {
+          setMessage(r.message)
+          setOpen(true)
+          setTimeout(() => {
+            router.push(`/auth/signup?invitation=${invitation}`)
+          }, 2000)
+        }
+      })
+    // make sure the useEffect is called only once
+    calledOnce.current = true
+  }, [router, invitation])
+
   const handleLogin = useCallback(
     async (values: { email: string; password: string }) => {
       setIsLoading(true)
@@ -54,7 +90,7 @@ const Login: FC = () => {
         }
       } catch {
         setOpen(true)
-        setMessage('LOGIN_server_error')
+        setMessage('RESPONSE_SERVER_ERROR')
         setIsLoading(false)
       }
     },
