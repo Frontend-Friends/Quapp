@@ -41,6 +41,7 @@ export const ChatForm = ({
           setValues({ message: '' })
           setSubmitting(false)
           resetForm({ values: { message: '' } })
+          console.log(result.history)
           setChat(result.history)
         }
         setIsLoading(false)
