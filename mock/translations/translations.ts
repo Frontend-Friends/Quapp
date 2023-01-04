@@ -18,6 +18,12 @@ export const translations: Record<string, string> = {
   GLOBAL_back_to_home: 'Zurück zur Startseite',
   GLOBAL_status: 'Status',
 
+  RESET_reset_password: 'Password zurücksetzen',
+  RESET_title: 'Password zurücksetzen',
+  RESET_text:
+    'Geben Sie Ihre E-Mail Adresse ein, um Ihr Passwort zurückzusetzen.',
+  RESET_submit_button: 'Passwort zurücksetzen',
+
   HOME_signup_free: 'Jetzt kostenlos Registrieren',
   HOME_subtitle: 'Die App die Nachbarn verbindet.',
   HOME_intro:
