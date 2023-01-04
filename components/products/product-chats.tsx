@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material'
+import { Alert, Box, Typography } from '@mui/material'
 import React, { useCallback, useState } from 'react'
 import { ChatMessage, ProductChatType } from './types'
 import { useTranslation } from '../../hooks/use-translation'
@@ -39,12 +39,16 @@ export const ProductChats = ({
       <Typography variant="h2" className="mb-4">
         {t('CHAT_title')}
       </Typography>
+
       {!isOwner && (
         <ChatForm
           isOwner={isOwner}
           chatId={userId}
           setChat={updateChat(userId)}
         />
+      )}
+      {selectedChats.length === 0 && (
+        <Alert severity="info">{t('CHAT_no_messages')}</Alert>
       )}
       {selectedChats.map((chat, index) => {
         return (
