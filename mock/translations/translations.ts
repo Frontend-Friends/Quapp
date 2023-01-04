@@ -126,4 +126,8 @@ export const translations: Record<string, string> = {
 
   NOTIFICATION_unread_message: 'Ungelesene Nachricht',
   RESPONSE_SERVER_ERROR: 'An error occurred while sending the request',
+
+  HTML_TITLE_general: 'Quapp - Die App die Nachbarn verbindet',
+  HTML_META_description:
+    'Quapp hilft dir Kontakt mit deiner Nachbarschaft herzustellen und sich gegenseitig mit Hilfe oder Leihgaben zu unterstützen.',
 }

@@ -8,8 +8,8 @@ import { CondensedContainer } from '../../components/condensed-container'
 import { LoadingButton } from '@mui/lab'
 import { useRouter } from 'next/router'
 import { sendFormData } from '../../lib/helpers/send-form-data'
-import { twFormGroup } from '../../constants/constants-css-classes'
 import { fetchJson } from '../../lib/helpers/fetch-json'
+import { twFormGroup } from '../../lib/constants/css-classes'
 
 const Signup: FC = () => {
   const [isLoading, setIsLoading] = useState(false)

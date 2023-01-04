@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router'
 import React, { FC, useCallback, useEffect, useRef, useState } from 'react'
 import LoadingButton from '@mui/lab/LoadingButton'
-
 import { Box, Link, Snackbar, TextField, Typography } from '@mui/material'
 import { CondensedContainer } from '../../components/condensed-container'
 import { useTranslation } from '../../hooks/use-translation'
@@ -10,8 +9,7 @@ import { loginFormSchema } from '../../lib/schema/login-form-schema'
 import { withIronSessionSsr } from 'iron-session/next'
 import { ironOptions } from '../../lib/config'
 import { fetchJson } from '../../lib/helpers/fetch-json'
-
-const twFormGroup = 'mb-4'
+import { twFormGroup } from '../../lib/constants/css-classes'
 
 export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
   const { user } = req.session
