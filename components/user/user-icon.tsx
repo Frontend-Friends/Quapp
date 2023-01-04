@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useRef, useState } from 'react'
+import { FC, useCallback, useRef, useState } from 'react'
 import {
   Button,
   Divider,
@@ -16,23 +16,12 @@ import { useTranslation } from '../../hooks/use-translation'
 import LogoutRounded from '@mui/icons-material/LogoutRounded'
 import SettingsRounded from '@mui/icons-material/SettingsRounded'
 
-const userExists = async () => {
-  const user: { isUser: boolean } = await fetchJson(' /api/cookie')
-  return user.isUser
-}
-
 export const UserIcon: FC = () => {
   const [open, setOpen] = useState<boolean>(false)
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const ref = useRef<HTMLButtonElement | null>(null)
   const t = useTranslation()
-  const { push, asPath } = useRouter()
-  const [isUser, setIsUser] = useState(false)
-
-  useEffect(() => {
-    const user = userExists().then((res) => res)
-    user.then((res) => setIsUser(res))
-  }, [asPath])
+  const { push } = useRouter()
 
   const handleClick = useCallback(() => {
     setOpen((state) => !state)
@@ -43,8 +32,6 @@ export const UserIcon: FC = () => {
       await push('/auth/login')
     }
   }, [push])
-
-  if (!isUser) return null
 
   return (
     <div>

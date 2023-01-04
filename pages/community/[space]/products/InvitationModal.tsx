@@ -3,10 +3,10 @@ import { Box, Modal, Snackbar, TextField } from '@mui/material'
 import { CondensedContainer } from '../../../../components/condensed-container'
 import { Formik } from 'formik'
 import { invitationFormSchema } from '../../../../lib/schema/invitation-form-schema'
-import { twFormGroup } from '../../../../constants/constants-css-classes'
 import { LoadingButton } from '@mui/lab'
 import { useTranslation } from '../../../../hooks/use-translation'
 import { InvitationType } from '../../../../components/products/types'
+import { twFormGroup } from '../../../../lib/constants/css-classes'
 
 interface Props {
   openModal: boolean
