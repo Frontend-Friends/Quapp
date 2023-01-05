@@ -18,6 +18,12 @@ export const translations: Record<string, string> = {
   GLOBAL_back_to_home: 'Zurück zur Startseite',
   GLOBAL_status: 'Status',
 
+  RESET_reset_password: 'Password zurücksetzen',
+  RESET_title: 'Password zurücksetzen',
+  RESET_text:
+    'Geben Sie Ihre E-Mail Adresse ein, um Ihr Passwort zurückzusetzen.',
+  RESET_submit_button: 'Passwort zurücksetzen',
+
   HOME_signup_free: 'Jetzt kostenlos Registrieren',
   HOME_subtitle: 'Die App die Nachbarn verbindet.',
   HOME_intro:
@@ -129,6 +135,7 @@ export const translations: Record<string, string> = {
   SETTINGS_change_settings: 'Einstellungen ändern',
 
   NOTIFICATION_unread_message: 'Ungelesene Nachricht',
+  RESPONSE_SERVER_ERROR: 'An error occurred while sending the request',
 
   HTML_TITLE_general: 'Quapp - Die App die Nachbarn verbindet',
   HTML_META_description:

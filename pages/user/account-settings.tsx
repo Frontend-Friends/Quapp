@@ -62,7 +62,6 @@ const AccountSettings: React.FC<{ isLoggedIn: boolean; user: User }> = ({
       setIsLoading({ ...isLoading, resetPassword: false })
     }
   }
-  // todo add pre-filled values
   return (
     <CondensedContainer>
       <Typography variant="h1" className="my-6">

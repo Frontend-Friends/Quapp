@@ -1,19 +1,31 @@
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded'
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded'
 import GridViewRoundedIcon from '@mui/icons-material/GridViewRounded'
-import React, { FC } from 'react'
-import { Button } from '@mui/material'
+import React, { FC, useEffect, useState } from 'react'
+import { Button, Link } from '@mui/material'
 import { useRouter } from 'next/router'
 import { LogoSVG } from '../svg/quapp_logo'
 import { UserIcon } from '../user/user-icon'
-import { Link } from '@mui/material'
 import { useTranslation } from '../../hooks/use-translation'
+import { fetchJson } from '../../lib/helpers/fetch-json'
 
+const userExists = async () => {
+  const user: { isUser: boolean } = await fetchJson(' /api/cookie')
+  return user.isUser
+}
 export const twNavbarButton =
   'aspect-square border-0 rounded-full bg-white text-violetRed-600 hover:bg-white md:min-w-[32px]'
 const NavigationBar: FC = () => {
-  const router = useRouter()
   const t = useTranslation()
+  const [isUser, setIsUser] = useState(false)
+  const { asPath } = useRouter()
+
+  const router = useRouter()
+
+  useEffect(() => {
+    const user = userExists().then((res) => res)
+    user.then((res) => setIsUser(res))
+  }, [asPath])
 
   return (
     <nav
@@ -40,22 +52,26 @@ const NavigationBar: FC = () => {
         >
           <LogoSVG aria-label={t('SVG_logo')} />
         </Link>
-        <Button
-          className={`${twNavbarButton} md:hidden`}
-          onClick={() => router.back()}
-        >
-          <ArrowBackRoundedIcon fontSize="large" />
-        </Button>
-        <Button className={twNavbarButton}>
-          <SearchRoundedIcon fontSize="large" />
-        </Button>
-        <Button
-          className={twNavbarButton}
-          onClick={() => router.push('/community/dashboard')}
-        >
-          <GridViewRoundedIcon fontSize="large" />
-        </Button>
-        <UserIcon />
+        {isUser && (
+          <>
+            <Button
+              className={`${twNavbarButton} md:hidden`}
+              onClick={() => router.back()}
+            >
+              <ArrowBackRoundedIcon fontSize="large" />
+            </Button>
+            <Button className={twNavbarButton}>
+              <SearchRoundedIcon fontSize="large" />
+            </Button>
+            <Button
+              className={twNavbarButton}
+              onClick={() => router.push('/community/dashboard')}
+            >
+              <GridViewRoundedIcon fontSize="large" />
+            </Button>
+            <UserIcon />
+          </>
+        )}
       </div>
     </nav>
   )

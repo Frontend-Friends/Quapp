@@ -11,6 +11,7 @@ export const translationsEn: Record<string, string> = {
   GLOBAL_open: 'Open',
   GLOBAL_options: 'Options',
   GLOBAL_back_to_home: 'Back to home page',
+  GLOBAL_invitation_send: 'Send invitation',
 
   HOME_signup_free: 'Register now for free',
   HOME_subtitle: 'The app that connects neighbors',
@@ -34,6 +35,11 @@ export const translationsEn: Record<string, string> = {
   LOGIN_forgot_password: 'Forgot password?',
   LOGIN_has_no_account: 'You don`t have an account yet?',
   LOGIN_has_account: 'You already have an account?',
+
+  RESET_reset_password: 'Reset password',
+  RESET_title: 'Reset password',
+  RESET_text: 'Enter your email address to reset your password.',
+  RESET_submit_button: 'Reset password',
 
   LOGOUT_logout: 'Log out',
 
@@ -93,6 +99,8 @@ export const translationsEn: Record<string, string> = {
   CHAT_message_error: 'message must not be empty',
   CHAT_message_required: 'The field is mandatory',
 
+  INVITATION_server_error: 'An error occurred while sending the invitation',
+
   SVG_logo: 'The Quapp logo with link to the home page',
   SVG_appartment:
     'A purely decorative illustration showing an apartment building',
@@ -106,6 +114,8 @@ export const translationsEn: Record<string, string> = {
   FOOTER_contact: 'Contact',
   FOOTER_imprint: 'Imprint',
   FOOTER_privacy: 'Privacy policy',
+
+  RESPONSE_SERVER_ERROR: 'An error occurred while sending the request',
 
   HTML_TITLE_general: 'Quapp - The app that connects neighbors',
 }

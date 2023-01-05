@@ -7,11 +7,13 @@ import { ChatForm } from '../chat-form'
 import { User } from '../user/types'
 
 export const ProductChats = ({
+  userName,
   userId,
   isOwner,
   chats,
   productOwnerName,
 }: {
+  userName: string
   isOwner: boolean
   userId: User['id']
   chats: ProductChatType[]
@@ -22,17 +24,24 @@ export const ProductChats = ({
     chats.filter((chat) => chat.chatUserId === userId || isOwner)
   )
 
-  const updateChat = useCallback((chatId: string | null) => {
-    return (history: ChatMessage[]) => {
-      setSelectedChats((state) => {
-        const foundIndex = state.findIndex((item) => item.chatUserId === chatId)
-        if (foundIndex > -1) {
-          state[foundIndex] = { ...state[foundIndex], history }
-        }
-        return [...state]
-      })
-    }
-  }, [])
+  const updateChat = useCallback(
+    (chatId: string | null) => {
+      return (history: ChatMessage[]) => {
+        setSelectedChats((state) => {
+          const foundIndex = state.findIndex(
+            (item) => item.chatUserId === chatId
+          )
+          if (foundIndex > -1) {
+            state[foundIndex] = { ...state[foundIndex], history }
+          } else {
+            state.push({ chatUserId: chatId, chatUserName: userName, history })
+          }
+          return [...state]
+        })
+      }
+    },
+    [userName]
+  )
 
   return (
     <Box className="rounded border border-slate-200">
