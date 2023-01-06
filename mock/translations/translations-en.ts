@@ -1,9 +1,10 @@
 export const translationsEn: Record<string, string> = {
   GLOBAL_email: 'email',
   GLOBAL_password: 'password',
-  GLOBAL_first_name: 'first_name',
-  GLOBAL_last_name: 'last_name',
+  GLOBAL_first_name: 'first name',
+  GLOBAL_last_name: 'last name',
   GLOBAL_mobile_number: 'mobile number',
+  GLOBAL_user_name: 'Nickname',
   GLOBAL_save: 'save',
   GLOBAL_cancel: 'Cancel',
   GLOBAL_edit: 'Edit',
@@ -68,6 +69,7 @@ export const translationsEn: Record<string, string> = {
   BORROW_TEXTFIELD_default_value: 'Write a message',
   BORROW_DATEPICKER_label: 'Borrow date',
   BORROW_button_submit: 'Send request',
+  BUTTON_reset_password: 'Reset password',
 
   CREATE_PRODUCT_detail: 'Product Detail',
   CREATE_PRODUCT_upload: 'Upload image',

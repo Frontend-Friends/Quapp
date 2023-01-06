@@ -73,6 +73,7 @@ const AccountSettings: React.FC<{ isLoggedIn: boolean; user: User }> = ({
             firstName: props.user.firstName,
             lastName: props.user.lastName,
             phone: props.user.phone,
+            userName: props.user.userName,
           } as SettingType
         }
         validationSchema={settingsFormSchema}
@@ -108,6 +109,19 @@ const AccountSettings: React.FC<{ isLoggedIn: boolean; user: User }> = ({
                 helperText={formikProps.errors.lastName}
                 type="text"
                 label={t('GLOBAL_last_name')}
+                variant="outlined"
+              />
+
+              <TextField
+                className={twFormGroup}
+                name="userName"
+                onChange={formikProps.handleChange}
+                onBlur={formikProps.handleBlur}
+                value={formikProps.values.userName}
+                error={!!formikProps.errors.userName}
+                helperText={formikProps.errors.userName}
+                type="text"
+                label={t('GLOBAL_user_name')}
                 variant="outlined"
               />
 

@@ -3,6 +3,7 @@ export const translations: Record<string, string> = {
   GLOBAL_password: 'Passwort',
   GLOBAL_first_name: 'Vorname',
   GLOBAL_last_name: 'Nachname',
+  GLOBAL_user_name: 'Nickname',
   GLOBAL_mobile_number: 'Mobilfunknummer',
   GLOBAL_save: 'Speichern',
   GLOBAL_cancel: 'Abbrechen',
@@ -114,6 +115,7 @@ export const translations: Record<string, string> = {
   BUTTON_info: 'mehr erfahren',
   BUTTON_close: 'schliessen',
   BUTTON_remove_upload: 'Hochgeladenes Bild entfernen',
+  BUTTON_reset_password: 'Passwort zurücksetzen',
 
   CHAT_title: 'Nachrichten',
   CHAT_no_messages: 'Derzeit sind keine Chat-Nachrichten vorhanden.',
