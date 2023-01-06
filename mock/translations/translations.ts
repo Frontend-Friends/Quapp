@@ -72,19 +72,19 @@ export const translations: Record<string, string> = {
   PRODUCT_not_available: 'Nicht verfügbar',
   PRODUCT_add: 'Neues Produkt erstellen',
   PRODUCT_image: 'Produkt Bild',
-  PRODUCT_edit: 'bearbeiten',
-  PRODUCT_delete: 'löschen',
+  PRODUCT_edit: 'Bearbeiten',
+  PRODUCT_delete: 'Löschen',
   PRODUCT_updated_info: 'Der Eintrag wurde gespeichert:',
   PRODUCT_settings: 'Produkteinstellungen',
   PRODUCT_request_from: 'Anfrage von',
 
-  DELETE_cancel_button: 'abbrechen',
-  DELETE_confirm_button: 'löschen',
+  DELETE_cancel_button: 'Abbrechen',
+  DELETE_confirm_button: 'Löschen',
   DELETE_title: 'Löschen von: ',
   DELETE_text: 'Der Eintrag wird unwiederruflich gelöscht.',
   DELETE_PRODUCT_success_text: 'Der Eintrag wurde erfolgreich gelöscht.',
 
-  SAVE_PRODUCT_submit: 'speichern',
+  SAVE_PRODUCT_submit: 'Speichern',
 
   BORROW_TEXTFIELD_label: 'Nachricht',
   BORROW_TEXTFIELD_default_value: 'Schreibe eine Nachricht',
@@ -98,8 +98,8 @@ export const translations: Record<string, string> = {
   BORROW_message_title: 'Ausleihanfrage für: ',
   BORROW_response_accept_text: 'Du hast zugesagt',
   BORROW_response_declined_text: 'Du hast abgelehnt',
-  BORROW_REQUEST_accept: 'akzeptieren',
-  BORROW_REQUEST_decline: 'ablehnen',
+  BORROW_REQUEST_accept: 'Akzeptieren',
+  BORROW_REQUEST_decline: 'Ablehnen',
   BORROW_date_assigned: 'Das Datum ist schon vergeben',
   BORROW_success_title: 'Deine Anfrage wurde versendet.',
   BORROW_success_text: 'Willst Du eine neue Anfrage',
@@ -118,8 +118,8 @@ export const translations: Record<string, string> = {
 
   BUTTON_borrow: 'Ich möchte das ausleihen!',
   BUTTON_contact: 'Kontakt aufnehmen',
-  BUTTON_info: 'mehr erfahren',
-  BUTTON_close: 'schliessen',
+  BUTTON_info: 'Mehr erfahren',
+  BUTTON_close: 'Schliessen',
   BUTTON_remove_upload: 'Hochgeladenes Bild entfernen',
   BUTTON_reset_password: 'Passwort zurücksetzen',
 
@@ -137,9 +137,9 @@ export const translations: Record<string, string> = {
   SETTINGS_change_settings: 'Einstellungen ändern',
 
   NOTIFICATION_unread_message: 'Ungelesene Nachricht',
-  RESPONSE_SERVER_ERROR: 'An error occurred while sending the request',
+  RESPONSE_SERVER_ERROR: 'Beim senden gab es einen Fehler',
 
   HTML_TITLE_general: 'Quapp - Die App die Nachbarn verbindet',
   HTML_META_description:
-    'Quapp hilft dir Kontakt mit deiner Nachbarschaft herzustellen und sich gegenseitig mit Hilfe oder Leihgaben zu unterstützen.',
+    'Quapp hilft dir, Kontakt mit deiner Nachbarschaft herzustellen und sich gegenseitig mit Hilfe oder Leihgaben zu unterstützen.',
 }
