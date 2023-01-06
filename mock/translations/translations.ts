@@ -19,6 +19,12 @@ export const translations: Record<string, string> = {
   GLOBAL_back_to_home: 'Zurück zur Startseite',
   GLOBAL_status: 'Status',
 
+  SPACES_title: 'Dein Space',
+  SPACES_no_entries: 'Es sind noch keine Spaces vorhanden',
+  SPACES_members: 'Mitglieder',
+  SPACES_items: 'Einträge',
+  SPACES_add_space: 'Space hinzufügen',
+
   RESET_reset_password: 'Password zurücksetzen',
   RESET_title: 'Password zurücksetzen',
   RESET_text:
@@ -119,12 +125,6 @@ export const translations: Record<string, string> = {
 
   CHAT_title: 'Nachrichten',
   CHAT_no_messages: 'Derzeit sind keine Chat-Nachrichten vorhanden.',
-
-  SPACES_title: 'Deine Spaces',
-  SPACES_no_entries: 'Es gibt noch keine Spaces.',
-  SPACES_members: 'Mitglieder',
-  SPACES_items: 'Einträge',
-  SPACES_add_space: 'Space hinzufügen',
 
   CHAT_button_send: 'Nachricht senden',
   CHAT_button_loading: 'wird gesendet',

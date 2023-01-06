@@ -88,7 +88,7 @@ const SpaceForm: FC<Props> = ({
               variant="contained"
               loading={isLoading}
             >
-              {t('SPACE_add_space')}
+              {t('SPACES_add_space')}
             </LoadingButton>
           </form>
         )}
