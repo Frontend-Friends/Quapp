@@ -87,6 +87,7 @@ export const translationsEn: Record<string, string> = {
   BUTTON_info: 'Learn more',
   BUTTON_close: 'Close',
   BUTTON_remove_upload: 'Remove uploaded image',
+  BUTTON_invite_member: 'Invite person',
 
   CHAT_title: 'News',
 
@@ -103,6 +104,7 @@ export const translationsEn: Record<string, string> = {
   CHAT_message_required: 'The field is mandatory',
 
   INVITATION_server_error: 'An error occurred while sending the invitation',
+  INVITATION_title: 'Invite a person to this space',
 
   SVG_logo: 'The Quapp logo with link to the home page',
   SVG_appartment:

@@ -18,6 +18,7 @@ export const translations: Record<string, string> = {
   GLOBAL_date: 'Datum',
   GLOBAL_back_to_home: 'Zurück zur Startseite',
   GLOBAL_status: 'Status',
+  GLOBAL_invitation_send: 'Einladung versenden',
 
   SPACES_title: 'Dein Space',
   SPACES_no_entries: 'Es sind noch keine Spaces vorhanden',
@@ -122,6 +123,7 @@ export const translations: Record<string, string> = {
   BUTTON_close: 'Schliessen',
   BUTTON_remove_upload: 'Hochgeladenes Bild entfernen',
   BUTTON_reset_password: 'Passwort zurücksetzen',
+  BUTTON_invite_member: 'Person einladen',
 
   CHAT_title: 'Nachrichten',
   CHAT_no_messages: 'Derzeit sind keine Chat-Nachrichten vorhanden.',
@@ -135,6 +137,9 @@ export const translations: Record<string, string> = {
 
   SETTINGS_title: 'Einstellungen',
   SETTINGS_change_settings: 'Einstellungen ändern',
+
+  INVITATION_server_error: 'Beim Versenden der Einladung gab es einen Fehler',
+  INVITATION_title: 'Lade eine Person in diesen Space ein',
 
   NOTIFICATION_unread_message: 'Ungelesene Nachricht',
   RESPONSE_SERVER_ERROR: 'Beim senden gab es einen Fehler',
