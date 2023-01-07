@@ -1,7 +1,7 @@
 import { FC, useState } from 'react'
 import { CondensedContainer } from '../condensed-container'
 import { Header } from '../header'
-import { Fab, Grid, Typography } from '@mui/material'
+import { Fab, Grid, Snackbar, Typography } from '@mui/material'
 import SpaceItem from '../spaces/space-item'
 import AddIcon from '@mui/icons-material/Add'
 import SpaceForm from '../../pages/community/space-form'
@@ -14,8 +14,9 @@ export const Dashboard: FC<{
 }> = ({ spaces, t }) => {
   const [open, setOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const [message, setMessage] = useState('')
   const [mySpaces, setMySpaces] = useState<SpaceItemType[]>(spaces ?? [])
+  const [message, setMessage] = useState<string>('')
+  const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false)
 
   return (
     <CondensedContainer className="relative">
@@ -29,6 +30,8 @@ export const Dashboard: FC<{
                 space={mySpace}
                 setMySpaces={setMySpaces}
                 mySpaces={mySpaces}
+                setSnackbarOpen={setSnackbarOpen}
+                setMessage={setMessage}
               />
             )
           })}
@@ -56,6 +59,16 @@ export const Dashboard: FC<{
           setMySpaces={setMySpaces}
         />
       )}
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
+        open={snackbarOpen}
+        autoHideDuration={3000}
+        onClose={() => setSnackbarOpen(false)}
+        message={t(message)}
+      />
     </CondensedContainer>
   )
 }

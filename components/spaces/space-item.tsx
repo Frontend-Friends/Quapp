@@ -9,7 +9,6 @@ import {
   Grid,
   IconButton,
   Link as MuiLink,
-  Snackbar,
   Typography,
 } from '@mui/material'
 import React, { Dispatch, FC, SetStateAction, useState } from 'react'
@@ -27,13 +26,19 @@ interface Props {
   space: SpaceItemType
   setMySpaces: Dispatch<SetStateAction<SpaceItemType[]>>
   mySpaces: SpaceItemType[]
+  setSnackbarOpen: Dispatch<SetStateAction<boolean>>
+  setMessage: Dispatch<SetStateAction<string>>
 }
 
-const SpaceItem: FC<Props> = ({ space, setMySpaces, mySpaces }) => {
+const SpaceItem: FC<Props> = ({
+  space,
+  setMySpaces,
+  mySpaces,
+  setSnackbarOpen,
+  setMessage,
+}) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
-  const [message, setMessage] = useState<string>('')
-  const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false)
   const [dialogOpen, setDialogOpen] = useState<boolean>(false)
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -151,16 +156,6 @@ const SpaceItem: FC<Props> = ({ space, setMySpaces, mySpaces }) => {
             {t('GLOBAL_no')}
           </Button>
         </DialogActions>
-        <Snackbar
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'center',
-          }}
-          open={snackbarOpen}
-          autoHideDuration={3000}
-          onClose={() => setSnackbarOpen(false)}
-          message={t(message)}
-        />
       </Dialog>
     </>
   )
