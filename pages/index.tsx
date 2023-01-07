@@ -40,13 +40,13 @@ const Home: FC<{ isLoggedIn: boolean }> = () => {
           <Link
             underline="none"
             href="/auth/signup"
-            className="col-span-7 mx-auto mt-5 mb-3 block md:col-start-3 md:mx-[unset] md:mt-0 lg:mb-6 lg:mt-8 lg:pl-14 2xl:col-span-4"
+            className="col-span-7 mx-auto mt-6 mb-5 block md:col-start-3 md:mx-[unset] md:mt-0 lg:mb-6 lg:mt-8 lg:pl-14 2xl:col-span-4"
           >
             <Button
               type="submit"
               variant="contained"
               color="secondary"
-              className="px-12 md:py-3 md:text-xl lg:py-4 lg:text-2xl"
+              className="px-12 py-3 md:text-xl lg:py-4 lg:text-2xl"
             >
               {t('HOME_signup_free')}
             </Button>
@@ -87,11 +87,11 @@ const Home: FC<{ isLoggedIn: boolean }> = () => {
           <div className="pb-32 text-center sm:pb-20 md:pb-20 lg:flex lg:items-center lg:py-20">
             <CollaboratorSVG className="relative h-[256px] lg:basis-2/6" />
             <div className="relative z-10 p-3 lg:flex lg:basis-4/6 lg:gap-10 lg:p-8">
-              <div className="text-left sm:p-3 lg:text-right">
+              <div className="text-left sm:p-3">
                 <h2 className="m-0 text-3xl font-medium md:text-5xl">
                   {t('HOME_spaces_title')}
                 </h2>
-                <Divider className="my-3 w-1/2 lg:my-6 lg:ml-auto" />
+                <Divider className="my-3 w-1/2 lg:my-6" />
                 <p className="mt-1 text-lg md:text-2xl lg:text-2xl">
                   {t('HOME_spaces_text')}
                 </p>
@@ -113,14 +113,13 @@ const Home: FC<{ isLoggedIn: boolean }> = () => {
           />
         </div>
       </section>
-      <section className="mx-auto max-w-[1280px] p-3 lg:p-8">
-        <div className="relative">
-          <h2 className="absolute m-0 w-1/2 pl-[30%] text-left font-medium md:text-3xl lg:mb-6 lg:text-5xl">
-            {t('HOME_support_title')}
-          </h2>
-          <HangoutSVG className="-ml-20 h-[256px] w-full" />
-        </div>
-        <p className="p-3 text-center text-lg md:text-2xl lg:text-2xl">
+      <section className="relative mx-auto flex max-w-[1280px] flex-col items-center p-3 pb-16 lg:flex-row lg:flex-wrap lg:p-8">
+        <h2 className="absolute left-1/3 z-10 m-0 w-1/2 text-left text-4xl font-medium sm:text-5xl lg:static lg:order-1 lg:flex-[0_0_100%]">
+          {t('HOME_support_title')}
+        </h2>
+        <HangoutSVG className="-ml-20 w-full lg:order-3 lg:ml-auto lg:h-[384px] lg:flex-[0_0_33%] lg:shrink lg:scale-x-[-1]" />
+        <p className="text-center text-lg md:text-2xl lg:order-2 lg:flex-[0_0_66%] lg:self-start lg:text-left lg:text-2xl">
+          <Divider className="mb-3 lg:mb-6" />
           {t('HOME_support_text')}
         </p>
       </section>
