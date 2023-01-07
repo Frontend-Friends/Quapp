@@ -1,7 +1,11 @@
 import {
+  Button,
   Card,
   CardContent,
   CardHeader,
+  Dialog,
+  DialogActions,
+  DialogTitle,
   Grid,
   IconButton,
   Link as MuiLink,
@@ -30,11 +34,14 @@ const SpaceItem: FC<Props> = ({ space, setMySpaces, mySpaces }) => {
   const open = Boolean(anchorEl)
   const [message, setMessage] = useState<string>('')
   const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false)
+  const [dialogOpen, setDialogOpen] = useState<boolean>(false)
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)
   }
   const handleClose = () => {
     setAnchorEl(null)
+    setDialogOpen(false)
+    setSnackbarOpen(false)
   }
   const handleDeleteClick = async () => {
     handleClose()
@@ -43,7 +50,13 @@ const SpaceItem: FC<Props> = ({ space, setMySpaces, mySpaces }) => {
         ok: boolean
         message: string
       }>(`/api/delete-space?spaceId=${space.id}`)
-      if (delSpace.ok) {
+
+      const delSpaceFromUser = await fetchJson<{
+        ok: boolean
+        message: string
+      }>(`/api/delete-space-from-user?spaceId=${space.id}`)
+      const allSuccess = await Promise.all([delSpace, delSpaceFromUser])
+      if (allSuccess) {
         setMessage(delSpace.message)
         setSnackbarOpen(true)
         setMySpaces(
@@ -52,14 +65,6 @@ const SpaceItem: FC<Props> = ({ space, setMySpaces, mySpaces }) => {
           )
         )
       } else {
-        setMessage(delSpace.message)
-        setSnackbarOpen(true)
-      }
-      const delSpaceFromUser = await fetchJson<{
-        ok: boolean
-        message: string
-      }>(`/api/delete-space-from-user?spaceId=${space.id}`)
-      if (!delSpaceFromUser.ok) {
         setMessage(delSpace.message)
         setSnackbarOpen(true)
       }
@@ -107,9 +112,11 @@ const SpaceItem: FC<Props> = ({ space, setMySpaces, mySpaces }) => {
               'aria-labelledby': 'basic-button',
             }}
           >
-            <MenuItem onClick={handleEditClick}>{t('GLOBAL_edit')}</MenuItem>
-            <MenuItem onClick={handleDeleteClick}>
-              {t('GLOBAL_delete')}
+            <MenuItem onClick={handleEditClick}>{`${space.name} ${t(
+              'GLOBAL_edit'
+            )}`}</MenuItem>
+            <MenuItem onClick={() => setDialogOpen(true)}>
+              {`${space.name} ${t('GLOBAL_delete')}`}
             </MenuItem>
           </Menu>
           <CardContent className="flex items-center">
@@ -135,16 +142,25 @@ const SpaceItem: FC<Props> = ({ space, setMySpaces, mySpaces }) => {
           </CardContent>
         </Card>
       </Grid>
-      <Snackbar
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
-        }}
-        open={snackbarOpen}
-        autoHideDuration={3000}
-        onClose={() => setSnackbarOpen(false)}
-        message={t(message)}
-      />
+      <Dialog open={dialogOpen} onClose={handleClose}>
+        <DialogTitle>{t('DIALOG_do_you_want_to_delete')}</DialogTitle>
+        <DialogActions>
+          <Button onClick={handleDeleteClick}>{t('yes')}</Button>
+          <Button onClick={handleClose} autoFocus>
+            {t('no')}
+          </Button>
+        </DialogActions>
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+          }}
+          open={snackbarOpen}
+          autoHideDuration={3000}
+          onClose={() => setSnackbarOpen(false)}
+          message={t(message)}
+        />
+      </Dialog>
     </>
   )
 }
