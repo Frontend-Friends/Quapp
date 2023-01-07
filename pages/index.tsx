@@ -30,17 +30,17 @@ const Home: FC<{ isLoggedIn: boolean }> = () => {
             className="col-span-7 mx-auto block w-1/2 md:h-full md:w-1/5 lg:mb-10"
             preserveAspectRatio="xMidYMid meet"
           />
-          <h1 className="col-span-7 text-center text-xl font-medium sm:col-start-3 sm:text-left md:text-2xl lg:pl-14 lg:text-3xl">
+          <h1 className="col-span-7 text-center text-xl font-medium sm:col-start-3 sm:text-left md:text-2xl lg:pl-14 lg:text-3xl 2xl:col-start-4">
             {t('HOME_subtitle')}
           </h1>
-          <AppartmentSVG className="col-span-3 row-span-2 -ml-6 h-[130px] w-full flex-1 sm:col-span-2 sm:-ml-14 sm:scale-125 md:scale-150 lg:scale-[2]" />
-          <p className="col-span-4 row-span-2 m-0 flex-1 text-lg font-light sm:col-span-4 md:text-2xl lg:row-span-1 lg:pl-14">
+          <AppartmentSVG className="col-span-3 row-span-2 -ml-6 h-[130px] w-full flex-1 sm:col-span-2 sm:-ml-14 sm:scale-125 md:scale-150 lg:scale-[2] 2xl:col-span-3 2xl:-ml-0 2xl:scale-[2.3]" />
+          <p className="col-span-4 row-span-2 m-0 flex-1 text-lg font-light sm:col-span-4 md:text-2xl lg:row-span-1 lg:pl-14 2xl:col-span-4">
             {t('HOME_intro')}
           </p>
           <Link
             underline="none"
             href="/auth/signup"
-            className="col-span-7 mx-auto mt-5 mb-3 block md:col-start-3 md:mx-[unset] md:mt-0 lg:mb-6 lg:mt-8 lg:pl-14"
+            className="col-span-7 mx-auto mt-5 mb-3 block md:col-start-3 md:mx-[unset] md:mt-0 lg:mb-6 lg:mt-8 lg:pl-14 2xl:col-span-4"
           >
             <Button
               type="submit"
@@ -51,7 +51,7 @@ const Home: FC<{ isLoggedIn: boolean }> = () => {
               {t('HOME_signup_free')}
             </Button>
           </Link>
-          <Box className="col-span-7 text-center md:col-start-3 md:text-left lg:pl-14 lg:text-xl">
+          <Box className="col-span-7 text-center md:col-start-3 md:text-left lg:pl-14 lg:text-xl 2xl:col-start-4">
             <Link
               underline="hover"
               href="/auth/login"
@@ -66,7 +66,7 @@ const Home: FC<{ isLoggedIn: boolean }> = () => {
           className="xl:h-30 pointer-events-none absolute bottom-0 w-full touch-none sm:h-12 md:h-14 lg:h-28"
         />
       </section>
-      <section className="mx-auto max-w-[1280px] flex-row p-3 lg:flex lg:p-8 lg:pt-14">
+      <section className="mx-auto max-w-[1280px] flex-row items-center p-3 lg:flex lg:p-8 lg:pt-14">
         <WindowNeighboursSVG className="w-full lg:w-1/2" />
         <div className="p-3 md:pt-12 lg:order-first lg:w-1/2">
           <h2 className="m-0 text-center font-medium md:text-3xl lg:text-left lg:text-5xl">
@@ -115,12 +115,14 @@ const Home: FC<{ isLoggedIn: boolean }> = () => {
       </section>
       <section className="mx-auto max-w-[1280px] p-3 lg:p-8">
         <div className="relative">
-          <h2 className="absolute m-0 w-1/2 pl-[30%] text-left text-4xl font-medium">
+          <h2 className="absolute m-0 w-1/2 pl-[30%] text-left font-medium md:text-3xl lg:mb-6 lg:text-5xl">
             {t('HOME_support_title')}
           </h2>
           <HangoutSVG className="-ml-20 h-[256px] w-full" />
         </div>
-        <p className="p-3 text-center">{t('HOME_support_text')}</p>
+        <p className="p-3 text-center text-lg md:text-2xl lg:text-2xl">
+          {t('HOME_support_text')}
+        </p>
       </section>
     </main>
   )
