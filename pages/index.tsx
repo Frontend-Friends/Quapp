@@ -66,13 +66,15 @@ const Home: FC<{ isLoggedIn: boolean }> = () => {
           className="xl:h-30 pointer-events-none absolute bottom-0 w-full touch-none sm:h-12 md:h-14 lg:h-28"
         />
       </section>
-      <section className="mx-auto max-w-[1280px] p-3 lg:p-8">
-        <WindowNeighboursSVG className="w-full" />
-        <div className="p-3">
-          <h2 className="m-0 text-center font-medium">
+      <section className="mx-auto max-w-[1280px] flex-row p-3 lg:flex lg:p-8 lg:py-16">
+        <WindowNeighboursSVG className="w-full lg:w-1/2" />
+        <div className="p-3 md:py-12 lg:order-first lg:w-1/2">
+          <h2 className="m-0 text-center font-medium md:mb-4 md:text-3xl lg:mb-6 lg:text-left lg:text-5xl">
             {t('HOME_support_title')}
           </h2>
-          <p className="mt-1 text-center">{t('HOME_support_text')}</p>
+          <p className="mt-1 text-center text-lg md:text-2xl lg:pr-6 lg:text-left lg:text-2xl">
+            {t('HOME_support_text')}
+          </p>
         </div>
       </section>
       <section className="mb-10 pb-10 lg:p-8">
