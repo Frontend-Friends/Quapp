@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { Dispatch, FC, SetStateAction, useState } from 'react'
 import { SpaceItemType } from '../../components/products/types'
 import { Box, Snackbar, TextField } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
@@ -10,10 +10,12 @@ import { twFormGroup } from '../../lib/constants/css-classes'
 
 interface Props {
   setOpen: (isOpen: boolean) => void
-  isLoading?: boolean
   setIsLoading: (isLoading: boolean) => void
   setMessage: (message: string) => void
   message: string
+  setMySpaces: Dispatch<SetStateAction<SpaceItemType[]>>
+  mySpaces?: SpaceItemType[]
+  isLoading?: boolean
 }
 
 const SpaceForm: FC<Props> = ({
@@ -22,6 +24,8 @@ const SpaceForm: FC<Props> = ({
   setIsLoading,
   setMessage,
   message,
+  setMySpaces,
+  mySpaces,
 }) => {
   const t = useTranslation()
   const [isSnackbarOpen, setIsSnackbarOpen] = useState(false)
@@ -30,15 +34,20 @@ const SpaceForm: FC<Props> = ({
     try {
       const fetchedAddSpace = await sendFormData<{
         message: string
+        space: SpaceItemType
       }>('/api/add-space', values)
 
       if (fetchedAddSpace.ok) {
+        const space = fetchedAddSpace.space
+        mySpaces?.push(space)
         setIsLoading(false)
         setMessage(fetchedAddSpace.message)
         setIsSnackbarOpen(true)
         setOpen(false)
+        if (Array.isArray(mySpaces)) {
+          setMySpaces([...mySpaces])
+        }
       } else {
-        setOpen(true)
         setMessage(t(fetchedAddSpace.errorMessage))
         setIsLoading(false)
         setIsLoading(false)

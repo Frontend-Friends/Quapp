@@ -10,7 +10,7 @@ import { withIronSessionApiRoute } from 'iron-session/next'
 import { sessionOptions } from '../../config/session-config'
 import { parsedForm } from '../../lib/helpers/parsed-form'
 import { db } from '../../config/firebase'
-import { SpaceFormData } from '../../components/products/types'
+import { SpaceFormData, SpaceItemType } from '../../components/products/types'
 import { sendResponse } from '../../lib/helpers/send-response'
 import { sendError } from '../../lib/helpers/send-error'
 
@@ -34,26 +34,29 @@ async function addSpace(req: NextApiRequest, res: NextApiResponse) {
     const userRef = doc(db, 'user', id ?? '')
 
     const formData = await parsedForm<SpaceFormData>(req)
-    const spaceData = {
+    const spaceName = {
       ...formData.fields,
     }
     // add space to spaces collection
-    const addNewSpace = await addDoc(spaceRef, {
-      ...spaceData,
+    const spaceData = {
+      ...spaceName,
       ownerId: `/user/${id}`,
       creatorId: `/user/${id}`,
       creationDate: new Date(),
       users: [id],
+    }
+    const newSpaceId = await addDoc(spaceRef, {
+      ...spaceData,
     }).then((result) => result.id)
 
     // add space-id to spaces property of user
     const userUpdate = await updateDoc(userRef, {
-      spaces: arrayUnion(addNewSpace),
+      spaces: arrayUnion(newSpaceId),
     })
-    await Promise.all([addNewSpace, userUpdate])
-    sendResponse(res, {
+    await Promise.all([newSpaceId, userUpdate])
+    sendResponse<{ space: SpaceItemType; message: string }>(res, {
       space: { ...spaceData },
-      message: `The space ${spaceData.name} is added to spaces and to your profile.`,
+      message: `The space ${spaceName.name} is added to spaces and to your profile.`,
     })
   } catch (err) {
     console.error(err)

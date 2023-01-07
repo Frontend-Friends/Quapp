@@ -15,14 +15,15 @@ export const Dashboard: FC<{
   const [open, setOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [message, setMessage] = useState('')
+  const [mySpaces, setMySpaces] = useState<SpaceItemType[]>(spaces ?? [])
 
   return (
     <CondensedContainer className="relative">
       <Header title={t('SPACES_title')} />
-      {!!spaces?.length ? (
+      {!!mySpaces?.length ? (
         <Grid container columns={{ md: 1 }} spacing={{ xs: 4 }} pt={4}>
-          {spaces.map((space) => (
-            <SpaceItem key={space.id} space={space} />
+          {mySpaces.map((mySpace) => (
+            <SpaceItem key={mySpace.id} space={mySpace} />
           ))}
         </Grid>
       ) : (
@@ -44,6 +45,8 @@ export const Dashboard: FC<{
           setIsLoading={setIsLoading}
           setMessage={setMessage}
           message={message}
+          mySpaces={mySpaces}
+          setMySpaces={setMySpaces}
         />
       )}
     </CondensedContainer>
