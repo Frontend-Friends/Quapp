@@ -8,7 +8,7 @@ import {
   Snackbar,
   Typography,
 } from '@mui/material'
-import React, { FC, useState } from 'react'
+import React, { Dispatch, FC, SetStateAction, useState } from 'react'
 import { SpaceItemType } from '../products/types'
 import GroupsIcon from '@mui/icons-material/Groups'
 import CategoryIcon from '@mui/icons-material/Category'
@@ -21,9 +21,11 @@ import { fetchJson } from '../../lib/helpers/fetch-json'
 
 interface Props {
   space: SpaceItemType
+  setMySpaces: Dispatch<SetStateAction<SpaceItemType[]>>
+  mySpaces: SpaceItemType[]
 }
 
-const SpaceItem: FC<Props> = ({ space }) => {
+const SpaceItem: FC<Props> = ({ space, setMySpaces, mySpaces }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
   const [message, setMessage] = useState<string>('')
@@ -37,12 +39,18 @@ const SpaceItem: FC<Props> = ({ space }) => {
   const handleDeleteClick = async () => {
     handleClose()
     try {
-      const delSpace = await fetchJson<{ ok: boolean; message: string }>(
-        `/api/delete-space?spaceId=${space.id}`
-      )
+      const delSpace = await fetchJson<{
+        ok: boolean
+        message: string
+      }>(`/api/delete-space?spaceId=${space.id}`)
       if (delSpace.ok) {
         setMessage(delSpace.message)
         setSnackbarOpen(true)
+        setMySpaces(
+          mySpaces.filter(
+            (mySpace) => mySpace.creationDate !== space.creationDate
+          )
+        )
       } else {
         setMessage(delSpace.message)
         setSnackbarOpen(true)
