@@ -3,6 +3,8 @@ import { useCallback } from 'react'
 import { translations } from '../mock/translations/translations'
 import { translationsEn } from '../mock/translations/translations-en'
 
+export type UseTranslationType = (key: string) => string
+
 export const useTranslation = () => {
   const { locale } = useRouter()
   return useCallback(

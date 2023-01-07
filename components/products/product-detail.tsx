@@ -51,9 +51,11 @@ const handleSubmit: HandleSubmit = async (
 export const ProductDetail = ({
   product,
   userId,
+  userName,
 }: {
   userId?: User['id']
   product?: ProductType | null
+  userName?: string
 }) => {
   const { asPath, query, push } = useRouter()
 
@@ -222,6 +224,7 @@ export const ProductDetail = ({
           )}
           {userId && (
             <ProductChats
+              userName={userName || ''}
               isOwner={product.owner.id === userId}
               chats={product.chats}
               userId={userId}

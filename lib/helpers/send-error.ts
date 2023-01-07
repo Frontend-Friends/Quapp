@@ -4,5 +4,7 @@ export const sendError = <T extends object>(
   res: NextApiResponse,
   value?: T
 ) => {
-  res.status(500).json({ ok: false, errorMessage: 'SERVER_ERROR', ...value })
+  res
+    .status(500)
+    .json({ ok: false, errorMessage: 'RESPONSE_SERVER_ERROR', ...value })
 }

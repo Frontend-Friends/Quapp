@@ -17,6 +17,7 @@ import MenuItem from '@mui/material/MenuItem'
 import React from 'react'
 import { useTranslation } from '../../hooks/use-translation'
 import Link from 'next/link'
+import { fetchJson } from '../../lib/helpers/fetch-json'
 
 interface Props {
   space: SpaceItemType
@@ -31,6 +32,14 @@ const SpaceItem: FC<Props> = ({ space }) => {
   const handleClose = () => {
     setAnchorEl(null)
   }
+
+  const handleDeleteClick = async () => {
+    handleClose()
+    await fetchJson(`/api/delete-space?spaceId=${space.id}`)
+    await fetchJson(`/api/delete-space-from-user?spaceId=${space.id}`)
+  }
+
+  const handleEditClick = () => {}
 
   const t = useTranslation()
 
@@ -68,8 +77,8 @@ const SpaceItem: FC<Props> = ({ space }) => {
             'aria-labelledby': 'basic-button',
           }}
         >
-          <MenuItem onClick={handleClose}>{t('GLOBAL_edit')}</MenuItem>
-          <MenuItem onClick={handleClose}>{t('GLOBAL_delete')}</MenuItem>
+          <MenuItem onClick={handleEditClick}>{t('GLOBAL_edit')}</MenuItem>
+          <MenuItem onClick={handleDeleteClick}>{t('GLOBAL_delete')}</MenuItem>
         </Menu>
         <CardContent className="flex items-center">
           {space.memberCount && (

@@ -1,16 +1,18 @@
 export const translationsEn: Record<string, string> = {
-  GLOBAL_email: 'email',
-  GLOBAL_password: 'password',
-  GLOBAL_first_name: 'first_name',
-  GLOBAL_last_name: 'last_name',
-  GLOBAL_mobile_number: 'mobile number',
-  GLOBAL_save: 'save',
+  GLOBAL_email: 'Email',
+  GLOBAL_password: 'Password',
+  GLOBAL_first_name: 'First name',
+  GLOBAL_last_name: 'Last name',
+  GLOBAL_mobile_number: 'Mobile number',
+  GLOBAL_user_name: 'Nickname',
+  GLOBAL_save: 'Save',
   GLOBAL_cancel: 'Cancel',
   GLOBAL_edit: 'Edit',
   GLOBAL_delete: 'Delete',
   GLOBAL_open: 'Open',
   GLOBAL_options: 'Options',
   GLOBAL_back_to_home: 'Back to home page',
+  GLOBAL_invitation_send: 'Send invitation',
 
   HOME_signup_free: 'Register now for free',
   HOME_subtitle: 'The app that connects neighbors',
@@ -35,6 +37,11 @@ export const translationsEn: Record<string, string> = {
   LOGIN_has_no_account: 'You don`t have an account yet?',
   LOGIN_has_account: 'You already have an account?',
 
+  RESET_reset_password: 'Reset password',
+  RESET_title: 'Reset password',
+  RESET_text: 'Enter your email address to reset your password.',
+  RESET_submit_button: 'Reset password',
+
   LOGOUT_logout: 'Log out',
 
   SIGNUP_title: 'Registration',
@@ -45,23 +52,24 @@ export const translationsEn: Record<string, string> = {
   PRODUCT_not_available: 'Not available',
   PRODUCT_add: 'Create new product',
   PRODUCT_image: 'Product image',
-  PRODUCT_edit: 'edit',
-  PRODUCT_delete: 'delete',
+  PRODUCT_edit: 'Edit',
+  PRODUCT_delete: 'Delete',
   PRODUCT_updated_info: 'The entry was saved:',
-  PRODUCT_settings: 'product settings',
+  PRODUCT_settings: 'Product settings',
 
-  DELETE_cancel_button: 'cancel',
-  DELETE_confirm_button: 'delete',
+  DELETE_cancel_button: 'Cancel',
+  DELETE_confirm_button: 'Delete',
   DELETE_title: 'Delete from: ',
   DELETE_text: 'The entry will be irrevocably deleted.',
   DELETE_PRODUCT_success_text: 'The entry was successfully deleted.',
 
-  SAVE_PRODUCT_submit: 'save',
+  SAVE_PRODUCT_submit: 'Save',
 
-  BORROW_TEXTFIELD_label: 'message',
+  BORROW_TEXTFIELD_label: 'Message',
   BORROW_TEXTFIELD_default_value: 'Write a message',
   BORROW_DATEPICKER_label: 'Borrow date',
   BORROW_button_submit: 'Send request',
+  BUTTON_reset_password: 'Reset password',
 
   CREATE_PRODUCT_detail: 'Product Detail',
   CREATE_PRODUCT_upload: 'Upload image',
@@ -69,29 +77,32 @@ export const translationsEn: Record<string, string> = {
   CREATE_PRODUCT_title: 'Product Title',
   CREATE_PRODUCT_text: 'Product Text',
   CREATE_PRODUCT_submit: 'Create Product',
-  CREATE_PRODUCT_loading: 'transfer...',
-  CREATE_PRODUCT_page_title: 'create product',
-  EDIT_PRODUCT_page_title: 'edit product',
+  CREATE_PRODUCT_loading: 'Transfer...',
+  CREATE_PRODUCT_page_title: 'Create product',
+  EDIT_PRODUCT_page_title: 'Edit product',
   CREATE_PRODUCT_is_available: 'Product is available',
 
   BUTTON_borrow: 'I want to borrow this!',
   BUTTON_contact: 'Contact me',
-  BUTTON_info: 'learn more',
-  BUTTON_close: 'close',
-  BUTTON_remove_upload: 'remove uploaded image',
+  BUTTON_info: 'Learn more',
+  BUTTON_close: 'Close',
+  BUTTON_remove_upload: 'Remove uploaded image',
 
-  CHAT_title: 'news',
+  CHAT_title: 'News',
 
   SPACES_title: 'Your Spaces',
   SPACES_no_entries: 'There are no Spaces yet',
   SPACES_members: 'Members',
   SPACES_items: 'Entries',
+  SPACE_add_space: 'Add space',
 
   CHAT_button_send: 'Send message',
   CHAT_button_loading: 'will be sent',
-  CHAT_message: 'message',
-  CHAT_message_error: 'message must not be empty',
+  CHAT_message: 'Message',
+  CHAT_message_error: 'Message must not be empty',
   CHAT_message_required: 'The field is mandatory',
+
+  INVITATION_server_error: 'An error occurred while sending the invitation',
 
   SVG_logo: 'The Quapp logo with link to the home page',
   SVG_appartment:
@@ -106,6 +117,8 @@ export const translationsEn: Record<string, string> = {
   FOOTER_contact: 'Contact',
   FOOTER_imprint: 'Imprint',
   FOOTER_privacy: 'Privacy policy',
+
+  RESPONSE_SERVER_ERROR: 'An error occurred while sending the request',
 
   HTML_TITLE_general: 'Quapp - The app that connects neighbors',
 }

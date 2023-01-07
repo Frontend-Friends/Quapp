@@ -1,4 +1,4 @@
-import { fetchJson } from '../helpers/fetch-json'
+import { fetchJson } from './fetch-json'
 import { ProductType } from '../../components/products/types'
 
 export const fetchProductApi = async (space: string, productId: string) =>

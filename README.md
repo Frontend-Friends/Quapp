@@ -18,6 +18,8 @@ Der Server läuft dann regulär mit Hot-Reload unter http://localhost:3000/
 - MUI
 - Node
 - Firebase
+- Jest
+- husky
 
 ### Wireframes
 Die UI Wireframes können unter https://t.ly/i_VV eingesehen werden.
