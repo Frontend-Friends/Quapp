@@ -98,7 +98,7 @@ const InvitationModal: React.FC<Props> = ({
       </Modal>
       <Snackbar
         anchorOrigin={{
-          vertical: 'bottom',
+          vertical: 'top',
           horizontal: 'center',
         }}
         open={openSnackbar}

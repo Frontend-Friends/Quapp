@@ -130,7 +130,7 @@ const Signup: FC = () => {
       </Formik>
       <Snackbar
         anchorOrigin={{
-          vertical: 'bottom',
+          vertical: 'top',
           horizontal: 'center',
         }}
         open={open}

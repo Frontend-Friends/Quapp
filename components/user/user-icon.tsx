@@ -58,7 +58,7 @@ export const UserIcon: FC = () => {
           horizontal: 'right',
         }}
         transformOrigin={{
-          vertical: 'bottom',
+          vertical: 'top',
           horizontal: 'right',
         }}
       >

@@ -104,7 +104,7 @@ const SpaceForm: FC<Props> = ({
       </Formik>
       <Snackbar
         anchorOrigin={{
-          vertical: 'bottom',
+          vertical: 'top',
           horizontal: 'center',
         }}
         open={isSnackbarOpen}
