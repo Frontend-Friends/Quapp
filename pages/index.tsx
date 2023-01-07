@@ -22,9 +22,9 @@ export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
 const Home: FC<{ isLoggedIn: boolean }> = () => {
   const t = useTranslation()
   return (
-    <main className="mx-auto max-w-[1280px] text-blueishGray-600">
+    <main className="w-full text-blueishGray-600">
       <section className="relative bg-gradient-to-br from-violetRed-600 via-violetRed-600 to-violetRed-900 pb-10 text-white">
-        <div className="p-3">
+        <div className="mx-auto max-w-[1280px] p-3">
           <LogoSVG aria-label={t('SVG_logo')} className="mx-auto block w-1/2" />
           <h1 className="text-center text-lg font-medium">
             {t('HOME_subtitle')}
@@ -38,7 +38,7 @@ const Home: FC<{ isLoggedIn: boolean }> = () => {
               type="submit"
               variant="contained"
               color="secondary"
-              className="mx-auto mt-5 mb-3 block px-14"
+              className="mx-auto mt-5 mb-3 block px-12"
             >
               {t('HOME_signup_free')}
             </Button>
@@ -55,10 +55,10 @@ const Home: FC<{ isLoggedIn: boolean }> = () => {
         </div>
         <WaveWhiteSVG
           preserveAspectRatio="none"
-          className="pointer-events-none absolute bottom-0 w-full touch-none"
+          className="pointer-events-none absolute bottom-0 w-full touch-none md:h-14 lg:h-20"
         />
       </section>
-      <section>
+      <section className="mx-auto max-w-[1280px]">
         <WindowNeighboursSVG className="w-full" />
         <div className="p-3">
           <h2 className="m-0 text-center font-medium">
@@ -67,7 +67,7 @@ const Home: FC<{ isLoggedIn: boolean }> = () => {
           <p className="mt-1 text-center">{t('HOME_support_text')}</p>
         </div>
       </section>
-      <section className="relative mb-10 bg-gradient-to-t from-slate-300 to-slate-200 pb-24">
+      <section className="relative mx-auto mb-10 max-w-[1280px] bg-gradient-to-t from-slate-300 to-slate-200 pb-24">
         <WaveWhiteTopSVG
           preserveAspectRatio="none"
           className="absolute top-0 w-full"
@@ -86,7 +86,7 @@ const Home: FC<{ isLoggedIn: boolean }> = () => {
           className="absolute bottom-0 w-full"
         />
       </section>
-      <section>
+      <section className="mx-auto max-w-[1280px]">
         <div className="relative">
           <h2 className="absolute m-0 w-1/2 pl-[30%] text-left text-4xl font-medium">
             {t('HOME_support_title')}
