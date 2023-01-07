@@ -19,7 +19,7 @@ async function deleteSpace(req: NextApiRequest, res: NextApiResponse) {
 
     await deleteDoc(spaceRef)
 
-    sendResponse(res, { spaceId })
+    sendResponse(res, { message: 'The space is successfully deleted' })
   } catch (err) {
     console.error(err)
     sendError(res)
