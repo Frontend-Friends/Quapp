@@ -13,6 +13,8 @@ export const translationsEn: Record<string, string> = {
   GLOBAL_options: 'Options',
   GLOBAL_back_to_home: 'Back to home page',
   GLOBAL_invitation_send: 'Send invitation',
+  GLOBAL_yes: 'Yes',
+  GLOBAL_no: 'No',
 
   HOME_signup_free: 'Register now for free',
   HOME_subtitle: 'The app that connects neighbors',
@@ -95,7 +97,8 @@ export const translationsEn: Record<string, string> = {
   SPACES_no_entries: 'There are no Spaces yet',
   SPACES_members: 'Members',
   SPACES_items: 'Entries',
-  SPACE_add_space: 'Add space',
+  SPACES_add_space: 'Add space',
+  SPACES_name: 'Space name',
 
   CHAT_button_send: 'Send message',
   CHAT_button_loading: 'will be sent',

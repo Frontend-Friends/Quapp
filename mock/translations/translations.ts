@@ -19,12 +19,15 @@ export const translations: Record<string, string> = {
   GLOBAL_back_to_home: 'Zurück zur Startseite',
   GLOBAL_status: 'Status',
   GLOBAL_invitation_send: 'Einladung versenden',
+  GLOBAL_yes: 'Ja',
+  GLOBAL_no: 'Nein',
 
   SPACES_title: 'Dein Space',
   SPACES_no_entries: 'Es sind noch keine Spaces vorhanden',
   SPACES_members: 'Mitglieder',
   SPACES_items: 'Einträge',
   SPACES_add_space: 'Space hinzufügen',
+  SPACES_name: 'Space Name',
 
   RESET_reset_password: 'Password zurücksetzen',
   RESET_title: 'Password zurücksetzen',
