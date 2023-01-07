@@ -22,9 +22,16 @@ export const Dashboard: FC<{
       <Header title={t('SPACES_title')} />
       {!!mySpaces?.length ? (
         <Grid container columns={{ md: 1 }} spacing={{ xs: 4 }} pt={4}>
-          {mySpaces.map((mySpace) => (
-            <SpaceItem key={mySpace.id} space={mySpace} />
-          ))}
+          {mySpaces.map((mySpace) => {
+            return (
+              <SpaceItem
+                key={`${mySpace.creationDate}`}
+                space={mySpace}
+                setMySpaces={setMySpaces}
+                mySpaces={mySpaces}
+              />
+            )
+          })}
         </Grid>
       ) : (
         <Typography variant="body2">{t('SPACES_no_entries')}</Typography>
