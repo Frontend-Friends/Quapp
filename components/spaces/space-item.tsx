@@ -35,6 +35,7 @@ const SpaceItem: FC<Props> = ({ space, setMySpaces, mySpaces }) => {
   const [message, setMessage] = useState<string>('')
   const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false)
   const [dialogOpen, setDialogOpen] = useState<boolean>(false)
+
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)
   }
@@ -143,11 +144,11 @@ const SpaceItem: FC<Props> = ({ space, setMySpaces, mySpaces }) => {
         </Card>
       </Grid>
       <Dialog open={dialogOpen} onClose={handleClose}>
-        <DialogTitle>{t('DIALOG_do_you_want_to_delete')}</DialogTitle>
+        <DialogTitle>{t('DELETE_text')}</DialogTitle>
         <DialogActions>
-          <Button onClick={handleDeleteClick}>{t('yes')}</Button>
+          <Button onClick={handleDeleteClick}>{t('GLOBAL_yes')}</Button>
           <Button onClick={handleClose} autoFocus>
-            {t('no')}
+            {t('GLOBAL_no')}
           </Button>
         </DialogActions>
         <Snackbar
