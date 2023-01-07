@@ -68,7 +68,7 @@ const Home: FC<{ isLoggedIn: boolean }> = () => {
       </section>
       <section className="mx-auto max-w-[1280px] flex-row items-center p-3 lg:flex lg:p-8 lg:pt-14">
         <WindowNeighboursSVG className="w-full lg:w-1/2" />
-        <div className="p-3 md:pt-12 lg:order-first lg:w-1/2">
+        <div className="sm:p-3 md:pt-12 lg:order-first lg:w-1/2">
           <h2 className="m-0 text-center font-medium md:text-3xl lg:text-left lg:text-5xl">
             {t('HOME_support_title')}
           </h2>
@@ -87,8 +87,8 @@ const Home: FC<{ isLoggedIn: boolean }> = () => {
           <div className="pb-32 text-center sm:pb-20 md:pb-20 lg:flex lg:items-center lg:py-20">
             <CollaboratorSVG className="relative h-[256px] lg:basis-2/6" />
             <div className="relative z-10 p-3 lg:flex lg:basis-4/6 lg:gap-10 lg:p-8">
-              <div className="text-left lg:text-right">
-                <h2 className="m-0 text-3xl font-medium md:text-3xl lg:text-5xl">
+              <div className="text-left sm:p-3 lg:text-right">
+                <h2 className="m-0 text-3xl font-medium md:text-5xl">
                   {t('HOME_spaces_title')}
                 </h2>
                 <Divider className="my-3 w-1/2 lg:my-6 lg:ml-auto" />
@@ -96,8 +96,8 @@ const Home: FC<{ isLoggedIn: boolean }> = () => {
                   {t('HOME_spaces_text')}
                 </p>
               </div>
-              <div className="text-right lg:text-left">
-                <h2 className="m-0 text-3xl font-medium md:text-3xl lg:text-5xl">
+              <div className="text-right sm:p-3 lg:text-left">
+                <h2 className="m-0 text-3xl font-medium md:text-5xl">
                   {t('HOME_offers_title')}
                 </h2>
                 <Divider className="my-3 ml-auto w-1/2 lg:my-6 lg:ml-[unset]" />
