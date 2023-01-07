@@ -24,8 +24,11 @@ const Home: FC<{ isLoggedIn: boolean }> = () => {
   return (
     <main className="w-full text-blueishGray-600">
       <section className="relative bg-gradient-to-br from-violetRed-600 via-violetRed-600 to-violetRed-900 pb-10 text-white">
-        <div className="mx-auto max-w-[1280px] p-3">
-          <LogoSVG aria-label={t('SVG_logo')} className="mx-auto block w-1/2" />
+        <div className="mx-auto max-w-[1280px] p-3 lg:p-8">
+          <LogoSVG
+            aria-label={t('SVG_logo')}
+            className="mx-auto block w-1/2 lg:mx-[unset] lg:h-1/2 lg:w-1/5"
+          />
           <h1 className="text-center text-lg font-medium">
             {t('HOME_subtitle')}
           </h1>
@@ -58,7 +61,7 @@ const Home: FC<{ isLoggedIn: boolean }> = () => {
           className="pointer-events-none absolute bottom-0 w-full touch-none md:h-14 lg:h-20"
         />
       </section>
-      <section className="mx-auto max-w-[1280px]">
+      <section className="mx-auto max-w-[1280px] p-3 lg:p-8">
         <WindowNeighboursSVG className="w-full" />
         <div className="p-3">
           <h2 className="m-0 text-center font-medium">
@@ -67,26 +70,30 @@ const Home: FC<{ isLoggedIn: boolean }> = () => {
           <p className="mt-1 text-center">{t('HOME_support_text')}</p>
         </div>
       </section>
-      <section className="relative mx-auto mb-10 max-w-[1280px] bg-gradient-to-t from-slate-300 to-slate-200 pb-24">
-        <WaveWhiteTopSVG
-          preserveAspectRatio="none"
-          className="absolute top-0 w-full"
-        />
-        <CollaboratorSVG className="relative h-[256px] w-full" />
-        <div className="relative z-10 p-3">
-          <h2 className="m-0 text-3xl font-medium">{t('HOME_spaces_title')}</h2>
-          <p className="mt-1">{t('HOME_spaces_text')}</p>
-          <h2 className="m-0 text-right text-3xl font-medium">
-            {t('HOME_offers_title')}
-          </h2>
-          <p className="mt-1 text-right">{t('HOME_offers_text')}</p>
+      <section className="relative mx-auto mb-10 pb-24 lg:p-8">
+        <div className="max-w-[1280px] bg-gradient-to-t from-slate-300 to-slate-200">
+          <WaveWhiteTopSVG
+            preserveAspectRatio="none"
+            className="absolute top-0 w-full"
+          />
+          <CollaboratorSVG className="relative h-[256px] w-full" />
+          <div className="relative z-10 p-3">
+            <h2 className="m-0 text-3xl font-medium">
+              {t('HOME_spaces_title')}
+            </h2>
+            <p className="mt-1">{t('HOME_spaces_text')}</p>
+            <h2 className="m-0 text-right text-3xl font-medium">
+              {t('HOME_offers_title')}
+            </h2>
+            <p className="mt-1 text-right">{t('HOME_offers_text')}</p>
+          </div>
+          <WaveWhiteBottomSVG
+            preserveAspectRatio="none"
+            className="absolute bottom-0 w-full"
+          />
         </div>
-        <WaveWhiteBottomSVG
-          preserveAspectRatio="none"
-          className="absolute bottom-0 w-full"
-        />
       </section>
-      <section className="mx-auto max-w-[1280px]">
+      <section className="mx-auto max-w-[1280px] p-3 lg:p-8">
         <div className="relative">
           <h2 className="absolute m-0 w-1/2 pl-[30%] text-left text-4xl font-medium">
             {t('HOME_support_title')}
