@@ -34,7 +34,7 @@ const Home: FC<{ isLoggedIn: boolean }> = () => {
             {t('HOME_subtitle')}
           </h1>
           <AppartmentSVG className="col-span-3 row-span-2 -ml-6 h-[130px] w-full flex-1 sm:col-span-2 sm:-ml-14 sm:scale-125 md:scale-150 lg:scale-[2] 2xl:col-span-3 2xl:-ml-0 2xl:scale-[2.3]" />
-          <p className="col-span-4 row-span-2 m-0 flex-1 text-lg font-light sm:col-span-4 md:text-2xl lg:row-span-1 lg:pl-14 2xl:col-span-4">
+          <p className="col-span-4 row-span-2 m-0 flex-1 text-lg sm:col-span-4 md:text-2xl lg:row-span-1 lg:pl-14 2xl:col-span-4">
             {t('HOME_intro')}
           </p>
           <Link
