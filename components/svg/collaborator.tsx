@@ -1,8 +1,6 @@
 import { SVGProps } from 'react'
-import { useTranslation } from '../../hooks/use-translation'
 
 export const CollaboratorSVG = (props: SVGProps<SVGSVGElement>) => {
-  const t = useTranslation()
   return (
     <svg
       width="360"
@@ -13,7 +11,6 @@ export const CollaboratorSVG = (props: SVGProps<SVGSVGElement>) => {
       role="img"
       {...props}
     >
-      <title id="hollaboratorTitle">{t('SVG_collaborator')}</title>
       <g clipPath="url(#clip0_662_111)">
         <path
           d="M213.616 6.964C239.532 -6.9023 272.425 0.367087 289.864 24.9539L289.27 25.375C272.047 1.09173 239.556 -6.08612 213.959 7.60594C211.784 8.76946 209.685 10.0689 207.674 11.4964C181.351 30.1656 175.124 66.7685 193.794 93.0905L193.201 93.5116C174.299 66.8624 180.602 29.8039 207.252 10.9028C209.289 9.4578 211.414 8.14228 213.616 6.964Z"

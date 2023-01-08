@@ -1,8 +1,6 @@
 import { SVGProps } from 'react'
-import { useTranslation } from '../../hooks/use-translation'
 
 export const AppartmentSVG = (props: SVGProps<SVGSVGElement>) => {
-  const t = useTranslation()
   return (
     <svg
       width="188"
@@ -13,7 +11,6 @@ export const AppartmentSVG = (props: SVGProps<SVGSVGElement>) => {
       role="img"
       {...props}
     >
-      <title id="appartmentTitle">{t('SVG_appartment')}</title>
       <g clipPath="url(#clip0_662_454)">
         <path
           d="M133.213 55.3609H117.154V65.6824H133.213V55.3609Z"
