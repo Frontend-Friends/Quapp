@@ -47,6 +47,9 @@ export const translations: Record<string, string> = {
   HOME_together_title: 'Gemeinsam Nachbarn sein.',
   HOME_together_text:
     'Sharing is caring - nach dieser Devise sollte unserer Meinung nach, jede Nachbarschaft leben! Quapp ermöglicht es dir ganz einfach Kontakt zu deiner Nachbarschaft aufzubauen und sich gegenseitig zu unterstützen.',
+  HOME_is_logged_in:
+    'Du bist bereits eingeloggt! Um auf dein Dashboard zu kommen, klicke einfach den folgenden Button:',
+  HOME_to_dashboard: 'Zu deinem Dashboard',
 
   LOGIN_title: 'Login',
   LOGIN_login: 'Anmelden',

@@ -1,6 +1,6 @@
 import { withIronSessionSsr } from 'iron-session/next'
 import { ironOptions } from '../lib/config'
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { LogoSVG } from '../components/svg/quapp_logo'
 import { AppartmentSVG } from '../components/svg/appartment'
 import { WindowNeighboursSVG } from '../components/svg/windowneighbours'
@@ -11,6 +11,8 @@ import { useTranslation } from '../hooks/use-translation'
 import { WaveWhiteSVG } from '../components/svg/wave_white'
 import { WaveWhiteBottomSVG } from '../components/svg/wave_white_bottom'
 import { WaveWhiteTopSVG } from '../components/svg/wave_white_top'
+import { useRouter } from 'next/router'
+import { fetchJson } from '../lib/helpers/fetch-json'
 
 export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
   const { user } = req.session
@@ -19,8 +21,21 @@ export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
   }
 }, ironOptions)
 
+const userExists = async () => {
+  const user: { isUser: boolean } = await fetchJson(' /api/cookie')
+  return user.isUser
+}
+
 const Home: FC<{ isLoggedIn: boolean }> = () => {
   const t = useTranslation()
+  const [isUser, setIsUser] = useState(false)
+  const { asPath } = useRouter()
+
+  useEffect(() => {
+    const user = userExists().then((res) => res)
+    user.then((res) => setIsUser(res))
+  }, [asPath])
+
   return (
     <main className="w-full text-blueishGray-600">
       <section className="relative bg-gradient-to-b from-violetRed-600 via-violetRed-600 to-violetRed-900 pb-10 text-white">
@@ -38,31 +53,53 @@ const Home: FC<{ isLoggedIn: boolean }> = () => {
             className="col-span-3 row-span-2 -ml-6 h-[130px] w-full flex-1 sm:col-span-2 sm:-ml-14 sm:scale-125 md:scale-150 lg:scale-[2] 2xl:col-span-3 2xl:-ml-0 2xl:scale-[2.3]"
           />
           <p className="col-span-4 row-span-2 m-0 flex-1 text-lg sm:col-span-4 md:text-2xl lg:row-span-1 lg:pl-14 2xl:col-span-4">
-            {t('HOME_intro')}
+            {!isUser ? t('HOME_intro') : t('HOME_is_logged_in')}
           </p>
-          <Link
-            underline="none"
-            href="/auth/signup"
-            className="col-span-7 mx-auto mt-6 mb-5 block md:col-start-3 md:mx-[unset] md:mt-0 lg:mb-6 lg:mt-8 lg:pl-14 2xl:col-span-4"
-          >
-            <Button
-              type="submit"
-              variant="contained"
-              color="secondary"
-              className="px-12 py-3 md:text-xl lg:py-4 lg:text-2xl"
-            >
-              {t('HOME_signup_free')}
-            </Button>
-          </Link>
-          <Box className="col-span-7 text-center md:col-start-3 md:text-left lg:pl-14 lg:text-xl 2xl:col-start-4">
-            <Link
-              underline="hover"
-              href="/auth/login"
-              className="text-white underline"
-            >
-              {t('LOGIN_has_account')}
-            </Link>
-          </Box>
+
+          {!isUser ? (
+            <>
+              <Link
+                underline="none"
+                href="/auth/signup"
+                className="col-span-7 mx-auto mt-6 mb-5 block md:col-start-3 md:mx-[unset] md:mt-0 lg:mb-6 lg:mt-8 lg:pl-14 2xl:col-span-4"
+              >
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="secondary"
+                  className="px-12 py-3 md:text-xl lg:py-4 lg:text-2xl"
+                >
+                  {t('HOME_signup_free')}
+                </Button>
+              </Link>
+              <Box className="col-span-7 text-center md:col-start-3 md:text-left lg:pl-14 lg:text-xl 2xl:col-start-4">
+                <Link
+                  underline="hover"
+                  href="/auth/login"
+                  className="text-white underline"
+                >
+                  {t('LOGIN_has_account')}
+                </Link>
+              </Box>
+            </>
+          ) : (
+            <>
+              <Link
+                underline="none"
+                href="/community/dashboard"
+                className="col-span-7 mx-auto mt-6 mb-5 block md:col-start-3 md:mx-[unset] md:mt-0 lg:mb-6 lg:mt-8 lg:pl-14 2xl:col-span-4"
+              >
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="secondary"
+                  className="px-12 py-3 md:text-xl lg:py-4 lg:text-2xl"
+                >
+                  {t('HOME_to_dashboard')}
+                </Button>
+              </Link>
+            </>
+          )}
         </div>
         <WaveWhiteSVG
           preserveAspectRatio="none"
