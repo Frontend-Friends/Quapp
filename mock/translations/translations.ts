@@ -142,4 +142,14 @@ export const translations: Record<string, string> = {
   HTML_TITLE_general: 'Quapp - Die App die Nachbarn verbindet',
   HTML_META_description:
     'Quapp hilft dir, Kontakt mit deiner Nachbarschaft herzustellen und sich gegenseitig mit Hilfe oder Leihgaben zu unterstützen.',
+
+  SVG_logo: 'Das Quapp Logo',
+  SVG_appartment:
+    'Eine simple Illustration auf der ein Hochhaus mit Leuten davon zu erkennen ist.',
+  SVG_windowneighbours:
+    'Eine simple Illustration auf der zwei Nachbarn sich über Ihre Balkone unterhalten.',
+  SVG_collaborator:
+    'Eine simple Illustration auf der zwei Personen zu sehen sind, die schematisch dargestellte Gegenstände tauschen.',
+  SVG_hangout:
+    'Eine simple Illustration auf der zwei Personen zu sehen sind die an einem Tisch Kaffee trinken und sich unterhalten.',
 }
