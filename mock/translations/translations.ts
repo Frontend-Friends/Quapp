@@ -28,7 +28,7 @@ export const translations: Record<string, string> = {
   RESET_reset_password: 'Password zurücksetzen',
   RESET_title: 'Password zurücksetzen',
   RESET_text:
-    'Geben Sie Ihre E-Mail Adresse ein, um Ihr Passwort zurückzusetzen.',
+    'Bitte gib deine E-Mail Adresse ein, um das Passwort zurückzusetzen.',
   RESET_submit_button: 'Passwort zurücksetzen',
 
   HOME_signup_free: 'Jetzt kostenlos Registrieren',
@@ -51,21 +51,21 @@ export const translations: Record<string, string> = {
   LOGIN_title: 'Login',
   LOGIN_login: 'Anmelden',
   LOGIN_forgot_password: 'Passwort vergessen?',
-  LOGIN_has_no_account: 'Sie haben noch keinen Account?',
-  LOGIN_has_account: 'Sie haben schon einen Account?',
+  LOGIN_has_no_account: 'Du hast noch keinen Account?',
+  LOGIN_has_account: 'Du hast schon einen Account?',
   LOGIN_something_went_wrong:
-    'Etwas ist schief gelaufen. Bitte versuchen Sie es erneut.',
+    'Etwas ist schief gelaufen. Bitte versuche es erneut.',
   LOGIN_password_has_been_reset:
-    'Ihr Passwort wurde zurückgesetzt. Bitte überprüfen Sie Ihre E-Mail.',
+    'Dein Passwort wurde zurückgesetzt. Bitte überprüfe deine E-Mail Postfach.',
 
   LOGOUT_logout: 'Abmelden',
 
   SIGNUP_title: 'Registration',
   SIGNUP_signup: 'Registrieren',
   SIGNUP_something_went_wrong:
-    'Bei der Registrierung ist etwas schief gelaufen. Bitte versuchen Sie es erneut.',
+    'Bei der Registrierung ist etwas schief gelaufen. Bitte versuche es erneut.',
   SIGNUP_success_page_text:
-    'Vielen Dank für deine Registrierung! Wir haben dir eine E-Mail mit einem Verifizierungslink geschickt. Bitte klicke diesen um die Registrierung abzuschliessen. Dein Quapp Team',
+    'Vielen Dank für deine Registrierung! Wir haben dir eine E-Mail mit einem Verifizierungslink geschickt. Bitte klicke diesen an, um die Registrierung abzuschliessen. Dein Quapp Team',
 
   PRODUCTS_title: 'Produkte',
   PRODUCTS_no_entries: 'Leider gibt es noch keine Einträge.',
@@ -81,7 +81,7 @@ export const translations: Record<string, string> = {
   DELETE_cancel_button: 'Abbrechen',
   DELETE_confirm_button: 'Löschen',
   DELETE_title: 'Löschen von: ',
-  DELETE_text: 'Der Eintrag wird unwiederruflich gelöscht.',
+  DELETE_text: 'Der Eintrag wird unwiderruflich gelöscht.',
   DELETE_PRODUCT_success_text: 'Der Eintrag wurde erfolgreich gelöscht.',
 
   SAVE_PRODUCT_submit: 'Speichern',
@@ -102,7 +102,7 @@ export const translations: Record<string, string> = {
   BORROW_REQUEST_decline: 'Ablehnen',
   BORROW_date_assigned: 'Das Datum ist schon vergeben',
   BORROW_success_title: 'Deine Anfrage wurde versendet.',
-  BORROW_success_text: 'Willst Du eine neue Anfrage',
+  BORROW_success_text: 'Willst du eine neue Anfrage',
   REQUEST_product_link: 'Link zum Produkt',
 
   CREATE_PRODUCT_detail: 'Produkt Detail',
@@ -131,13 +131,13 @@ export const translations: Record<string, string> = {
   CHAT_message: 'Nachricht',
   CHAT_message_history: 'Nachrichtenverlauf',
   CHAT_message_error: 'Die Nachricht darf nicht leer sein',
-  CHAT_message_required: 'Das Feld ist pflicht',
+  CHAT_message_required: 'Dies ist ein Pflichtfeld',
 
   SETTINGS_title: 'Einstellungen',
   SETTINGS_change_settings: 'Einstellungen ändern',
 
   NOTIFICATION_unread_message: 'Ungelesene Nachricht',
-  RESPONSE_SERVER_ERROR: 'Beim senden gab es einen Fehler',
+  RESPONSE_SERVER_ERROR: 'Beim Senden gab es einen Fehler',
 
   HTML_TITLE_general: 'Quapp - Die App die Nachbarn verbindet',
   HTML_META_description:
