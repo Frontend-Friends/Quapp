@@ -33,6 +33,7 @@ const NavigationBar: FC = () => {
       fixed
       bottom-0
       z-50
+      h-[83px]
       w-full
       bg-gradient-to-br
       from-violetRed-600
