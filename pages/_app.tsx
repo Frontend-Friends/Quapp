@@ -67,7 +67,7 @@ export default function App({
         <div
           className={clsx(
             'flex min-h-screen min-w-[340px] flex-col justify-between',
-            showNavbar && 'md:mt-[83px]'
+            showNavbar && 'md:pt-[83px]'
           )}
         >
           <Component {...pageProps} />
