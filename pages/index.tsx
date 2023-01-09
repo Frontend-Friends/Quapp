@@ -165,10 +165,10 @@ const Home: FC<{ isLoggedIn: boolean }> = () => {
         </h2>
         <HangoutSVG
           aria-label={t('SVG_hangout')}
-          className="-ml-20 w-full lg:order-3 lg:ml-auto lg:h-[384px] lg:flex-[0_0_33%] lg:shrink lg:scale-x-[-1]"
+          className="-ml-20 w-full lg:order-4 lg:ml-auto lg:h-[384px] lg:flex-[0_0_33%] lg:shrink lg:scale-x-[-1]"
         />
-        <p className="text-center text-lg md:text-2xl lg:order-2 lg:flex-[0_0_66%] lg:self-start lg:text-left lg:text-2xl">
-          <Divider className="mb-3 lg:mb-6" />
+        <Divider className="mt-7 w-full lg:order-2" />
+        <p className="text-center text-lg md:text-2xl lg:order-3 lg:flex-[0_0_66%] lg:self-start lg:text-left lg:text-2xl">
           {t('HOME_support_text')}
         </p>
       </section>
