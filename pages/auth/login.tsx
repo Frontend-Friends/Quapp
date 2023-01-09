@@ -1,14 +1,7 @@
 import { useRouter } from 'next/router'
-import React, { FC, useCallback, useEffect, useRef, useState } from 'react'
+import { FC, useCallback, useEffect, useRef, useState } from 'react'
 import LoadingButton from '@mui/lab/LoadingButton'
-import {
-  Box,
-  Link,
-  Modal,
-  Snackbar,
-  TextField,
-  Typography,
-} from '@mui/material'
+import { Box, Link, Modal, TextField, Typography } from '@mui/material'
 import { CondensedContainer } from '../../components/condensed-container'
 import { useTranslation } from '../../hooks/use-translation'
 import { Formik } from 'formik'
@@ -18,6 +11,7 @@ import { ironOptions } from '../../lib/config'
 import { fetchJson } from '../../lib/helpers/fetch-json'
 
 import { resetPasswordFormSchema } from '../../lib/schema/reset-password-form-schema'
+import { useSnackbar } from '../../hooks/use-snackbar'
 
 const twFormGroup = 'mb-4'
 
@@ -31,10 +25,10 @@ export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
 const Login: FC = () => {
   const router = useRouter()
   const t = useTranslation()
-  const [open, setOpen] = React.useState(false)
-  const [message, setMessage] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [openModal, setOpenModal] = useState(false)
+
+  const setAlert = useSnackbar((state) => state.setAlert)
 
   const invitation = router.query.invitation as string
 
@@ -53,16 +47,14 @@ const Login: FC = () => {
         invitationId?: string
       }>(`/api/get-invitation?invitation=${invitation}`).then((r) => {
         if (r.ok) {
-          setMessage(r.message)
-          setOpen(true)
+          setAlert({ severity: 'success', children: r.message })
           fetchJson(`/api/delete-invitation?invitation=${invitation}`).then()
           setTimeout(() => {
             router.push(`/community/${r.space}/products`)
           }, 2000)
         }
         if (!r.isSignedUp) {
-          setMessage(r.message)
-          setOpen(true)
+          setAlert({ severity: 'error', children: r.message })
           setTimeout(() => {
             router.push(`/auth/signup?invitation=${invitation}`)
           }, 2000)
@@ -70,7 +62,7 @@ const Login: FC = () => {
       })
     // make sure the useEffect is called only once
     calledOnce.current = true
-  }, [router, invitation])
+  }, [router, invitation, setAlert])
 
   const handleLogin = useCallback(
     async (values: { email: string; password: string }) => {
@@ -84,18 +76,16 @@ const Login: FC = () => {
         if (fetchedLogin.ok) {
           await router.push('/community/dashboard')
         } else {
-          setOpen(true)
-          setMessage(fetchedLogin.errorMessage)
+          setAlert({ severity: 'error', children: fetchedLogin.errorMessage })
           setIsLoading(false)
         }
       } catch {
-        setOpen(true)
-        setMessage('RESPONSE_SERVER_ERROR')
+        setAlert({ severity: 'error', children: t('RESPONSE_SERVER_ERROR') })
         setIsLoading(false)
       }
     },
 
-    [router]
+    [router, setAlert, t]
   )
 
   const handleResetPassword = async (email: string) => {
@@ -110,15 +100,16 @@ const Login: FC = () => {
       if (fetchedResetPassword.ok) {
         setIsLoading(false)
         setOpenModal(false)
-        setOpen(true)
       } else {
-        setOpen(true)
-        setMessage(t('LOGIN_password_has_been_reset'))
+        setAlert({
+          severity: 'error',
+          children: t('LOGIN_password_has_been_reset'),
+        })
         setIsLoading(false)
       }
     } catch {
       setIsLoading(false)
-      setMessage('LOGIN_server_error')
+      setAlert({ severity: 'error', children: t('LOGIN_server_error') })
       setIsLoading(false)
     }
   }
@@ -193,16 +184,6 @@ const Login: FC = () => {
           </form>
         )}
       </Formik>
-      <Snackbar
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
-        }}
-        open={open}
-        autoHideDuration={3000}
-        onClose={() => setOpen(false)}
-        message={t(message)}
-      />
       <Modal
         open={openModal}
         onClose={() => {
