@@ -1,7 +1,5 @@
-import React, { ReactNode, useCallback, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useMemo, useRef, useState } from 'react'
 import {
-  Alert,
-  AlertColor,
   Box,
   Button,
   Fab,
@@ -11,7 +9,6 @@ import {
   Pagination,
   Select,
   SelectChangeEvent,
-  Snackbar,
   Typography,
 } from '@mui/material'
 import { useTranslation } from '../../../../hooks/use-translation'
@@ -49,6 +46,7 @@ import { sendFormData } from '../../../../lib/helpers/send-form-data'
 import InvitationModal from './InvitationModal'
 
 import { fetchProductApi } from '../../../../lib/helpers/fetch-product-api'
+import { useSnackbar } from '../../../../hooks/use-snackbar'
 
 export const maxProductsPerPage = 20
 
@@ -108,10 +106,6 @@ export const getServerSideProps = withIronSessionSsr<{
   }
 }, sessionOptions)
 
-const useAlert = () => {
-  return useState<{ severity: AlertColor; children: ReactNode }>()
-}
-
 const getProducts = async (space: string, skip?: string, filter?: string) => {
   const filterNumber = parseInt(filter || '')
   const filterQuery = isNaN(filterNumber) ? '' : `&filter=${filterNumber}`
@@ -146,7 +140,7 @@ export const Product = ({
   const lastPage = useRef(skip)
   const lastFilter = useRef(filter)
 
-  const [alert, setAlert] = useAlert()
+  const setAlert = useSnackbar((state) => state.setAlert)
 
   const [productList, setProductList] = useState(products)
   const [pageCount, setPageCount] = useState(count || 0)
@@ -163,8 +157,6 @@ export const Product = ({
 
   const [showCreateProduct, setShowCreateProduct] = useState(false)
   const [productToEdit, setProductToEdit] = useState<ProductType | null>(null)
-  const [openSnackbar, setOpenSnackbar] = useState(false)
-  const [message, setMessage] = useState('')
 
   const product = useFetchProductDetail(productDetail)
 
@@ -212,7 +204,6 @@ export const Product = ({
         severity: 'error',
         children: fetchedProductList.errorMessage,
       })
-      setOpenSnackbar(true)
     }
     setIsLoading(false)
   }, [space, skip, filter, asPath])
@@ -224,13 +215,11 @@ export const Product = ({
         isInvitationOk: boolean
         message: string
       }>('/api/invitation', { ...values, space: space })
-      setMessage(invitation.message)
-      setOpenSnackbar(true)
+      setAlert({ severity: 'success', children: invitation.message })
       setOpenModal(false)
       setIsLoading(false)
     } catch {
-      setMessage(t('INVITATION_server_error'))
-      setOpenSnackbar(false)
+      setAlert({ severity: 'error', children: t('INVITATION_server_error') })
       setOpenModal(true)
       setIsLoading(false)
     }
@@ -298,7 +287,6 @@ export const Product = ({
                     severity: 'success',
                     children: t('DELETE_PRODUCT_success_text'),
                   })
-                  setOpenSnackbar(true)
                 }}
                 onEdit={async (id) => {
                   const fetchedProduct = await fetchProductApi(
@@ -332,7 +320,6 @@ export const Product = ({
             severity: 'success',
             children: `${t('PRODUCT_updated_info')} ${updatedProduct.title}`,
           })
-          setOpenSnackbar(true)
         }}
         showModal={showCreateProduct}
         onClose={(state) => {
@@ -342,7 +329,6 @@ export const Product = ({
         product={productToEdit}
         onError={(error) => {
           setAlert({ severity: 'error', children: error })
-          setOpenSnackbar(true)
         }}
       />
       <Box className="py-4">
@@ -367,23 +353,10 @@ export const Product = ({
           />
         )}
       </Box>
-      <Snackbar
-        open={openSnackbar}
-        autoHideDuration={6000}
-        onClose={() => {
-          setOpenSnackbar(false)
-        }}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      >
-        <Alert {...alert} />
-      </Snackbar>
 
       <InvitationModal
         setOpenModal={setOpenModal}
-        message={message}
-        openSnackbar={openSnackbar}
         space={space}
-        setOpenSnackbar={setOpenSnackbar}
         openModal={openModal}
         isLoading={isLoading}
         handleInvitation={handleInvitation}

@@ -1,18 +1,17 @@
-import { Dispatch, FC, SetStateAction, useState } from 'react'
+import { Dispatch, FC, SetStateAction } from 'react'
 import { SpaceItemType } from '../../components/products/types'
-import { Box, Snackbar, TextField } from '@mui/material'
+import { Box, TextField } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 import { Formik } from 'formik'
 import { useTranslation } from '../../hooks/use-translation'
 import { sendFormData } from '../../lib/helpers/send-form-data'
 import { addSpaceFormSchema } from '../../lib/schema/add-space-form-schema'
 import { twFormGroup } from '../../lib/constants/css-classes'
+import { useSnackbar } from '../../hooks/use-snackbar'
 
 interface Props {
   setOpen: (isOpen: boolean) => void
   setIsLoading: (isLoading: boolean) => void
-  setMessage: (message: string) => void
-  message: string
   setMySpaces: Dispatch<SetStateAction<SpaceItemType[]>>
   mySpaces?: SpaceItemType[]
   isLoading?: boolean
@@ -22,13 +21,11 @@ const SpaceForm: FC<Props> = ({
   setOpen,
   isLoading,
   setIsLoading,
-  setMessage,
-  message,
   setMySpaces,
   mySpaces,
 }) => {
   const t = useTranslation()
-  const [isSnackbarOpen, setIsSnackbarOpen] = useState(false)
+  const setAlert = useSnackbar((state) => state.setAlert)
   const handleAddSpace = async (values: SpaceItemType) => {
     setIsLoading(true)
     try {
@@ -41,24 +38,27 @@ const SpaceForm: FC<Props> = ({
         const space = fetchedAddSpace.space
         mySpaces?.push(space)
         setIsLoading(false)
-        setMessage(fetchedAddSpace.message)
-        setIsSnackbarOpen(true)
+        setAlert({ severity: 'success', children: fetchedAddSpace.message })
         setOpen(false)
         if (Array.isArray(mySpaces)) {
           setMySpaces([...mySpaces])
         }
       } else {
-        setMessage(t(fetchedAddSpace.errorMessage))
+        setAlert({
+          severity: 'error',
+          children: t(fetchedAddSpace.errorMessage),
+        })
         setIsLoading(false)
         setIsLoading(false)
-        setIsSnackbarOpen(true)
         setOpen(true)
       }
     } catch {
-      setIsSnackbarOpen(true)
       setIsLoading(false)
       setOpen(true)
-      setMessage('SPACES_failed')
+      setAlert({
+        severity: 'error',
+        children: t('SPACES_failed'),
+      })
     }
   }
 
@@ -102,16 +102,6 @@ const SpaceForm: FC<Props> = ({
           </form>
         )}
       </Formik>
-      <Snackbar
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
-        }}
-        open={isSnackbarOpen}
-        autoHideDuration={3000}
-        onClose={() => setIsSnackbarOpen(false)}
-        message={t(message)}
-      />
     </>
   )
 }

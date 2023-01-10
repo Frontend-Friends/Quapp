@@ -14,7 +14,6 @@ export const Dashboard: FC<{
 }> = ({ spaces, t }) => {
   const [open, setOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const [message, setMessage] = useState('')
   const [mySpaces, setMySpaces] = useState<SpaceItemType[]>(spaces ?? [])
 
   return (
@@ -43,8 +42,6 @@ export const Dashboard: FC<{
           setOpen={setOpen}
           isLoading={isLoading}
           setIsLoading={setIsLoading}
-          setMessage={setMessage}
-          message={message}
           mySpaces={mySpaces}
           setMySpaces={setMySpaces}
         />

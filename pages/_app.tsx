@@ -14,6 +14,7 @@ import { Notifications } from '../components/notifications'
 import { useRouter } from 'next/router'
 import { useMemo } from 'react'
 import clsx from 'clsx'
+import { Snackbar } from '../components/snackbar/snackbar'
 
 const domain = 'quapp.org'
 const protocolSubdomain = 'https://www.'
@@ -75,6 +76,7 @@ export default function App({
         </div>
         {showNavbar && <NavigationBar />}
         <Notifications />
+        <Snackbar />
       </ThemeProvider>
     </CacheProvider>
   )
