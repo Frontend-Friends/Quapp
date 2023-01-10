@@ -12,6 +12,7 @@ import { getProductRef } from '../helpers/refs/get-product-ref'
 import { fetchUser } from './fetch-user'
 import { getUserRef } from '../helpers/refs/get-user-ref'
 import { Message } from '../../components/message/type'
+import { fetchSpace } from './fetch-space'
 
 export const fetchProduct = async (
   space: string,
@@ -21,6 +22,8 @@ export const fetchProduct = async (
   const [, productPath] = getProductRef(space, productsQuery)
   const chatCollection = collection(...productPath, 'chats')
   const [productDetailSnap] = await getProduct(productsQuery, space)
+
+  const fetchedSpace = await fetchSpace(space)
   if (Object.keys(productDetailSnap).length <= 1) {
     return undefined
   }
@@ -80,5 +83,7 @@ export const fetchProduct = async (
     owner: { userName: owner.userName || null, id: owner.id },
     chats: sortedChats,
     messages,
+    spaceId: fetchedSpace.id,
+    spaceName: fetchedSpace.name,
   } as ProductType
 }
