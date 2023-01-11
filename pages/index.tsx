@@ -159,7 +159,7 @@ const Home: FC<{ isLoggedIn: boolean }> = () => {
           />
         </div>
       </section>
-      <section className="relative mx-auto flex max-w-[1280px] flex-col items-center p-3 pb-16 lg:flex-row lg:flex-wrap lg:p-8">
+      <section className="relative mx-auto flex max-w-[1280px] flex-col items-center bg-white p-3 pb-16 lg:flex-row lg:flex-wrap lg:p-8">
         <h2 className="absolute left-1/3 z-10 m-0 w-1/2 text-left text-4xl font-medium lg:static lg:order-1 lg:flex-[0_0_100%]">
           {t('HOME_support_title')}
         </h2>

@@ -3,7 +3,7 @@
 exports[`renders Dashboard unchanged 1`] = `
 <div>
   <div
-    class="mx-auto w-full max-w-3xl p-2 md:p-8 relative MuiBox-root css-0"
+    class="mx-auto w-full max-w-3xl p-2 pb-8 md:p-8 relative MuiBox-root css-0"
   >
     <header>
       <h1
