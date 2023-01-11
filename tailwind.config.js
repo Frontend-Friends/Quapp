@@ -33,7 +33,6 @@ module.exports = {
       },
     },
   },
-  important: 'body',
   // eslint-disable-next-line import/no-extraneous-dependencies
   plugins: ['tailwindcss', 'postcss-preset-env', require('@tailwindcss/line-clamp')],
 }
