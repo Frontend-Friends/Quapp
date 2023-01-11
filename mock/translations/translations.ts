@@ -19,11 +19,12 @@ export const translations: Record<string, string> = {
   GLOBAL_back_to_home: 'Zurück zur Startseite',
   GLOBAL_status: 'Status',
 
-  SPACES_title: 'Dein Space',
+  SPACES_title: 'Deine Spaces',
   SPACES_no_entries: 'Es sind noch keine Spaces vorhanden',
   SPACES_members: 'Mitglieder',
   SPACES_items: 'Einträge',
-  SPACES_add_space: 'Space hinzufügen',
+  SPACES_add_space: 'Space erstellen',
+  SPACE_name: 'Name deines Spaces',
 
   RESET_reset_password: 'Password zurücksetzen',
   RESET_title: 'Password zurücksetzen',
@@ -96,13 +97,13 @@ export const translations: Record<string, string> = {
   BORROW_DATEPICKER_label: 'Ausleihdatum',
   BORROW_button_submit: 'Anfrage senden',
   BORROW_request_text:
-    '{USER} möchte das Produkt {PRODUCT_TITLE} am {DATE} ausleihen',
+    '{USER} möchte das Angebot {PRODUCT_TITLE} am {DATE} in Anspruch nehmen',
   BORROW_response_text:
-    'Du kannst das Produkt {PRODUCT_TITLE} von {USER} am {DATE} {ACCEPT} ausleihen',
+    'Du kannst das Angebot {PRODUCT_TITLE} von {USER} am {DATE} {ACCEPT} in Anspruch nehmen',
   BORROW_response_not: 'nicht',
-  BORROW_message_title: 'Ausleihanfrage für: ',
-  BORROW_response_accept_text: 'Du hast zugesagt',
-  BORROW_response_declined_text: 'Du hast abgelehnt',
+  BORROW_message_title: 'Anfrage für: ',
+  BORROW_response_accept_text: 'Du hast die Anfrage akzeptiert',
+  BORROW_response_declined_text: 'Du hast die Anfrage abgelehnt',
   BORROW_REQUEST_accept: 'Akzeptieren',
   BORROW_REQUEST_decline: 'Ablehnen',
   BORROW_date_assigned: 'Das Datum ist schon vergeben',
@@ -157,4 +158,10 @@ export const translations: Record<string, string> = {
     'Eine simple Illustration auf der zwei Personen zu sehen sind, die schematisch dargestellte Gegenstände tauschen.',
   SVG_hangout:
     'Eine simple Illustration auf der zwei Personen zu sehen sind die an einem Tisch Kaffee trinken und sich unterhalten.',
+
+  FOOTER_contact: 'Kontakt',
+  FOOTER_imprint: 'Impressum',
+  FOOTER_privacy: 'Datenschutz',
+
+  INBOX_title: 'Benachrichtigungen',
 }
