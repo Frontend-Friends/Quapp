@@ -28,6 +28,7 @@ export const translations: Record<string, string> = {
   SPACES_items: 'Einträge',
   SPACES_add_space: 'Space hinzufügen',
   SPACES_name: 'Space Name',
+  SPACES_administrator: 'Administrator',
 
   RESET_reset_password: 'Password zurücksetzen',
   RESET_title: 'Password zurücksetzen',
@@ -127,6 +128,7 @@ export const translations: Record<string, string> = {
   BUTTON_remove_upload: 'Hochgeladenes Bild entfernen',
   BUTTON_reset_password: 'Passwort zurücksetzen',
   BUTTON_invite_member: 'Person einladen',
+  BUTTON_save: 'Speichern',
 
   CHAT_title: 'Nachrichten',
   CHAT_no_messages: 'Derzeit sind keine Chat-Nachrichten vorhanden.',

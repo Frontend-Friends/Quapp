@@ -71,7 +71,6 @@ export const translationsEn: Record<string, string> = {
   BORROW_TEXTFIELD_default_value: 'Write a message',
   BORROW_DATEPICKER_label: 'Borrow date',
   BORROW_button_submit: 'Send request',
-  BUTTON_reset_password: 'Reset password',
 
   CREATE_PRODUCT_detail: 'Product Detail',
   CREATE_PRODUCT_upload: 'Upload image',
@@ -90,6 +89,8 @@ export const translationsEn: Record<string, string> = {
   BUTTON_close: 'Close',
   BUTTON_remove_upload: 'Remove uploaded image',
   BUTTON_invite_member: 'Invite person',
+  BUTTON_reset_password: 'Reset password',
+  BUTTON_save: 'Speichern',
 
   CHAT_title: 'News',
 
@@ -99,6 +100,7 @@ export const translationsEn: Record<string, string> = {
   SPACES_items: 'Entries',
   SPACES_add_space: 'Add space',
   SPACES_name: 'Space name',
+  SPACES_administrator: 'Administrator',
 
   CHAT_button_send: 'Send message',
   CHAT_button_loading: 'will be sent',
