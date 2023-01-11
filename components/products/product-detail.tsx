@@ -72,7 +72,6 @@ export const ProductDetail = ({
   const [productMessage, setProductMessage] = useState(product?.messages)
 
   useEffect(() => {
-    console.log(product?.messages)
     setProductMessage(product ? [...product.messages] : undefined)
   }, [product])
 

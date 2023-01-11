@@ -12,6 +12,7 @@ import { db } from '../../config/firebase'
 import { ProductType } from '../../components/products/types'
 import { User } from '../../components/user/types'
 import { maxProductsPerPage } from '../../pages/community/[space]/products/[[...products]]'
+import { getSpace } from './get-space'
 
 export const fetchProductList = async (
   space: string,
@@ -65,11 +66,15 @@ export const fetchProductList = async (
   const productsOnPage = firstProducts.docs.slice(offset)
   const productsData: DocumentData[] = []
 
+  const [fetchedSpace] = await getSpace(space)
+
   productsOnPage.forEach((productDoc) => {
     const docData = productDoc.data()
     productsData.push({
       ...docData,
       id: productDoc.id,
+      spaceId: fetchedSpace.id,
+      spaceName: fetchedSpace.name,
     })
   })
 

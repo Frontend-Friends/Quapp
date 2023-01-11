@@ -1,5 +1,5 @@
 import { getDoc } from 'firebase/firestore'
-import { ProductType } from '../../components/products/types'
+import { SpaceItemType } from '../../components/products/types'
 import { getSpaceRef } from '../helpers/refs/get-space-ref'
 
 export const getSpace = async (spaceId: string) => {
@@ -10,7 +10,7 @@ export const getSpace = async (spaceId: string) => {
         ({
           ...r.data(),
           id: r.id,
-        } as ProductType)
+        } as SpaceItemType)
     ),
     ref,
   ])

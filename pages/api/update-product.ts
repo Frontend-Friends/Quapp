@@ -50,7 +50,16 @@ async function createProduct(req: NextApiRequest, res: NextApiResponse) {
 
     const data = {
       ...formData.fields,
-    } as Omit<ProductType, 'id' | 'owner' | 'chats' | 'createdAt' | 'messages'>
+    } as Omit<
+      ProductType,
+      | 'id'
+      | 'owner'
+      | 'chats'
+      | 'createdAt'
+      | 'messages'
+      | 'spaceId'
+      | 'spaceName'
+    >
 
     if (imgSrc) {
       await deleteFileInStorage(oldDoc.imgSrc)

@@ -81,7 +81,9 @@ export const translations: Record<string, string> = {
   PRODUCT_updated_info: 'Der Eintrag wurde gespeichert:',
   PRODUCT_settings: 'Produkteinstellungen',
   PRODUCT_request_from: 'Anfrage von',
-
+  PRODUCT_description: 'Produkt Beschreibung',
+  PRODUCTS_my_list: 'Meine Produkte',
+  PRODUCT_location_at: 'in',
   DELETE_cancel_button: 'Abbrechen',
   DELETE_confirm_button: 'Löschen',
   DELETE_title: 'Löschen von: ',
