@@ -23,7 +23,6 @@ export default async function signupRoute(
 ) {
   const referer = req.headers.referer
 
-  console.log(req.headers.referer)
   const refUrl = referer ? new URL(referer) : undefined
   const { fields } = await parsedForm<{ fields: SignupType }>(req)
   try {
@@ -32,9 +31,10 @@ export default async function signupRoute(
       sendError(res)
       return
     }
+    console.log(`${refUrl.protocol}//${refUrl.host}`)
     const actionCodeSettings = {
       // URL must be in the authorized domains list in the Firebase Console.
-      url: `https://www.quapp.org/auth/login?name=${fields.firstName}`,
+      url: `${refUrl.protocol}//${refUrl.host}/auth/login?name=${fields.firstName}`,
       // This must be true.
       handleCodeInApp: true,
     }
