@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
-import { FC, useCallback, useEffect, useRef, useState } from 'react'
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react'
 import LoadingButton from '@mui/lab/LoadingButton'
-import { Box, Link, Modal, TextField, Typography } from '@mui/material'
+import { Box, IconButton, Link, Modal, TextField } from '@mui/material'
 import { CondensedContainer } from '../../components/condensed-container'
 import { useTranslation } from '../../hooks/use-translation'
 import { Formik } from 'formik'
@@ -12,6 +12,8 @@ import { fetchJson } from '../../lib/helpers/fetch-json'
 
 import { resetPasswordFormSchema } from '../../lib/schema/reset-password-form-schema'
 import { useSnackbar } from '../../hooks/use-snackbar'
+import { Header } from '../../components/header'
+import CloseIcon from '@mui/icons-material/Close'
 
 const twFormGroup = 'mb-4'
 
@@ -27,11 +29,8 @@ const Login: FC = () => {
   const t = useTranslation()
   const [isLoading, setIsLoading] = useState(false)
   const [openModal, setOpenModal] = useState(false)
-
   const setAlert = useSnackbar((state) => state.setAlert)
-
   const invitation = router.query.invitation as string
-
   const calledOnce = useRef(false)
 
   useEffect(() => {
@@ -116,9 +115,7 @@ const Login: FC = () => {
 
   return (
     <CondensedContainer>
-      <Typography variant="h1" className="my-6">
-        {t('LOGIN_title')}
-      </Typography>
+      <Header title={t('LOGIN_title')} titleSpacingClasses="mb-4" />
       <Formik
         initialValues={
           { email: '', password: '' } as {
@@ -192,8 +189,18 @@ const Login: FC = () => {
         aria-labelledby="delete-title"
         aria-describedby="delete-description"
       >
-        <CondensedContainer className="absolute top-1/2 left-1/2 m-0 w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-white p-8 drop-shadow-2xl">
-          <h3 id="reset-title">{`${t('RESET_title')}`}</h3>
+        <CondensedContainer className="absolute m-0 h-full w-full bg-white p-8 drop-shadow-2xl md:top-1/3 md:left-1/2 md:h-[unset] md:w-[600px] md:-translate-x-1/2 md:-translate-y-1/3">
+          <Box className="sticky top-0 z-10 flex h-0 w-full justify-end">
+            <IconButton
+              title={t('BUTTON_close')}
+              className="z-10 -mt-2 -mr-2 h-12 w-12 border border-slate-200 bg-white shadow hover:bg-slate-200"
+              onClick={() => setOpenModal(false)}
+            >
+              <CloseIcon />
+            </IconButton>
+          </Box>
+          <h3 id="reset-title" className="my-0">{`${t('RESET_title')}`}</h3>
+
           <p id="reset-description">{t('RESET_text')}</p>
           <Formik
             initialValues={{
@@ -208,7 +215,7 @@ const Login: FC = () => {
           >
             {(formikProps) => (
               <form onSubmit={formikProps.handleSubmit}>
-                <Box className="grid grid-cols-2 gap-4">
+                <Box className="grid grid-cols-1 gap-4">
                   <TextField
                     className={twFormGroup}
                     name="email"

@@ -7,10 +7,7 @@ export const CondensedContainer = forwardRef<HTMLDivElement, BoxProps>(
     return (
       <Box
         {...props}
-        className={clsx(
-          'mx-auto my-[10%] w-full max-w-3xl p-2 md:p-8',
-          props.className
-        )}
+        className={clsx('mx-auto w-full max-w-3xl p-2 md:p-8', props.className)}
         ref={ref}
       />
     )

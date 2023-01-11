@@ -3,11 +3,11 @@
 exports[`renders Dashboard unchanged 1`] = `
 <div>
   <div
-    class="mx-auto my-[10%] w-full max-w-3xl p-2 md:p-8 relative MuiBox-root css-0"
+    class="mx-auto w-full max-w-3xl p-2 md:p-8 relative MuiBox-root css-0"
   >
     <header>
       <h1
-        class="MuiTypography-root MuiTypography-h1 text-violetRed-600 md:text-3xl lg:text-4xl css-o2w69a-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-h1 text-3xl text-violetRed-600 lg:text-4xl css-o2w69a-MuiTypography-root"
       >
         SPACES_title
       </h1>

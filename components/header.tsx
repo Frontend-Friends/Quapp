@@ -13,7 +13,7 @@ export const Header: FC<{
       <Typography
         variant="h1"
         className={clsx(
-          'text-violetRed-600 md:text-3xl lg:text-4xl',
+          'text-3xl text-violetRed-600 lg:text-4xl',
           titleSpacingClasses
         )}
       >
