@@ -49,7 +49,7 @@ const SpaceItem: FC<Props> = ({ space }) => {
     <Grid item xs={1} className="grow">
       <Card
         variant="outlined"
-        className="relative flex w-full bg-gray-100 text-left hover:bg-slate-200"
+        className="relative flex w-full bg-blueishGray-50 text-left hover:bg-white"
         color="inherit"
       >
         <Link href={`${space.id}/products`} passHref>
@@ -58,7 +58,7 @@ const SpaceItem: FC<Props> = ({ space }) => {
             className="absolute top-0 bottom-0 left-0 right-0 block"
           />
         </Link>
-        <Box className="grid aspect-square h-full w-1/3 max-w-[80px] items-center justify-center bg-slate-300 object-cover md:max-w-[145px]">
+        <Box className="grid aspect-square h-full w-1/3 max-w-[105px] items-center justify-center bg-slate-300 object-cover md:max-w-[145px]">
           <MapsHomeWorkRoundedIcon className="text-5xl text-slate-400 md:text-6xl" />
         </Box>
         <Box className="grow">

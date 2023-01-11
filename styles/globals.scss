@@ -2,8 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+// Increase the root element base font size for desktop resolutions
 @media screen and (min-width: 768px) {
   html {
     font-size: 20px;
   }
+}
+
+h1,
+h2,
+h3 {
+  @apply font-medium text-primary;
 }
