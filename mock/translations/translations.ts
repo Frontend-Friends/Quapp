@@ -162,6 +162,7 @@ export const translations: Record<string, string> = {
   FOOTER_privacy: 'Datenschutz',
 
   INBOX_title: 'Benachrichtigungen',
+
   SETTINGS_change_password: 'Passwort ändern',
   SETTINGS_change_password_description:
     'Um dein Passwort zu ändern, musst du es von unserem System zurücksetzen lassen. Du erhältst nach der Durchführung eine E-Mail mit entsprechenden Anweisungen.',
