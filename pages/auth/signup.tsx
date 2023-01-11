@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react'
-import { Box, Link, Snackbar, TextField, Typography } from '@mui/material'
+import { Box, Link, TextField } from '@mui/material'
 import { Formik } from 'formik'
 import { useTranslation } from '../../hooks/use-translation'
 import { SignupType } from '../../components/products/types'
@@ -10,12 +10,14 @@ import { useRouter } from 'next/router'
 import { sendFormData } from '../../lib/helpers/send-form-data'
 import { fetchJson } from '../../lib/helpers/fetch-json'
 import { twFormGroup } from '../../lib/constants/css-classes'
+import { useSnackbar } from '../../hooks/use-snackbar'
+import { Header } from '../../components/header'
 
 const Signup: FC = () => {
   const [isLoading, setIsLoading] = useState(false)
-  const [open, setOpen] = React.useState(false)
-  const [message, setMessage] = useState('')
   const router = useRouter()
+  const setAlert = useSnackbar((state) => state.setAlert)
+  const t = useTranslation()
 
   const handleSignup = async (values: SignupType) => {
     setIsLoading(true)
@@ -40,22 +42,17 @@ const Signup: FC = () => {
           query: { name: values.firstName },
         })
       } else {
-        setOpen(true)
-        setMessage(fetchedSignup.errorMessage)
+        setAlert({ severity: 'error', children: fetchedSignup.errorMessage })
         setIsLoading(false)
       }
     } catch {
       setIsLoading(false)
-      setOpen(true)
-      setMessage('SIGNUP_failed')
+      setAlert({ severity: 'error', children: t('SIGNUP_failed') })
     }
   }
-  const t = useTranslation()
   return (
     <CondensedContainer>
-      <Typography variant="h1" className="my-6">
-        {t('SIGNUP_title')}
-      </Typography>
+      <Header title={t('SIGNUP_title')} titleSpacingClasses="mb-4" />
       <Formik
         initialValues={
           {
@@ -128,16 +125,6 @@ const Signup: FC = () => {
           </form>
         )}
       </Formik>
-      <Snackbar
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'center',
-        }}
-        open={open}
-        autoHideDuration={3000}
-        onClose={() => setOpen(false)}
-        message={t(message)}
-      />
     </CondensedContainer>
   )
 }

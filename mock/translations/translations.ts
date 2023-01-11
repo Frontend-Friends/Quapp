@@ -51,25 +51,28 @@ export const translations: Record<string, string> = {
   HOME_together_title: 'Gemeinsam Nachbarn sein.',
   HOME_together_text:
     'Sharing is caring - nach dieser Devise sollte unserer Meinung nach, jede Nachbarschaft leben! Quapp ermöglicht es dir ganz einfach Kontakt zu deiner Nachbarschaft aufzubauen und sich gegenseitig zu unterstützen.',
+  HOME_is_logged_in:
+    'Du bist bereits eingeloggt! Um auf dein Dashboard zu kommen, klicke einfach den folgenden Button:',
+  HOME_to_dashboard: 'Zu deinem Dashboard',
 
   LOGIN_title: 'Login',
   LOGIN_login: 'Anmelden',
   LOGIN_forgot_password: 'Passwort vergessen?',
-  LOGIN_has_no_account: 'Sie haben noch keinen Account?',
-  LOGIN_has_account: 'Sie haben schon einen Account?',
+  LOGIN_has_no_account: 'Du hast noch keinen Account?',
+  LOGIN_has_account: 'Du hast schon einen Account?',
   LOGIN_something_went_wrong:
-    'Etwas ist schief gelaufen. Bitte versuchen Sie es erneut.',
+    'Etwas ist schief gelaufen. Bitte versuche es erneut.',
   LOGIN_password_has_been_reset:
-    'Ihr Passwort wurde zurückgesetzt. Bitte überprüfen Sie Ihre E-Mail.',
+    'Dein Passwort wurde zurückgesetzt. Bitte überprüfe deine E-Mail Postfach.',
 
   LOGOUT_logout: 'Abmelden',
 
   SIGNUP_title: 'Registration',
   SIGNUP_signup: 'Registrieren',
   SIGNUP_something_went_wrong:
-    'Bei der Registrierung ist etwas schief gelaufen. Bitte versuchen Sie es erneut.',
+    'Bei der Registrierung ist etwas schief gelaufen. Bitte versuche es erneut.',
   SIGNUP_success_page_text:
-    'Vielen Dank für deine Registrierung! Wir haben dir eine E-Mail mit einem Verifizierungslink geschickt. Bitte klicke diesen um die Registrierung abzuschliessen. Dein Quapp Team',
+    'Vielen Dank für deine Registrierung! Wir haben dir eine E-Mail mit einem Verifizierungslink geschickt. Bitte klicke diesen an, um die Registrierung abzuschliessen. Dein Quapp Team',
 
   PRODUCTS_title: 'Produkte',
   PRODUCTS_no_entries: 'Leider gibt es noch keine Einträge.',
@@ -85,7 +88,7 @@ export const translations: Record<string, string> = {
   DELETE_cancel_button: 'Abbrechen',
   DELETE_confirm_button: 'Löschen',
   DELETE_title: 'Löschen von: ',
-  DELETE_text: 'Der Eintrag wird unwiederruflich gelöscht.',
+  DELETE_text: 'Der Eintrag wird unwiderruflich gelöscht.',
   DELETE_PRODUCT_success_text: 'Der Eintrag wurde erfolgreich gelöscht.',
 
   SAVE_PRODUCT_submit: 'Speichern',
@@ -95,18 +98,18 @@ export const translations: Record<string, string> = {
   BORROW_DATEPICKER_label: 'Ausleihdatum',
   BORROW_button_submit: 'Anfrage senden',
   BORROW_request_text:
-    '{USER} möchte das Produkt {PRODUCT_TITLE} am {DATE} ausleihen',
+    '{USER} möchte das Angebot {PRODUCT_TITLE} am {DATE} in Anspruch nehmen',
   BORROW_response_text:
-    'Du kannst das Produkt {PRODUCT_TITLE} von {USER} am {DATE} {ACCEPT} ausleihen',
+    'Du kannst das Angebot {PRODUCT_TITLE} von {USER} am {DATE} {ACCEPT} in Anspruch nehmen',
   BORROW_response_not: 'nicht',
-  BORROW_message_title: 'Ausleihanfrage für: ',
-  BORROW_response_accept_text: 'Du hast zugesagt',
-  BORROW_response_declined_text: 'Du hast abgelehnt',
+  BORROW_message_title: 'Anfrage für: ',
+  BORROW_response_accept_text: 'Du hast die Anfrage akzeptiert',
+  BORROW_response_declined_text: 'Du hast die Anfrage abgelehnt',
   BORROW_REQUEST_accept: 'Akzeptieren',
   BORROW_REQUEST_decline: 'Ablehnen',
   BORROW_date_assigned: 'Das Datum ist schon vergeben',
   BORROW_success_title: 'Deine Anfrage wurde versendet.',
-  BORROW_success_text: 'Willst Du eine neue Anfrage',
+  BORROW_success_text: 'Willst du eine neue Anfrage',
   REQUEST_product_link: 'Link zum Produkt',
 
   CREATE_PRODUCT_detail: 'Produkt Detail',
@@ -136,7 +139,7 @@ export const translations: Record<string, string> = {
   CHAT_message: 'Nachricht',
   CHAT_message_history: 'Nachrichtenverlauf',
   CHAT_message_error: 'Die Nachricht darf nicht leer sein',
-  CHAT_message_required: 'Das Feld ist pflicht',
+  CHAT_message_required: 'Dies ist ein Pflichtfeld',
 
   SETTINGS_title: 'Einstellungen',
   SETTINGS_change_settings: 'Einstellungen ändern',
@@ -145,9 +148,25 @@ export const translations: Record<string, string> = {
   INVITATION_title: 'Lade eine Person in diesen Space ein',
 
   NOTIFICATION_unread_message: 'Ungelesene Nachricht',
-  RESPONSE_SERVER_ERROR: 'Beim senden gab es einen Fehler',
+  RESPONSE_SERVER_ERROR: 'Beim Senden gab es einen Fehler',
 
   HTML_TITLE_general: 'Quapp - Die App die Nachbarn verbindet',
   HTML_META_description:
     'Quapp hilft dir, Kontakt mit deiner Nachbarschaft herzustellen und sich gegenseitig mit Hilfe oder Leihgaben zu unterstützen.',
+
+  SVG_logo: 'Das Quapp Logo',
+  SVG_appartment:
+    'Eine simple Illustration auf der ein Hochhaus mit Leuten davon zu erkennen ist.',
+  SVG_windowneighbours:
+    'Eine simple Illustration auf der zwei Nachbarn sich über Ihre Balkone unterhalten.',
+  SVG_collaborator:
+    'Eine simple Illustration auf der zwei Personen zu sehen sind, die schematisch dargestellte Gegenstände tauschen.',
+  SVG_hangout:
+    'Eine simple Illustration auf der zwei Personen zu sehen sind die an einem Tisch Kaffee trinken und sich unterhalten.',
+
+  FOOTER_contact: 'Kontakt',
+  FOOTER_imprint: 'Impressum',
+  FOOTER_privacy: 'Datenschutz',
+
+  INBOX_title: 'Benachrichtigungen',
 }

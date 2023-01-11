@@ -53,8 +53,6 @@ export const Dashboard: FC<{
           setOpen={setOpen}
           isLoading={isLoading}
           setIsLoading={setIsLoading}
-          setMessage={setMessage}
-          message={message}
           mySpaces={mySpaces}
           setMySpaces={setMySpaces}
         />

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Modal, Snackbar, TextField } from '@mui/material'
+import { Box, Modal, TextField } from '@mui/material'
 import { CondensedContainer } from '../../../../components/condensed-container'
 import { Formik } from 'formik'
 import { invitationFormSchema } from '../../../../lib/schema/invitation-form-schema'
@@ -13,9 +13,6 @@ interface Props {
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>
   space: string
   isLoading: boolean
-  message: string
-  openSnackbar: boolean
-  setOpenSnackbar: (open: boolean) => void
   handleInvitation: (values: InvitationType) => Promise<void>
 }
 
@@ -23,9 +20,6 @@ const InvitationModal: React.FC<Props> = ({
   openModal,
   setOpenModal,
   isLoading,
-  message,
-  openSnackbar,
-  setOpenSnackbar,
   handleInvitation,
 }) => {
   const t = useTranslation()
@@ -96,16 +90,6 @@ const InvitationModal: React.FC<Props> = ({
           </Formik>
         </CondensedContainer>
       </Modal>
-      <Snackbar
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'center',
-        }}
-        open={openSnackbar}
-        autoHideDuration={3000}
-        onClose={() => setOpenSnackbar(false)}
-        message={t(message)}
-      />
     </>
   )
 }

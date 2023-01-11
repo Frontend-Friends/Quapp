@@ -1,4 +1,5 @@
 /** @type {import("tailwindcss").Config} */
+
 module.exports = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx}',
@@ -10,6 +11,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        primary: '#D80062',
+        secondary: '#57B894',
+        tertiary: '#3F3D56',
+
         violetRed: {
           300: '#ff7bb8',
           600: '#D80062',
@@ -23,6 +28,8 @@ module.exports = {
           contrastText: '#fff',
         },
         blueishGray: {
+          50: '#f1f0fa',
+          100: '#dedcea',
           200: '#a29eb2',
           300: '#66647B',
           600: '#3F3D56',
