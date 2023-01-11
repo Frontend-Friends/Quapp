@@ -43,6 +43,8 @@ async function createProduct(req: NextApiRequest, res: NextApiResponse) {
       )
     }
 
+    console.log(formData.files?.img)
+
     const imgSrc = await uploadFileToStorage(formData.files?.img)
 
     const docRef = collection(db, 'spaces', space, 'products')
