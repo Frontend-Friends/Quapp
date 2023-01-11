@@ -1,4 +1,4 @@
-import { Button, Card } from '@mui/material'
+import { Card } from '@mui/material'
 import Link from 'next/link'
 import { Message } from './type'
 import { useTranslation } from '../../hooks/use-translation'
@@ -17,13 +17,15 @@ export const MessageLink = ({
   const dateFormate = useMemo(() => {
     const date = new Date(parseInt(message.date))
 
-    return dayjs(date).format('DD.MM. HH:MM')
+    return dayjs(date).format('DD.MM.YY - HH:MM')
   }, [message])
 
   return (
     <Link href={href} passHref shallow>
-      <Card component={Button} className="flex w-full gap-4 p-4">
-        <span className="text-gray-500">{dateFormate}</span>
+      <Card className="flex w-full items-center gap-4 bg-blueishGray-50 p-4 hover:cursor-pointer hover:bg-white">
+        <span className="w-[110px] shrink-0 rounded bg-blueishGray-200 py-1 px-2 text-center text-xs text-white md:w-[140px]">
+          {dateFormate}
+        </span>
         <span>
           {message.type === 'borrowRequest' && t('BORROW_message_title')}
           {message.type === 'borrowResponse' &&

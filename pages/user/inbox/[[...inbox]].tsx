@@ -3,13 +3,15 @@ import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { withIronSessionSsr } from 'iron-session/next'
 import { sessionOptions } from '../../../config/session-config'
 import { useRouter } from 'next/router'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { fetchJson } from '../../../lib/helpers/fetch-json'
 import { Message } from '../../../components/message/type'
 import { MessageDrawer } from '../../../components/message/message-drawer'
 import { MessageLink } from '../../../components/message/message-link'
 import { fetchMessages } from '../../../lib/services/fetch-messages'
 import { useAsync } from 'react-use'
+import { Header } from '../../../components/header'
+import { useTranslation } from '../../../hooks/use-translation'
 
 export const getServerSideProps: GetServerSideProps<{ messages?: Message[] }> =
   withIronSessionSsr(async ({ req }) => {
@@ -87,10 +89,12 @@ export default function Inbox({
     })
   }, [])
 
+  const t = useTranslation()
+
   return (
     <CondensedContainer>
-      <h1>Inbox</h1>
-      <ul className="grid gap-4">
+      <Header title={t('INBOX_title')} titleSpacingClasses="mb-4" />
+      <ul className="grid list-none gap-4 p-0">
         {mutateMessages?.map((entry, index) => {
           return (
             <li key={index}>
