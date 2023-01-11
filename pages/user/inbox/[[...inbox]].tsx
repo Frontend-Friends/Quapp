@@ -5,6 +5,7 @@ import { sessionOptions } from '../../../config/session-config'
 import { useRouter } from 'next/router'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { fetchJson } from '../../../lib/helpers/fetch-json'
+import { Message } from '../../../components/message/type'
 import { MessageDetail } from '../../../components/message/message-detail'
 import { MessageLink } from '../../../components/message/message-link'
 import { fetchMessages } from '../../../lib/services/fetch-messages'
@@ -12,29 +13,28 @@ import { useAsync } from 'react-use'
 import { Header } from '../../../components/header'
 import { useTranslation } from '../../../hooks/use-translation'
 
-export const getServerSideProps: GetServerSideProps<{
-  messages?: MessageDetail[]
-}> = withIronSessionSsr(async ({ req }) => {
-  const user = req.session.user
-  if (!user || !user.id) {
-    return { notFound: true }
-  }
-  const messages = await fetchMessages(user.id)
+export const getServerSideProps: GetServerSideProps<{ messages?: Message[] }> =
+  withIronSessionSsr(async ({ req }) => {
+    const user = req.session.user
+    if (!user || !user.id) {
+      return { notFound: true }
+    }
+    const messages = await fetchMessages(user.id)
 
-  return { props: { messages } }
-}, sessionOptions)
+    return { props: { messages } }
+  }, sessionOptions)
 
 export default function Inbox({
   messages,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { query, push } = useRouter()
   const [mutateMessages, setMutateMessages] = useState(messages)
-  const [message, setMessage] = useState<MessageDetail | undefined>(undefined)
+  const [message, setMessage] = useState<Message | undefined>(undefined)
   const [requestInterval, setRequestInterval] = useState(0)
 
   useAsync(async () => {
     const { messages: fetchedMessages, ok } = await fetchJson<{
-      messages: MessageDetail[]
+      messages: Message[]
     }>('/api/messages')
     if (ok) {
       setMutateMessages(fetchedMessages)
@@ -77,7 +77,7 @@ export default function Inbox({
 
   const isOpen = useMemo(() => !!query.inbox, [query])
 
-  const updateMessage = useCallback(async (updatedMessage: MessageDetail) => {
+  const updateMessage = useCallback(async (updatedMessage: Message) => {
     setMutateMessages((state) => {
       const foundIndex = state?.findIndex(
         (item) => item.date === updatedMessage.date
