@@ -9,7 +9,7 @@ import { CondensedContainer } from '../condensed-container'
 import CloseIcon from '@mui/icons-material/Close'
 import React from 'react'
 
-export const MessageDrawer = ({
+export const MessageDetail = ({
   open,
   onClose,
   message,
