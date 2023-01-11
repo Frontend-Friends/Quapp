@@ -45,10 +45,11 @@ export default async function signupRoute(
       password
     )
     await sendEmailVerification(credentials.user, actionCodeSettings).catch(
-      () => {
+      (error) => {
+        console.log(error)
         sendError(res, {
           session: false,
-          message: 'SIGNUP_something_went_wrong',
+          message: error,
         })
       }
     )
