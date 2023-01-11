@@ -150,6 +150,12 @@ const AccountSettings: React.FC<{ isLoggedIn: boolean; user: User }> = ({
           </form>
         )}
       </Formik>
+      <Typography variant="h1" className="mt-14 mb-4">
+        {t('SETTINGS_change_password')}
+      </Typography>
+      <Typography className="mt-4 mb-4">
+        {t('SETTINGS_change_password_description')}
+      </Typography>
       <LoadingButton
         variant="contained"
         loading={isLoading.resetPassword}
