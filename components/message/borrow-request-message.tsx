@@ -2,9 +2,11 @@ import { Message } from './type'
 import { useCallback, useMemo, useState } from 'react'
 import { fetchJson } from '../../lib/helpers/fetch-json'
 import { useTranslation } from '../../hooks/use-translation'
+import Alert from '@mui/material/Alert'
 import dayjs from 'dayjs'
 import Link from 'next/link'
 import { LoadingButton } from '@mui/lab'
+import { Divider } from '@mui/material'
 
 export const BorrowRequestMessage = ({
   message,
@@ -56,15 +58,31 @@ export const BorrowRequestMessage = ({
         `<span class="font-black">"${message.product?.title}"</span>`
       )
   }, [t, message])
+
+  let inquiryStatus
+
+  if (message.accept) {
+    inquiryStatus = (
+      <Alert severity="error">{t('BORROW_response_declined_text')}</Alert>
+    )
+  } else {
+    inquiryStatus = (
+      <Alert severity="success">{t('BORROW_response_accept_text')}</Alert>
+    )
+  }
+
   return (
-    <div>
+    <>
       <p dangerouslySetInnerHTML={{ __html: borrowText }} />
       <Link
         href={`/community/${message.space}/products/${message.productId}`}
         passHref
       >
-        <a>{t('REQUEST_product_link')}</a>
+        <a className="inline-block rounded bg-violetRed-600 py-1 px-4 text-white no-underline hover:bg-mintGreen-600">
+          {t('REQUEST_product_link')}
+        </a>
       </Link>
+      <Divider className="my-6" />
       {message.status === 'pending' && (
         <div className="mt-4 flex gap-4">
           <LoadingButton
@@ -93,15 +111,7 @@ export const BorrowRequestMessage = ({
           </LoadingButton>
         </div>
       )}
-      {message.status === 'replied' && (
-        <div className="mt-4 font-black">
-          {t(
-            message.accept
-              ? 'BORROW_response_accept_text'
-              : 'BORROW_response_declined_text'
-          )}
-        </div>
-      )}
-    </div>
+      {message.status === 'replied' && inquiryStatus}
+    </>
   )
 }
