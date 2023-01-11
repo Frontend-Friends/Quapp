@@ -22,9 +22,19 @@ export const ProductItem: FC<{
   product: ProductType
   categories?: string[]
   userId?: User['id']
-  onEdit: (id: string) => void
-  onDelete: (id: string) => void
-}> = ({ categories, product, userId, onEdit, onDelete }) => {
+  onEdit: (id: string, spaceId: string) => void
+  onDelete: (id: string, spaceId: string) => void
+  withSpaceName?: boolean
+  onClick: () => void
+}> = ({
+  categories,
+  product,
+  userId,
+  onEdit,
+  onDelete,
+  withSpaceName,
+  onClick,
+}) => {
   const t = useTranslation()
   const { query } = useRouter()
   const [openDeleteModal, setOpenDeleteModal] = useState(false)
@@ -48,6 +58,7 @@ export const ProductItem: FC<{
               !product.isAvailable && 'bg-white',
               'flex h-full items-stretch justify-start p-0 normal-case'
             )}
+            onClick={onClick}
           >
             {product.imgSrc && (
               <CardMedia
@@ -75,6 +86,14 @@ export const ProductItem: FC<{
                   {product.description}
                 </Typography>
               )}
+              {withSpaceName && (
+                <Typography
+                  variant="body2"
+                  className="pt-1 text-gray-500 line-clamp-2"
+                >
+                  ({t('PRODUCT_location_at')} {product.spaceName})
+                </Typography>
+              )}
               {categories && product.category !== undefined && (
                 <Typography
                   variant="body2"
@@ -90,6 +109,7 @@ export const ProductItem: FC<{
           <Box className="absolute right-0 top-0">
             <ProductMenu
               productId={product.id}
+              spaceId={product.spaceId}
               onEdit={onEdit}
               onDelete={() => {
                 setOpenDeleteModal(true)
@@ -121,7 +141,7 @@ export const ProductItem: FC<{
             <Button
               onClick={() => {
                 setOpenDeleteModal(false)
-                onDelete(product.id)
+                onDelete(product.id, product.spaceId)
               }}
               variant="contained"
             >
