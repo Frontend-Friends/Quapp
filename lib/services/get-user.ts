@@ -1,6 +1,6 @@
 import { getDoc } from 'firebase/firestore'
-import { ProductType } from '../../components/products/types'
 import { getUserRef } from '../helpers/refs/get-user-ref'
+import { User } from '../../components/user/types'
 
 export const getUser = async (userId: string) => {
   const [ref] = getUserRef(userId)
@@ -10,7 +10,7 @@ export const getUser = async (userId: string) => {
         ({
           ...r.data(),
           id: r.id,
-        } as ProductType)
+        } as User)
     ),
     ref,
   ])

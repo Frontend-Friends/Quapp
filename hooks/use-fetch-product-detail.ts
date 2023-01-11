@@ -13,23 +13,24 @@ export const deleteProduct = async (productId: string, space: string) => {
 }
 
 export const useFetchProductDetail = (
-  initialProductDetail?: ProductType | null
+  initialProductDetail?: ProductType | null,
+  space?: string | null
 ) => {
   const { query } = useRouter()
-  const { products: productQuery, space } = query
+  const { products: productQuery } = query
   const isInitial = useRef(true)
   const currentQuery = useRef(productQuery?.[0])
   const [product, setProduct] = useState(initialProductDetail)
   useAsync(async () => {
+    if (!space) {
+      return
+    }
     if (
       !!productQuery?.[0] &&
       !isInitial.current &&
       currentQuery.current !== productQuery[0]
     ) {
-      const fetchedProduct = await fetchProductApi(
-        space as string,
-        productQuery[0]
-      )
+      const fetchedProduct = await fetchProductApi(space, productQuery[0])
       setProduct(fetchedProduct)
     }
     if (!productQuery?.[0]) {
@@ -37,7 +38,7 @@ export const useFetchProductDetail = (
     }
     isInitial.current = false
     currentQuery.current = productQuery?.[0]
-  }, [productQuery])
+  }, [productQuery, space])
 
   return product
 }

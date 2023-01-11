@@ -32,11 +32,12 @@ const SpaceForm: FC<Props> = ({
       const fetchedAddSpace = await sendFormData<{
         message: string
         space: SpaceItemType
+        spaceId: string
       }>('/api/add-space', values)
 
       if (fetchedAddSpace.ok) {
         const space = fetchedAddSpace.space
-        mySpaces?.push(space)
+        mySpaces?.push({ ...space, id: fetchedAddSpace.spaceId })
         setIsLoading(false)
         setAlert({ severity: 'success', children: fetchedAddSpace.message })
         setOpen(false)
@@ -87,7 +88,7 @@ const SpaceForm: FC<Props> = ({
                 error={!!props.errors.name}
                 helperText={props.errors.name}
                 type="text"
-                label={t('SPACE_name')}
+                label={t('SPACES_name')}
                 variant="outlined"
               />
             </Box>

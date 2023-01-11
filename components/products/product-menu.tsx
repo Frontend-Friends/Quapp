@@ -6,11 +6,13 @@ import { useTranslation } from '../../hooks/use-translation'
 
 export const ProductMenu = ({
   productId,
+  spaceId,
   onEdit,
   onDelete,
 }: {
   productId: string
-  onEdit: (id: string) => void
+  spaceId: string
+  onEdit: (id: string, spaceId: string) => void
   onDelete: (id: string) => void
 }) => {
   const t = useTranslation()
@@ -30,9 +32,9 @@ export const ProductMenu = ({
     handleOnClose()
   }, [productId, handleOnClose, onDelete])
   const handleOnEdit = useCallback(() => {
-    onEdit(productId)
+    onEdit(productId, spaceId)
     handleOnClose()
-  }, [productId, handleOnClose, onEdit])
+  }, [onEdit, productId, spaceId, handleOnClose])
   return (
     <>
       <IconButton aria-label={t('PRODUCT_settings')} onClick={handleOnClick}>

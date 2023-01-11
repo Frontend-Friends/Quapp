@@ -13,6 +13,8 @@ export const translationsEn: Record<string, string> = {
   GLOBAL_options: 'Options',
   GLOBAL_back_to_home: 'Back to home page',
   GLOBAL_invitation_send: 'Send invitation',
+  GLOBAL_yes: 'Yes',
+  GLOBAL_no: 'No',
 
   HOME_signup_free: 'Register now for free',
   HOME_subtitle: 'The app that connects neighbors',
@@ -87,6 +89,7 @@ export const translationsEn: Record<string, string> = {
   BUTTON_info: 'Learn more',
   BUTTON_close: 'Close',
   BUTTON_remove_upload: 'Remove uploaded image',
+  BUTTON_invite_member: 'Invite person',
 
   CHAT_title: 'News',
 
@@ -94,7 +97,8 @@ export const translationsEn: Record<string, string> = {
   SPACES_no_entries: 'There are no Spaces yet',
   SPACES_members: 'Members',
   SPACES_items: 'Entries',
-  SPACE_add_space: 'Add space',
+  SPACES_add_space: 'Add space',
+  SPACES_name: 'Space name',
 
   CHAT_button_send: 'Send message',
   CHAT_button_loading: 'will be sent',
@@ -103,6 +107,7 @@ export const translationsEn: Record<string, string> = {
   CHAT_message_required: 'The field is mandatory',
 
   INVITATION_server_error: 'An error occurred while sending the invitation',
+  INVITATION_title: 'Invite a person to this space',
 
   SVG_logo: 'The Quapp logo with link to the home page',
   SVG_appartment:

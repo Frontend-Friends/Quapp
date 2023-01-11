@@ -18,18 +18,21 @@ export const translations: Record<string, string> = {
   GLOBAL_date: 'Datum',
   GLOBAL_back_to_home: 'Zurück zur Startseite',
   GLOBAL_status: 'Status',
+  GLOBAL_invitation_send: 'Einladung versenden',
+  GLOBAL_yes: 'Ja',
+  GLOBAL_no: 'Nein',
 
-  SPACES_title: 'Deine Spaces',
+  SPACES_title: 'Dein Space',
   SPACES_no_entries: 'Es sind noch keine Spaces vorhanden',
   SPACES_members: 'Mitglieder',
   SPACES_items: 'Einträge',
-  SPACES_add_space: 'Space erstellen',
-  SPACE_name: 'Name deines Spaces',
+  SPACES_add_space: 'Space hinzufügen',
+  SPACES_name: 'Space Name',
 
   RESET_reset_password: 'Password zurücksetzen',
   RESET_title: 'Password zurücksetzen',
   RESET_text:
-    'Bitte gib deine E-Mail Adresse ein, um das Passwort zurückzusetzen.',
+    'Geben Sie Ihre E-Mail Adresse ein, um Ihr Passwort zurückzusetzen.',
   RESET_submit_button: 'Passwort zurücksetzen',
 
   HOME_signup_free: 'Jetzt kostenlos Registrieren',
@@ -81,7 +84,9 @@ export const translations: Record<string, string> = {
   PRODUCT_updated_info: 'Der Eintrag wurde gespeichert:',
   PRODUCT_settings: 'Produkteinstellungen',
   PRODUCT_request_from: 'Anfrage von',
-
+  PRODUCT_description: 'Produkt Beschreibung',
+  PRODUCTS_my_list: 'Meine Produkte',
+  PRODUCT_location_at: 'in',
   DELETE_cancel_button: 'Abbrechen',
   DELETE_confirm_button: 'Löschen',
   DELETE_title: 'Löschen von: ',
@@ -126,6 +131,7 @@ export const translations: Record<string, string> = {
   BUTTON_close: 'Schliessen',
   BUTTON_remove_upload: 'Hochgeladenes Bild entfernen',
   BUTTON_reset_password: 'Passwort zurücksetzen',
+  BUTTON_invite_member: 'Person einladen',
 
   CHAT_title: 'Nachrichten',
   CHAT_no_messages: 'Derzeit sind keine Chat-Nachrichten vorhanden.',
@@ -139,6 +145,9 @@ export const translations: Record<string, string> = {
 
   SETTINGS_title: 'Einstellungen',
   SETTINGS_change_settings: 'Einstellungen ändern',
+
+  INVITATION_server_error: 'Beim Versenden der Einladung gab es einen Fehler',
+  INVITATION_title: 'Lade eine Person in diesen Space ein',
 
   NOTIFICATION_unread_message: 'Ungelesene Nachricht',
   RESPONSE_SERVER_ERROR: 'Beim Senden gab es einen Fehler',

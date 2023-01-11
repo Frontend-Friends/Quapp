@@ -54,10 +54,14 @@ async function addSpace(req: NextApiRequest, res: NextApiResponse) {
       spaces: arrayUnion(newSpaceId),
     })
     await Promise.all([newSpaceId, userUpdate])
-    sendResponse<{ space: SpaceItemType; message: string }>(res, {
-      space: { ...spaceData },
-      message: `The space ${spaceName.name} is added to spaces and to your profile.`,
-    })
+    sendResponse<{ space: SpaceItemType; message: string; spaceId: string }>(
+      res,
+      {
+        space: { ...spaceData },
+        message: `The space ${spaceName.name} is added to spaces and to your profile.`,
+        spaceId: newSpaceId,
+      }
+    )
   } catch (err) {
     console.error(err)
     sendError(res)

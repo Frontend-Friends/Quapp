@@ -30,6 +30,8 @@ export type ProductType = {
   chats: ProductChatType[]
   borrowDates?: string[]
   messages: Message[]
+  spaceId: string
+  spaceName: string
 }
 
 export type SpaceItemType = {

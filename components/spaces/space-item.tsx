@@ -1,44 +1,82 @@
 import {
+  Button,
   Card,
   CardContent,
   CardHeader,
+  Dialog,
+  DialogActions,
+  DialogTitle,
   Grid,
-  Link as MuiLink,
   IconButton,
+  Link as MuiLink,
   Typography,
-  Box,
 } from '@mui/material'
-import { FC } from 'react'
+import React, { Dispatch, FC, SetStateAction, useState } from 'react'
 import { SpaceItemType } from '../products/types'
 import GroupsIcon from '@mui/icons-material/Groups'
 import CategoryIcon from '@mui/icons-material/Category'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
-import MapsHomeWorkRoundedIcon from '@mui/icons-material/MapsHomeWorkRounded'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
-import React from 'react'
 import { useTranslation } from '../../hooks/use-translation'
 import Link from 'next/link'
 import { fetchJson } from '../../lib/helpers/fetch-json'
 
 interface Props {
   space: SpaceItemType
+  setMySpaces: Dispatch<SetStateAction<SpaceItemType[]>>
+  mySpaces: SpaceItemType[]
+  setSnackbarOpen: Dispatch<SetStateAction<boolean>>
+  setMessage: Dispatch<SetStateAction<string>>
 }
 
-const SpaceItem: FC<Props> = ({ space }) => {
+const SpaceItem: FC<Props> = ({
+  space,
+  setMySpaces,
+  mySpaces,
+  setSnackbarOpen,
+  setMessage,
+}) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
+  const [dialogOpen, setDialogOpen] = useState<boolean>(false)
+
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)
   }
   const handleClose = () => {
     setAnchorEl(null)
+    setDialogOpen(false)
+    setSnackbarOpen(false)
   }
-
   const handleDeleteClick = async () => {
     handleClose()
-    await fetchJson(`/api/delete-space?spaceId=${space.id}`)
-    await fetchJson(`/api/delete-space-from-user?spaceId=${space.id}`)
+    try {
+      const delSpace = await fetchJson<{
+        ok: boolean
+        message: string
+      }>(`/api/delete-space?spaceId=${space.id}`)
+
+      const delSpaceFromUser = await fetchJson<{
+        ok: boolean
+        message: string
+      }>(`/api/delete-space-from-user?spaceId=${space.id}`)
+      const allSuccess = await Promise.all([delSpace, delSpaceFromUser])
+      if (allSuccess) {
+        setMessage(delSpace.message)
+        setSnackbarOpen(true)
+        setMySpaces(
+          mySpaces.filter(
+            (mySpace) => mySpace.creationDate !== space.creationDate
+          )
+        )
+      } else {
+        setMessage(delSpace.message)
+        setSnackbarOpen(true)
+      }
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   const handleEditClick = () => {}
@@ -46,22 +84,15 @@ const SpaceItem: FC<Props> = ({ space }) => {
   const t = useTranslation()
 
   return (
-    <Grid item xs={1} className="grow">
-      <Card
-        variant="outlined"
-        className="relative flex w-full bg-blueishGray-50 text-left hover:bg-white"
-        color="inherit"
-      >
-        <Link href={`${space.id}/products`} passHref>
-          <MuiLink
-            title={`${t('GLOBAL_open')} ${space.name}`}
-            className="absolute top-0 bottom-0 left-0 right-0 block"
-          />
-        </Link>
-        <Box className="grid aspect-square h-full w-1/3 max-w-[105px] items-center justify-center bg-slate-300 object-cover md:max-w-[145px]">
-          <MapsHomeWorkRoundedIcon className="text-5xl text-slate-400 md:text-6xl" />
-        </Box>
-        <Box className="grow">
+    <>
+      <Grid item xs={1} className="grow">
+        <Card variant="outlined" className="relative">
+          <Link href={`${space.id}/products`} passHref>
+            <MuiLink
+              title={`${t('GLOBAL_open')} ${space.name}`}
+              className="absolute top-0 bottom-0 left-0 right-0 block"
+            />
+          </Link>
           <CardHeader
             title={space.name}
             action={
@@ -87,9 +118,11 @@ const SpaceItem: FC<Props> = ({ space }) => {
               'aria-labelledby': 'basic-button',
             }}
           >
-            <MenuItem onClick={handleEditClick}>{t('GLOBAL_edit')}</MenuItem>
-            <MenuItem onClick={handleDeleteClick}>
-              {t('GLOBAL_delete')}
+            <MenuItem onClick={handleEditClick}>{`${space.name} ${t(
+              'GLOBAL_edit'
+            )}`}</MenuItem>
+            <MenuItem onClick={() => setDialogOpen(true)}>
+              {`${space.name} ${t('GLOBAL_delete')}`}
             </MenuItem>
           </Menu>
           <CardContent className="flex items-center">
@@ -113,9 +146,18 @@ const SpaceItem: FC<Props> = ({ space }) => {
               </Typography>
             )}
           </CardContent>
-        </Box>
-      </Card>
-    </Grid>
+        </Card>
+      </Grid>
+      <Dialog open={dialogOpen} onClose={handleClose}>
+        <DialogTitle>{t('DELETE_text')}</DialogTitle>
+        <DialogActions>
+          <Button onClick={handleDeleteClick}>{t('GLOBAL_yes')}</Button>
+          <Button onClick={handleClose} autoFocus>
+            {t('GLOBAL_no')}
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
   )
 }
 
