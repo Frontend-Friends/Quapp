@@ -7,6 +7,7 @@ import AddIcon from '@mui/icons-material/Add'
 import SpaceForm from '../../pages/community/space-form'
 import { SpaceItemType } from '../products/types'
 import { UseTranslationType } from '../../hooks/use-translation'
+import EditSpaceModal from '../spaces/EditSpaceModal'
 
 export const Dashboard: FC<{
   spaces?: SpaceItemType[]
@@ -17,7 +18,8 @@ export const Dashboard: FC<{
   const [mySpaces, setMySpaces] = useState<SpaceItemType[]>(spaces ?? [])
   const [message, setMessage] = useState<string>('')
   const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false)
-
+  const [openModal, setOpenModal] = useState<boolean>(false)
+  const [space, setSpace] = useState<SpaceItemType | null>(null)
   return (
     <CondensedContainer className="relative">
       <Header title={t('SPACES_title')} />
@@ -32,6 +34,8 @@ export const Dashboard: FC<{
                 mySpaces={mySpaces}
                 setSnackbarOpen={setSnackbarOpen}
                 setMessage={setMessage}
+                setOpenModal={setOpenModal}
+                setSpace={setSpace}
               />
             )
           })}
@@ -68,6 +72,13 @@ export const Dashboard: FC<{
         autoHideDuration={3000}
         onClose={() => setSnackbarOpen(false)}
         message={t(message)}
+      />
+      <EditSpaceModal
+        openModal={openModal}
+        setOpenModal={setOpenModal}
+        space={space}
+        setSpace={setSpace}
+        t={t}
       />
     </CondensedContainer>
   )

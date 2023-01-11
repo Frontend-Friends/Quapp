@@ -4,7 +4,7 @@ import { CondensedContainer } from '../condensed-container'
 import { Formik, FormikValues } from 'formik'
 import { twFormGroup } from '../../lib/constants/css-classes'
 import LoadingButton from '@mui/lab/LoadingButton'
-import { useTranslation } from '../../hooks/use-translation'
+import { UseTranslationType } from '../../hooks/use-translation'
 import { editSpaceSchema } from '../../lib/schema/edit-space-schema'
 import { SpaceItemType } from '../products/types'
 import { sendFormData } from '../../lib/helpers/send-form-data'
@@ -14,6 +14,7 @@ interface Props {
   setOpenModal: Dispatch<SetStateAction<boolean>>
   space: SpaceItemType | null
   setSpace: Dispatch<SetStateAction<SpaceItemType>>
+  t: UseTranslationType
 }
 
 const EditSpaceModal: React.FC<Props> = ({
@@ -21,8 +22,8 @@ const EditSpaceModal: React.FC<Props> = ({
   setOpenModal,
   space,
   setSpace,
+  t,
 }) => {
-  const t = useTranslation()
   const [isLoading, setIsLoading] = useState(false)
   const handleEditSpace = async (values: FormikValues) => {
     setIsLoading(true)
