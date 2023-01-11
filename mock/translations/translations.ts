@@ -19,11 +19,12 @@ export const translations: Record<string, string> = {
   GLOBAL_back_to_home: 'Zurück zur Startseite',
   GLOBAL_status: 'Status',
 
-  SPACES_title: 'Dein Space',
+  SPACES_title: 'Deine Spaces',
   SPACES_no_entries: 'Es sind noch keine Spaces vorhanden',
   SPACES_members: 'Mitglieder',
   SPACES_items: 'Einträge',
-  SPACES_add_space: 'Space hinzufügen',
+  SPACES_add_space: 'Space erstellen',
+  SPACE_name: 'Name deines Spaces',
 
   RESET_reset_password: 'Password zurücksetzen',
   RESET_title: 'Password zurücksetzen',
@@ -155,4 +156,8 @@ export const translations: Record<string, string> = {
     'Eine simple Illustration auf der zwei Personen zu sehen sind, die schematisch dargestellte Gegenstände tauschen.',
   SVG_hangout:
     'Eine simple Illustration auf der zwei Personen zu sehen sind die an einem Tisch Kaffee trinken und sich unterhalten.',
+
+  FOOTER_contact: 'Kontakt',
+  FOOTER_imprint: 'Impressum',
+  FOOTER_privacy: 'Datenschutz',
 }

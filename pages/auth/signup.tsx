@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react'
-import { Box, Link, TextField, Typography } from '@mui/material'
+import { Box, Link, TextField } from '@mui/material'
 import { Formik } from 'formik'
 import { useTranslation } from '../../hooks/use-translation'
 import { SignupType } from '../../components/products/types'
@@ -11,6 +11,7 @@ import { sendFormData } from '../../lib/helpers/send-form-data'
 import { fetchJson } from '../../lib/helpers/fetch-json'
 import { twFormGroup } from '../../lib/constants/css-classes'
 import { useSnackbar } from '../../hooks/use-snackbar'
+import { Header } from '../../components/header'
 
 const Signup: FC = () => {
   const [isLoading, setIsLoading] = useState(false)
@@ -51,9 +52,7 @@ const Signup: FC = () => {
   }
   return (
     <CondensedContainer>
-      <Typography variant="h1" className="my-6">
-        {t('SIGNUP_title')}
-      </Typography>
+      <Header title={t('SIGNUP_title')} titleSpacingClasses="mb-4" />
       <Formik
         initialValues={
           {

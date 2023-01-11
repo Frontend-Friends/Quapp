@@ -244,8 +244,7 @@ export const Product = ({
         {t('BUTTON_invite_member')}
       </Button>
       <Header title={t('PRODUCTS_title')} />
-
-      {spaceName && <Header title={spaceName} />}
+      {spaceName && <Typography>{spaceName}</Typography>}
 
       {categories && (
         <FormControl className="lg:max-w-[32.5%]">
