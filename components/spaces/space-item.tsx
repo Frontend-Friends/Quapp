@@ -24,22 +24,28 @@ import { fetchJson } from '../../lib/helpers/fetch-json'
 
 interface Props {
   space: SpaceItemType
+  setSpace: Dispatch<SetStateAction<SpaceItemType>>
+
   setMySpaces: Dispatch<SetStateAction<SpaceItemType[]>>
   mySpaces: SpaceItemType[]
   setSnackbarOpen: Dispatch<SetStateAction<boolean>>
   setMessage: Dispatch<SetStateAction<string>>
+  setOpenModal: Dispatch<SetStateAction<boolean>>
 }
 
 const SpaceItem: FC<Props> = ({
   space,
+  setSpace,
   setMySpaces,
   mySpaces,
   setSnackbarOpen,
   setMessage,
+  setOpenModal,
 }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
   const [dialogOpen, setDialogOpen] = useState<boolean>(false)
+  const t = useTranslation()
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)
@@ -49,6 +55,12 @@ const SpaceItem: FC<Props> = ({
     setDialogOpen(false)
     setSnackbarOpen(false)
   }
+  const handleEditClick = () => {
+    handleClose()
+    setOpenModal(true)
+    setSpace(space)
+  }
+
   const handleDeleteClick = async () => {
     handleClose()
     try {
@@ -78,10 +90,6 @@ const SpaceItem: FC<Props> = ({
       console.error(error)
     }
   }
-
-  const handleEditClick = () => {}
-
-  const t = useTranslation()
 
   return (
     <>
