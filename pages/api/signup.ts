@@ -22,6 +22,8 @@ export default async function signupRoute(
   res: NextApiResponse
 ) {
   const referer = req.headers.referer
+
+  console.log(req.headers.referer)
   const refUrl = referer ? new URL(referer) : undefined
   const { fields } = await parsedForm<{ fields: SignupType }>(req)
   try {
