@@ -20,7 +20,7 @@ class MyDocument extends Document<{ emotionStyleTags: ReactNode[] }> {
 
   render() {
     return (
-      <Html className="sm:text-[30px]">
+      <Html>
         <Head>
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link
