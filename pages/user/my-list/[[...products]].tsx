@@ -46,7 +46,6 @@ export const getServerSideProps = withIronSessionSsr<{
     (item) => item.id === productsQuery?.[0]
   )
 
-  console.log(productsQuery)
   let productDetail: ProductType | undefined = undefined
   if (productsQuery && foundProduct) {
     productDetail = await fetchProduct(
@@ -59,8 +58,6 @@ export const getServerSideProps = withIronSessionSsr<{
       return { notFound: true }
     }
   }
-
-  console.log(productDetail?.spaceId)
 
   return {
     props: {

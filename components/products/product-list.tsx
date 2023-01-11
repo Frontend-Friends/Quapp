@@ -28,17 +28,7 @@ import { getQueryAsNumber } from '../../lib/helpers/get-query-as-number'
 import { maxProductsPerPage } from '../../pages/community/[space]/products/[[...products]]'
 import { useRouter } from 'next/router'
 import { ParsedUrlQuery } from 'querystring'
-import { fetchJson } from '../../lib/helpers/fetch-json'
-
-const getProducts = async (space: string, skip?: string, filter?: string) => {
-  const filterNumber = parseInt(filter || '')
-  const filterQuery = isNaN(filterNumber) ? '' : `&filter=${filterNumber}`
-  const skipQuery = skip === undefined ? '' : `&skip=${skip}`
-  return fetchJson<{
-    products: ProductType[]
-    count: number
-  }>(`/api/product-list?space=${space}${skipQuery}${filterQuery}`)
-}
+import { getProducts } from '../../lib/services/get-products'
 
 export const ProductList = ({
   products,
