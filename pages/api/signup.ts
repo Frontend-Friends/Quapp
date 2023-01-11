@@ -34,7 +34,7 @@ export default async function signupRoute(
     }
     const actionCodeSettings = {
       // URL must be in the authorized domains list in the Firebase Console.
-      url: `${refUrl.protocol}//${refUrl.host}/auth/login?name=${fields.firstName}`,
+      url: `https://www.quapp.org/auth/login?name=${fields.firstName}`,
       // This must be true.
       handleCodeInApp: true,
     }
@@ -44,15 +44,7 @@ export default async function signupRoute(
       email,
       password
     )
-    await sendEmailVerification(credentials.user, actionCodeSettings).catch(
-      (error) => {
-        console.log(error)
-        sendError(res, {
-          session: false,
-          message: error,
-        })
-      }
-    )
+    await sendEmailVerification(credentials.user, actionCodeSettings)
     const [userRef] = getUserRef(credentials.user.uid)
     await setDoc(userRef, {
       email,
