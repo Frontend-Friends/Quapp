@@ -50,16 +50,12 @@ async function getInvitation(req: NextApiRequest, res: NextApiResponse) {
               spaces: arrayUnion(
                 invitedPerson?.space ?? 'no user provided in invitation'
               ),
-            })
-              .then(() => true)
-              .catch(() => false)
+            }).then(() => true)
 
             // add user-id to space
             const addUserToSpace = await updateDoc(spaceRef, {
               users: arrayUnion(userId ?? 'no user provided in invitation'),
-            })
-              .then(() => true)
-              .catch(() => false)
+            }).then(() => true)
             const resolvedPromise = await Promise.all([
               addSpaceToUser,
               addUserToSpace,
