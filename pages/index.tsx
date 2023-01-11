@@ -13,6 +13,7 @@ import { WaveWhiteBottomSVG } from '../components/svg/wave_white_bottom'
 import { WaveWhiteTopSVG } from '../components/svg/wave_white_top'
 import { useRouter } from 'next/router'
 import { fetchJson } from '../lib/helpers/fetch-json'
+import Alert from '@mui/material/Alert'
 
 export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
   const { user } = req.session
@@ -52,12 +53,12 @@ const Home: FC<{ isLoggedIn: boolean }> = () => {
             aria-label={t('SVG_appartment')}
             className="col-span-3 row-span-2 -ml-6 h-[130px] w-full flex-1 sm:col-span-2 sm:-ml-14 sm:scale-125 md:scale-150 lg:scale-[2] 2xl:col-span-3 2xl:-ml-0 2xl:scale-[2.3]"
           />
-          <p className="col-span-4 row-span-2 m-0 flex-1 text-lg sm:col-span-4 md:text-xl lg:row-span-1 lg:pl-14 2xl:col-span-4">
-            {!isUser ? t('HOME_intro') : t('HOME_is_logged_in')}
-          </p>
 
           {!isUser ? (
             <>
+              <p className="col-span-4 row-span-2 m-0 flex-1 text-lg sm:col-span-4 md:text-xl lg:row-span-1 lg:pl-14 2xl:col-span-4">
+                {t('HOME_intro')}
+              </p>
               <Link
                 underline="none"
                 href="/auth/signup"
@@ -84,6 +85,12 @@ const Home: FC<{ isLoggedIn: boolean }> = () => {
             </>
           ) : (
             <>
+              <Alert
+                severity="info"
+                className="col-span-4 row-span-2 sm:col-span-4 md:mb-4 lg:row-span-1 2xl:col-span-4"
+              >
+                {t('HOME_is_logged_in')}
+              </Alert>
               <Link
                 underline="none"
                 href="/community/dashboard"
@@ -161,7 +168,7 @@ const Home: FC<{ isLoggedIn: boolean }> = () => {
       </section>
       <section className="relative mx-auto flex max-w-[1280px] flex-col items-center bg-white p-3 pb-16 lg:flex-row lg:flex-wrap lg:p-8">
         <h2 className="absolute left-1/3 z-10 m-0 w-1/2 text-left text-4xl font-medium lg:static lg:order-1 lg:flex-[0_0_100%]">
-          {t('HOME_support_title')}
+          {t('HOME_together_title')}
         </h2>
         <HangoutSVG
           aria-label={t('SVG_hangout')}
@@ -169,7 +176,7 @@ const Home: FC<{ isLoggedIn: boolean }> = () => {
         />
         <Divider className="mt-7 w-full lg:order-2" />
         <p className="text-center text-lg md:text-xl lg:order-3 lg:flex-[0_0_66%] lg:self-start lg:text-left lg:text-2xl">
-          {t('HOME_support_text')}
+          {t('HOME_together_text')}
         </p>
       </section>
     </main>
