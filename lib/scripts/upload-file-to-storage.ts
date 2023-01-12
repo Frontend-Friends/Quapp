@@ -1,7 +1,7 @@
 import { File } from 'formidable'
 import fs from 'fs'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
-import { storage } from '../../config/firebase'
+import path from 'path'
 
 export const uploadFileToStorage = async (img?: File | null) => {
   if (!img || !img.originalFilename) {
@@ -11,12 +11,12 @@ export const uploadFileToStorage = async (img?: File | null) => {
 
   const fileBuffer = await fs.promises.readFile(filePath)
 
-  const imgRef = ref(storage, `${new Date().getTime()}-${img.originalFilename}`)
+  const pathToFile = path.join(
+    process.cwd(),
+    `/public/images/${new Date().getTime()}-${img.originalFilename}`
+  )
 
-  console.error(filePath)
-  console.error(fileBuffer.toString())
+  await fs.promises.writeFile(pathToFile, fileBuffer)
 
-  await uploadBytes(imgRef, fileBuffer)
-
-  return getDownloadURL(imgRef)
+  return pathToFile
 }
