@@ -5,7 +5,7 @@ export const uploadFileToStorage = async (img?: File | null) => {
   if (!img || !img.originalFilename) {
     return null
   }
-  const filePath = `${process.cwd()}${img.filepath}`
+  const filePath = img.filepath
 
   const fileBuffer = await fs.promises.readFile(filePath)
 
