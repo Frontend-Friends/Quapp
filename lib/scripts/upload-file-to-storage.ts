@@ -11,12 +11,10 @@ export const uploadFileToStorage = async (img?: File | null) => {
 
   const fileBuffer = await fs.promises.readFile(filePath)
 
-  const pathToFile = path.join(
-    process.cwd(),
-    `/public/images/${new Date().getTime()}-${img.originalFilename}`
-  )
+  const relativePath = `/images/${new Date().getTime()}-${img.originalFilename}`
+  const pathToFile = path.join(process.cwd(), '/public', relativePath)
 
   await fs.promises.writeFile(pathToFile, fileBuffer)
 
-  return pathToFile
+  return relativePath
 }
