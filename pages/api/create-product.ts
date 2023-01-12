@@ -1,16 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { createProductSchema } from '../../lib/schema/create-product-schema'
-import { db } from '../../config/firebase'
-import { addDoc, collection } from 'firebase/firestore'
-import { uploadFileToStorage } from '../../lib/scripts/upload-file-to-storage'
 import { ProductFormData } from '../../components/products/types'
 import { withIronSessionApiRoute } from 'iron-session/next'
 import { sessionOptions } from '../../config/session-config'
 import { parsedForm } from '../../lib/helpers/parsed-form'
-import { fetchProduct } from '../../lib/services/fetch-product'
 import { createNewCategory } from '../../lib/helpers/create_new_category'
-import { deleteObjectKey } from '../../lib/helpers/delete-object-key'
-import { getUserRef } from '../../lib/helpers/refs/get-user-ref'
 import { sendError } from '../../lib/helpers/send-error'
 import { sendResponse } from '../../lib/helpers/send-response'
 
@@ -42,9 +36,7 @@ async function createProduct(req: NextApiRequest, res: NextApiResponse) {
         formData.fields.newCategory
       )
     }
-
-    console.log(formData.files?.img)
-
+    /*
     const imgSrc = await uploadFileToStorage(formData.files?.img)
 
     const docRef = collection(db, 'spaces', space, 'products')
@@ -61,9 +53,9 @@ async function createProduct(req: NextApiRequest, res: NextApiResponse) {
       owner: userRef,
     }).then((r) => r.id)
 
-    const productData = await fetchProduct(space, productId, user.id || '')
+    const productData = await fetchProduct(space, productId, user.id || '')*/
 
-    sendResponse(res, { productId, product: productData })
+    sendResponse(res, { productId: 0, product: null })
   } catch (err) {
     console.error(err)
     sendError(res)
