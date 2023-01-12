@@ -13,7 +13,10 @@ export const uploadFileToStorage = async (img?: File | null) => {
 
   const imgRef = ref(storage, `${new Date().getTime()}-${img.originalFilename}`)
 
-  await uploadBytes(imgRef, fileBuffer).catch((err) => console.error(err))
+  console.error(filePath)
+  console.error(fileBuffer.toString())
+
+  await uploadBytes(imgRef, fileBuffer)
 
   return getDownloadURL(imgRef)
 }
