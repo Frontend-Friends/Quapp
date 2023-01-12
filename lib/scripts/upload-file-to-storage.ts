@@ -13,6 +13,7 @@ export const uploadFileToStorage = async (img?: File | null) => {
   }${img.filepath}`
 
   const fileBuffer = await fs.promises.readFile(filePath)
+  throw Error(fileBuffer.toString())
 
   const imgRef = ref(storage, `${new Date().getTime()}-${img.originalFilename}`)
 
