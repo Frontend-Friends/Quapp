@@ -1,19 +1,13 @@
 import { File } from 'formidable'
 import fs from 'fs'
-import path from 'path'
 import { supabase } from '../../config/supabase'
 
 export const uploadFileToStorage = async (img?: File | null) => {
   if (!img || !img.originalFilename) {
     return null
   }
-  const filePath = path.join(
-    process.cwd(),
-    'public',
-    'android-chrome-192x192.png'
-  )
 
-  const fileBuffer = await fs.promises.readFile(filePath)
+  const fileBuffer = await fs.promises.readFile(img.filepath)
 
   const fileName = `${new Date().getTime()}-${img.originalFilename}`
 
