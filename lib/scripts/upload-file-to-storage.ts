@@ -1,20 +1,24 @@
 import { File } from 'formidable'
 import fs from 'fs'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
+import { storage } from '../../config/firebase'
 import path from 'path'
 
 export const uploadFileToStorage = async (img?: File | null) => {
   if (!img || !img.originalFilename) {
     return null
   }
-  const filePath = img.filepath
+  const filePath = path.join(
+    process.cwd(),
+    'public',
+    'android-chrome-192x192.png'
+  )
 
   const fileBuffer = await fs.promises.readFile(filePath)
 
-  const relativePath = `/images/${new Date().getTime()}-${img.originalFilename}`
-  const pathToFile = path.join(process.cwd(), '/public', relativePath)
+  const imgRef = ref(storage, `${new Date().getTime()}-${img.originalFilename}`)
 
-  await fs.promises.writeFile(pathToFile, fileBuffer)
+  await uploadBytes(imgRef, fileBuffer)
 
-  return relativePath
+  return getDownloadURL(imgRef)
 }
