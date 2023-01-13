@@ -22,6 +22,7 @@ export default async function signupRoute(
   res: NextApiResponse
 ) {
   const referer = req.headers.referer
+
   const refUrl = referer ? new URL(referer) : undefined
   const { fields } = await parsedForm<{ fields: SignupType }>(req)
   try {
@@ -30,6 +31,7 @@ export default async function signupRoute(
       sendError(res)
       return
     }
+    console.log(`${refUrl.protocol}//${refUrl.host}`)
     const actionCodeSettings = {
       // URL must be in the authorized domains list in the Firebase Console.
       url: `${refUrl.protocol}//${refUrl.host}/auth/login?name=${fields.firstName}`,
@@ -42,14 +44,7 @@ export default async function signupRoute(
       email,
       password
     )
-    await sendEmailVerification(credentials.user, actionCodeSettings).catch(
-      () => {
-        sendError(res, {
-          session: false,
-          message: 'SIGNUP_something_went_wrong',
-        })
-      }
-    )
+    await sendEmailVerification(credentials.user, actionCodeSettings)
     const [userRef] = getUserRef(credentials.user.uid)
     await setDoc(userRef, {
       email,
