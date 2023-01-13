@@ -11,15 +11,12 @@ export const uploadFileToStorage = async (img?: File | null) => {
 
   const fileName = `${new Date().getTime()}-${img.originalFilename}`
 
-  const { data: uploadData, error } = await supabase.storage
+  await supabase.storage
     .from('images')
     .upload(`public/${fileName}`, fileBuffer, {
       cacheControl: '3600',
       upsert: false,
     })
-
-  console.log(error)
-  console.log(uploadData?.path)
 
   const { data } = supabase.storage
     .from('images')
