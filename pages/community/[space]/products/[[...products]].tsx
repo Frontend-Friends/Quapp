@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button } from '@mui/material'
+import { Box, IconButton } from '@mui/material'
 import { useTranslation } from '../../../../hooks/use-translation'
 import { InferGetServerSidePropsType } from 'next'
 import { Header } from '../../../../components/header'
@@ -22,6 +22,9 @@ import { sendFormData } from '../../../../lib/helpers/send-form-data'
 import InvitationModal from './InvitationModal'
 import { useSnackbar } from '../../../../hooks/use-snackbar'
 import { ProductList } from '../../../../components/products/product-list'
+import MoreVertIcon from '@mui/icons-material/MoreVert'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
 
 export const maxProductsPerPage = 20
 
@@ -99,6 +102,17 @@ export const Product = ({
     filter?: string
   }
 
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+  const open = Boolean(anchorEl)
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
+
   const setAlert = useSnackbar((state) => state.setAlert)
 
   const [isLoading, setIsLoading] = useState(false)
@@ -123,10 +137,38 @@ export const Product = ({
 
   return (
     <main className="m mx-auto grid w-full max-w-7xl gap-4 p-3">
-      <Button onClick={() => setOpenModal(true)} variant="contained">
-        {t('BUTTON_invite_member')}
-      </Button>
-      <Header title={`${t('PRODUCTS_title')} ${spaceName ? spaceName : ''}`} />
+      <Box className="flex">
+        <Header title={spaceName ? spaceName : ''} />
+        <IconButton
+          aria-label="settings"
+          aria-controls={open ? 'products-menu' : undefined}
+          aria-haspopup="true"
+          aria-expanded={open ? 'true' : undefined}
+          onClick={handleClick}
+          className="relative ml-auto"
+        >
+          <MoreVertIcon />
+        </IconButton>
+      </Box>
+
+      <Menu
+        id="products-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+      >
+        <MenuItem
+          onClick={() => {
+            setOpenModal(true)
+            handleClose()
+          }}
+        >
+          {t('BUTTON_invite_member')}
+        </MenuItem>
+      </Menu>
 
       <ProductList
         products={products}

@@ -74,7 +74,6 @@ export const translations: Record<string, string> = {
   SIGNUP_success_page_text:
     'Vielen Dank für deine Registrierung! Wir haben dir eine E-Mail mit einem Verifizierungslink geschickt. Bitte klicke diesen an, um die Registrierung abzuschliessen. Dein Quapp Team',
 
-  PRODUCTS_title: 'Produkte',
   PRODUCTS_no_entries: 'Leider gibt es noch keine Einträge.',
   PRODUCT_not_available: 'Nicht verfügbar',
   PRODUCT_add: 'Neues Produkt erstellen',

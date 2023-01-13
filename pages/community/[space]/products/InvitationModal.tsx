@@ -33,8 +33,10 @@ const InvitationModal: React.FC<Props> = ({
         aria-labelledby="invitation-title"
         aria-describedby="delete-description"
       >
-        <CondensedContainer className="absolute top-1/2 left-1/2 m-0 w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-white p-8 drop-shadow-2xl">
-          <h3 id="invitation-title">{`${t('INVITATION_title')} `}</h3>
+        <CondensedContainer className="absolute top-1/3 left-1/2 m-0 w-[400px] -translate-x-1/2 -translate-y-1/3 bg-white p-8 drop-shadow-2xl">
+          <h3 id="invitation-title" className="m-0 mb-4">{`${t(
+            'INVITATION_title'
+          )} `}</h3>
 
           <Formik
             initialValues={
@@ -80,7 +82,7 @@ const InvitationModal: React.FC<Props> = ({
                 <LoadingButton
                   type="submit"
                   variant="contained"
-                  className="mr-4"
+                  className="mt-2"
                   loading={isLoading}
                 >
                   {t('GLOBAL_invitation_send')}
