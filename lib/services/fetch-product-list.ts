@@ -21,15 +21,14 @@ export const fetchProductList = async (
 ) => {
   const productCollection = collection(db, 'spaces', space, 'products')
 
+  const orderByDate = orderBy('createdAt', 'desc')
+  const filterQuery = where('category', '==', filter)
+
   // Query to count all the products
   const countQuery =
     filter !== undefined
-      ? query(
-          productCollection,
-          where('category', '==', filter),
-          orderBy('createdAt')
-        )
-      : query(productCollection, orderBy('createdAt'))
+      ? query(productCollection, filterQuery, orderByDate)
+      : query(productCollection, orderByDate)
 
   // fetch the products to count
   const productCountDocs = await getDocs(countQuery)
@@ -48,16 +47,13 @@ export const fetchProductList = async (
   // make sure we always have a number
   const maxProducts = maxProductsPerPage + maxProductsPerPage * offsetMultiplier
 
+  const limited = limit(maxProducts)
+
   // Query to get all Products from 0 to current page with or without filter
   const firstProductQuery =
     filter !== undefined
-      ? query(
-          productCollection,
-          where('category', '==', filter),
-          orderBy('createdAt'),
-          limit(maxProducts)
-        )
-      : query(productCollection, orderBy('createdAt'), limit(maxProducts))
+      ? query(productCollection, filterQuery, orderByDate, limited)
+      : query(productCollection, orderByDate, limited)
 
   // get the products
   const firstProducts = await getDocs(firstProductQuery)

@@ -31,7 +31,6 @@ export default async function signupRoute(
       sendError(res)
       return
     }
-    console.log(`${refUrl.protocol}//${refUrl.host}`)
     const actionCodeSettings = {
       // URL must be in the authorized domains list in the Firebase Console.
       url: `${refUrl.protocol}//${refUrl.host}/auth/login?name=${fields.firstName}`,
