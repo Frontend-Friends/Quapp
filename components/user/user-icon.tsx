@@ -15,6 +15,7 @@ import { fetchJson } from '../../lib/helpers/fetch-json'
 import { useTranslation } from '../../hooks/use-translation'
 import LogoutRounded from '@mui/icons-material/LogoutRounded'
 import SettingsRounded from '@mui/icons-material/SettingsRounded'
+import InventoryIcon from '@mui/icons-material/Inventory'
 
 export const UserIcon: FC = () => {
   const [open, setOpen] = useState<boolean>(false)
@@ -43,7 +44,7 @@ export const UserIcon: FC = () => {
           setOpen(true)
         }}
       >
-        <Person2RoundedIcon fontSize="large" />
+        <Person2RoundedIcon className="text-3xl" />
       </Button>
       <Menu
         id="basic-menu"
@@ -63,6 +64,17 @@ export const UserIcon: FC = () => {
         }}
       >
         <MenuList>
+          <MenuItem
+            onClick={() => {
+              push('/user/my-list')
+            }}
+          >
+            <ListItemIcon>
+              <InventoryIcon fontSize="small" />
+            </ListItemIcon>
+            {t('PRODUCTS_my_list')}
+          </MenuItem>
+          <Divider />
           <MenuItem
             onClick={() => {
               push('/user/account-settings')

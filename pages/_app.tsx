@@ -14,6 +14,7 @@ import { Notifications } from '../components/notifications'
 import { useRouter } from 'next/router'
 import { useMemo } from 'react'
 import clsx from 'clsx'
+import { Snackbar } from '../components/snackbar/snackbar'
 
 const domain = 'quapp.org'
 const protocolSubdomain = 'https://www.'
@@ -67,14 +68,17 @@ export default function App({
         <div
           className={clsx(
             'flex min-h-screen min-w-[340px] flex-col justify-between',
-            showNavbar && 'md:mt-[83px]'
+            showNavbar && 'md:pt-[83px]'
           )}
         >
-          <Component {...pageProps} />
+          <div className="grow bg-[url(/assets/img/neighbourhood.svg)] bg-[length:auto_300px] bg-bottom bg-repeat-x">
+            <Component {...pageProps} />
+          </div>
           <Footer />
         </div>
         {showNavbar && <NavigationBar />}
         <Notifications />
+        <Snackbar />
       </ThemeProvider>
     </CacheProvider>
   )

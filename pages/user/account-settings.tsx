@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Box, Snackbar, TextField, Typography } from '@mui/material'
+import { Box, TextField, Typography } from '@mui/material'
 import { Formik } from 'formik'
 import { useTranslation } from '../../hooks/use-translation'
 import { SettingType, User } from '../../components/user/types'
@@ -11,6 +11,7 @@ import { withIronSessionSsr } from 'iron-session/next'
 import { ironOptions } from '../../lib/config'
 import { sendFormData } from '../../lib/helpers/send-form-data'
 import { twFormGroup } from '../../lib/constants/css-classes'
+import { useSnackbar } from '../../hooks/use-snackbar'
 
 const AccountSettings: React.FC<{ isLoggedIn: boolean; user: User }> = ({
   ...props
@@ -19,8 +20,8 @@ const AccountSettings: React.FC<{ isLoggedIn: boolean; user: User }> = ({
     updateAccount: false,
     resetPassword: false,
   })
-  const [open, setOpen] = React.useState(false)
-  const [message, setMessage] = useState('')
+  const setAlert = useSnackbar((state) => state.setAlert)
+
   const t = useTranslation()
   if (!props.user) {
     alert('middleware richtig konfigurieren')
@@ -32,13 +33,11 @@ const AccountSettings: React.FC<{ isLoggedIn: boolean; user: User }> = ({
       const result = await sendFormData(`/api/account-settings`, values)
       if (result.ok) {
         setIsLoading({ ...isLoading, updateAccount: false })
-        setOpen(true)
-        setMessage('SETTINGS_updated')
+        setAlert({ severity: 'success', children: t('SETTINGS_updated') })
       }
     } catch {
       setIsLoading({ ...isLoading, updateAccount: false })
-      setOpen(true)
-      setMessage('SETTINGS_failed')
+      setAlert({ severity: 'error', children: t('SETTINGS_failed') })
     }
   }
   const handleResetPassword = async (email: string) => {
@@ -52,13 +51,15 @@ const AccountSettings: React.FC<{ isLoggedIn: boolean; user: User }> = ({
       if (fetchedResetPassword.ok) {
         setIsLoading({ ...isLoading, updateAccount: false })
       } else {
-        setOpen(true)
-        setMessage(t('LOGIN_password_has_been_reset'))
+        setAlert({
+          severity: 'error',
+          children: t('LOGIN_password_has_been_reset'),
+        })
         setIsLoading({ ...isLoading, resetPassword: false })
       }
     } catch {
       setIsLoading({ ...isLoading, resetPassword: true })
-      setMessage('LOGIN_server_error')
+      setAlert({ severity: 'error', children: t('LOGIN_server_error') })
       setIsLoading({ ...isLoading, resetPassword: false })
     }
   }
@@ -149,6 +150,12 @@ const AccountSettings: React.FC<{ isLoggedIn: boolean; user: User }> = ({
           </form>
         )}
       </Formik>
+      <Typography variant="h1" className="mt-14 mb-4">
+        {t('SETTINGS_change_password')}
+      </Typography>
+      <Typography className="mt-4 mb-4">
+        {t('SETTINGS_change_password_description')}
+      </Typography>
       <LoadingButton
         variant="contained"
         loading={isLoading.resetPassword}
@@ -159,16 +166,6 @@ const AccountSettings: React.FC<{ isLoggedIn: boolean; user: User }> = ({
       >
         {t('BUTTON_reset_password')}
       </LoadingButton>
-      <Snackbar
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'center',
-        }}
-        open={open}
-        autoHideDuration={3000}
-        onClose={() => setOpen(false)}
-        message={t(message)}
-      />
     </CondensedContainer>
   )
 }
