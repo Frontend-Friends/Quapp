@@ -1,8 +1,7 @@
 import { File } from 'formidable'
 import fs from 'fs'
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
-import { storage } from '../../config/firebase'
 import path from 'path'
+import { supabase } from '../../config/supabase'
 
 export const uploadFileToStorage = async (img?: File | null) => {
   if (!img || !img.originalFilename) {
@@ -16,9 +15,21 @@ export const uploadFileToStorage = async (img?: File | null) => {
 
   const fileBuffer = await fs.promises.readFile(filePath)
 
-  const imgRef = ref(storage, `${new Date().getTime()}-${img.originalFilename}`)
+  const fileName = `${new Date().getTime()}-${img.originalFilename}`
 
-  await uploadBytes(imgRef, fileBuffer)
+  const { data: uploadData, error } = await supabase.storage
+    .from('images')
+    .upload(`public/${fileName}`, fileBuffer, {
+      cacheControl: '3600',
+      upsert: false,
+    })
 
-  return getDownloadURL(imgRef)
+  console.log(error)
+  console.log(uploadData?.path)
+
+  const { data } = supabase.storage
+    .from('images')
+    .getPublicUrl(`public/${fileName}`)
+
+  return data.publicUrl
 }
