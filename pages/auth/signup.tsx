@@ -9,7 +9,7 @@ import { LoadingButton } from '@mui/lab'
 import { useRouter } from 'next/router'
 import { sendFormData } from '../../lib/helpers/send-form-data'
 import { fetchJson } from '../../lib/helpers/fetch-json'
-import { twFormGroup } from '../../lib/constants/css-classes'
+import { twFormGroup } from '../../lib/constants'
 import { useSnackbar } from '../../hooks/use-snackbar'
 import { Header } from '../../components/header'
 
@@ -76,7 +76,7 @@ const Signup: FC = () => {
                 onBlur={props.handleBlur}
                 value={props.values.firstName}
                 error={!!props.errors.firstName}
-                helperText={props.errors.firstName}
+                helperText={t(props.errors.firstName || '')}
                 type="text"
                 label={t('GLOBAL_first_name')}
                 variant="outlined"
@@ -89,7 +89,7 @@ const Signup: FC = () => {
                 onBlur={props.handleBlur}
                 value={props.values.email}
                 error={!!props.errors.email}
-                helperText={props.errors.email}
+                helperText={t(props.errors.email || '')}
                 type="email"
                 label={t('GLOBAL_email')}
                 variant="outlined"
@@ -102,7 +102,7 @@ const Signup: FC = () => {
                 onBlur={props.handleBlur}
                 value={props.values.password}
                 error={!!props.errors.password}
-                helperText={props.errors.password}
+                helperText={t(props.errors.password || '')}
                 type="password"
                 label={t('GLOBAL_password')}
                 variant="outlined"

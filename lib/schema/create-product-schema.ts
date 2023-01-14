@@ -2,8 +2,12 @@ import { boolean, mixed, object, string } from 'yup'
 import { MAX_FILE_SIZE } from '../constants'
 
 export const createProductSchema = object().shape({
-  title: string().min(4, 'to short').required('PRODUCT_CREATE_required_title'),
-  text: string().min(4, 'to short').required('PRODUCT_CREATE_required_text'),
+  title: string()
+    .min(4, 'GLOBAL_too_short')
+    .required('PRODUCT_CREATE_required_title'),
+  text: string()
+    .min(4, 'GLOBAL_too_short')
+    .required('PRODUCT_CREATE_required_text'),
   img: mixed()
     .test({
       message: 'PRODUCT_CREATE_wrong_file_format',

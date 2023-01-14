@@ -137,7 +137,7 @@ const Login: FC = () => {
                 value={props.values.email}
                 onChange={props.handleChange}
                 error={!!props.errors.email}
-                helperText={props.errors.email}
+                helperText={t(props.errors.email || '')}
                 onBlur={props.handleBlur}
                 type="email"
                 label={t('GLOBAL_email')}
@@ -150,7 +150,7 @@ const Login: FC = () => {
                 value={props.values.password}
                 onChange={props.handleChange}
                 onBlur={props.handleBlur}
-                helperText={props.errors.password}
+                helperText={t(props.errors.password || '')}
                 error={!!props.errors.password}
                 type="password"
                 label={t('GLOBAL_password')}
@@ -225,7 +225,7 @@ const Login: FC = () => {
                     value={formikProps.values.email}
                     onChange={formikProps.handleChange}
                     onBlur={formikProps.handleBlur}
-                    helperText={formikProps.errors.email}
+                    helperText={t(formikProps.errors.email || '')}
                     error={!!formikProps.errors.email}
                   />
                 </Box>

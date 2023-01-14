@@ -22,6 +22,10 @@ export const translations: Record<string, string> = {
   GLOBAL_invitation_send: 'Einladung versenden',
   GLOBAL_yes: 'Ja',
   GLOBAL_no: 'Nein',
+  GLOBAL_required: 'Pflichtfeld',
+  GLOBAL_too_short: 'Eingabe ist zu kurz',
+  GLOBAL_password_min_eight: 'Das Passwort muss mindestens 8 Zeichen lang sein',
+  GLOBAL_invalid_email: 'E-Mail Adresse ungültig',
 
   SPACES_title: 'Dein Space',
   SPACES_no_entries: 'Es sind noch keine Spaces vorhanden',
