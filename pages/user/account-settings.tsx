@@ -10,7 +10,7 @@ import { fetchJson } from '../../lib/helpers/fetch-json'
 import { withIronSessionSsr } from 'iron-session/next'
 import { ironOptions } from '../../lib/config'
 import { sendFormData } from '../../lib/helpers/send-form-data'
-import { twFormGroup } from '../../lib/constants/css-classes'
+import { twFormGroup } from '../../lib/constants'
 import { useSnackbar } from '../../hooks/use-snackbar'
 
 const AccountSettings: React.FC<{ isLoggedIn: boolean; user: User }> = ({

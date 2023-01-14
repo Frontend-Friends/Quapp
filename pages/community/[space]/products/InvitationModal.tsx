@@ -6,7 +6,7 @@ import { invitationFormSchema } from '../../../../lib/schema/invitation-form-sch
 import { LoadingButton } from '@mui/lab'
 import { useTranslation } from '../../../../hooks/use-translation'
 import { InvitationType } from '../../../../components/products/types'
-import { twFormGroup } from '../../../../lib/constants/css-classes'
+import { twFormGroup } from '../../../../lib/constants'
 
 interface Props {
   openModal: boolean

@@ -6,7 +6,7 @@ import { Formik } from 'formik'
 import { useTranslation } from '../../hooks/use-translation'
 import { sendFormData } from '../../lib/helpers/send-form-data'
 import { addSpaceFormSchema } from '../../lib/schema/add-space-form-schema'
-import { twFormGroup } from '../../lib/constants/css-classes'
+import { twFormGroup } from '../../lib/constants'
 import { useSnackbar } from '../../hooks/use-snackbar'
 
 interface Props {
