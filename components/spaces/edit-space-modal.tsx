@@ -6,15 +6,17 @@ import { twFormGroup } from '../../lib/constants/css-classes'
 import LoadingButton from '@mui/lab/LoadingButton'
 import { UseTranslationType } from '../../hooks/use-translation'
 import { editSpaceSchema } from '../../lib/schema/edit-space-schema'
-import { SpaceItemType } from '../products/types'
+import { SpaceItemTypeWithUser } from '../products/types'
 import { sendFormData } from '../../lib/helpers/send-form-data'
+import { User } from '../user/types'
 
 interface Props {
   openModal: boolean
   setOpenModal: Dispatch<SetStateAction<boolean>>
-  space: SpaceItemType | null
-  setSpace: Dispatch<SetStateAction<SpaceItemType>>
+  space: SpaceItemTypeWithUser | null
+  setSpace: Dispatch<SetStateAction<SpaceItemTypeWithUser>>
   t: UseTranslationType
+  user: User
 }
 
 const EditSpaceModal: React.FC<Props> = ({
@@ -23,6 +25,7 @@ const EditSpaceModal: React.FC<Props> = ({
   space,
   setSpace,
   t,
+  user: currentUser,
 }) => {
   const [isLoading, setIsLoading] = useState(false)
   const handleEditSpace = async (values: FormikValues) => {
@@ -42,7 +45,9 @@ const EditSpaceModal: React.FC<Props> = ({
       console.log(error)
     }
   }
-  console.log(space)
+
+  const users: { id: string; userName: string }[] | undefined = space?.users
+
   return (
     <Modal
       open={openModal}
@@ -93,12 +98,15 @@ const EditSpaceModal: React.FC<Props> = ({
                   id="demo-simple-select"
                   value={props.values.name}
                   error={!!props.errors.ownerId}
-                  defaultValue="name of the owner"
+                  defaultValue={currentUser.id}
                 >
-                  {/*todo users.map*/}
-                  <MenuItem value={10}>ich </MenuItem>
-                  <MenuItem value={20}>du</MenuItem>
-                  <MenuItem value={30}>er</MenuItem>
+                  {users?.map((user) => {
+                    return (
+                      <MenuItem value={user.id} key={user.id}>
+                        {user.userName}
+                      </MenuItem>
+                    )
+                  })}
                 </Select>
               </Box>
               <LoadingButton

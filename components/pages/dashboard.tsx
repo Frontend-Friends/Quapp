@@ -5,21 +5,26 @@ import { Fab, Grid, Snackbar, Typography } from '@mui/material'
 import SpaceItem from '../spaces/space-item'
 import AddIcon from '@mui/icons-material/Add'
 import SpaceForm from '../../pages/community/space-form'
-import { SpaceItemType } from '../products/types'
+import { SpaceItemTypeWithUser } from '../products/types'
 import { UseTranslationType } from '../../hooks/use-translation'
-import EditSpaceModal from '../spaces/EditSpaceModal'
+import EditSpaceModal from '../spaces/edit-space-modal'
+import { User } from '../user/types'
 
 export const Dashboard: FC<{
-  spaces?: SpaceItemType[]
+  spaces?: SpaceItemTypeWithUser[]
+  user: User
   t: UseTranslationType
-}> = ({ spaces, t }) => {
+}> = ({ spaces, t, user }) => {
   const [open, setOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const [mySpaces, setMySpaces] = useState<SpaceItemType[]>(spaces ?? [])
+  const [mySpaces, setMySpaces] = useState<SpaceItemTypeWithUser[]>(
+    spaces ?? []
+  )
   const [message, setMessage] = useState<string>('')
   const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false)
   const [openModal, setOpenModal] = useState<boolean>(false)
-  const [space, setSpace] = useState<SpaceItemType | null>(null)
+  const [space, setSpace] = useState<SpaceItemTypeWithUser | null>(null)
+
   return (
     <CondensedContainer className="relative">
       <Header title={t('SPACES_title')} />
@@ -77,6 +82,7 @@ export const Dashboard: FC<{
         space={space}
         setSpace={setSpace}
         t={t}
+        user={user}
       />
     </CondensedContainer>
   )

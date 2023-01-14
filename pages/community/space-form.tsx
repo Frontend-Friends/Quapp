@@ -1,5 +1,8 @@
 import { Dispatch, FC, SetStateAction } from 'react'
-import { SpaceItemType } from '../../components/products/types'
+import {
+  SpaceItemType,
+  SpaceItemTypeWithUser,
+} from '../../components/products/types'
 import { Box, TextField } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 import { Formik } from 'formik'
@@ -12,8 +15,8 @@ import { useSnackbar } from '../../hooks/use-snackbar'
 interface Props {
   setOpen: (isOpen: boolean) => void
   setIsLoading: (isLoading: boolean) => void
-  setMySpaces: Dispatch<SetStateAction<SpaceItemType[]>>
-  mySpaces?: SpaceItemType[]
+  setMySpaces: Dispatch<SetStateAction<SpaceItemTypeWithUser[]>>
+  mySpaces?: SpaceItemTypeWithUser[]
   isLoading?: boolean
 }
 
@@ -31,7 +34,7 @@ const SpaceForm: FC<Props> = ({
     try {
       const fetchedAddSpace = await sendFormData<{
         message: string
-        space: SpaceItemType
+        space: SpaceItemTypeWithUser
         spaceId: string
       }>('/api/add-space', values)
 

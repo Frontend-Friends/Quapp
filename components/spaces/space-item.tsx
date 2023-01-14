@@ -12,7 +12,7 @@ import {
   Typography,
 } from '@mui/material'
 import React, { Dispatch, FC, SetStateAction, useState } from 'react'
-import { SpaceItemType } from '../products/types'
+import { SpaceItemTypeWithUser } from '../products/types'
 import GroupsIcon from '@mui/icons-material/Groups'
 import CategoryIcon from '@mui/icons-material/Category'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
@@ -23,11 +23,11 @@ import Link from 'next/link'
 import { fetchJson } from '../../lib/helpers/fetch-json'
 
 interface Props {
-  space: SpaceItemType
-  setSpace: Dispatch<SetStateAction<SpaceItemType>>
+  space: SpaceItemTypeWithUser
+  setSpace: Dispatch<SetStateAction<SpaceItemTypeWithUser>>
 
-  setMySpaces: Dispatch<SetStateAction<SpaceItemType[]>>
-  mySpaces: SpaceItemType[]
+  setMySpaces: Dispatch<SetStateAction<SpaceItemTypeWithUser[]>>
+  mySpaces: SpaceItemTypeWithUser[]
   setSnackbarOpen: Dispatch<SetStateAction<boolean>>
   setMessage: Dispatch<SetStateAction<string>>
   setOpenModal: Dispatch<SetStateAction<boolean>>

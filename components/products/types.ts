@@ -44,6 +44,11 @@ export type SpaceItemType = {
   itemCount?: number
   categories?: string[]
   spaces?: string[]
+  users?: string[]
+}
+
+export type SpaceItemTypeWithUser = SpaceItemType & {
+  users?: { id: string; userName: string }[]
 }
 
 export type SignupType = {
