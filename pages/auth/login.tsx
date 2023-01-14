@@ -186,8 +186,8 @@ const Login: FC = () => {
         onClose={() => {
           setOpenModal(false)
         }}
-        aria-labelledby="delete-title"
-        aria-describedby="delete-description"
+        aria-labelledby="reset-title"
+        aria-describedby="reset-description"
       >
         <CondensedContainer className="absolute m-0 h-full w-full bg-white p-8 drop-shadow-2xl md:top-1/3 md:left-1/2 md:h-[unset] md:w-[600px] md:-translate-x-1/2 md:-translate-y-1/3">
           <Box className="sticky top-0 z-10 flex h-0 w-full justify-end">
