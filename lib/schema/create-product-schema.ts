@@ -1,5 +1,5 @@
 import { boolean, mixed, object, string } from 'yup'
-import { MAX_FILE_SIZE } from '../constants/css-classes'
+import { MAX_FILE_SIZE } from '../constants'
 
 export const createProductSchema = object().shape({
   title: string().min(4, 'to short').required('PRODUCT_CREATE_required_title'),
