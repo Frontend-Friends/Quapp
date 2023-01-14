@@ -33,6 +33,8 @@ export const translations: Record<string, string> = {
   SPACES_items: 'Einträge',
   SPACES_add_space: 'Space hinzufügen',
   SPACES_name: 'Space Name',
+  SPACES_add_space_text:
+    'Wähle bitte einen passenden Namen für deinen eigenen neuen Space:',
 
   RESET_reset_password: 'Password zurücksetzen',
   RESET_title: 'Password zurücksetzen',
