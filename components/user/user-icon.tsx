@@ -3,7 +3,6 @@ import {
   Button,
   Divider,
   ListItemIcon,
-  ListItemText,
   Menu,
   MenuItem,
   MenuList,
@@ -16,6 +15,7 @@ import { useTranslation } from '../../hooks/use-translation'
 import LogoutRounded from '@mui/icons-material/LogoutRounded'
 import SettingsRounded from '@mui/icons-material/SettingsRounded'
 import InventoryIcon from '@mui/icons-material/Inventory'
+import Link from 'next/link'
 
 export const UserIcon: FC = () => {
   const [open, setOpen] = useState<boolean>(false)
@@ -64,33 +64,49 @@ export const UserIcon: FC = () => {
         }}
       >
         <MenuList>
-          <MenuItem
-            onClick={() => {
-              push('/user/my-list')
-            }}
-          >
-            <ListItemIcon>
-              <InventoryIcon fontSize="small" />
-            </ListItemIcon>
-            {t('PRODUCTS_my_list')}
+          <MenuItem>
+            <Link href="/user/my-list" passHref>
+              <a className="flex items-center no-underline hover:text-secondary focus:text-secondary">
+                <ListItemIcon>
+                  <InventoryIcon fontSize="small" />
+                </ListItemIcon>
+                {t('PRODUCTS_my_list')}
+              </a>
+            </Link>
           </MenuItem>
           <Divider />
-          <MenuItem
-            onClick={() => {
-              push('/user/account-settings')
-            }}
-          >
-            <ListItemIcon>
-              <SettingsRounded fontSize="small" />
-            </ListItemIcon>
-            {t('GLOBAL_go_to_account_settings')}
+          <MenuItem>
+            <Link href="/user/account-settings" passHref>
+              <a className="flex items-center no-underline hover:text-secondary focus:text-secondary">
+                <ListItemIcon>
+                  <SettingsRounded fontSize="small" />
+                </ListItemIcon>
+                {t('GLOBAL_go_to_account_settings')}
+              </a>
+            </Link>
           </MenuItem>
           <Divider />
-          <MenuItem onClick={handleLogout}>
-            <ListItemIcon>
-              <LogoutRounded fontSize="small" />
-            </ListItemIcon>
-            <ListItemText>{t('LOGOUT_logout')}</ListItemText>
+          <MenuItem>
+            <Link href="/user/inbox" passHref>
+              <a className="flex items-center no-underline hover:text-secondary focus:text-secondary">
+                <ListItemIcon>
+                  <SettingsRounded fontSize="small" />
+                </ListItemIcon>
+                {t('GLOBAL_go_to_inbox')}
+              </a>
+            </Link>
+          </MenuItem>
+          <Divider />
+          <MenuItem>
+            <button
+              onClick={handleLogout}
+              className="flex items-center border-0 bg-transparent p-0 no-underline hover:text-secondary focus:text-secondary"
+            >
+              <ListItemIcon>
+                <LogoutRounded fontSize="small" />
+              </ListItemIcon>
+              {t('LOGOUT_logout')}
+            </button>
           </MenuItem>
         </MenuList>
       </Menu>
