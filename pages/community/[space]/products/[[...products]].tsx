@@ -19,7 +19,7 @@ import { getDoc } from 'firebase/firestore'
 import { getSpaceRef } from '../../../../lib/helpers/refs/get-space-ref'
 
 import { sendFormData } from '../../../../lib/helpers/send-form-data'
-import InvitationModal from './InvitationModal'
+import InvitationModal from './invitation-modal'
 import { useSnackbar } from '../../../../hooks/use-snackbar'
 import { ProductList } from '../../../../components/products/product-list'
 import MoreVertIcon from '@mui/icons-material/MoreVert'

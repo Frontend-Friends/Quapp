@@ -6,11 +6,10 @@ import { Formik } from 'formik'
 import { useTranslation } from '../../hooks/use-translation'
 import { sendFormData } from '../../lib/helpers/send-form-data'
 import { addSpaceFormSchema } from '../../lib/schema/add-space-form-schema'
-import { twFormGroup } from '../../lib/constants/css-classes'
+import { twFormGroup } from '../../lib/constants'
 import { useSnackbar } from '../../hooks/use-snackbar'
 
 interface Props {
-  setOpen: (isOpen: boolean) => void
   setIsLoading: (isLoading: boolean) => void
   setMySpaces: Dispatch<SetStateAction<SpaceItemType[]>>
   mySpaces?: SpaceItemType[]
@@ -18,7 +17,6 @@ interface Props {
 }
 
 const SpaceForm: FC<Props> = ({
-  setOpen,
   isLoading,
   setIsLoading,
   setMySpaces,
@@ -40,7 +38,6 @@ const SpaceForm: FC<Props> = ({
         mySpaces?.push({ ...space, id: fetchedAddSpace.spaceId })
         setIsLoading(false)
         setAlert({ severity: 'success', children: fetchedAddSpace.message })
-        setOpen(false)
         if (Array.isArray(mySpaces)) {
           setMySpaces([...mySpaces])
         }
@@ -51,11 +48,9 @@ const SpaceForm: FC<Props> = ({
         })
         setIsLoading(false)
         setIsLoading(false)
-        setOpen(true)
       }
     } catch {
       setIsLoading(false)
-      setOpen(true)
       setAlert({
         severity: 'error',
         children: t('SPACES_failed'),

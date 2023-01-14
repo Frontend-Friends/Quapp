@@ -88,7 +88,7 @@ const SpaceItem: FC<Props> = ({
       <Grid item xs={1} className="grow">
         <Card
           variant="outlined"
-          className="relative flex w-full flex-wrap bg-blueishGray-50 text-left hover:bg-white md:p-2"
+          className="relative flex w-full flex-wrap bg-blueishGray-50 text-left hover:bg-blueishGray-100 md:p-2"
         >
           <Link href={`${space.id}/products`} passHref>
             <MuiLink
