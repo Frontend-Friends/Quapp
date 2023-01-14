@@ -25,7 +25,7 @@ export const Products = ({
 }) => {
   const t = useTranslation()
   return (
-    <section className="relative grid gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+    <section className="relative grid gap-4 md:my-5 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
       {!products?.length && (
         <Typography variant="body2">{t('PRODUCTS_no_entries')}</Typography>
       )}
