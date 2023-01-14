@@ -49,7 +49,7 @@ export const Dashboard: FC<{
         <Typography variant="body2">{t('SPACES_no_entries')}</Typography>
       )}
       <Fab
-        color="primary"
+        color="secondary"
         aria-label="add"
         variant="extended"
         className="mt-8"

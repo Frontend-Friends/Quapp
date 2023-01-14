@@ -9,7 +9,6 @@ import { ProductDetail } from './product-detail'
 import { CreateEditProduct } from './create-product'
 import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { ProductType } from './types'
-import AddRounded from '@mui/icons-material/AddRounded'
 import {
   Box,
   Fab,
@@ -29,6 +28,7 @@ import { maxProductsPerPage } from '../../pages/community/[space]/products/[[...
 import { useRouter } from 'next/router'
 import { ParsedUrlQuery } from 'querystring'
 import { getProducts } from '../../lib/services/get-products'
+import AddIcon from '@mui/icons-material/Add'
 
 export const ProductList = ({
   products,
@@ -140,38 +140,43 @@ export const ProductList = ({
 
   return (
     <>
-      <Fab
-        size="large"
-        color="secondary"
-        aria-label={t('PRODUCT_add')}
-        title={t('PRODUCT_add')}
-        className="fixed bottom-[115px] right-[16px] z-10 p-8 md:bottom-[50px] md:right-[24px]"
-        onClick={() => {
-          setShowCreateProduct(true)
-        }}
-      >
-        <AddRounded fontSize="large" />
-      </Fab>
-      {productCategories && (
-        <FormControl className="lg:max-w-[32.5%]">
-          <InputLabel id="filter-select">
-            {t('PRODUCTS_filter_category_label')}
-          </InputLabel>
-          <Select
-            labelId="filter-select"
-            label={t('PRODUCTS_filter_category_label')}
-            value={categoryFilter}
-            onChange={handleFilterChange}
-          >
-            <MenuItem value="">{t('PRODUCTS_reset_category_filter')}</MenuItem>
-            {productCategories.map((category, index) => (
-              <MenuItem value={index} key={index}>
-                {category}
+      <Box className="flex items-center">
+        {productCategories && (
+          <FormControl className="w-full md:w-1/2 lg:max-w-[32.5%]">
+            <InputLabel id="filter-select">
+              {t('PRODUCTS_filter_category_label')}
+            </InputLabel>
+            <Select
+              labelId="filter-select"
+              label={t('PRODUCTS_filter_category_label')}
+              value={categoryFilter}
+              onChange={handleFilterChange}
+            >
+              <MenuItem value="">
+                {t('PRODUCTS_reset_category_filter')}
               </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      )}
+              {productCategories.map((category, index) => (
+                <MenuItem value={index} key={index}>
+                  {category}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        )}
+
+        <Fab
+          color="secondary"
+          variant="extended"
+          className="fixed bottom-[110px] right-[16px] z-10 h-16 w-16 rounded-full p-6 text-[0px] md:static md:bottom-[unset] md:right-[unset] md:ml-auto md:h-auto md:w-auto md:py-1 md:text-base"
+          aria-label={t('PRODUCT_add')}
+          onClick={() => {
+            setShowCreateProduct(true)
+          }}
+        >
+          <AddIcon className="text-4xl md:mr-2 md:text-3xl" />{' '}
+          {t('PRODUCT_add')}
+        </Fab>
+      </Box>
       <Products
         products={productList}
         onDelete={async (id, spaceId) => {

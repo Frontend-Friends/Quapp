@@ -1,5 +1,4 @@
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded'
-import SearchRoundedIcon from '@mui/icons-material/SearchRounded'
 import GridViewRoundedIcon from '@mui/icons-material/GridViewRounded'
 import React, { FC, useEffect, useState } from 'react'
 import { Button, Link } from '@mui/material'
@@ -66,9 +65,6 @@ const NavigationBar: FC = () => {
               onClick={() => router.back()}
             >
               <ArrowBackRoundedIcon className="text-3xl" />
-            </Button>
-            <Button className={twNavbarButton}>
-              <SearchRoundedIcon className="text-3xl" />
             </Button>
             <Button
               className={twNavbarButton}
