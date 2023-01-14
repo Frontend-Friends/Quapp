@@ -58,6 +58,7 @@ export const translationsEn: Record<string, string> = {
   PRODUCT_delete: 'Delete',
   PRODUCT_updated_info: 'The entry was saved:',
   PRODUCT_settings: 'Product settings',
+  PRODUCTS_reset_category_filter: 'Reset filter',
 
   DELETE_cancel_button: 'Cancel',
   DELETE_confirm_button: 'Delete',
@@ -101,6 +102,8 @@ export const translationsEn: Record<string, string> = {
   SPACES_add_space: 'Add space',
   SPACES_name: 'Space name',
   SPACES_administrator: 'Administrator',
+  SPACES_edit_ok: 'The space is successfully edited',
+  SPACES_edit_failed: 'The space could not be edited',
 
   CHAT_button_send: 'Send message',
   CHAT_button_loading: 'will be sent',

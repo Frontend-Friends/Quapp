@@ -1,5 +1,15 @@
 import React, { Dispatch, SetStateAction, useState } from 'react'
-import { Box, MenuItem, Modal, Select, TextField } from '@mui/material'
+import {
+  AlertProps,
+  Box,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Modal,
+  Select,
+  SelectChangeEvent,
+  TextField,
+} from '@mui/material'
 import { CondensedContainer } from '../condensed-container'
 import { Formik, FormikValues } from 'formik'
 import { twFormGroup } from '../../lib/constants/css-classes'
@@ -8,15 +18,14 @@ import { UseTranslationType } from '../../hooks/use-translation'
 import { editSpaceSchema } from '../../lib/schema/edit-space-schema'
 import { SpaceItemTypeWithUser } from '../products/types'
 import { sendFormData } from '../../lib/helpers/send-form-data'
-import { User } from '../user/types'
 
 interface Props {
   openModal: boolean
   setOpenModal: Dispatch<SetStateAction<boolean>>
+  setAlert: (alert: AlertProps) => void
   space: SpaceItemTypeWithUser | null
   setSpace: Dispatch<SetStateAction<SpaceItemTypeWithUser>>
   t: UseTranslationType
-  user: User
 }
 
 const EditSpaceModal: React.FC<Props> = ({
@@ -24,25 +33,45 @@ const EditSpaceModal: React.FC<Props> = ({
   setOpenModal,
   space,
   setSpace,
+  setAlert,
   t,
-  user: currentUser,
 }) => {
   const [isLoading, setIsLoading] = useState(false)
+
+  const handleChange = (event: SelectChangeEvent, props: FormikValues) => {
+    props.setFieldValue('ownerId', event.target.value)
+  }
   const handleEditSpace = async (values: FormikValues) => {
     setIsLoading(true)
     //   update space regarding ownerId and name
     try {
-      const fetchedEditSpace = await sendFormData('/api/edit-space', values)
+      const fetchedEditSpace = await sendFormData<{
+        updatedSpace: SpaceItemTypeWithUser
+        message: string
+        ok: boolean
+      }>('/api/edit-space', {
+        ...values,
+        spaceId: space?.id ?? '',
+      })
 
       if (fetchedEditSpace.ok) {
         setIsLoading(false)
         setOpenModal(false)
-        //todo change:
-        setSpace({ ...values, name: values.name })
-        console.log()
+        setSpace({
+          ...fetchedEditSpace.updatedSpace,
+        })
+        setAlert({
+          severity: 'success',
+          children: t('SPACES_edit_ok'),
+        })
       }
     } catch (error) {
-      console.log(error)
+      setIsLoading(false)
+      setOpenModal(false)
+      setAlert({
+        severity: 'error',
+        children: t('SPACES_edit_failed'),
+      })
     }
   }
 
@@ -62,7 +91,7 @@ const EditSpaceModal: React.FC<Props> = ({
 
         <Formik
           initialValues={
-            { name: space?.name, ownerId: space?.ownerId } as {
+            { name: space?.name, ownerId: space?.adminId } as {
               name: string
               ownerId: string
             }
@@ -87,27 +116,31 @@ const EditSpaceModal: React.FC<Props> = ({
                   label={t('SPACES_name')}
                   variant="outlined"
                 />
-
-                <Select
-                  name="ownerId"
-                  label={t('SPACES_administrator')}
-                  variant="outlined"
-                  onChange={props.handleChange}
-                  onBlur={props.handleBlur}
-                  className={twFormGroup}
-                  id="demo-simple-select"
-                  value={props.values.name}
-                  error={!!props.errors.ownerId}
-                  defaultValue={currentUser.id}
-                >
-                  {users?.map((user) => {
-                    return (
-                      <MenuItem value={user.id} key={user.id}>
-                        {user.userName}
-                      </MenuItem>
-                    )
-                  })}
-                </Select>
+                <FormControl fullWidth>
+                  <InputLabel id="ownerId">
+                    {t('SPACES_administrator')}
+                  </InputLabel>
+                  <Select
+                    name="ownerId"
+                    labelId="ownerId"
+                    label={t('SPACES_administrator')}
+                    variant="outlined"
+                    onChange={(e) => handleChange(e, props)}
+                    onBlur={props.handleBlur}
+                    className={twFormGroup}
+                    id="simple-select"
+                    value={props.values.ownerId}
+                    error={!!props.errors.ownerId}
+                  >
+                    {users?.map((user) => {
+                      return (
+                        <MenuItem value={user.id} key={user.id}>
+                          {user.userName}
+                        </MenuItem>
+                      )
+                    })}
+                  </Select>
+                </FormControl>
               </Box>
               <LoadingButton
                 type="submit"

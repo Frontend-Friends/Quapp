@@ -29,11 +29,12 @@ export const translations: Record<string, string> = {
   SPACES_add_space: 'Space hinzufügen',
   SPACES_name: 'Space Name',
   SPACES_administrator: 'Administrator',
+  SPACES_edit_ok: 'Der Space wurde erfolgreich geändert',
+  SPACES_edit_failed: 'Der Space konnte nicht erstellt werden',
 
   RESET_reset_password: 'Password zurücksetzen',
   RESET_title: 'Password zurücksetzen',
-  RESET_text:
-    'Geben Sie Ihre E-Mail Adresse ein, um Ihr Passwort zurückzusetzen.',
+  RESET_text: 'Bitte E-Mail Adresse eingeben, um dein Passwort zurückzusetzen.',
   RESET_submit_button: 'Passwort zurücksetzen',
 
   HOME_signup_free: 'Jetzt kostenlos Registrieren',
@@ -93,6 +94,8 @@ export const translations: Record<string, string> = {
   DELETE_title: 'Löschen von: ',
   DELETE_text: 'Der Eintrag wird unwiderruflich gelöscht.',
   DELETE_PRODUCT_success_text: 'Der Eintrag wurde erfolgreich gelöscht.',
+  PRODUCTS_filter_category_label: 'Nach Kategorien filtern',
+  PRODUCTS_reset_category_filter: 'Filter zurücksetzen',
 
   SAVE_PRODUCT_submit: 'Speichern',
 

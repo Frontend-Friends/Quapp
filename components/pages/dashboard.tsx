@@ -8,13 +8,12 @@ import SpaceForm from '../../pages/community/space-form'
 import { SpaceItemTypeWithUser } from '../products/types'
 import { UseTranslationType } from '../../hooks/use-translation'
 import EditSpaceModal from '../spaces/edit-space-modal'
-import { User } from '../user/types'
+import { useSnackbar } from '../../hooks/use-snackbar'
 
 export const Dashboard: FC<{
   spaces?: SpaceItemTypeWithUser[]
-  user: User
   t: UseTranslationType
-}> = ({ spaces, t, user }) => {
+}> = ({ spaces, t }) => {
   const [open, setOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [mySpaces, setMySpaces] = useState<SpaceItemTypeWithUser[]>(
@@ -24,7 +23,7 @@ export const Dashboard: FC<{
   const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false)
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [space, setSpace] = useState<SpaceItemTypeWithUser | null>(null)
-
+  const setAlert = useSnackbar((state) => state.setAlert)
   return (
     <CondensedContainer className="relative">
       <Header title={t('SPACES_title')} />
@@ -79,10 +78,10 @@ export const Dashboard: FC<{
       <EditSpaceModal
         openModal={openModal}
         setOpenModal={setOpenModal}
+        setAlert={setAlert}
         space={space}
         setSpace={setSpace}
         t={t}
-        user={user}
       />
     </CondensedContainer>
   )

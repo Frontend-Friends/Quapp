@@ -25,7 +25,6 @@ import { fetchJson } from '../../lib/helpers/fetch-json'
 interface Props {
   space: SpaceItemTypeWithUser
   setSpace: Dispatch<SetStateAction<SpaceItemTypeWithUser>>
-
   setMySpaces: Dispatch<SetStateAction<SpaceItemTypeWithUser[]>>
   mySpaces: SpaceItemTypeWithUser[]
   setSnackbarOpen: Dispatch<SetStateAction<boolean>>

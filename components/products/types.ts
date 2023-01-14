@@ -45,6 +45,7 @@ export type SpaceItemType = {
   categories?: string[]
   spaces?: string[]
   users?: string[]
+  adminId?: string
 }
 
 export type SpaceItemTypeWithUser = SpaceItemType & {

@@ -2,7 +2,7 @@ import {
   SpaceItemType,
   SpaceItemTypeWithUser,
 } from '../../components/products/types'
-import { getDoc } from 'firebase/firestore'
+import { doc, getDoc } from 'firebase/firestore'
 import { withIronSessionSsr } from 'iron-session/next'
 import { sessionOptions } from '../../config/session-config'
 import { getSpaceRef } from '../../lib/helpers/refs/get-space-ref'
@@ -10,6 +10,7 @@ import { fetchUser } from '../../lib/services/fetch-user'
 import { Dashboard } from '../../components/pages/dashboard'
 import { useTranslation } from '../../hooks/use-translation'
 import { User } from '../../components/user/types'
+import { db } from '../../config/firebase'
 
 export const getServerSideProps = withIronSessionSsr<{
   spaces?: SpaceItemType[]
@@ -26,12 +27,13 @@ export const getServerSideProps = withIronSessionSsr<{
           const [ref] = getSpaceRef(space)
           const fetchedDoc = await getDoc(ref).then(async (result) => {
             const data = result.data()
-
+            const adminId = doc(db, data?.ownerId ?? '')?.id ?? ''
             return {
               ...data,
               id: result.id,
-              ownerId: data?.ownerId.id || '',
-              creatorId: data?.creatorId.id || '',
+              ownerId: data?.ownerId || '',
+              adminId,
+              creatorId: data?.creatorId || '',
               creationDate: data?.creationDate?.seconds ?? 0,
             } as SpaceItemType
           })
@@ -59,21 +61,18 @@ export const getServerSideProps = withIronSessionSsr<{
         })
     )
   )) as SpaceItemTypeWithUser[]
-  return { props: { spaces: spacesWithUsers, user: user } }
+  return { props: { spaces: spacesWithUsers } }
 }, sessionOptions)
 
 export const Index = ({
   spaces,
-  user,
 }: {
   spaces?: SpaceItemTypeWithUser[]
   user: User
 }) => {
   const t = useTranslation()
-  console.log('user is', user)
-  console.log('spaces are', spaces)
 
-  return <Dashboard t={t} spaces={spaces} user={user} />
+  return <Dashboard t={t} spaces={spaces} />
 }
 
 export default Index
