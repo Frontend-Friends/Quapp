@@ -200,7 +200,6 @@ const Login: FC = () => {
             </IconButton>
           </Box>
           <h3 id="reset-title" className="my-0">{`${t('RESET_title')}`}</h3>
-
           <p id="reset-description">{t('RESET_text')}</p>
           <Formik
             initialValues={{
