@@ -73,6 +73,7 @@ export const ProductList = ({
   const [categoryFilter, setCategoryFilter] = useState<string | number>(
     filter ?? ''
   )
+  const [productCategories, setProductCategories] = useState(categories)
 
   const [pageCount, setPageCount] = useState(count || 0)
 
@@ -151,7 +152,7 @@ export const ProductList = ({
       >
         <AddRounded fontSize="large" />
       </Fab>
-      {categories && (
+      {productCategories && (
         <FormControl className="lg:max-w-[32.5%]">
           <InputLabel id="filter-select">
             {t('PRODUCTS_filter_category_label')}
@@ -163,7 +164,7 @@ export const ProductList = ({
             onChange={handleFilterChange}
           >
             <MenuItem value="">{t('PRODUCTS_reset_category_filter')}</MenuItem>
-            {categories.map((category, index) => (
+            {productCategories.map((category, index) => (
               <MenuItem value={index} key={index}>
                 {category}
               </MenuItem>
@@ -187,14 +188,15 @@ export const ProductList = ({
           setShowCreateProduct(true)
         }}
         userId={userId}
-        categories={categories}
+        categories={productCategories}
         withSpaceName={withSpaceName}
         setSpace={setCurrentSpace}
       >
         <PageLoader isLoading={isLoading} className="fixed inset-0 z-10" />
         <ProductDetail product={product} userId={userId} userName={userName} />
         <CreateEditProduct
-          categories={categories}
+          categories={productCategories}
+          setCategories={setProductCategories}
           onUpdateProduct={(updatedProduct) => {
             setProductList((state) => {
               const foundIndex = state?.findIndex(

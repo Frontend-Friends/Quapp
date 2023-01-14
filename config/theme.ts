@@ -20,7 +20,7 @@ const theme = createTheme({
       contrastText: twTheme.extend.colors.mintGreen.contrastText,
     },
     error: {
-      main: '#d53030',
+      main: twTheme.extend.colors.violetRed[600],
     },
     background: {
       default: '#FFFFFF',

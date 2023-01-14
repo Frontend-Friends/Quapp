@@ -14,6 +14,7 @@ export const translations: Record<string, string> = {
   GLOBAL_back_to_login: 'Zurück zum Login',
   GLOBAL_hello: 'Hallo',
   GLOBAL_go_to_account_settings: 'Account Einstellungen',
+  GLOBAL_go_to_inbox: 'Benachrichtigungen',
   GLOBAL_settings: 'Einstellungen',
   GLOBAL_date: 'Datum',
   GLOBAL_back_to_home: 'Zurück zur Startseite',
@@ -123,6 +124,10 @@ export const translations: Record<string, string> = {
   CREATE_PRODUCT_page_title: 'Produkt erstellen',
   EDIT_PRODUCT_page_title: 'Produkt bearbeiten',
   CREATE_PRODUCT_is_available: 'Produkt ist verfügbar',
+  PRODUCT_CREATE_wrong_file_format:
+    'Das Bild muss entweder ein JPG oder PNG sein',
+  PRODUCT_CREATE_file_size:
+    'Das Bild ist zu gross. Es darf max 2MB gross sein.',
 
   BUTTON_borrow: 'Ich möchte das ausleihen!',
   BUTTON_contact: 'Kontakt aufnehmen',

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { Dispatch, SetStateAction, useState } from 'react'
 import { useTranslation } from '../../hooks/use-translation'
 import { Box, IconButton, Modal } from '@mui/material'
 import { CondensedContainer } from '../condensed-container'
@@ -16,6 +16,7 @@ export const CreateEditProduct = ({
   product,
   categories,
   onUpdateProduct,
+  setCategories,
 }: {
   showModal: boolean
   onClose: (state: boolean) => void
@@ -23,6 +24,7 @@ export const CreateEditProduct = ({
   product: ProductType | null
   categories?: string[]
   onUpdateProduct: (product: ProductType) => void
+  setCategories: Dispatch<SetStateAction<string[] | undefined>>
 }) => {
   const t = useTranslation()
   const [loading, setLoading] = useState(false)
@@ -69,11 +71,15 @@ export const CreateEditProduct = ({
             const response = await sendFormData<{
               productId: string
               product: ProductType
+              categories: string[]
             }>(product ? updateAPi : createAPi, values)
             if (!response.ok) {
               if (onError) onError(t('FORM_submitting_error'))
             }
             setLoading(false)
+            if (response.categories.length) {
+              setCategories(response.categories)
+            }
 
             if (response.ok) {
               onUpdateProduct({ ...product, ...response.product })
