@@ -1,0 +1,124 @@
+[debug] [2023-01-15T18:59:52.369Z] ----------------------------------------------------------------------
+[debug] [2023-01-15T18:59:52.371Z] Command:       /Users/fabricetobler/.nvm/versions/node/v16.15.1/bin/node /Users/fabricetobler/.nvm/versions/node/v16.15.1/bin/firebase deploy --only functions
+[debug] [2023-01-15T18:59:52.371Z] CLI Version:   11.20.0
+[debug] [2023-01-15T18:59:52.371Z] Platform:      darwin
+[debug] [2023-01-15T18:59:52.372Z] Node Version:  v16.15.1
+[debug] [2023-01-15T18:59:52.373Z] Time:          Sun Jan 15 2023 19:59:52 GMT+0100 (Central European Standard Time)
+[debug] [2023-01-15T18:59:52.373Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-01-15T18:59:52.438Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-01-15T18:59:52.438Z] > authorizing via signed-in user (ftdesigner@gmail.com)
+[debug] [2023-01-15T18:59:52.438Z] [iam] checking project quapp-dff48 for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2023-01-15T18:59:52.439Z] > refreshing access token with scopes: []
+[debug] [2023-01-15T18:59:52.441Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2023-01-15T18:59:52.441Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2023-01-15T18:59:52.576Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2023-01-15T18:59:52.576Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2023-01-15T18:59:52.594Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/quapp-dff48:testIamPermissions [none]
+[debug] [2023-01-15T18:59:52.594Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/quapp-dff48:testIamPermissions x-goog-quota-user=projects/quapp-dff48
+[debug] [2023-01-15T18:59:52.594Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/quapp-dff48:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2023-01-15T18:59:53.308Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/quapp-dff48:testIamPermissions 200
+[debug] [2023-01-15T18:59:53.308Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/quapp-dff48:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2023-01-15T18:59:53.309Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/quapp-dff48/serviceAccounts/quapp-dff48@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2023-01-15T18:59:53.309Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/quapp-dff48/serviceAccounts/quapp-dff48@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2023-01-15T18:59:53.986Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/quapp-dff48/serviceAccounts/quapp-dff48@appspot.gserviceaccount.com:testIamPermissions 200
+[debug] [2023-01-15T18:59:53.987Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/quapp-dff48/serviceAccounts/quapp-dff48@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[info] 
+[info] === Deploying to 'quapp-dff48'...
+[info] 
+[info] i  deploying functions 
+[info] Running command: npm --prefix "$RESOURCE_DIR" run build
+[info] ✔  functions: Finished running predeploy script. 
+[debug] [2023-01-15T19:00:01.924Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/quapp-dff48 [none]
+[debug] [2023-01-15T19:00:02.226Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/quapp-dff48 200
+[debug] [2023-01-15T19:00:02.227Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/quapp-dff48 {"projectId":"quapp-dff48","projectNumber":"583570250250","displayName":"Quapp","name":"projects/quapp-dff48","resources":{"hostingSite":"quapp-dff48","storageBucket":"quapp-dff48.appspot.com","locationId":"us-central"},"state":"ACTIVE","etag":"1_4beb769a-e824-4d10-92f5-b302a0ea32cf"}
+[info] i  functions: preparing codebase default for deployment 
+[info] i  functions: ensuring required API cloudfunctions.googleapis.com is enabled... 
+[info] i  functions: ensuring required API cloudbuild.googleapis.com is enabled... 
+[info] i  artifactregistry: ensuring required API artifactregistry.googleapis.com is enabled... 
+[debug] [2023-01-15T19:00:02.229Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/quapp-dff48/services/cloudfunctions.googleapis.com [none]
+[debug] [2023-01-15T19:00:02.229Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/quapp-dff48/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/quapp-dff48
+[debug] [2023-01-15T19:00:02.230Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/quapp-dff48/services/runtimeconfig.googleapis.com [none]
+[debug] [2023-01-15T19:00:02.230Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/quapp-dff48/services/runtimeconfig.googleapis.com x-goog-quota-user=projects/quapp-dff48
+[debug] [2023-01-15T19:00:02.231Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/quapp-dff48/services/cloudbuild.googleapis.com [none]
+[debug] [2023-01-15T19:00:02.231Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/quapp-dff48/services/cloudbuild.googleapis.com x-goog-quota-user=projects/quapp-dff48
+[debug] [2023-01-15T19:00:02.232Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/quapp-dff48/services/artifactregistry.googleapis.com [none]
+[debug] [2023-01-15T19:00:02.232Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/quapp-dff48/services/artifactregistry.googleapis.com x-goog-quota-user=projects/quapp-dff48
+[debug] [2023-01-15T19:00:03.094Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/quapp-dff48/services/runtimeconfig.googleapis.com 200
+[debug] [2023-01-15T19:00:03.094Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/quapp-dff48/services/runtimeconfig.googleapis.com [omitted]
+[debug] [2023-01-15T19:00:03.102Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/quapp-dff48/services/cloudbuild.googleapis.com 200
+[debug] [2023-01-15T19:00:03.103Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/quapp-dff48/services/cloudbuild.googleapis.com [omitted]
+[info] ✔  functions: required API cloudbuild.googleapis.com is enabled 
+[debug] [2023-01-15T19:00:03.119Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/quapp-dff48/services/cloudfunctions.googleapis.com 200
+[debug] [2023-01-15T19:00:03.119Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/quapp-dff48/services/cloudfunctions.googleapis.com [omitted]
+[info] ✔  functions: required API cloudfunctions.googleapis.com is enabled 
+[debug] [2023-01-15T19:00:03.131Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/quapp-dff48/services/artifactregistry.googleapis.com 200
+[debug] [2023-01-15T19:00:03.131Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/quapp-dff48/services/artifactregistry.googleapis.com [omitted]
+[info] ✔  artifactregistry: required API artifactregistry.googleapis.com is enabled 
+[debug] [2023-01-15T19:00:03.132Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/quapp-dff48/adminSdkConfig [none]
+[debug] [2023-01-15T19:00:03.377Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/quapp-dff48/adminSdkConfig 200
+[debug] [2023-01-15T19:00:03.378Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/quapp-dff48/adminSdkConfig {"projectId":"quapp-dff48","storageBucket":"quapp-dff48.appspot.com","locationId":"us-central"}
+[debug] [2023-01-15T19:00:03.378Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/quapp-dff48/configs [none]
+[debug] [2023-01-15T19:00:03.720Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/quapp-dff48/configs 200
+[debug] [2023-01-15T19:00:03.720Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/quapp-dff48/configs {}
+[debug] [2023-01-15T19:00:03.722Z] Validating nodejs source
+[warn] ⚠  functions: package.json indicates an outdated version of firebase-functions. Please upgrade using npm install --save firebase-functions@latest in your functions directory. 
+[warn] ⚠  functions: Please note that there will be breaking changes when you upgrade. 
+[debug] [2023-01-15T19:00:04.211Z] > [functions] package.json contents: {
+  "name": "functions",
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "firebase-admin": "^10.2.0",
+    "firebase-functions": "^3.21.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.6.4"
+  },
+  "private": true
+}
+[debug] [2023-01-15T19:00:04.211Z] Building nodejs source
+[debug] [2023-01-15T19:00:04.212Z] Could not find functions.yaml. Must use http discovery
+[debug] [2023-01-15T19:00:04.410Z] Serving at port 9005
+
+[debug] [2023-01-15T19:00:04.480Z] Got response from /__/functions.yaml {"endpoints":{"helloWorld":{"platform":"gcfv1","httpsTrigger":{},"entryPoint":"helloWorld"},"getProduct":{"platform":"gcfv1","httpsTrigger":{},"entryPoint":"getProduct"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[debug] [2023-01-15T19:00:04.489Z] shutdown requested via /__/quitquitquit
+
+[info] i  functions: preparing functions directory for uploading... 
+[info] i  functions: packaged /Users/fabricetobler/Documents/repositories/Quapp/functions (67.29 KB) for uploading 
+[debug] [2023-01-15T19:00:04.584Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v1/projects/quapp-dff48/locations/-/functions [none]
+[debug] [2023-01-15T19:00:05.097Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v1/projects/quapp-dff48/locations/-/functions 200
+[debug] [2023-01-15T19:00:05.097Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v1/projects/quapp-dff48/locations/-/functions {"functions":[{"name":"projects/quapp-dff48/locations/us-central1/functions/getProduct","httpsTrigger":{"url":"https://us-central1-quapp-dff48.cloudfunctions.net/getProduct","securityLevel":"SECURE_ALWAYS"},"status":"ACTIVE","entryPoint":"getProduct","timeout":"60s","availableMemoryMb":256,"serviceAccountEmail":"quapp-dff48@appspot.gserviceaccount.com","updateTime":"2023-01-15T18:55:42.528Z","versionId":"9","labels":{"deployment-tool":"cli-firebase","firebase-functions-hash":"3c9f4a62e4df75ac135a5d599e5ded38f143b3c4"},"sourceUploadUrl":"https://storage.googleapis.com/uploads-880338040879.us-central1.cloudfunctions.appspot.com/30187427-614f-40b9-a123-45c5fcd7bc4d.zip","environmentVariables":{"FIREBASE_CONFIG":"{\"projectId\":\"quapp-dff48\",\"storageBucket\":\"quapp-dff48.appspot.com\",\"locationId\":\"us-central\"}","GCLOUD_PROJECT":"quapp-dff48","EVENTARC_CLOUD_EVENT_SOURCE":"projects/quapp-dff48/locations/us-central1/functions/getProduct"},"runtime":"nodejs16","ingressSettings":"ALLOW_ALL","buildId":"ea304572-41e0-434f-a029-df830ced8ad6","buildName":"projects/583570250250/locations/us-central1/builds/ea304572-41e0-434f-a029-df830ced8ad6","dockerRegistry":"ARTIFACT_REGISTRY"},{"name":"projects/quapp-dff48/locations/us-central1/functions/helloWorld","httpsTrigger":{"url":"https://us-central1-quapp-dff48.cloudfunctions.net/helloWorld","securityLevel":"SECURE_ALWAYS"},"status":"ACTIVE","entryPoint":"helloWorld","timeout":"60s","availableMemoryMb":256,"serviceAccountEmail":"quapp-dff48@appspot.gserviceaccount.com","updateTime":"2023-01-15T18:55:42.509Z","versionId":"13","labels":{"deployment-tool":"cli-firebase","firebase-functions-hash":"3c9f4a62e4df75ac135a5d599e5ded38f143b3c4"},"sourceUploadUrl":"https://storage.googleapis.com/uploads-880338040879.us-central1.cloudfunctions.appspot.com/30187427-614f-40b9-a123-45c5fcd7bc4d.zip","environmentVariables":{"FIREBASE_CONFIG":"{\"projectId\":\"quapp-dff48\",\"storageBucket\":\"quapp-dff48.appspot.com\",\"locationId\":\"us-central\"}","GCLOUD_PROJECT":"quapp-dff48","EVENTARC_CLOUD_EVENT_SOURCE":"projects/quapp-dff48/locations/us-central1/functions/getProduct"},"runtime":"nodejs16","ingressSettings":"ALLOW_ALL","buildId":"ea304572-41e0-434f-a029-df830ced8ad6","buildName":"projects/583570250250/locations/us-central1/builds/ea304572-41e0-434f-a029-df830ced8ad6","dockerRegistry":"ARTIFACT_REGISTRY"}]}
+[debug] [2023-01-15T19:00:05.099Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v2/projects/quapp-dff48/locations/-/functions filter=environment%3D%22GEN_2%22
+[debug] [2023-01-15T19:00:06.099Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v2/projects/quapp-dff48/locations/-/functions 200
+[debug] [2023-01-15T19:00:06.099Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v2/projects/quapp-dff48/locations/-/functions {}
+[debug] [2023-01-15T19:00:06.104Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/quapp-dff48 [none]
+[debug] [2023-01-15T19:00:06.353Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/quapp-dff48 200
+[debug] [2023-01-15T19:00:06.353Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/quapp-dff48 {"projectId":"quapp-dff48","projectNumber":"583570250250","displayName":"Quapp","name":"projects/quapp-dff48","resources":{"hostingSite":"quapp-dff48","storageBucket":"quapp-dff48.appspot.com","locationId":"us-central"},"state":"ACTIVE","etag":"1_4beb769a-e824-4d10-92f5-b302a0ea32cf"}
+[debug] [2023-01-15T19:00:06.353Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/quapp-dff48 [none]
+[debug] [2023-01-15T19:00:06.560Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/quapp-dff48 200
+[debug] [2023-01-15T19:00:06.560Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/quapp-dff48 {"projectId":"quapp-dff48","projectNumber":"583570250250","displayName":"Quapp","name":"projects/quapp-dff48","resources":{"hostingSite":"quapp-dff48","storageBucket":"quapp-dff48.appspot.com","locationId":"us-central"},"state":"ACTIVE","etag":"1_4beb769a-e824-4d10-92f5-b302a0ea32cf"}
+[debug] [2023-01-15T19:00:06.562Z] >>> [apiv2][query] POST https://cloudfunctions.googleapis.com/v1/projects/quapp-dff48/locations/us-central1/functions:generateUploadUrl [none]
+[debug] [2023-01-15T19:00:06.562Z] >>> [apiv2][body] POST https://cloudfunctions.googleapis.com/v1/projects/quapp-dff48/locations/us-central1/functions:generateUploadUrl {}
+[debug] [2023-01-15T19:00:07.219Z] <<< [apiv2][status] POST https://cloudfunctions.googleapis.com/v1/projects/quapp-dff48/locations/us-central1/functions:generateUploadUrl 200
+[debug] [2023-01-15T19:00:07.220Z] <<< [apiv2][body] POST https://cloudfunctions.googleapis.com/v1/projects/quapp-dff48/locations/us-central1/functions:generateUploadUrl {"uploadUrl":"https://storage.googleapis.com/uploads-880338040879.us-central1.cloudfunctions.appspot.com/eb34270a-e636-48b7-a3d1-3166d5c026f4.zip?GoogleAccessId=service-583570250250@gcf-admin-robot.iam.gserviceaccount.com&Expires=1673811007&Signature=KJAnqa47C3QbEuMbogSX%2BpJlRDIfdLIBdxnwzzkJeZ0mCifX3sdGzsePS1XZ1WkaI8rGW6RCHSJhGb0RXX6JIt13qSQkS2OVhDrXdL7autIMvmpUrtEgr7SjmmJpgKp7DHZ24dGhKfkrZNgQnn%2FwYlHXxvUodPPPUFGccSFughtZKbqT7%2BOta0ml7Vju4wOaXHq4l%2BOSVkOF7QOUwJGmk0al8ukxEuskN8x%2Fcs5GyNnqXDAm31CJG5RSp0b08jlynysWSMVRJNn6qSQ%2Bgun5QPKN%2FuJ24pBSBhebDs7YG3WYDRN1xaxYkjI5ls3%2Fjhgi2CSamVPsrbfZzOM4s7VIxA%3D%3D"}
+[debug] [2023-01-15T19:00:07.221Z] >>> [apiv2][query] PUT https://storage.googleapis.com/uploads-880338040879.us-central1.cloudfunctions.appspot.com/eb34270a-e636-48b7-a3d1-3166d5c026f4.zip GoogleAccessId=service-583570250250%40gcf-admin-robot.iam.gserviceaccount.com&Expires=1673811007&Signature=KJAnqa47C3QbEuMbogSX%2BpJlRDIfdLIBdxnwzzkJeZ0mCifX3sdGzsePS1XZ1WkaI8rGW6RCHSJhGb0RXX6JIt13qSQkS2OVhDrXdL7autIMvmpUrtEgr7SjmmJpgKp7DHZ24dGhKfkrZNgQnn%2FwYlHXxvUodPPPUFGccSFughtZKbqT7%2BOta0ml7Vju4wOaXHq4l%2BOSVkOF7QOUwJGmk0al8ukxEuskN8x%2Fcs5GyNnqXDAm31CJG5RSp0b08jlynysWSMVRJNn6qSQ%2Bgun5QPKN%2FuJ24pBSBhebDs7YG3WYDRN1xaxYkjI5ls3%2Fjhgi2CSamVPsrbfZzOM4s7VIxA%3D%3D
+[debug] [2023-01-15T19:00:07.221Z] >>> [apiv2][body] PUT https://storage.googleapis.com/uploads-880338040879.us-central1.cloudfunctions.appspot.com/eb34270a-e636-48b7-a3d1-3166d5c026f4.zip [stream]
+[debug] [2023-01-15T19:00:07.499Z] <<< [apiv2][status] PUT https://storage.googleapis.com/uploads-880338040879.us-central1.cloudfunctions.appspot.com/eb34270a-e636-48b7-a3d1-3166d5c026f4.zip 200
+[debug] [2023-01-15T19:00:07.499Z] <<< [apiv2][body] PUT https://storage.googleapis.com/uploads-880338040879.us-central1.cloudfunctions.appspot.com/eb34270a-e636-48b7-a3d1-3166d5c026f4.zip [omitted]
+[info] ✔  functions: functions folder uploaded successfully 
+[info] i  functions: updating Node.js 16 function helloWorld(us-central1)... 
+[info] i  functions: updating Node.js 16 function getProduct(us-central1)... 
+[debug] [2023-01-15T19:00:07.505Z] >>> [apiv2][query] PATCH https://cloudfunctions.googleapis.com/v1/projects/quapp-dff48/locations/us-central1/functions/helloWorld updateMask=name%2CsourceUploadUrl%2CentryPoint%2Cruntime%2CdockerRegistry%2Clabels%2ChttpsTrigger.securityLevel%2CenvironmentVariables%2CavailableMemoryMb%2CsourceToken
+[debug] [2023-01-15T19:00:07.505Z] >>> [apiv2][body] PATCH https://cloudfunctions.googleapis.com/v1/projects/quapp-dff48/locations/us-central1/functions/helloWorld {"name":"projects/quapp-dff48/locations/us-central1/functions/helloWorld","sourceUploadUrl":"https://storage.googleapis.com/uploads-880338040879.us-central1.cloudfunctions.appspot.com/eb34270a-e636-48b7-a3d1-3166d5c026f4.zip?GoogleAccessId=service-583570250250@gcf-admin-robot.iam.gserviceaccount.com&Expires=1673811007&Signature=KJAnqa47C3QbEuMbogSX%2BpJlRDIfdLIBdxnwzzkJeZ0mCifX3sdGzsePS1XZ1WkaI8rGW6RCHSJhGb0RXX6JIt13qSQkS2OVhDrXdL7autIMvmpUrtEgr7SjmmJpgKp7DHZ24dGhKfkrZNgQnn%2FwYlHXxvUodPPPUFGccSFughtZKbqT7%2BOta0ml7Vju4wOaXHq4l%2BOSVkOF7QOUwJGmk0al8ukxEuskN8x%2Fcs5GyNnqXDAm31CJG5RSp0b08jlynysWSMVRJNn6qSQ%2Bgun5QPKN%2FuJ24pBSBhebDs7YG3WYDRN1xaxYkjI5ls3%2Fjhgi2CSamVPsrbfZzOM4s7VIxA%3D%3D","entryPoint":"helloWorld","runtime":"nodejs16","dockerRegistry":"ARTIFACT_REGISTRY","labels":{"deployment-tool":"cli-firebase","firebase-functions-hash":"4cbbda452a4cb023453641955c0cb66f55f86028"},"httpsTrigger":{"securityLevel":"SECURE_ALWAYS"},"environmentVariables":{"FIREBASE_CONFIG":"{\"projectId\":\"quapp-dff48\",\"storageBucket\":\"quapp-dff48.appspot.com\",\"locationId\":\"us-central\"}","GCLOUD_PROJECT":"quapp-dff48","EVENTARC_CLOUD_EVENT_SOURCE":"projects/quapp-dff48/locations/us-central1/functions/getProduct"},"availableMemoryMb":256}
