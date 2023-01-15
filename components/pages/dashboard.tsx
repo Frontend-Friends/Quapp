@@ -9,11 +9,13 @@ import { SpaceItemTypeWithUser } from '../products/types'
 import { UseTranslationType } from '../../hooks/use-translation'
 import EditSpaceModal from '../spaces/edit-space-modal'
 import { useSnackbar } from '../../hooks/use-snackbar'
+import { User } from '../user/types'
 
 export const Dashboard: FC<{
   spaces?: SpaceItemTypeWithUser[]
+  user: User
   t: UseTranslationType
-}> = ({ spaces, t }) => {
+}> = ({ spaces, user, t }) => {
   const [open, setOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [mySpaces, setMySpaces] = useState<SpaceItemTypeWithUser[]>(
@@ -63,6 +65,7 @@ export const Dashboard: FC<{
           setIsLoading={setIsLoading}
           mySpaces={mySpaces}
           setMySpaces={setMySpaces}
+          user={user}
         />
       )}
       <Snackbar
@@ -81,6 +84,8 @@ export const Dashboard: FC<{
         setAlert={setAlert}
         space={space}
         setSpace={setSpace}
+        mySpaces={mySpaces}
+        setMySpaces={setMySpaces}
         t={t}
       />
     </CondensedContainer>
