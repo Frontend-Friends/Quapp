@@ -11,7 +11,7 @@ import {
 } from '@mui/material'
 import { CondensedContainer } from '../condensed-container'
 import { Formik, FormikValues } from 'formik'
-import { twFormGroup } from '../../lib/constants/css-classes'
+import { twFormGroup } from '../../lib/constants'
 import LoadingButton from '@mui/lab/LoadingButton'
 import { UseTranslationType } from '../../hooks/use-translation'
 import { editSpaceSchema } from '../../lib/schema/edit-space-schema'
@@ -41,11 +41,18 @@ const EditSpaceModal: React.FC<Props> = ({
   setOpenEditModal,
 }) => {
   const [isLoading, setIsLoading] = useState(false)
+  const enhancedUsersInSpace: { id: string; userName: string }[] | undefined =
+    space?.enhancedUsersInSpace
   const setUpdatedSpaces = (updatedSpace: SpaceItemTypeWithUser) => {
     // adding users : Users[] and adminId to new space and updating mySpaces for the component to re-render (update ui)
     return mySpaces.map((s) => {
       if (s.id === updatedSpace.id) {
-        return { ...updatedSpace, users: space?.users, adminId: space?.adminId }
+        return {
+          ...updatedSpace,
+          users: space?.users,
+          adminId: space?.adminId,
+          enhancedUsersInSpace,
+        }
       }
       return s
     })
@@ -90,8 +97,6 @@ const EditSpaceModal: React.FC<Props> = ({
     }
   }
 
-  const enhancedUsersInSpace: { id: string; userName: string }[] | undefined =
-    space?.enhancedUsersInSpace
   return (
     <Modal
       open={openEditModal}

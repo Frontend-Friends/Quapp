@@ -50,7 +50,7 @@ export const Dashboard: FC<{
                 mySpaces={mySpaces}
                 setSnackbarOpen={setSnackbarOpen}
                 setMessage={setMessage}
-                setOpenModal={setOpenModal}
+                setOpenEditModal={setOpenEditModal}
                 setSpace={setSpace}
               />
             )

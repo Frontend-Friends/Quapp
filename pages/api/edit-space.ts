@@ -31,7 +31,7 @@ async function editSpace(req: NextApiRequest, res: NextApiResponse) {
     const updatedFields = {
       ...fetchedSpace,
       ...fields,
-      ownerId: `/space/${ownerId}`,
+      ownerId: `/user/${ownerId}`,
     }
     await setDoc(docRef, {
       ...updatedFields,

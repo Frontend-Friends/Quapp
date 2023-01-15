@@ -29,7 +29,7 @@ interface Props {
   mySpaces: SpaceItemTypeWithUser[]
   setSnackbarOpen: Dispatch<SetStateAction<boolean>>
   setMessage: Dispatch<SetStateAction<string>>
-  setOpenModal: Dispatch<SetStateAction<boolean>>
+  setOpenEditModal: Dispatch<SetStateAction<boolean>>
 }
 
 const SpaceItem: FC<Props> = ({
@@ -39,7 +39,7 @@ const SpaceItem: FC<Props> = ({
   mySpaces,
   setSnackbarOpen,
   setMessage,
-  setOpenModal,
+  setOpenEditModal,
 }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
@@ -56,7 +56,7 @@ const SpaceItem: FC<Props> = ({
   }
   const handleEditClick = () => {
     handleClose()
-    setOpenModal(true)
+    setOpenEditModal(true)
     setSpace(space)
   }
 
