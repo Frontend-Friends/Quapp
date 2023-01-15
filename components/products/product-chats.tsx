@@ -14,7 +14,9 @@ const filteredChats = (
   chats: ProductChatType[],
   userId: User['id'],
   isOwner: boolean
-) => chats.filter((chat) => chat.chatUserId === userId || isOwner)
+) => {
+  return chats.filter((chat) => chat.chatUserId === userId || isOwner)
+}
 
 export const ProductChats = ({
   userName,
@@ -33,6 +35,7 @@ export const ProductChats = ({
   const [selectedChats, setSelectedChats] = useState(
     filteredChats(chats, userId, isOwner)
   )
+
   const { query } = useRouter()
   const [productId] = query.products as string[]
   const [fetchCount, setFetchCount] = useState(0)
@@ -63,6 +66,7 @@ export const ProductChats = ({
       return
     }
     const chatId = isOwner ? selectedTab : userId
+
     const fetchedChat = await fetchJson<{
       history: ChatMessage[]
       userId: string | null
@@ -73,7 +77,7 @@ export const ProductChats = ({
       }`
     )
 
-    if (fetchedChat.chats) {
+    if (fetchedChat.chats.length) {
       setSelectedChats(fetchedChat.chats)
     } else {
       const selectedChatId = selectedTab || fetchedChat.userId
