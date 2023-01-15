@@ -45,7 +45,10 @@ export const getServerSideProps = withIronSessionSsr<{
     spaces.map(
       (space) =>
         new Promise(async (resolveSpace) => {
-          const users = await Promise.all<{ id: string; userName: string }>(
+          const enhancedUsersInSpace = await Promise.all<{
+            id: string
+            userName: string
+          }>(
             space?.users?.map(
               (u) =>
                 new Promise(async (resolveUser) => {
@@ -57,22 +60,23 @@ export const getServerSideProps = withIronSessionSsr<{
                 }) || []
             ) || []
           )
-          resolveSpace({ ...space, users })
+          resolveSpace({ ...space, enhancedUsersInSpace })
         })
     )
   )) as SpaceItemTypeWithUser[]
-  return { props: { spaces: spacesWithUsers } }
+  return { props: { spaces: spacesWithUsers, user } }
 }, sessionOptions)
 
 export const Index = ({
   spaces,
+  user,
 }: {
   spaces?: SpaceItemTypeWithUser[]
   user: User
 }) => {
   const t = useTranslation()
 
-  return <Dashboard t={t} spaces={spaces} />
+  return <Dashboard t={t} spaces={spaces} user={user} />
 }
 
 export default Index
