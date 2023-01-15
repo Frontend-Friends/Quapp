@@ -17,13 +17,12 @@ export const Notifications = () => {
   useAsync(async () => {
     let allowNotifications = false
     Notification.requestPermission().then((permission) => {
-      if (permission === 'granted') {
-        allowNotifications = true
-      } else {
-        allowNotifications = false
-      }
+      allowNotifications = permission === 'granted'
     })
-    if (asPath.startsWith('/user/inbox')) {
+    if (
+      (!asPath.startsWith('/community') && !asPath.startsWith('/user')) ||
+      asPath.startsWith('/user/inbox')
+    ) {
       return
     }
     const { messages } = await fetchJson<{ messages: Message[] }>(
@@ -56,7 +55,7 @@ export const Notifications = () => {
     setMessages(unreadMessages.current)
     const delay = setTimeout(() => {
       setRequest(request + 1)
-    }, 5000)
+    }, 120000) // 2 Min
 
     return () => {
       clearTimeout(delay)
