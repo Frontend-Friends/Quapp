@@ -4,6 +4,8 @@ import { Message } from './message/type'
 import { useTranslation } from '../hooks/use-translation'
 import { useRef, useState } from 'react'
 import { useRouter } from 'next/router'
+import { useUnreadMessages } from '../hooks/use-unread-messages'
+import Cookies from 'js-cookie'
 
 export const Notifications = () => {
   const t = useTranslation()
@@ -11,8 +13,17 @@ export const Notifications = () => {
   const unreadMessages = useRef<Message[]>([])
   const { push } = useRouter()
   const { asPath } = useRouter()
+  const { setMessages } = useUnreadMessages()
 
   useAsync(async () => {
+    const notificationCookie = Cookies.get('allowNotification')
+    Notification.requestPermission().then((permission) => {
+      if (permission === 'granted' && notificationCookie !== 'true') {
+        Cookies.set('allowNotification', 'true')
+      } else if (notificationCookie !== 'false') {
+        Cookies.set('allowNotification', 'false')
+      }
+    })
     if (asPath.startsWith('/user/inbox')) {
       return
     }
@@ -43,6 +54,7 @@ export const Notifications = () => {
       }
     })
     unreadMessages.current.push(...messages)
+    setMessages(unreadMessages.current)
     const delay = setTimeout(() => {
       setRequest(request + 1)
     }, 5000)
@@ -50,6 +62,6 @@ export const Notifications = () => {
     return () => {
       clearTimeout(delay)
     }
-  }, [request])
+  }, [request, setMessages])
   return null
 }
