@@ -16,11 +16,10 @@ export const Notifications = () => {
   const { setMessages } = useUnreadMessages()
 
   useAsync(async () => {
-    const notificationCookie = Cookies.get('allowNotification')
     Notification.requestPermission().then((permission) => {
-      if (permission === 'granted' && notificationCookie !== 'true') {
+      if (permission === 'granted') {
         Cookies.set('allowNotification', 'true')
-      } else if (notificationCookie !== 'false') {
+      } else {
         Cookies.set('allowNotification', 'false')
       }
     })
