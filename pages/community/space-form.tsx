@@ -11,13 +11,15 @@ import { sendFormData } from '../../lib/helpers/send-form-data'
 import { addSpaceFormSchema } from '../../lib/schema/add-space-form-schema'
 import { twFormGroup } from '../../lib/constants/css-classes'
 import { useSnackbar } from '../../hooks/use-snackbar'
+import { User } from '../../components/user/types'
 
 interface Props {
+  user: User
   setOpen: (isOpen: boolean) => void
   setIsLoading: (isLoading: boolean) => void
   setMySpaces: Dispatch<SetStateAction<SpaceItemTypeWithUser[]>>
-  mySpaces?: SpaceItemTypeWithUser[]
   isLoading?: boolean
+  mySpaces?: SpaceItemTypeWithUser[]
 }
 
 const SpaceForm: FC<Props> = ({
@@ -26,6 +28,7 @@ const SpaceForm: FC<Props> = ({
   setIsLoading,
   setMySpaces,
   mySpaces,
+  user,
 }) => {
   const t = useTranslation()
   const setAlert = useSnackbar((state) => state.setAlert)
@@ -40,13 +43,20 @@ const SpaceForm: FC<Props> = ({
 
       if (fetchedAddSpace.ok) {
         const space = fetchedAddSpace.space
-        mySpaces?.push({ ...space, id: fetchedAddSpace.spaceId })
+        mySpaces?.push({
+          ...space,
+          id: fetchedAddSpace.spaceId,
+          enhancedUsersInSpace: [
+            {
+              id: user.id ?? '',
+              userName: user.firstName,
+            },
+          ],
+        })
         setIsLoading(false)
         setAlert({ severity: 'success', children: fetchedAddSpace.message })
-        setOpen(false)
-        if (Array.isArray(mySpaces)) {
-          setMySpaces([...mySpaces])
-        }
+
+        setMySpaces([...(mySpaces ?? [])])
       } else {
         setAlert({
           severity: 'error',
@@ -54,16 +64,15 @@ const SpaceForm: FC<Props> = ({
         })
         setIsLoading(false)
         setIsLoading(false)
-        setOpen(true)
       }
     } catch {
       setIsLoading(false)
-      setOpen(true)
       setAlert({
         severity: 'error',
-        children: t('SPACES_failed'),
+        children: t('SPACES_edit_failed'),
       })
     }
+    setOpen(false)
   }
 
   return (
@@ -72,7 +81,7 @@ const SpaceForm: FC<Props> = ({
         initialValues={
           {
             name: '',
-          } as SpaceItemType
+          } as SpaceItemTypeWithUser
         }
         validationSchema={addSpaceFormSchema}
         validateOnChange={false}
