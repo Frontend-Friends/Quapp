@@ -68,6 +68,12 @@ export const translationsEn: Record<string, string> = {
 
   SAVE_PRODUCT_submit: 'Save',
 
+  SETTINGS_updated: 'The settings were saved.',
+  SETTINGS_title: 'Settings',
+  SETTINGS_change_settings: 'Change settings',
+  SETTINGS_change_password: 'Change password',
+  SETTINGS_change_password_description:
+    'To change your password, you need to have it reset by our system. You will receive an email with instructions after doing so.',
   BORROW_TEXTFIELD_label: 'Message',
   BORROW_TEXTFIELD_default_value: 'Write a message',
   BORROW_DATEPICKER_label: 'Borrow date',

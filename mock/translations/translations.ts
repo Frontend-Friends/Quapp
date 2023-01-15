@@ -150,6 +150,10 @@ export const translations: Record<string, string> = {
 
   SETTINGS_title: 'Einstellungen',
   SETTINGS_change_settings: 'Einstellungen ändern',
+  SETTINGS_change_password: 'Passwort ändern',
+  SETTINGS_change_password_description:
+    'Um dein Passwort zu ändern, musst du es von unserem System zurücksetzen lassen. Du erhältst nach der Durchführung eine E-Mail mit entsprechenden Anweisungen.',
+  SETTINGS_updated: 'Die Einstellungen wurden erfolgreich geändert',
 
   INVITATION_server_error: 'Beim Versenden der Einladung gab es einen Fehler',
   INVITATION_title: 'Lade eine Person in diesen Space ein',
@@ -176,8 +180,4 @@ export const translations: Record<string, string> = {
   FOOTER_privacy: 'Datenschutz',
 
   INBOX_title: 'Benachrichtigungen',
-
-  SETTINGS_change_password: 'Passwort ändern',
-  SETTINGS_change_password_description:
-    'Um dein Passwort zu ändern, musst du es von unserem System zurücksetzen lassen. Du erhältst nach der Durchführung eine E-Mail mit entsprechenden Anweisungen.',
 }
