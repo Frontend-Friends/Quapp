@@ -1,5 +1,6 @@
 import { FC, useCallback, useRef, useState } from 'react'
 import {
+  Badge,
   Button,
   Divider,
   ListItemIcon,
@@ -17,6 +18,7 @@ import SettingsRounded from '@mui/icons-material/SettingsRounded'
 import EmailIcon from '@mui/icons-material/Email'
 import ListAltIcon from '@mui/icons-material/ListAlt'
 import Link from 'next/link'
+import { useUnreadMessages } from '../../hooks/use-unread-messages'
 
 export const UserIcon: FC = () => {
   const [open, setOpen] = useState<boolean>(false)
@@ -24,6 +26,7 @@ export const UserIcon: FC = () => {
   const ref = useRef<HTMLButtonElement | null>(null)
   const t = useTranslation()
   const { push } = useRouter()
+  const { messages } = useUnreadMessages()
 
   const handleClick = useCallback(() => {
     setOpen((state) => !state)
@@ -45,7 +48,9 @@ export const UserIcon: FC = () => {
           setOpen(true)
         }}
       >
-        <Person2RoundedIcon className="text-3xl" />
+        <Badge badgeContent={messages.length || undefined} color="secondary">
+          <Person2RoundedIcon className="text-3xl" />
+        </Badge>
       </Button>
       <Menu
         id="basic-menu"
@@ -91,7 +96,12 @@ export const UserIcon: FC = () => {
             <Link href="/user/inbox" passHref>
               <a className="flex items-center no-underline hover:text-secondary focus:text-secondary">
                 <ListItemIcon>
-                  <EmailIcon fontSize="small" />
+                  <Badge
+                    badgeContent={messages.length || undefined}
+                    color="secondary"
+                  >
+                    <EmailIcon fontSize="small" />
+                  </Badge>
                 </ListItemIcon>
                 {t('GLOBAL_go_to_inbox')}
               </a>

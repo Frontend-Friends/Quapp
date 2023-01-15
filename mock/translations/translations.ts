@@ -124,6 +124,8 @@ export const translations: Record<string, string> = {
   BORROW_success_text: 'Willst du eine neue Anfrage',
   REQUEST_product_link: 'Link zum Angebot',
 
+  FORM_submitting_error: 'Beim erstellen ist ein Fehler entstanden.',
+
   CREATE_PRODUCT_detail: 'Angebot Detail',
   CREATE_PRODUCT_upload: 'Bild hochladen',
   CREATE_PRODUCT_description: 'Angebot Beschreibung',

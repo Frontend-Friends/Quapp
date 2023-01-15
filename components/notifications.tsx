@@ -4,6 +4,7 @@ import { Message } from './message/type'
 import { useTranslation } from '../hooks/use-translation'
 import { useRef, useState } from 'react'
 import { useRouter } from 'next/router'
+import { useUnreadMessages } from '../hooks/use-unread-messages'
 
 export const Notifications = () => {
   const t = useTranslation()
@@ -11,8 +12,17 @@ export const Notifications = () => {
   const unreadMessages = useRef<Message[]>([])
   const { push } = useRouter()
   const { asPath } = useRouter()
+  const { setMessages } = useUnreadMessages()
 
   useAsync(async () => {
+    let allowNotifications = false
+    Notification.requestPermission().then((permission) => {
+      if (permission === 'granted') {
+        allowNotifications = true
+      } else {
+        allowNotifications = false
+      }
+    })
     if (asPath.startsWith('/user/inbox')) {
       return
     }
@@ -24,7 +34,7 @@ export const Notifications = () => {
       const mayHasMessage = unreadMessages.current.some(
         (item) => message.id === item.id
       )
-      if (!mayHasMessage) {
+      if (!mayHasMessage && allowNotifications) {
         Notification.requestPermission().then((permission) => {
           if (permission === 'granted') {
             const notification = new Notification(
@@ -43,6 +53,7 @@ export const Notifications = () => {
       }
     })
     unreadMessages.current.push(...messages)
+    setMessages(unreadMessages.current)
     const delay = setTimeout(() => {
       setRequest(request + 1)
     }, 5000)
@@ -50,6 +61,6 @@ export const Notifications = () => {
     return () => {
       clearTimeout(delay)
     }
-  }, [request])
+  }, [request, setMessages])
   return null
 }
