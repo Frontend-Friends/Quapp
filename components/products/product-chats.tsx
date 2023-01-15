@@ -37,7 +37,7 @@ export const ProductChats = ({
   const [productId] = query.products as string[]
   const [fetchCount, setFetchCount] = useState(0)
 
-  const [selectedTab, setSelectedTab] = useState(selectedChats[0].chatUserId)
+  const [selectedTab, setSelectedTab] = useState(selectedChats[0]?.chatUserId)
 
   const updateChat = useCallback(
     (chatId: string | null) => {
@@ -59,10 +59,27 @@ export const ProductChats = ({
   )
 
   useAsync(async () => {
-    const fetchedChat = await fetchJson<{ history: ChatMessage[] }>(
-      `/api/chats?productId=${productId}&space=${query.space}&chatId=${selectedTab}`
+    if (!isOwner && !selectedTab) {
+      return
+    }
+    const chatId = isOwner ? selectedTab : userId
+    const fetchedChat = await fetchJson<{
+      history: ChatMessage[]
+      userId: string | null
+      chats: ProductChatType[]
+    }>(
+      `/api/chats?productId=${productId}&space=${query.space}&chatId=${
+        chatId || ''
+      }`
     )
-    updateChat(selectedTab)(fetchedChat.history)
+
+    if (fetchedChat.chats) {
+      setSelectedChats(fetchedChat.chats)
+    } else {
+      const selectedChatId = selectedTab || fetchedChat.userId
+      updateChat(selectedChatId)(fetchedChat.history)
+    }
+
     const timeout = setTimeout(() => {
       setFetchCount(fetchCount + 1)
     }, 5000)
@@ -84,47 +101,52 @@ export const ProductChats = ({
           setChat={updateChat(userId)}
         />
       )}
-      {selectedChats.length === 0 && (
+      {!selectedChats.length && (
         <Alert severity="info">{t('CHAT_no_messages')}</Alert>
       )}
-      <TabContext value={selectedTab as string}>
-        <TabList
-          onChange={(_, newValue) => {
-            setSelectedTab(`${newValue}`)
-          }}
-        >
+      {!!selectedChats.length && (
+        <TabContext value={selectedTab as string}>
+          {isOwner && (
+            <TabList
+              onChange={(_, newValue) => {
+                setSelectedTab(`${newValue}`)
+              }}
+            >
+              {selectedChats.map((chat, index) => {
+                return (
+                  <Tab
+                    label={chat.chatUserName}
+                    value={chat.chatUserId}
+                    key={index}
+                  />
+                )
+              })}
+            </TabList>
+          )}
+
           {selectedChats.map((chat, index) => {
             return (
-              <Tab
-                label={chat.chatUserName}
-                value={chat.chatUserId}
-                key={index}
-              />
+              <TabPanel value={chat.chatUserId as string} key={index}>
+                <div>
+                  {isOwner && (
+                    <ChatForm
+                      isOwner={isOwner}
+                      chatId={chat.chatUserId}
+                      setChat={updateChat(chat.chatUserId)}
+                    />
+                  )}
+                  <ProductChat
+                    productOwnerName={productOwnerName}
+                    history={chat.history}
+                    userName={chat.chatUserName}
+                    isOwner={isOwner}
+                  />
+                </div>
+              </TabPanel>
             )
           })}
-        </TabList>
-        {selectedChats.map((chat, index) => {
-          return (
-            <TabPanel value={chat.chatUserId as string} key={index}>
-              <div>
-                {isOwner && (
-                  <ChatForm
-                    isOwner={isOwner}
-                    chatId={chat.chatUserId}
-                    setChat={updateChat(chat.chatUserId)}
-                  />
-                )}
-                <ProductChat
-                  productOwnerName={productOwnerName}
-                  history={chat.history}
-                  userName={chat.chatUserName}
-                  isOwner={isOwner}
-                />
-              </div>
-            </TabPanel>
-          )
-        })}
-      </TabContext>
+        </TabContext>
+      )}
     </Box>
   )
 }
