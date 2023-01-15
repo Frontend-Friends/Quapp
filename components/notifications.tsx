@@ -51,7 +51,7 @@ export const Notifications = () => {
         })
       }
     })
-    unreadMessages.current.push(...messages)
+    unreadMessages.current = messages
     setMessages(unreadMessages.current)
     const delay = setTimeout(() => {
       setRequest(request + 1)
