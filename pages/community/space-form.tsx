@@ -15,17 +15,17 @@ import { User } from '../../components/user/types'
 
 interface Props {
   user: User
-  setOpen: (isOpen: boolean) => void
   setIsLoading: (isLoading: boolean) => void
   setMySpaces: Dispatch<SetStateAction<SpaceItemTypeWithUser[]>>
+  setOpenModal: Dispatch<SetStateAction<boolean>>
   isLoading?: boolean
   mySpaces?: SpaceItemTypeWithUser[]
 }
 
 const SpaceForm: FC<Props> = ({
-  setOpen,
   isLoading,
   setIsLoading,
+  setOpenModal,
   setMySpaces,
   mySpaces,
   user,
@@ -55,7 +55,6 @@ const SpaceForm: FC<Props> = ({
         })
         setIsLoading(false)
         setAlert({ severity: 'success', children: fetchedAddSpace.message })
-
         setMySpaces([...(mySpaces ?? [])])
       } else {
         setAlert({
@@ -64,17 +63,15 @@ const SpaceForm: FC<Props> = ({
         })
         setIsLoading(false)
         setIsLoading(false)
-        setOpen(true)
       }
     } catch {
       setIsLoading(false)
-      setOpen(true)
       setAlert({
         severity: 'error',
         children: t('SPACES_failed'),
       })
     }
-    setOpen(false)
+    setOpenModal(false)
   }
 
   return (

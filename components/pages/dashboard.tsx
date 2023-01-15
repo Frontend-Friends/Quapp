@@ -25,7 +25,6 @@ export const Dashboard: FC<{
   user: User
   t: UseTranslationType
 }> = ({ spaces, user, t }) => {
-  const [open, setOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [mySpaces, setMySpaces] = useState<SpaceItemTypeWithUser[]>(
     spaces ?? []
@@ -70,16 +69,7 @@ export const Dashboard: FC<{
       >
         <AddIcon className="mr-2" /> {t('SPACES_add_space')}
       </Fab>
-      {open && (
-        <SpaceForm
-          setOpen={setOpen}
-          isLoading={isLoading}
-          setIsLoading={setIsLoading}
-          mySpaces={mySpaces}
-          setMySpaces={setMySpaces}
-          user={user}
-        />
-      )}
+
       <Modal
         open={openModal}
         onClose={() => {
@@ -102,14 +92,16 @@ export const Dashboard: FC<{
             'SPACES_add_space'
           )}`}</h3>
           <p id="addspace-description">{t('SPACES_add_space_text')}</p>
-          <SpaceForm
-            isLoading={isLoading}
-            setIsLoading={setIsLoading}
-            mySpaces={mySpaces}
-            setMySpaces={setMySpaces}
-            user={user}
-            setOpen={setOpen}
-          />
+          {setOpenModal && (
+            <SpaceForm
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
+              mySpaces={mySpaces}
+              setMySpaces={setMySpaces}
+              user={user}
+              setOpenModal={setOpenModal}
+            />
+          )}
         </CondensedContainer>
       </Modal>
 
