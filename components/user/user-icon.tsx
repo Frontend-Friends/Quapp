@@ -14,7 +14,8 @@ import { fetchJson } from '../../lib/helpers/fetch-json'
 import { useTranslation } from '../../hooks/use-translation'
 import LogoutRounded from '@mui/icons-material/LogoutRounded'
 import SettingsRounded from '@mui/icons-material/SettingsRounded'
-import InventoryIcon from '@mui/icons-material/Inventory'
+import EmailIcon from '@mui/icons-material/Email'
+import ListAltIcon from '@mui/icons-material/ListAlt'
 import Link from 'next/link'
 
 export const UserIcon: FC = () => {
@@ -68,7 +69,7 @@ export const UserIcon: FC = () => {
             <Link href="/user/my-list" passHref>
               <a className="flex items-center no-underline hover:text-secondary focus:text-secondary">
                 <ListItemIcon>
-                  <InventoryIcon fontSize="small" />
+                  <ListAltIcon fontSize="small" />
                 </ListItemIcon>
                 {t('PRODUCTS_my_list')}
               </a>
@@ -90,7 +91,7 @@ export const UserIcon: FC = () => {
             <Link href="/user/inbox" passHref>
               <a className="flex items-center no-underline hover:text-secondary focus:text-secondary">
                 <ListItemIcon>
-                  <SettingsRounded fontSize="small" />
+                  <EmailIcon fontSize="small" />
                 </ListItemIcon>
                 {t('GLOBAL_go_to_inbox')}
               </a>
