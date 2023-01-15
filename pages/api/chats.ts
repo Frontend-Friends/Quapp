@@ -1,11 +1,19 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { withIronSessionApiRoute } from 'iron-session/next'
 import { sessionOptions } from '../../config/session-config'
-import { doc, getDoc } from 'firebase/firestore'
+import {
+  collection,
+  doc,
+  DocumentData,
+  getDoc,
+  getDocs,
+} from 'firebase/firestore'
 import { sortChatByTime } from '../../lib/scripts/sort-chat-by-time'
 import { getProductRef } from '../../lib/helpers/refs/get-product-ref'
 import { sendError } from '../../lib/helpers/send-error'
 import { sendResponse } from '../../lib/helpers/send-response'
+import { ProductChatType } from '../../components/products/types'
+import { getUser } from '../../lib/services/get-user'
 
 export const config = {
   api: {
@@ -30,12 +38,42 @@ async function chats(req: NextApiRequest, res: NextApiResponse) {
 
     const [, productPath] = getProductRef(space as string, productId)
 
-    const docRef = doc(...productPath, 'chats', chatId)
-
-    const fetchedChat = await getDoc(docRef).then((r) => r.data())
+    let allChats: ProductChatType[] = []
+    let fetchedChat
+    if (chatId === '') {
+      const chatCollection = collection(...productPath, 'chats')
+      const fetchedChatCollection = await getDocs(chatCollection)
+      allChats = await Promise.all<ProductChatType>(
+        fetchedChatCollection.docs.map(
+          (entry) =>
+            new Promise(async (resolve) => {
+              const data = entry.data()
+              const [fetchedUser] = await getUser(entry.id)
+              resolve({
+                chatUserId: entry.id,
+                chatUserName: fetchedUser.userName || '',
+                history: data.history,
+              })
+            })
+        )
+      )
+    } else {
+      const docRef = doc(...productPath, 'chats', chatId)
+      fetchedChat = await getDoc(docRef).then(
+        (r) =>
+          ({
+            id: r.id,
+            ...r.data(),
+          } as DocumentData)
+      )
+    }
     const currentHistory = fetchedChat?.history || []
 
-    sendResponse(res, { history: sortChatByTime(currentHistory) })
+    sendResponse(res, {
+      history: sortChatByTime(currentHistory),
+      userId: fetchedChat?.userId || null,
+      chats: allChats,
+    })
   } catch (error) {
     console.error(error)
     sendError(res)
