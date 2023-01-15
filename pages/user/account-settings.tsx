@@ -10,7 +10,7 @@ import { fetchJson } from '../../lib/helpers/fetch-json'
 import { withIronSessionSsr } from 'iron-session/next'
 import { ironOptions } from '../../lib/config'
 import { sendFormData } from '../../lib/helpers/send-form-data'
-import { twFormGroup } from '../../lib/constants/css-classes'
+import { twFormGroup } from '../../lib/constants'
 import { useSnackbar } from '../../hooks/use-snackbar'
 
 const AccountSettings: React.FC<{ isLoggedIn: boolean; user: User }> = ({
@@ -94,7 +94,7 @@ const AccountSettings: React.FC<{ isLoggedIn: boolean; user: User }> = ({
                 onBlur={formikProps.handleBlur}
                 value={formikProps.values.firstName}
                 error={!!formikProps.errors.firstName}
-                helperText={formikProps.errors.firstName}
+                helperText={t(formikProps.errors.firstName || '')}
                 type="text"
                 label={t('GLOBAL_first_name')}
                 variant="outlined"
@@ -107,7 +107,7 @@ const AccountSettings: React.FC<{ isLoggedIn: boolean; user: User }> = ({
                 onBlur={formikProps.handleBlur}
                 value={formikProps.values.lastName}
                 error={!!formikProps.errors.lastName}
-                helperText={formikProps.errors.lastName}
+                helperText={t(formikProps.errors.lastName || '')}
                 type="text"
                 label={t('GLOBAL_last_name')}
                 variant="outlined"
@@ -120,7 +120,7 @@ const AccountSettings: React.FC<{ isLoggedIn: boolean; user: User }> = ({
                 onBlur={formikProps.handleBlur}
                 value={formikProps.values.userName}
                 error={!!formikProps.errors.userName}
-                helperText={formikProps.errors.userName}
+                helperText={t(formikProps.errors.userName || '')}
                 type="text"
                 label={t('GLOBAL_user_name')}
                 variant="outlined"
@@ -133,7 +133,7 @@ const AccountSettings: React.FC<{ isLoggedIn: boolean; user: User }> = ({
                 onBlur={formikProps.handleBlur}
                 value={formikProps.values.phone}
                 error={!!formikProps.errors.phone}
-                helperText={formikProps.errors.phone}
+                helperText={t(formikProps.errors.phone || '')}
                 type="text"
                 label={t('GLOBAL_mobile_number')}
                 variant="outlined"

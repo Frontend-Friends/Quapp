@@ -7,17 +7,17 @@ export const createNewCategory = async (space: string, category: string) => {
   const categories = spaceData.categories
 
   const mayHasCategory = categories?.findIndex((item) => item === category)
-  if (mayHasCategory === undefined) {
+  if (mayHasCategory === undefined || !categories) {
     await updateSpace(space, {
       ...spaceData,
       categories: [category],
     })
-    return 0
-  }
-  if (mayHasCategory > -1) {
-    return mayHasCategory
+    return { categories: [category], index: 0 }
   }
   spaceData.categories?.push(category)
   await updateSpace(space, spaceData)
-  return spaceData.categories ? spaceData.categories.length - 1 : ''
+  return {
+    categories: spaceData.categories as string[],
+    index: mayHasCategory >= 0 ? mayHasCategory : categories.length - 1,
+  }
 }

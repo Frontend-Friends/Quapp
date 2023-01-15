@@ -93,7 +93,10 @@ const SpaceItem: FC<Props> = ({
   return (
     <>
       <Grid item xs={1} className="grow">
-        <Card variant="outlined" className="relative">
+        <Card
+          variant="outlined"
+          className="relative flex w-full flex-wrap bg-blueishGray-50 text-left hover:bg-blueishGray-100 md:p-2"
+        >
           <Link href={`${space.id}/products`} passHref>
             <MuiLink
               title={`${t('GLOBAL_open')} ${space.name}`}
@@ -102,6 +105,7 @@ const SpaceItem: FC<Props> = ({
           </Link>
           <CardHeader
             title={space.name}
+            className="grow pb-2"
             action={
               <IconButton
                 title={`${space.name} ${t('GLOBAL_options')}`}
@@ -125,14 +129,12 @@ const SpaceItem: FC<Props> = ({
               'aria-labelledby': 'basic-button',
             }}
           >
-            <MenuItem onClick={handleEditClick}>{`${space.name} ${t(
-              'GLOBAL_edit'
-            )}`}</MenuItem>
+            <MenuItem onClick={handleEditClick}>{t('GLOBAL_edit')}</MenuItem>
             <MenuItem onClick={() => setDialogOpen(true)}>
-              {`${space.name} ${t('GLOBAL_delete')}`}
+              {t('GLOBAL_delete')}
             </MenuItem>
           </Menu>
-          <CardContent className="flex items-center">
+          <CardContent className="flex basis-full items-center pt-2">
             {space.memberCount && (
               <Typography
                 align="justify"

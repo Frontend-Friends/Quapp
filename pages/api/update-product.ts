@@ -30,11 +30,15 @@ async function createProduct(req: NextApiRequest, res: NextApiResponse) {
     }
     const formData = await parsedForm<ProductFormData>(req)
 
+    const categories = []
+
     if (!!formData.fields.newCategory) {
-      formData.fields.category = await createNewCategory(
+      const fetchedCategories = await createNewCategory(
         space,
         formData.fields.newCategory
       )
+      formData.fields.category = fetchedCategories.index
+      categories.push(...fetchedCategories.categories)
     }
 
     deleteObjectKey(formData.fields, 'newCategory')
@@ -68,7 +72,7 @@ async function createProduct(req: NextApiRequest, res: NextApiResponse) {
 
     await setDoc(docRef, data, { merge: true })
 
-    sendResponse(res, { product: { ...data } })
+    sendResponse(res, { product: { ...data }, categories })
   } catch (err) {
     console.error(err)
     sendError(res)

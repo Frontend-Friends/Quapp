@@ -14,7 +14,7 @@ export async function unreadMessages(
   try {
     if (!user || !user.id) {
       console.error('No User or User Id')
-      sendError(res)
+      sendResponse(res, { ok: false, messages: [] })
       return
     }
     const [, userPath] = getUserRef(user.id)

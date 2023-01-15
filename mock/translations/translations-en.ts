@@ -110,6 +110,7 @@ export const translationsEn: Record<string, string> = {
   SPACES_administrator: 'Administrator',
   SPACES_edit_ok: 'The space is successfully edited',
   SPACES_edit_failed: 'The space could not be edited',
+  SPACES_edit_title: 'Edit space',
 
   CHAT_button_send: 'Send message',
   CHAT_button_loading: 'will be sent',

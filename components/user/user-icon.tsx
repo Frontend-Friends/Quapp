@@ -1,9 +1,9 @@
 import { FC, useCallback, useRef, useState } from 'react'
 import {
+  Badge,
   Button,
   Divider,
   ListItemIcon,
-  ListItemText,
   Menu,
   MenuItem,
   MenuList,
@@ -15,7 +15,10 @@ import { fetchJson } from '../../lib/helpers/fetch-json'
 import { useTranslation } from '../../hooks/use-translation'
 import LogoutRounded from '@mui/icons-material/LogoutRounded'
 import SettingsRounded from '@mui/icons-material/SettingsRounded'
-import InventoryIcon from '@mui/icons-material/Inventory'
+import EmailIcon from '@mui/icons-material/Email'
+import ListAltIcon from '@mui/icons-material/ListAlt'
+import Link from 'next/link'
+import { useUnreadMessages } from '../../hooks/use-unread-messages'
 
 export const UserIcon: FC = () => {
   const [open, setOpen] = useState<boolean>(false)
@@ -23,6 +26,7 @@ export const UserIcon: FC = () => {
   const ref = useRef<HTMLButtonElement | null>(null)
   const t = useTranslation()
   const { push } = useRouter()
+  const { messages } = useUnreadMessages()
 
   const handleClick = useCallback(() => {
     setOpen((state) => !state)
@@ -44,7 +48,9 @@ export const UserIcon: FC = () => {
           setOpen(true)
         }}
       >
-        <Person2RoundedIcon className="text-3xl" />
+        <Badge badgeContent={messages.length || undefined} color="secondary">
+          <Person2RoundedIcon className="text-3xl" />
+        </Badge>
       </Button>
       <Menu
         id="basic-menu"
@@ -64,33 +70,54 @@ export const UserIcon: FC = () => {
         }}
       >
         <MenuList>
-          <MenuItem
-            onClick={() => {
-              push('/user/my-list')
-            }}
-          >
-            <ListItemIcon>
-              <InventoryIcon fontSize="small" />
-            </ListItemIcon>
-            {t('PRODUCTS_my_list')}
+          <MenuItem>
+            <Link href="/user/my-list" passHref>
+              <a className="flex items-center no-underline hover:text-secondary focus:text-secondary">
+                <ListItemIcon>
+                  <ListAltIcon fontSize="small" />
+                </ListItemIcon>
+                {t('PRODUCTS_my_list')}
+              </a>
+            </Link>
           </MenuItem>
           <Divider />
-          <MenuItem
-            onClick={() => {
-              push('/user/account-settings')
-            }}
-          >
-            <ListItemIcon>
-              <SettingsRounded fontSize="small" />
-            </ListItemIcon>
-            {t('GLOBAL_go_to_account_settings')}
+          <MenuItem>
+            <Link href="/user/account-settings" passHref>
+              <a className="flex items-center no-underline hover:text-secondary focus:text-secondary">
+                <ListItemIcon>
+                  <SettingsRounded fontSize="small" />
+                </ListItemIcon>
+                {t('GLOBAL_go_to_account_settings')}
+              </a>
+            </Link>
           </MenuItem>
           <Divider />
-          <MenuItem onClick={handleLogout}>
-            <ListItemIcon>
-              <LogoutRounded fontSize="small" />
-            </ListItemIcon>
-            <ListItemText>{t('LOGOUT_logout')}</ListItemText>
+          <MenuItem>
+            <Link href="/user/inbox" passHref>
+              <a className="flex items-center no-underline hover:text-secondary focus:text-secondary">
+                <ListItemIcon>
+                  <Badge
+                    badgeContent={messages.length || undefined}
+                    color="secondary"
+                  >
+                    <EmailIcon fontSize="small" />
+                  </Badge>
+                </ListItemIcon>
+                {t('GLOBAL_go_to_inbox')}
+              </a>
+            </Link>
+          </MenuItem>
+          <Divider />
+          <MenuItem>
+            <button
+              onClick={handleLogout}
+              className="flex items-center border-0 bg-transparent p-0 no-underline hover:text-secondary focus:text-secondary"
+            >
+              <ListItemIcon>
+                <LogoutRounded fontSize="small" />
+              </ListItemIcon>
+              {t('LOGOUT_logout')}
+            </button>
           </MenuItem>
         </MenuList>
       </Menu>

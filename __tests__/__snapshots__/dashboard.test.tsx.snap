@@ -19,7 +19,7 @@ exports[`renders Dashboard unchanged 1`] = `
     </p>
     <button
       aria-label="add"
-      class="MuiButtonBase-root MuiFab-root MuiFab-extended MuiFab-sizeLarge MuiFab-primary MuiFab-root MuiFab-extended MuiFab-sizeLarge MuiFab-primary mt-8 css-nubenn-MuiButtonBase-root-MuiFab-root"
+      class="MuiButtonBase-root MuiFab-root MuiFab-extended MuiFab-sizeLarge MuiFab-secondary MuiFab-root MuiFab-extended MuiFab-sizeLarge MuiFab-secondary mt-8 css-1l9vhk9-MuiButtonBase-root-MuiFab-root"
       tabindex="0"
       type="button"
     >

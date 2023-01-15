@@ -1,20 +1,26 @@
 import { File } from 'formidable'
-import path from 'path'
 import fs from 'fs'
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
-import { storage } from '../../config/firebase'
+import { supabase } from '../../config/supabase'
 
 export const uploadFileToStorage = async (img?: File | null) => {
   if (!img || !img.originalFilename) {
     return null
   }
-  const filePath = path.join(img.filepath)
 
-  const fileBuffer = await fs.promises.readFile(filePath)
+  const fileBuffer = await fs.promises.readFile(img.filepath)
 
-  const imgRef = ref(storage, `${new Date().getTime()}-${img.originalFilename}`)
+  const fileName = `${new Date().getTime()}-${img.originalFilename}`
 
-  await uploadBytes(imgRef, fileBuffer)
+  await supabase.storage
+    .from('images')
+    .upload(`public/${fileName}`, fileBuffer, {
+      cacheControl: '3600',
+      upsert: false,
+    })
 
-  return getDownloadURL(imgRef)
+  const { data } = supabase.storage
+    .from('images')
+    .getPublicUrl(`public/${fileName}`)
+
+  return data.publicUrl
 }

@@ -20,25 +20,25 @@ import { sendFormData } from '../../lib/helpers/send-form-data'
 import { SnackbarProps } from '../../hooks/use-snackbar'
 
 interface Props {
-  openModal: boolean
-  setOpenModal: Dispatch<SetStateAction<boolean>>
   setAlert: (newState?: SnackbarProps) => void
   setMySpaces: Dispatch<SetStateAction<SpaceItemTypeWithUser[]>>
   setSpace: Dispatch<SetStateAction<SpaceItemTypeWithUser>>
   t: UseTranslationType
   space: SpaceItemTypeWithUser | null
   mySpaces: SpaceItemTypeWithUser[]
+  openEditModal: boolean
+  setOpenEditModal: Dispatch<SetStateAction<boolean>>
 }
 
 const EditSpaceModal: React.FC<Props> = ({
-  openModal,
-  setOpenModal,
   space,
   setSpace,
   mySpaces,
   setMySpaces,
   setAlert,
   t,
+  openEditModal,
+  setOpenEditModal,
 }) => {
   const [isLoading, setIsLoading] = useState(false)
   const setUpdatedSpaces = (updatedSpace: SpaceItemTypeWithUser) => {
@@ -69,7 +69,7 @@ const EditSpaceModal: React.FC<Props> = ({
       if (fetchedEditSpace.ok) {
         const updatedSpace = fetchedEditSpace.updatedSpace
         setIsLoading(false)
-        setOpenModal(false)
+        setOpenEditModal(false)
         setSpace({
           ...updatedSpace,
         })
@@ -82,7 +82,7 @@ const EditSpaceModal: React.FC<Props> = ({
       }
     } catch (error) {
       setIsLoading(false)
-      setOpenModal(false)
+      setOpenEditModal(false)
       setAlert({
         severity: 'error',
         children: t('SPACES_edit_failed'),
@@ -94,9 +94,9 @@ const EditSpaceModal: React.FC<Props> = ({
     space?.enhancedUsersInSpace
   return (
     <Modal
-      open={openModal}
+      open={openEditModal}
       onClose={() => {
-        setOpenModal(false)
+        setOpenEditModal(false)
       }}
       aria-labelledby="invitation-title"
       aria-describedby="delete-description"

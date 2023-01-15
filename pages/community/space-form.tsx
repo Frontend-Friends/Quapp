@@ -9,7 +9,7 @@ import { Formik } from 'formik'
 import { useTranslation } from '../../hooks/use-translation'
 import { sendFormData } from '../../lib/helpers/send-form-data'
 import { addSpaceFormSchema } from '../../lib/schema/add-space-form-schema'
-import { twFormGroup } from '../../lib/constants/css-classes'
+import { twFormGroup } from '../../lib/constants'
 import { useSnackbar } from '../../hooks/use-snackbar'
 import { User } from '../../components/user/types'
 
@@ -64,12 +64,14 @@ const SpaceForm: FC<Props> = ({
         })
         setIsLoading(false)
         setIsLoading(false)
+        setOpen(true)
       }
     } catch {
       setIsLoading(false)
+      setOpen(true)
       setAlert({
         severity: 'error',
-        children: t('SPACES_edit_failed'),
+        children: t('SPACES_failed'),
       })
     }
     setOpen(false)
@@ -98,7 +100,7 @@ const SpaceForm: FC<Props> = ({
                 onBlur={props.handleBlur}
                 value={props.values.name}
                 error={!!props.errors.name}
-                helperText={props.errors.name}
+                helperText={t(props.errors.name || '')}
                 type="text"
                 label={t('SPACES_name')}
                 variant="outlined"

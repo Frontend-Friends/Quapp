@@ -46,7 +46,7 @@ const Home: FC<{ isLoggedIn: boolean }> = () => {
             className="col-span-7 mx-auto block w-1/2 md:h-full md:w-1/5 lg:mb-10"
             preserveAspectRatio="xMidYMid meet"
           />
-          <h1 className="col-span-7 text-center text-xl font-medium sm:col-start-3 sm:text-left md:text-xl lg:pl-14 lg:text-2xl 2xl:col-start-4">
+          <h1 className="col-span-7 text-center text-xl font-medium text-white sm:col-start-3 sm:text-left md:text-xl lg:pl-14 lg:text-2xl 2xl:col-start-4">
             {t('HOME_subtitle')}
           </h1>
           <AppartmentSVG

@@ -137,7 +137,7 @@ const Login: FC = () => {
                 value={props.values.email}
                 onChange={props.handleChange}
                 error={!!props.errors.email}
-                helperText={props.errors.email}
+                helperText={t(props.errors.email || '')}
                 onBlur={props.handleBlur}
                 type="email"
                 label={t('GLOBAL_email')}
@@ -150,7 +150,7 @@ const Login: FC = () => {
                 value={props.values.password}
                 onChange={props.handleChange}
                 onBlur={props.handleBlur}
-                helperText={props.errors.password}
+                helperText={t(props.errors.password || '')}
                 error={!!props.errors.password}
                 type="password"
                 label={t('GLOBAL_password')}
@@ -186,8 +186,8 @@ const Login: FC = () => {
         onClose={() => {
           setOpenModal(false)
         }}
-        aria-labelledby="delete-title"
-        aria-describedby="delete-description"
+        aria-labelledby="reset-title"
+        aria-describedby="reset-description"
       >
         <CondensedContainer className="absolute m-0 h-full w-full bg-white p-8 drop-shadow-2xl md:top-1/3 md:left-1/2 md:h-[unset] md:w-[600px] md:-translate-x-1/2 md:-translate-y-1/3">
           <Box className="sticky top-0 z-10 flex h-0 w-full justify-end">
@@ -200,7 +200,6 @@ const Login: FC = () => {
             </IconButton>
           </Box>
           <h3 id="reset-title" className="my-0">{`${t('RESET_title')}`}</h3>
-
           <p id="reset-description">{t('RESET_text')}</p>
           <Formik
             initialValues={{
@@ -225,7 +224,7 @@ const Login: FC = () => {
                     value={formikProps.values.email}
                     onChange={formikProps.handleChange}
                     onBlur={formikProps.handleBlur}
-                    helperText={formikProps.errors.email}
+                    helperText={t(formikProps.errors.email || '')}
                     error={!!formikProps.errors.email}
                   />
                 </Box>

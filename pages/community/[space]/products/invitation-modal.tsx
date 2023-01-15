@@ -6,7 +6,7 @@ import { invitationFormSchema } from '../../../../lib/schema/invitation-form-sch
 import { LoadingButton } from '@mui/lab'
 import { useTranslation } from '../../../../hooks/use-translation'
 import { InvitationType } from '../../../../components/products/types'
-import { twFormGroup } from '../../../../lib/constants/css-classes'
+import { twFormGroup } from '../../../../lib/constants'
 
 interface Props {
   openModal: boolean
@@ -33,8 +33,10 @@ const InvitationModal: React.FC<Props> = ({
         aria-labelledby="invitation-title"
         aria-describedby="delete-description"
       >
-        <CondensedContainer className="absolute top-1/2 left-1/2 m-0 w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-white p-8 drop-shadow-2xl">
-          <h3 id="invitation-title">{`${t('INVITATION_title')} `}</h3>
+        <CondensedContainer className="absolute top-1/3 left-1/2 m-0 w-[400px] -translate-x-1/2 -translate-y-1/3 bg-white p-8 drop-shadow-2xl">
+          <h3 id="invitation-title" className="m-0 mb-4">{`${t(
+            'INVITATION_title'
+          )} `}</h3>
 
           <Formik
             initialValues={
@@ -57,7 +59,7 @@ const InvitationModal: React.FC<Props> = ({
                     value={props.values.firstName}
                     onChange={props.handleChange}
                     error={!!props.errors.firstName}
-                    helperText={props.errors.firstName}
+                    helperText={t(props.errors.firstName || '')}
                     onBlur={props.handleBlur}
                     type="text"
                     label={t('GLOBAL_first_name')}
@@ -70,7 +72,7 @@ const InvitationModal: React.FC<Props> = ({
                     value={props.values.email}
                     onChange={props.handleChange}
                     onBlur={props.handleBlur}
-                    helperText={props.errors.email}
+                    helperText={t(props.errors.email || '')}
                     error={!!props.errors.email}
                     type="email"
                     label={t('GLOBAL_email')}
@@ -80,7 +82,7 @@ const InvitationModal: React.FC<Props> = ({
                 <LoadingButton
                   type="submit"
                   variant="contained"
-                  className="mr-4"
+                  className="mt-2"
                   loading={isLoading}
                 >
                   {t('GLOBAL_invitation_send')}

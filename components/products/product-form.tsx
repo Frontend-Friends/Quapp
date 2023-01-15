@@ -71,7 +71,7 @@ export const ProductForm = ({
               value={props.values.title}
               name="title"
               error={!!props.errors.title}
-              helperText={props.errors.title}
+              helperText={t(props.errors.title || '')}
               className="mt-4"
             />
             <TextField
@@ -81,7 +81,7 @@ export const ProductForm = ({
               value={props.values.description}
               name="description"
               error={!!props.errors.description}
-              helperText={props.errors.description}
+              helperText={t(props.errors.description || '')}
               className="mt-4"
             />
             <TextField
@@ -92,7 +92,7 @@ export const ProductForm = ({
               value={props.values.text}
               name="text"
               error={!!props.errors.text}
-              helperText={props.errors.text}
+              helperText={t(props.errors.text || '')}
               className="mt-4"
             />
             <FormControl fullWidth className="mt-4">
@@ -113,17 +113,17 @@ export const ProductForm = ({
                 }}
                 error={!!props.errors.category}
               >
+                <MenuItem value="newCategory">
+                  <AddIcon /> {t('CREATE_PRODUCT_add_category')}
+                </MenuItem>
                 {categories?.map((category, key) => (
                   <MenuItem value={key} key={key}>
                     {category}
                   </MenuItem>
                 ))}
-                <MenuItem value="newCategory">
-                  <AddIcon /> {t('CREATE_PRODUCT_add_category')}
-                </MenuItem>
               </Select>
               <FormHelperText error={!!props.errors.category}>
-                {props.errors.category}
+                {t(props.errors.category || '')}
               </FormHelperText>
             </FormControl>
             {props.values.category === 'newCategory' && (
@@ -135,10 +135,14 @@ export const ProductForm = ({
                 name="newCategory"
                 className="mt-4"
                 error={!!props.errors.newCategory}
-                helperText={props.errors.newCategory}
+                helperText={t(props.errors.newCategory || '')}
               />
             )}
-            <FileUpload props={props} />
+            <FileUpload
+              {...props}
+              error={!!props.errors.img}
+              errorText={t(props.errors.img || '')}
+            />
             {!!product && (
               <FormGroup className="mt-4">
                 <FormControlLabel

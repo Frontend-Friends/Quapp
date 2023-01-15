@@ -68,7 +68,7 @@ export const BorrowForm = ({
               defaultValue={props.values.message}
               name="message"
               error={!!props.errors.message}
-              helperText={props.errors.message}
+              helperText={t(props.errors.message || '')}
             />
             <LocalizationProvider
               dateAdapter={AdapterDayjs}
@@ -118,7 +118,7 @@ export const BorrowForm = ({
                       {...params}
                       className="mt-4"
                       error={!!props.errors.borrowDate}
-                      helperText={props.errors.borrowDate}
+                      helperText={t(props.errors.borrowDate || '')}
                       onFocus={() => {
                         setDatePickerIsOpen(true)
                       }}

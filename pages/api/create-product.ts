@@ -36,11 +36,15 @@ async function createProduct(req: NextApiRequest, res: NextApiResponse) {
       ...formData.files,
     })
 
+    const categories = []
+
     if (!!formData.fields.newCategory) {
-      formData.fields.category = await createNewCategory(
+      const fetchedCategories = await createNewCategory(
         space,
         formData.fields.newCategory
       )
+      formData.fields.category = fetchedCategories.index
+      categories.push(...fetchedCategories.categories)
     }
 
     const imgSrc = await uploadFileToStorage(formData.files?.img)
@@ -61,7 +65,7 @@ async function createProduct(req: NextApiRequest, res: NextApiResponse) {
 
     const productData = await fetchProduct(space, productId, user.id || '')
 
-    sendResponse(res, { productId, product: productData })
+    sendResponse(res, { productId, product: productData, categories })
   } catch (err) {
     console.error(err)
     sendError(res)
