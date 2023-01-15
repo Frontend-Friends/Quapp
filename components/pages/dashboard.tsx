@@ -1,15 +1,7 @@
 import React, { FC, useState } from 'react'
 import { CondensedContainer } from '../condensed-container'
 import { Header } from '../header'
-import {
-  Box,
-  Fab,
-  Grid,
-  IconButton,
-  Modal,
-  Snackbar,
-  Typography,
-} from '@mui/material'
+import { Box, Fab, Grid, IconButton, Modal, Typography } from '@mui/material'
 import SpaceItem from '../spaces/space-item'
 import AddIcon from '@mui/icons-material/Add'
 import SpaceForm from '../../pages/community/space-form'
@@ -29,8 +21,6 @@ export const Dashboard: FC<{
   const [mySpaces, setMySpaces] = useState<SpaceItemTypeWithUser[]>(
     spaces ?? []
   )
-  const [message, setMessage] = useState<string>('')
-  const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false)
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [openEditModal, setOpenEditModal] = useState<boolean>(false)
   const [space, setSpace] = useState<SpaceItemTypeWithUser | null>(null)
@@ -47,8 +37,6 @@ export const Dashboard: FC<{
                 space={mySpace}
                 setMySpaces={setMySpaces}
                 mySpaces={mySpaces}
-                setSnackbarOpen={setSnackbarOpen}
-                setMessage={setMessage}
                 setOpenEditModal={setOpenEditModal}
                 setSpace={setSpace}
               />
@@ -105,16 +93,6 @@ export const Dashboard: FC<{
         </CondensedContainer>
       </Modal>
 
-      <Snackbar
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'center',
-        }}
-        open={snackbarOpen}
-        autoHideDuration={3000}
-        onClose={() => setSnackbarOpen(false)}
-        message={t(message)}
-      />
       <EditSpaceModal
         setAlert={setAlert}
         space={space}

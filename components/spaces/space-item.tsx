@@ -21,14 +21,13 @@ import MenuItem from '@mui/material/MenuItem'
 import { useTranslation } from '../../hooks/use-translation'
 import Link from 'next/link'
 import { fetchJson } from '../../lib/helpers/fetch-json'
+import { useSnackbar } from '../../hooks/use-snackbar'
 
 interface Props {
   space: SpaceItemTypeWithUser
   setSpace: Dispatch<SetStateAction<SpaceItemTypeWithUser>>
   setMySpaces: Dispatch<SetStateAction<SpaceItemTypeWithUser[]>>
   mySpaces: SpaceItemTypeWithUser[]
-  setSnackbarOpen: Dispatch<SetStateAction<boolean>>
-  setMessage: Dispatch<SetStateAction<string>>
   setOpenEditModal: Dispatch<SetStateAction<boolean>>
 }
 
@@ -37,14 +36,13 @@ const SpaceItem: FC<Props> = ({
   setSpace,
   setMySpaces,
   mySpaces,
-  setSnackbarOpen,
-  setMessage,
   setOpenEditModal,
 }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
   const [dialogOpen, setDialogOpen] = useState<boolean>(false)
   const t = useTranslation()
+  const setAlert = useSnackbar((state) => state.setAlert)
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)
@@ -52,7 +50,6 @@ const SpaceItem: FC<Props> = ({
   const handleClose = () => {
     setAnchorEl(null)
     setDialogOpen(false)
-    setSnackbarOpen(false)
   }
   const handleEditClick = () => {
     handleClose()
@@ -74,19 +71,17 @@ const SpaceItem: FC<Props> = ({
       }>(`/api/delete-space-from-user?spaceId=${space.id}`)
       const allSuccess = await Promise.all([delSpace, delSpaceFromUser])
       if (allSuccess) {
-        setMessage(delSpace.message)
-        setSnackbarOpen(true)
+        setAlert({ severity: 'success', children: delSpace.message })
         setMySpaces(
           mySpaces.filter(
             (mySpace) => mySpace.creationDate !== space.creationDate
           )
         )
       } else {
-        setMessage(delSpace.message)
-        setSnackbarOpen(true)
+        setAlert({ severity: 'error', children: delSpace.message })
       }
     } catch (error) {
-      console.error(error)
+      setAlert({ severity: 'error', children: t('RESPONSE_SERVER_ERROR') })
     }
   }
 
