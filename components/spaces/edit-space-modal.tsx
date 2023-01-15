@@ -1,6 +1,5 @@
 import React, { Dispatch, SetStateAction, useState } from 'react'
 import {
-  AlertProps,
   Box,
   FormControl,
   InputLabel,
@@ -18,14 +17,17 @@ import { UseTranslationType } from '../../hooks/use-translation'
 import { editSpaceSchema } from '../../lib/schema/edit-space-schema'
 import { SpaceItemTypeWithUser } from '../products/types'
 import { sendFormData } from '../../lib/helpers/send-form-data'
+import { SnackbarProps } from '../../hooks/use-snackbar'
 
 interface Props {
   openModal: boolean
   setOpenModal: Dispatch<SetStateAction<boolean>>
-  setAlert: (alert: AlertProps) => void
-  space: SpaceItemTypeWithUser | null
+  setAlert: (newState?: SnackbarProps) => void
+  setMySpaces: Dispatch<SetStateAction<SpaceItemTypeWithUser[]>>
   setSpace: Dispatch<SetStateAction<SpaceItemTypeWithUser>>
   t: UseTranslationType
+  space: SpaceItemTypeWithUser | null
+  mySpaces: SpaceItemTypeWithUser[]
 }
 
 const EditSpaceModal: React.FC<Props> = ({
@@ -33,11 +35,21 @@ const EditSpaceModal: React.FC<Props> = ({
   setOpenModal,
   space,
   setSpace,
+  mySpaces,
+  setMySpaces,
   setAlert,
   t,
 }) => {
   const [isLoading, setIsLoading] = useState(false)
-
+  const setUpdatedSpaces = (updatedSpace: SpaceItemTypeWithUser) => {
+    // adding users : Users[] and adminId to new space and updating mySpaces for the component to re-render (update ui)
+    return mySpaces.map((s) => {
+      if (s.id === updatedSpace.id) {
+        return { ...updatedSpace, users: space?.users, adminId: space?.adminId }
+      }
+      return s
+    })
+  }
   const handleChange = (event: SelectChangeEvent, props: FormikValues) => {
     props.setFieldValue('ownerId', event.target.value)
   }
@@ -55,15 +67,18 @@ const EditSpaceModal: React.FC<Props> = ({
       })
 
       if (fetchedEditSpace.ok) {
+        const updatedSpace = fetchedEditSpace.updatedSpace
         setIsLoading(false)
         setOpenModal(false)
         setSpace({
-          ...fetchedEditSpace.updatedSpace,
+          ...updatedSpace,
         })
         setAlert({
           severity: 'success',
           children: t('SPACES_edit_ok'),
         })
+
+        setMySpaces(setUpdatedSpaces(updatedSpace))
       }
     } catch (error) {
       setIsLoading(false)
@@ -75,8 +90,8 @@ const EditSpaceModal: React.FC<Props> = ({
     }
   }
 
-  const users: { id: string; userName: string }[] | undefined = space?.users
-
+  const enhancedUsersInSpace: { id: string; userName: string }[] | undefined =
+    space?.enhancedUsersInSpace
   return (
     <Modal
       open={openModal}
@@ -91,7 +106,10 @@ const EditSpaceModal: React.FC<Props> = ({
 
         <Formik
           initialValues={
-            { name: space?.name, ownerId: space?.adminId } as {
+            {
+              name: space?.name,
+              ownerId: space?.adminId,
+            } as {
               name: string
               ownerId: string
             }
@@ -132,7 +150,7 @@ const EditSpaceModal: React.FC<Props> = ({
                     value={props.values.ownerId}
                     error={!!props.errors.ownerId}
                   >
-                    {users?.map((user) => {
+                    {enhancedUsersInSpace?.map((user) => {
                       return (
                         <MenuItem value={user.id} key={user.id}>
                           {user.userName}
