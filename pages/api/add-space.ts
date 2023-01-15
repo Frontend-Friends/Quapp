@@ -43,7 +43,7 @@ async function addSpace(req: NextApiRequest, res: NextApiResponse) {
       ownerId: `/user/${id}`,
       creatorId: `/user/${id}`,
       creationDate: new Date(),
-      users: [id],
+      users: [id ?? ''],
     }
     const newSpaceId = await addDoc(spaceRef, {
       ...spaceData,

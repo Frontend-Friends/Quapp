@@ -33,13 +33,16 @@ export const translations: Record<string, string> = {
   SPACES_items: 'Einträge',
   SPACES_add_space: 'Space hinzufügen',
   SPACES_name: 'Space Name',
+  SPACES_administrator: 'Administrator',
+  SPACES_edit_ok: 'Der Space wurde erfolgreich geändert',
+  SPACES_edit_failed: 'Der Space konnte nicht erstellt werden',
   SPACES_add_space_text:
     'Wähle bitte einen passenden Namen für deinen eigenen neuen Space:',
+  SPACES_edit_title: 'Space bearbeiten',
 
   RESET_reset_password: 'Password zurücksetzen',
   RESET_title: 'Password zurücksetzen',
-  RESET_text:
-    'Geben Sie Ihre E-Mail Adresse ein, um Ihr Passwort zurückzusetzen.',
+  RESET_text: 'Bitte E-Mail Adresse eingeben, um dein Passwort zurückzusetzen.',
   RESET_submit_button: 'Passwort zurücksetzen',
 
   HOME_signup_free: 'Jetzt kostenlos Registrieren',
@@ -81,6 +84,7 @@ export const translations: Record<string, string> = {
   SIGNUP_success_page_text:
     'Vielen Dank für deine Registrierung! Wir haben dir eine E-Mail mit einem Verifizierungslink geschickt. Bitte klicke diesen an, um die Registrierung abzuschliessen. Dein Quapp Team',
 
+  PRODUCTS_title: 'Produkte',
   PRODUCTS_filter_category_label: 'Nach Kategorie filtern',
   PRODUCTS_reset_category_filter: 'Filter zurück setzen',
   PRODUCTS_no_entries: 'Leider gibt es noch keine Einträge.',
@@ -150,6 +154,7 @@ export const translations: Record<string, string> = {
   BUTTON_remove_upload: 'Hochgeladenes Bild entfernen',
   BUTTON_reset_password: 'Passwort zurücksetzen',
   BUTTON_invite_member: 'Person einladen',
+  BUTTON_save: 'Speichern',
 
   CHAT_title: 'Nachrichten',
   CHAT_no_messages: 'Derzeit sind keine Chat-Nachrichten vorhanden.',
@@ -163,6 +168,10 @@ export const translations: Record<string, string> = {
 
   SETTINGS_title: 'Einstellungen',
   SETTINGS_change_settings: 'Einstellungen ändern',
+  SETTINGS_change_password: 'Passwort ändern',
+  SETTINGS_change_password_description:
+    'Um dein Passwort zu ändern, musst du es von unserem System zurücksetzen lassen. Du erhältst nach der Durchführung eine E-Mail mit entsprechenden Anweisungen.',
+  SETTINGS_updated: 'Die Einstellungen wurden erfolgreich geändert',
 
   INVITATION_server_error: 'Beim Versenden der Einladung gab es einen Fehler',
   INVITATION_title: 'Lade eine Person in diesen Space ein',
@@ -189,8 +198,4 @@ export const translations: Record<string, string> = {
   FOOTER_privacy: 'Datenschutz',
 
   INBOX_title: 'Benachrichtigungen',
-
-  SETTINGS_change_password: 'Passwort ändern',
-  SETTINGS_change_password_description:
-    'Um dein Passwort zu ändern, musst du es von unserem System zurücksetzen lassen. Du erhältst nach der Durchführung eine E-Mail mit entsprechenden Anweisungen.',
 }
