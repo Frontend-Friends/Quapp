@@ -49,7 +49,7 @@ export type SpaceItemType = {
 }
 
 export type SpaceItemTypeWithUser = SpaceItemType & {
-  users?: { id: string; userName: string }[]
+  enhancedUsersInSpace?: { id: string; userName: string }[]
 }
 
 export type SignupType = {
