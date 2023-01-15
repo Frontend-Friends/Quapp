@@ -113,14 +113,14 @@ export const ProductForm = ({
                 }}
                 error={!!props.errors.category}
               >
+                <MenuItem value="newCategory">
+                  <AddIcon /> {t('CREATE_PRODUCT_add_category')}
+                </MenuItem>
                 {categories?.map((category, key) => (
                   <MenuItem value={key} key={key}>
                     {category}
                   </MenuItem>
                 ))}
-                <MenuItem value="newCategory">
-                  <AddIcon /> {t('CREATE_PRODUCT_add_category')}
-                </MenuItem>
               </Select>
               <FormHelperText error={!!props.errors.category}>
                 {t(props.errors.category || '')}

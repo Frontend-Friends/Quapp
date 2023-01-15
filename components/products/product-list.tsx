@@ -91,6 +91,11 @@ export const ProductList = ({
   }, [skip, maxPages])
 
   useAsync(async () => {
+    console.log(
+      lastPage.current === skip,
+      lastFilter.current === filter,
+      !currentSpace
+    )
     if (
       (lastPage.current === skip && lastFilter.current === filter) ||
       !currentSpace

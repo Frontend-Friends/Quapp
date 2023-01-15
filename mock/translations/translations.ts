@@ -81,6 +81,8 @@ export const translations: Record<string, string> = {
   SIGNUP_success_page_text:
     'Vielen Dank für deine Registrierung! Wir haben dir eine E-Mail mit einem Verifizierungslink geschickt. Bitte klicke diesen an, um die Registrierung abzuschliessen. Dein Quapp Team',
 
+  PRODUCTS_filter_category_label: 'Nach Kategorie filtern',
+  PRODUCTS_reset_category_filter: 'Filter zurück setzen',
   PRODUCTS_no_entries: 'Leider gibt es noch keine Einträge.',
   PRODUCT_not_available: 'Nicht verfügbar',
   PRODUCT_add: 'Angebot erstellen',
@@ -112,6 +114,7 @@ export const translations: Record<string, string> = {
     'Du kannst das Angebot {PRODUCT_TITLE} von {USER} am {DATE} {ACCEPT} in Anspruch nehmen',
   BORROW_response_not: 'nicht',
   BORROW_message_title: 'Anfrage für: ',
+  BORROW_response_message_title: 'Antwort auf Anfrage für: ',
   BORROW_response_accept_text: 'Du hast die Anfrage akzeptiert',
   BORROW_response_declined_text: 'Du hast die Anfrage abgelehnt',
   BORROW_REQUEST_accept: 'Akzeptieren',
@@ -129,6 +132,8 @@ export const translations: Record<string, string> = {
   CREATE_PRODUCT_submit: 'Angebot erstellen',
   CREATE_PRODUCT_loading: 'übertragen...',
   CREATE_PRODUCT_page_title: 'Angebot erstellen',
+  CREATE_PRODUCT_category_label: 'Kategorie auswählen',
+  CREATE_PRODUCT_add_category: 'Neue Kategorie erstellen',
   EDIT_PRODUCT_page_title: 'Angebot bearbeiten',
   CREATE_PRODUCT_is_available: 'Angebot ist verfügbar',
   PRODUCT_CREATE_wrong_file_format:

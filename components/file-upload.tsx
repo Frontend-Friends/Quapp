@@ -60,7 +60,7 @@ export function FileUpload<T extends CreateProduct>({
                       if (inputRef.current) {
                         inputRef.current.value = ''
                       }
-                      props.setFieldValue('img', null)
+                      props.setFieldValue('img', undefined)
                       setTimeout(() => {
                         setUploadText('')
                       }, 50)
