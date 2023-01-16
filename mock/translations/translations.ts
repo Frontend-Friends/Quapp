@@ -148,12 +148,11 @@ export const translations: Record<string, string> = {
   CREATE_PRODUCT_add_category: 'Neue Kategorie erstellen',
   EDIT_PRODUCT_page_title: 'Angebot bearbeiten',
   CREATE_PRODUCT_is_available: 'Angebot ist verfügbar',
-  CREATE_PRODUCT_new_category: 'Name der neuen Kategorie',
+  CREATE_PRODUCT_new_category: 'Neue Kategorie',
   PRODUCT_CREATE_wrong_file_format:
     'Das Bild muss entweder ein JPG oder PNG sein',
   PRODUCT_CREATE_file_size:
     'Das Bild ist zu gross. Es darf max 2MB gross sein.',
-  CREATE_PRODUCT_new_category: 'Neue Kategorie',
 
   BUTTON_borrow: 'Ich möchte das ausleihen!',
   BUTTON_contact: 'Kontakt aufnehmen',
