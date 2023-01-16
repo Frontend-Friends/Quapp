@@ -64,9 +64,9 @@ export const UserIcon: FC = () => {
         }}
       >
         <MenuList>
-          <MenuItem>
+          <MenuItem className="p-0 hover:bg-white">
             <Link href="/user/my-list" passHref>
-              <a className="flex items-center no-underline hover:text-secondary focus:text-secondary">
+              <a className="flex items-center py-2 px-6 text-current no-underline hover:text-primary focus:text-secondary">
                 <ListItemIcon>
                   <InventoryIcon fontSize="small" />
                 </ListItemIcon>
@@ -75,9 +75,9 @@ export const UserIcon: FC = () => {
             </Link>
           </MenuItem>
           <Divider />
-          <MenuItem>
+          <MenuItem className="p-0 hover:bg-white">
             <Link href="/user/account-settings" passHref>
-              <a className="flex items-center no-underline hover:text-secondary focus:text-secondary">
+              <a className="flex items-center py-2 px-6 text-current no-underline hover:text-primary focus:text-secondary">
                 <ListItemIcon>
                   <SettingsRounded fontSize="small" />
                 </ListItemIcon>
@@ -86,9 +86,9 @@ export const UserIcon: FC = () => {
             </Link>
           </MenuItem>
           <Divider />
-          <MenuItem>
+          <MenuItem className="p-0 hover:bg-white">
             <Link href="/user/inbox" passHref>
-              <a className="flex items-center no-underline hover:text-secondary focus:text-secondary">
+              <a className="flex items-center py-2 px-6 text-current no-underline hover:text-primary focus:text-secondary">
                 <ListItemIcon>
                   <SettingsRounded fontSize="small" />
                 </ListItemIcon>
@@ -97,10 +97,10 @@ export const UserIcon: FC = () => {
             </Link>
           </MenuItem>
           <Divider />
-          <MenuItem>
+          <MenuItem className="hover:bg-white">
             <button
               onClick={handleLogout}
-              className="flex items-center border-0 bg-transparent p-0 no-underline hover:text-secondary focus:text-secondary"
+              className="flex cursor-pointer items-center border-0 bg-transparent px-3 font-[Jost] text-base text-current no-underline hover:text-primary focus:text-secondary"
             >
               <ListItemIcon>
                 <LogoutRounded fontSize="small" />
