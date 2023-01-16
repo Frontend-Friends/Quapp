@@ -38,6 +38,7 @@ export const translationsEn: Record<string, string> = {
   LOGIN_forgot_password: 'Forgot password?',
   LOGIN_has_no_account: 'You don`t have an account yet?',
   LOGIN_has_account: 'You already have an account?',
+  LOGIN_password_reset_failed: 'Password reset failed. ',
 
   RESET_reset_password: 'Reset password',
   RESET_title: 'Reset password',
@@ -58,6 +59,7 @@ export const translationsEn: Record<string, string> = {
   PRODUCT_delete: 'Delete',
   PRODUCT_updated_info: 'The entry was saved:',
   PRODUCT_settings: 'Product settings',
+  PRODUCTS_reset_category_filter: 'Reset filter',
 
   DELETE_cancel_button: 'Cancel',
   DELETE_confirm_button: 'Delete',
@@ -67,11 +69,16 @@ export const translationsEn: Record<string, string> = {
 
   SAVE_PRODUCT_submit: 'Save',
 
+  SETTINGS_updated: 'The settings were saved.',
+  SETTINGS_title: 'Settings',
+  SETTINGS_change_settings: 'Change settings',
+  SETTINGS_change_password: 'Change password',
+  SETTINGS_change_password_description:
+    'To change your password, you need to have it reset by our system. You will receive an email with instructions after doing so.',
   BORROW_TEXTFIELD_label: 'Message',
   BORROW_TEXTFIELD_default_value: 'Write a message',
   BORROW_DATEPICKER_label: 'Borrow date',
   BORROW_button_submit: 'Send request',
-  BUTTON_reset_password: 'Reset password',
 
   CREATE_PRODUCT_detail: 'Product Detail',
   CREATE_PRODUCT_upload: 'Upload image',
@@ -90,6 +97,10 @@ export const translationsEn: Record<string, string> = {
   BUTTON_close: 'Close',
   BUTTON_remove_upload: 'Remove uploaded image',
   BUTTON_invite_member: 'Invite person',
+  BUTTON_reset_password: 'Reset password',
+  BUTTON_save: 'Speichern',
+
+  MENU_invite_member: 'Invite person',
 
   CHAT_title: 'News',
 
@@ -99,6 +110,10 @@ export const translationsEn: Record<string, string> = {
   SPACES_items: 'Entries',
   SPACES_add_space: 'Add space',
   SPACES_name: 'Space name',
+  SPACES_administrator: 'Administrator',
+  SPACES_edit_ok: 'The space is successfully edited',
+  SPACES_edit_failed: 'The space could not be edited',
+  SPACES_edit_title: 'Edit space',
 
   CHAT_button_send: 'Send message',
   CHAT_button_loading: 'will be sent',

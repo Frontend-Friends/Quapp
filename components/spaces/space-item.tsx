@@ -12,7 +12,7 @@ import {
   Typography,
 } from '@mui/material'
 import React, { Dispatch, FC, SetStateAction, useState } from 'react'
-import { SpaceItemType } from '../products/types'
+import { SpaceItemTypeWithUser } from '../products/types'
 import GroupsIcon from '@mui/icons-material/Groups'
 import CategoryIcon from '@mui/icons-material/Category'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
@@ -21,25 +21,30 @@ import MenuItem from '@mui/material/MenuItem'
 import { useTranslation } from '../../hooks/use-translation'
 import Link from 'next/link'
 import { fetchJson } from '../../lib/helpers/fetch-json'
+import { useSnackbar } from '../../hooks/use-snackbar'
 
 interface Props {
-  space: SpaceItemType
-  setMySpaces: Dispatch<SetStateAction<SpaceItemType[]>>
-  mySpaces: SpaceItemType[]
-  setSnackbarOpen: Dispatch<SetStateAction<boolean>>
-  setMessage: Dispatch<SetStateAction<string>>
+  space: SpaceItemTypeWithUser
+  setSpace: Dispatch<SetStateAction<SpaceItemTypeWithUser>>
+  setMySpaces: Dispatch<SetStateAction<SpaceItemTypeWithUser[]>>
+  mySpaces: SpaceItemTypeWithUser[]
+  setOpenEditModal: Dispatch<SetStateAction<boolean>>
+  isOwner: boolean
 }
 
 const SpaceItem: FC<Props> = ({
   space,
+  setSpace,
   setMySpaces,
   mySpaces,
-  setSnackbarOpen,
-  setMessage,
+  setOpenEditModal,
+  isOwner,
 }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
   const [dialogOpen, setDialogOpen] = useState<boolean>(false)
+  const t = useTranslation()
+  const setAlert = useSnackbar((state) => state.setAlert)
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)
@@ -47,8 +52,13 @@ const SpaceItem: FC<Props> = ({
   const handleClose = () => {
     setAnchorEl(null)
     setDialogOpen(false)
-    setSnackbarOpen(false)
   }
+  const handleEditClick = () => {
+    handleClose()
+    setOpenEditModal(true)
+    setSpace(space)
+  }
+
   const handleDeleteClick = async () => {
     handleClose()
     try {
@@ -63,25 +73,19 @@ const SpaceItem: FC<Props> = ({
       }>(`/api/delete-space-from-user?spaceId=${space.id}`)
       const allSuccess = await Promise.all([delSpace, delSpaceFromUser])
       if (allSuccess) {
-        setMessage(delSpace.message)
-        setSnackbarOpen(true)
+        setAlert({ severity: 'success', children: delSpace.message })
         setMySpaces(
           mySpaces.filter(
             (mySpace) => mySpace.creationDate !== space.creationDate
           )
         )
       } else {
-        setMessage(delSpace.message)
-        setSnackbarOpen(true)
+        setAlert({ severity: 'error', children: delSpace.message })
       }
     } catch (error) {
-      console.error(error)
+      setAlert({ severity: 'error', children: t('RESPONSE_SERVER_ERROR') })
     }
   }
-
-  const handleEditClick = () => {}
-
-  const t = useTranslation()
 
   return (
     <>
@@ -122,9 +126,18 @@ const SpaceItem: FC<Props> = ({
               'aria-labelledby': 'basic-button',
             }}
           >
-            <MenuItem onClick={handleEditClick}>{t('GLOBAL_edit')}</MenuItem>
-            <MenuItem onClick={() => setDialogOpen(true)}>
-              {t('GLOBAL_delete')}
+            {isOwner && (
+              <div>
+                <MenuItem onClick={() => handleEditClick()}>
+                  {t('GLOBAL_edit')}
+                </MenuItem>
+                <MenuItem onClick={() => setDialogOpen(true)}>
+                  {t('GLOBAL_delete')}
+                </MenuItem>
+              </div>
+            )}
+            <MenuItem onClick={() => {}}>
+              {'to implement: ' + t('MENU_invite_member')}
             </MenuItem>
           </Menu>
           <CardContent className="flex basis-full items-center pt-2">

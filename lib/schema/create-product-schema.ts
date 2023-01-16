@@ -15,7 +15,8 @@ export const createProductSchema = object().shape({
         if (!file) {
           return true
         }
-        const isValid = file?.type.match(/(png)|(jpg)|(jpeg)/g)?.length
+        const type = file?.mimetype || file?.type
+        const isValid = type.match(/(png)|(jpg)|(jpeg)/g)?.length
         if (!isValid) context?.createError()
         return isValid
       },

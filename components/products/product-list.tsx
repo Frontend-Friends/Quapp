@@ -164,18 +164,20 @@ export const ProductList = ({
           </FormControl>
         )}
 
-        <Fab
-          color="secondary"
-          variant="extended"
-          className="fixed bottom-[110px] right-[16px] z-10 h-16 w-16 rounded-full p-6 text-[0px] md:static md:bottom-[unset] md:right-[unset] md:ml-auto md:h-auto md:w-auto md:py-1 md:text-base"
-          aria-label={t('PRODUCT_add')}
-          onClick={() => {
-            setShowCreateProduct(true)
-          }}
-        >
-          <AddIcon className="text-4xl md:mr-2 md:text-3xl" />{' '}
-          {t('PRODUCT_add')}
-        </Fab>
+        {!withSpaceName && (
+          <Fab
+            color="secondary"
+            variant="extended"
+            className="fixed bottom-[110px] right-[16px] z-10 h-16 w-16 rounded-full p-6 text-[0px] md:static md:bottom-[unset] md:right-[unset] md:ml-auto md:h-auto md:w-auto md:py-1 md:text-base"
+            aria-label={t('PRODUCT_add')}
+            onClick={() => {
+              setShowCreateProduct(true)
+            }}
+          >
+            <AddIcon className="text-4xl md:mr-2 md:text-3xl" />{' '}
+            {t('PRODUCT_add')}
+          </Fab>
+        )}
       </Box>
       <Products
         products={productList}

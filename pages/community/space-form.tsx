@@ -1,5 +1,8 @@
 import { Dispatch, FC, SetStateAction } from 'react'
-import { SpaceItemType } from '../../components/products/types'
+import {
+  SpaceItemType,
+  SpaceItemTypeWithUser,
+} from '../../components/products/types'
 import { Box, TextField } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 import { Formik } from 'formik'
@@ -8,19 +11,24 @@ import { sendFormData } from '../../lib/helpers/send-form-data'
 import { addSpaceFormSchema } from '../../lib/schema/add-space-form-schema'
 import { twFormGroup } from '../../lib/constants'
 import { useSnackbar } from '../../hooks/use-snackbar'
+import { User } from '../../components/user/types'
 
 interface Props {
+  user: User
   setIsLoading: (isLoading: boolean) => void
-  setMySpaces: Dispatch<SetStateAction<SpaceItemType[]>>
-  mySpaces?: SpaceItemType[]
+  setMySpaces: Dispatch<SetStateAction<SpaceItemTypeWithUser[]>>
+  setOpenModal: Dispatch<SetStateAction<boolean>>
   isLoading?: boolean
+  mySpaces?: SpaceItemTypeWithUser[]
 }
 
 const SpaceForm: FC<Props> = ({
   isLoading,
   setIsLoading,
+  setOpenModal,
   setMySpaces,
   mySpaces,
+  user,
 }) => {
   const t = useTranslation()
   const setAlert = useSnackbar((state) => state.setAlert)
@@ -29,18 +37,26 @@ const SpaceForm: FC<Props> = ({
     try {
       const fetchedAddSpace = await sendFormData<{
         message: string
-        space: SpaceItemType
+        space: SpaceItemTypeWithUser
         spaceId: string
       }>('/api/add-space', values)
 
       if (fetchedAddSpace.ok) {
         const space = fetchedAddSpace.space
-        mySpaces?.push({ ...space, id: fetchedAddSpace.spaceId })
+        mySpaces?.push({
+          ...space,
+          id: fetchedAddSpace.spaceId,
+          adminId: user.id as string,
+          enhancedUsersInSpace: [
+            {
+              id: user.id ?? '',
+              userName: user.firstName,
+            },
+          ],
+        })
         setIsLoading(false)
         setAlert({ severity: 'success', children: fetchedAddSpace.message })
-        if (Array.isArray(mySpaces)) {
-          setMySpaces([...mySpaces])
-        }
+        setMySpaces([...(mySpaces ?? [])])
       } else {
         setAlert({
           severity: 'error',
@@ -56,6 +72,7 @@ const SpaceForm: FC<Props> = ({
         children: t('SPACES_failed'),
       })
     }
+    setOpenModal(false)
   }
 
   return (
@@ -64,7 +81,7 @@ const SpaceForm: FC<Props> = ({
         initialValues={
           {
             name: '',
-          } as SpaceItemType
+          } as SpaceItemTypeWithUser
         }
         validationSchema={addSpaceFormSchema}
         validateOnChange={false}

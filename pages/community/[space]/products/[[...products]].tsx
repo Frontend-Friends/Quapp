@@ -177,6 +177,7 @@ export const Product = ({
         categories={categories}
         userName={userName}
         count={count}
+        space={space}
       />
       <InvitationModal
         setOpenModal={setOpenModal}
