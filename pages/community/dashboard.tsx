@@ -27,7 +27,7 @@ export const getServerSideProps = withIronSessionSsr<{
           const [ref] = getSpaceRef(space)
           const fetchedDoc = await getDoc(ref).then(async (result) => {
             const data = result.data()
-            const adminId = doc(db, data?.ownerId ?? '')?.id ?? ''
+            const adminId = data?.ownerId ? doc(db, data.ownerId).id : ''
             return {
               ...data,
               id: result.id,
