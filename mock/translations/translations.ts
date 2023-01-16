@@ -144,7 +144,7 @@ export const translations: Record<string, string> = {
   BUTTON_reset_password: 'Passwort zurücksetzen',
   BUTTON_invite_member: 'Person einladen',
 
-  CHAT_title: 'Nachrichten',
+  CHAT_title: 'Chat',
   CHAT_no_messages: 'Derzeit sind keine Chat-Nachrichten vorhanden.',
 
   CHAT_button_send: 'Nachricht senden',
