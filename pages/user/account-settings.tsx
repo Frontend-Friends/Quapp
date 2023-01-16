@@ -50,10 +50,14 @@ const AccountSettings: React.FC<{ isLoggedIn: boolean; user: User }> = ({
       })
       if (fetchedResetPassword.ok) {
         setIsLoading({ ...isLoading, updateAccount: false })
+        setAlert({
+          severity: 'success',
+          children: t('LOGIN_password_has_been_reset'),
+        })
       } else {
         setAlert({
           severity: 'error',
-          children: t('LOGIN_password_has_been_reset'),
+          children: t('LOGIN_password_reset_failed'),
         })
         setIsLoading({ ...isLoading, resetPassword: false })
       }

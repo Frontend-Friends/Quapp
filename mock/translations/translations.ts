@@ -74,6 +74,8 @@ export const translations: Record<string, string> = {
     'Etwas ist schief gelaufen. Bitte versuche es erneut.',
   LOGIN_password_has_been_reset:
     'Dein Passwort wurde zurückgesetzt. Bitte überprüfe deine E-Mail Postfach.',
+  LOGIN_password_reset_failed:
+    'Das Zurücksetzen des Passworts ist fehlgeschlagen.',
 
   LOGOUT_logout: 'Abmelden',
 
