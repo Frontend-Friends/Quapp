@@ -42,6 +42,7 @@ export default function App({
     <CacheProvider value={emotionCache}>
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
+        <meta name="color-scheme" content="light only" />
         <meta property="og:title" content={t('HTML_TITLE_general')} />
         <meta property="og:description" content={t('HTML_META_description')} />
         <meta name="description" content={t('HTML_META_description')} />
