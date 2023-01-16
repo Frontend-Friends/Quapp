@@ -1,5 +1,5 @@
 import { Alert, Box, Tab, Typography } from '@mui/material'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { ChatMessage, ProductChatType } from './types'
 import { useTranslation } from '../../hooks/use-translation'
 import { ProductChat } from './product-chat'
@@ -61,6 +61,13 @@ export const ProductChats = ({
     [userName]
   )
 
+  useEffect(() => {
+    if (isOwner || !selectedChats[0]?.chatUserId) {
+      return
+    }
+    setSelectedTab(selectedChats[0].chatUserId)
+  }, [selectedChats, isOwner])
+
   useAsync(async () => {
     if (!isOwner && !selectedTab) {
       return
@@ -79,7 +86,7 @@ export const ProductChats = ({
 
     if (fetchedChat.chats.length) {
       setSelectedChats(fetchedChat.chats)
-    } else {
+    } else if (!!fetchedChat.history.length) {
       const selectedChatId = selectedTab || fetchedChat.userId
       updateChat(selectedChatId)(fetchedChat.history)
     }
