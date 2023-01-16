@@ -1,12 +1,13 @@
 import GridViewRoundedIcon from '@mui/icons-material/GridViewRounded'
 import React, { FC, useEffect, useState } from 'react'
-import { Button, Link } from '@mui/material'
+import { Badge, Button, Link } from '@mui/material'
 import { useRouter } from 'next/router'
 import { LogoSVG } from '../svg/quapp_logo'
 import { UserIcon } from '../user/user-icon'
 import { useTranslation } from '../../hooks/use-translation'
 import { fetchJson } from '../../lib/helpers/fetch-json'
 import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded'
+import { useUnreadMessages } from '../../hooks/use-unread-messages'
 
 const userExists = async () => {
   const user: { isUser: boolean } = await fetchJson(' /api/cookie')
@@ -18,6 +19,7 @@ const NavigationBar: FC = () => {
   const t = useTranslation()
   const [isUser, setIsUser] = useState(false)
   const { asPath } = useRouter()
+  const { messages } = useUnreadMessages()
 
   const router = useRouter()
 
@@ -74,10 +76,19 @@ const NavigationBar: FC = () => {
               className={twNavbarButton}
               onClick={() => router.push('/community/dashboard')}
             >
-              <GridViewRoundedIcon className="text-3xl" />
+              <GridViewRoundedIcon className="text-4xl md:text-3xl" />
             </Button>
-            <Button className={twNavbarButton}>
-              <NotificationsRoundedIcon className="text-3xl" />
+            <Button
+              aria-label={t('GLOBAL_go_to_inbox')}
+              className={twNavbarButton}
+              onClick={() => router.push('/user/inbox')}
+            >
+              <Badge
+                badgeContent={messages.length || undefined}
+                color="secondary"
+              >
+                <NotificationsRoundedIcon className="text-4xl md:text-3xl" />
+              </Badge>
             </Button>
             <UserIcon />
           </>
