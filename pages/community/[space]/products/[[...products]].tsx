@@ -17,7 +17,6 @@ import { User } from '../../../../components/user/types'
 import { getQueryAsNumber } from '../../../../lib/helpers/get-query-as-number'
 import { getDoc } from 'firebase/firestore'
 import { getSpaceRef } from '../../../../lib/helpers/refs/get-space-ref'
-
 import { sendFormData } from '../../../../lib/helpers/send-form-data'
 import InvitationModal from './invitation-modal'
 import { useSnackbar } from '../../../../hooks/use-snackbar'
