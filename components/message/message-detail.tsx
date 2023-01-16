@@ -30,7 +30,7 @@ export const MessageDetail = ({
       onClose={onClose}
       className="flex items-center justify-center md:p-10"
     >
-      <CondensedContainer className="absolute m-0 h-full w-full bg-white p-4 drop-shadow-2xl md:top-1/3 md:left-1/2 md:h-[unset] md:w-[600px] md:-translate-x-1/2 md:-translate-y-1/3">
+      <CondensedContainer className="absolute m-0 h-full max-h-full w-full overflow-auto bg-white p-4 drop-shadow-2xl md:top-1/3 md:left-1/2 md:h-[unset] md:w-[600px] md:-translate-x-1/2 md:-translate-y-1/3">
         <Link href={closeLink} passHref shallow>
           <IconButton
             title={t('BUTTON_close')}

@@ -44,7 +44,7 @@ export const UserIcon: FC = () => {
           setOpen(true)
         }}
       >
-        <Person2RoundedIcon className="text-4xl md:text-3xl" />
+        <Person2RoundedIcon className="text-3xl" />
       </Button>
       <Menu
         id="basic-menu"

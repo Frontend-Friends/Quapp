@@ -22,9 +22,9 @@ export const Snackbar = () => {
         setOpenSnackbar(false)
         setAlert(undefined)
       }}
-      anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
     >
-      <Alert {...alert} />
+      <Alert {...alert} className="items-center text-xl shadow-lg md:mt-5" />
     </SnackbarImpl>
   )
 }

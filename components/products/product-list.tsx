@@ -168,7 +168,7 @@ export const ProductList = ({
           <Fab
             color="secondary"
             variant="extended"
-            className="fixed bottom-[110px] right-[16px] z-10 h-16 w-16 rounded-full p-6 text-[0px] md:static md:bottom-[unset] md:right-[unset] md:ml-auto md:h-auto md:w-auto md:py-1 md:text-base"
+            className="fixed bottom-[81px] right-[15px] z-10 h-12 w-12 rounded-full p-6 text-[0px] md:static md:bottom-[unset] md:right-[unset] md:ml-auto md:h-auto md:w-auto md:py-1 md:text-base"
             aria-label={t('PRODUCT_add')}
             onClick={() => {
               setShowCreateProduct(true)

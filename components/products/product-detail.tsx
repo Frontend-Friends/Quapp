@@ -196,6 +196,7 @@ export const ProductDetail = ({
                   <p className="m-0">{t('BORROW_success_title')}</p>
                   <p className="m-0">{t('BORROW_success_text')}</p>
                   <Button
+                    variant={'outlined'}
                     onClick={() => {
                       setBorrowRequestSubmitted(false)
                     }}

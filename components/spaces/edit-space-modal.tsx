@@ -106,7 +106,7 @@ const EditSpaceModal: React.FC<Props> = ({
       aria-labelledby="invitation-title"
       aria-describedby="delete-description"
     >
-      <CondensedContainer className="absolute top-1/2 left-1/2 m-0 w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-white p-8 drop-shadow-2xl">
+      <CondensedContainer className="absolute top-1/2 left-1/2 m-0 max-h-full w-[400px] -translate-x-1/2 -translate-y-1/2 overflow-auto rounded-2xl bg-white p-8 drop-shadow-2xl">
         <h3 id="invitation-title">{`${t('SPACES_edit_title')} `}</h3>
 
         <Formik

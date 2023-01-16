@@ -14,7 +14,7 @@ const userExists = async () => {
   return user.isUser
 }
 export const twNavbarButton =
-  'aspect-square border-0 rounded-full bg-white text-violetRed-600 hover:bg-white md:min-w-[32px]'
+  'aspect-square min-w-0 border-0 rounded-full bg-white text-violetRed-600 hover:bg-white md:min-w-[32px]'
 const NavigationBar: FC = () => {
   const t = useTranslation()
   const [isUser, setIsUser] = useState(false)
@@ -35,7 +35,7 @@ const NavigationBar: FC = () => {
       bottom-0
       z-50
       flex
-      h-[83px]
+      h-[63px]
       w-full
       justify-center
       bg-gradient-to-br
@@ -45,6 +45,7 @@ const NavigationBar: FC = () => {
       px-4
       md:top-0
       md:bottom-[unset]
+      md:h-[83px]
       "
     >
       <div
@@ -76,7 +77,7 @@ const NavigationBar: FC = () => {
               className={twNavbarButton}
               onClick={() => router.push('/community/dashboard')}
             >
-              <GridViewRoundedIcon className="text-4xl md:text-3xl" />
+              <GridViewRoundedIcon className="text-3xl" />
             </Button>
             <Button
               aria-label={t('GLOBAL_go_to_inbox')}
@@ -87,7 +88,7 @@ const NavigationBar: FC = () => {
                 badgeContent={messages.length || undefined}
                 color="secondary"
               >
-                <NotificationsRoundedIcon className="text-4xl md:text-3xl" />
+                <NotificationsRoundedIcon className="text-3xl" />
               </Badge>
             </Button>
             <UserIcon />
