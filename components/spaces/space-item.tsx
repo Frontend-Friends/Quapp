@@ -85,7 +85,7 @@ const SpaceItem: FC<Props> = ({
 
   return (
     <>
-      <Grid item xs={1} className="grow">
+      <Grid item xs={1} className="basis-full">
         <Card
           variant="outlined"
           className="relative flex w-full flex-wrap bg-blueishGray-50 text-left hover:bg-blueishGray-100 md:p-2"
