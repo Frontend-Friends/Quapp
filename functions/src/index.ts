@@ -1,45 +1,28 @@
 import * as functions from 'firebase-functions'
-import * as admin from 'firebase-admin'
+import { product as getProduct } from './get-product'
 
 // Start writing functions
 // https://firebase.google.com/docs/functions/typescript
-
-admin.initializeApp()
 
 export const helloWorld = functions.https.onRequest((request, response) => {
   functions.logger.info('Hello logs!', { structuredData: true })
   response.send('Hello from Firebase!')
 })
 
-export const fetchProduct = async (
-  space: string,
-  productsQuery: string
-  // userId?: string
-) => {
-  const product = await admin
-    .firestore()
-    .doc(`spaces/${space}/products/${productsQuery}`)
-    .get()
-    .then((r) => ({
-      id: r.id,
-      ...r.data(),
-    }))
-
-  return {
-    product,
+export const product = functions.https.onRequest(async (request, response) => {
+  const { space, productId, userId } = request.query as {
+    space: string
+    productId: string
+    userId?: string
   }
-}
-
-export const getProduct = functions.https.onRequest(
-  async (request, response) => {
-    const { space, productsQuery, userId } = request.query as {
-      space: string
-      productsQuery: string
-      userId?: string
-    }
-    const product = await fetchProduct(space, productsQuery, userId)
+  console.log(request.query)
+  try {
+    const productDetail = await getProduct(space, productId, userId)
     response
       .header('content-type', 'application/json')
-      .json({ product: product || null })
+      .json({ product: productDetail || null })
+  } catch (error) {
+    console.error(error)
+    response.header('content-type', 'application/json').json({ product: null })
   }
-)
+})
