@@ -75,16 +75,6 @@ export const ProductForm = ({
               className="mt-4"
             />
             <TextField
-              label={t('CREATE_PRODUCT_description')}
-              onChange={props.handleChange}
-              onBlur={props.handleBlur}
-              value={props.values.description}
-              name="description"
-              error={!!props.errors.description}
-              helperText={t(props.errors.description || '')}
-              className="mt-4"
-            />
-            <TextField
               multiline
               label={t('CREATE_PRODUCT_text')}
               onChange={props.handleChange}
@@ -94,6 +84,18 @@ export const ProductForm = ({
               error={!!props.errors.text}
               helperText={t(props.errors.text || '')}
               className="mt-4"
+            />
+            <TextField
+              multiline
+              rows={4}
+              label={t('CREATE_PRODUCT_description')}
+              onChange={props.handleChange}
+              onBlur={props.handleBlur}
+              value={props.values.description}
+              name="description"
+              error={!!props.errors.description}
+              helperText={t(props.errors.description || '')}
+              className="mt-4 h-1/3"
             />
             <FormControl fullWidth className="mt-4">
               <InputLabel id="category-select">

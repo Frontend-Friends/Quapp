@@ -38,6 +38,7 @@ export const translationsEn: Record<string, string> = {
   LOGIN_forgot_password: 'Forgot password?',
   LOGIN_has_no_account: 'You don`t have an account yet?',
   LOGIN_has_account: 'You already have an account?',
+  LOGIN_password_reset_failed: 'Password reset failed. ',
 
   RESET_reset_password: 'Reset password',
   RESET_title: 'Reset password',
@@ -89,6 +90,7 @@ export const translationsEn: Record<string, string> = {
   CREATE_PRODUCT_page_title: 'Create product',
   EDIT_PRODUCT_page_title: 'Edit product',
   CREATE_PRODUCT_is_available: 'Product is available',
+  CREATE_PRODUCT_new_category: 'New category',
 
   BUTTON_borrow: 'I want to borrow this!',
   BUTTON_contact: 'Contact me',
@@ -98,6 +100,8 @@ export const translationsEn: Record<string, string> = {
   BUTTON_invite_member: 'Invite person',
   BUTTON_reset_password: 'Reset password',
   BUTTON_save: 'Speichern',
+
+  MENU_invite_member: 'Invite person',
 
   CHAT_title: 'News',
 

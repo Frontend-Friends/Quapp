@@ -1,13 +1,13 @@
-import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded'
 import GridViewRoundedIcon from '@mui/icons-material/GridViewRounded'
 import React, { FC, useEffect, useState } from 'react'
-import { Button, Link } from '@mui/material'
+import { Badge, Button, Link } from '@mui/material'
 import { useRouter } from 'next/router'
 import { LogoSVG } from '../svg/quapp_logo'
 import { UserIcon } from '../user/user-icon'
 import { useTranslation } from '../../hooks/use-translation'
 import { fetchJson } from '../../lib/helpers/fetch-json'
-import clsx from 'clsx'
+import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded'
+import { useUnreadMessages } from '../../hooks/use-unread-messages'
 
 const userExists = async () => {
   const user: { isUser: boolean } = await fetchJson(' /api/cookie')
@@ -19,6 +19,7 @@ const NavigationBar: FC = () => {
   const t = useTranslation()
   const [isUser, setIsUser] = useState(false)
   const { asPath } = useRouter()
+  const { messages } = useUnreadMessages()
 
   const router = useRouter()
 
@@ -46,31 +47,48 @@ const NavigationBar: FC = () => {
       md:bottom-[unset]
       "
     >
-      <div className="min-w-4 mx-auto flex w-full max-w-7xl items-center justify-between md:justify-end md:gap-6">
+      <div
+        className="
+          min-w-4mx-auto
+          flex
+          w-full
+          max-w-7xl
+          items-center
+          justify-between
+          md:justify-end
+          md:gap-6"
+      >
         <Link
-          className={clsx(
-            'md:mr-auto md:inline-block md:max-h-12',
-            isUser && 'hidden'
-          )}
+          className="md:mr-auto md:inline-block md:max-h-12"
           underline="hover"
           href="/"
           title={t('GLOBAL_back_to_home')}
         >
-          <LogoSVG aria-label={t('SVG_logo')} className="align-middle" />
+          <LogoSVG
+            preserveAspectRatio="xMinYMin meet"
+            aria-label={t('SVG_logo')}
+            className="align-middle"
+          />
         </Link>
         {isUser && (
           <>
             <Button
-              className={`${twNavbarButton} md:hidden`}
-              onClick={() => router.back()}
-            >
-              <ArrowBackRoundedIcon className="text-3xl" />
-            </Button>
-            <Button
               className={twNavbarButton}
               onClick={() => router.push('/community/dashboard')}
             >
-              <GridViewRoundedIcon className="text-3xl" />
+              <GridViewRoundedIcon className="text-4xl md:text-3xl" />
+            </Button>
+            <Button
+              aria-label={t('GLOBAL_go_to_inbox')}
+              className={twNavbarButton}
+              onClick={() => router.push('/user/inbox')}
+            >
+              <Badge
+                badgeContent={messages.length || undefined}
+                color="secondary"
+              >
+                <NotificationsRoundedIcon className="text-4xl md:text-3xl" />
+              </Badge>
             </Button>
             <UserIcon />
           </>

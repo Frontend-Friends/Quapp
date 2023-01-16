@@ -31,14 +31,17 @@ export const Dashboard: FC<{
       {!!mySpaces?.length ? (
         <Grid container columns={{ md: 1 }} spacing={{ xs: 4 }} pt={4}>
           {mySpaces.map((mySpace) => {
+            const isOwner = mySpace.adminId === user.id
+
             return (
               <SpaceItem
-                key={`${mySpace.creationDate}`}
+                key={`${mySpace.creationDate}-${mySpace.id}`}
                 space={mySpace}
                 setMySpaces={setMySpaces}
                 mySpaces={mySpaces}
                 setOpenEditModal={setOpenEditModal}
                 setSpace={setSpace}
+                isOwner={isOwner}
               />
             )
           })}
@@ -70,7 +73,7 @@ export const Dashboard: FC<{
           <Box className="sticky top-0 z-10 flex h-0 w-full justify-end">
             <IconButton
               title={t('BUTTON_close')}
-              className="z-10 -mt-2 -mr-2 h-12 w-12 border border-slate-200 bg-white shadow hover:bg-slate-200"
+              className="z-10 -mt-2 h-12 w-12 border border-slate-200 bg-white shadow hover:bg-slate-200"
               onClick={() => setOpenModal(false)}
             >
               <CloseIcon />

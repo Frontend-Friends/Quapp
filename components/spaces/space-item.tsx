@@ -29,6 +29,7 @@ interface Props {
   setMySpaces: Dispatch<SetStateAction<SpaceItemTypeWithUser[]>>
   mySpaces: SpaceItemTypeWithUser[]
   setOpenEditModal: Dispatch<SetStateAction<boolean>>
+  isOwner: boolean
 }
 
 const SpaceItem: FC<Props> = ({
@@ -37,6 +38,7 @@ const SpaceItem: FC<Props> = ({
   setMySpaces,
   mySpaces,
   setOpenEditModal,
+  isOwner,
 }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
@@ -87,14 +89,14 @@ const SpaceItem: FC<Props> = ({
 
   return (
     <>
-      <Grid item xs={1} className="grow">
+      <Grid item xs={1} className="basis-full">
         <Card
           variant="outlined"
           className="relative flex w-full flex-wrap bg-blueishGray-50 text-left hover:bg-blueishGray-100 md:p-2"
         >
           <Link href={`${space.id}/products`} passHref>
             <MuiLink
-              title={`${t('GLOBAL_open')} ${space.name}`}
+              title={`${space.name} ${t('GLOBAL_open')}`}
               className="absolute top-0 bottom-0 left-0 right-0 block"
             />
           </Link>
@@ -124,9 +126,18 @@ const SpaceItem: FC<Props> = ({
               'aria-labelledby': 'basic-button',
             }}
           >
-            <MenuItem onClick={handleEditClick}>{t('GLOBAL_edit')}</MenuItem>
-            <MenuItem onClick={() => setDialogOpen(true)}>
-              {t('GLOBAL_delete')}
+            {isOwner && (
+              <div>
+                <MenuItem onClick={() => handleEditClick()}>
+                  {t('GLOBAL_edit')}
+                </MenuItem>
+                <MenuItem onClick={() => setDialogOpen(true)}>
+                  {t('GLOBAL_delete')}
+                </MenuItem>
+              </div>
+            )}
+            <MenuItem onClick={() => {}}>
+              {'to implement: ' + t('MENU_invite_member')}
             </MenuItem>
           </Menu>
           <CardContent className="flex basis-full items-center pt-2">

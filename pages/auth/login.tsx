@@ -75,7 +75,10 @@ const Login: FC = () => {
         if (fetchedLogin.ok) {
           await router.push('/community/dashboard')
         } else {
-          setAlert({ severity: 'error', children: fetchedLogin.errorMessage })
+          setAlert({
+            severity: 'error',
+            children: t(fetchedLogin.errorMessage),
+          })
           setIsLoading(false)
         }
       } catch {

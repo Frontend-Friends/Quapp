@@ -2,15 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+// Force light mode colors
 // Increase the root element base font size for desktop resolutions
-@media screen and (min-width: 768px) {
-  html {
+:root {
+  color-scheme: light only;
+  @media screen and (min-width: 768px) {
     font-size: 20px;
   }
 }
 
+// Default setup for headings
 h1,
 h2,
-h3 {
+h3,
+h4,
+h5,
+h6 {
   @apply font-medium text-primary;
 }

@@ -46,6 +46,7 @@ const SpaceForm: FC<Props> = ({
         mySpaces?.push({
           ...space,
           id: fetchedAddSpace.spaceId,
+          adminId: user.id as string,
           enhancedUsersInSpace: [
             {
               id: user.id ?? '',
