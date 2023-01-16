@@ -96,7 +96,7 @@ const SpaceItem: FC<Props> = ({
         >
           <Link href={`${space.id}/products`} passHref>
             <MuiLink
-              title={`${t('GLOBAL_open')} ${space.name}`}
+              title={`${space.name} ${t('GLOBAL_open')}`}
               className="absolute top-0 bottom-0 left-0 right-0 block"
             />
           </Link>
