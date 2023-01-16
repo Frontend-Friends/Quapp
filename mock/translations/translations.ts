@@ -129,7 +129,10 @@ export const translations: Record<string, string> = {
   BORROW_success_title: 'Deine Anfrage wurde versendet.',
   BORROW_success_text: 'Willst du eine neue Anfrage',
   BORROW_message_response_title: 'Antwort auf Anfrage: ',
+
   REQUEST_product_link: 'Link zum Angebot',
+  REQUEST_decline: 'Anfrage ablehnen',
+  REQUEST_accept: 'Anfrage annehmen',
 
   FORM_submitting_error: 'Beim erstellen ist ein Fehler entstanden.',
 
