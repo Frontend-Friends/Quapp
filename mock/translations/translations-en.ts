@@ -90,6 +90,7 @@ export const translationsEn: Record<string, string> = {
   CREATE_PRODUCT_page_title: 'Create product',
   EDIT_PRODUCT_page_title: 'Edit product',
   CREATE_PRODUCT_is_available: 'Product is available',
+  CREATE_PRODUCT_new_category: 'New category',
 
   BUTTON_borrow: 'I want to borrow this!',
   BUTTON_contact: 'Contact me',

@@ -148,6 +148,7 @@ export const translations: Record<string, string> = {
     'Das Bild muss entweder ein JPG oder PNG sein',
   PRODUCT_CREATE_file_size:
     'Das Bild ist zu gross. Es darf max 2MB gross sein.',
+  CREATE_PRODUCT_new_category: 'Neue Kategorie',
 
   BUTTON_borrow: 'Ich möchte das ausleihen!',
   BUTTON_contact: 'Kontakt aufnehmen',
