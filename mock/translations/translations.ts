@@ -128,6 +128,7 @@ export const translations: Record<string, string> = {
   BORROW_date_assigned: 'Das Datum ist schon vergeben',
   BORROW_success_title: 'Deine Anfrage wurde versendet.',
   BORROW_success_text: 'Willst du eine neue Anfrage',
+  BORROW_message_response_title: 'Antwort auf Anfrage: ',
   REQUEST_product_link: 'Link zum Angebot',
 
   FORM_submitting_error: 'Beim erstellen ist ein Fehler entstanden.',
