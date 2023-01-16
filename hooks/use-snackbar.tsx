@@ -2,7 +2,7 @@ import { AlertColor } from '@mui/material'
 import { ReactNode } from 'react'
 import create from 'zustand'
 
-type SnackbarProps = { severity: AlertColor; children: ReactNode }
+export type SnackbarProps = { severity: AlertColor; children: ReactNode }
 
 export const useSnackbar = create<{
   alert: SnackbarProps | undefined

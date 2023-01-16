@@ -1,32 +1,30 @@
 import React, { FC, useState } from 'react'
 import { CondensedContainer } from '../condensed-container'
 import { Header } from '../header'
-import {
-  Box,
-  Fab,
-  Grid,
-  IconButton,
-  Modal,
-  Snackbar,
-  Typography,
-} from '@mui/material'
+import { Box, Fab, Grid, IconButton, Modal, Typography } from '@mui/material'
 import SpaceItem from '../spaces/space-item'
 import AddIcon from '@mui/icons-material/Add'
 import SpaceForm from '../../pages/community/space-form'
-import { SpaceItemType } from '../products/types'
+import { SpaceItemTypeWithUser } from '../products/types'
 import { UseTranslationType } from '../../hooks/use-translation'
+import EditSpaceModal from '../spaces/edit-space-modal'
+import { useSnackbar } from '../../hooks/use-snackbar'
+import { User } from '../user/types'
 import CloseIcon from '@mui/icons-material/Close'
 
 export const Dashboard: FC<{
-  spaces?: SpaceItemType[]
+  spaces?: SpaceItemTypeWithUser[]
+  user: User
   t: UseTranslationType
-}> = ({ spaces, t }) => {
-  const [openModal, setOpenModal] = useState(false)
+}> = ({ spaces, user, t }) => {
   const [isLoading, setIsLoading] = useState(false)
-  const [mySpaces, setMySpaces] = useState<SpaceItemType[]>(spaces ?? [])
-  const [message, setMessage] = useState<string>('')
-  const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false)
-
+  const [mySpaces, setMySpaces] = useState<SpaceItemTypeWithUser[]>(
+    spaces ?? []
+  )
+  const [openModal, setOpenModal] = useState<boolean>(false)
+  const [openEditModal, setOpenEditModal] = useState<boolean>(false)
+  const [space, setSpace] = useState<SpaceItemTypeWithUser | null>(null)
+  const setAlert = useSnackbar((state) => state.setAlert)
   return (
     <CondensedContainer className="relative">
       <Header title={t('SPACES_title')} />
@@ -39,8 +37,8 @@ export const Dashboard: FC<{
                 space={mySpace}
                 setMySpaces={setMySpaces}
                 mySpaces={mySpaces}
-                setSnackbarOpen={setSnackbarOpen}
-                setMessage={setMessage}
+                setOpenEditModal={setOpenEditModal}
+                setSpace={setSpace}
               />
             )
           })}
@@ -59,6 +57,7 @@ export const Dashboard: FC<{
       >
         <AddIcon className="mr-2" /> {t('SPACES_add_space')}
       </Fab>
+
       <Modal
         open={openModal}
         onClose={() => {
@@ -81,24 +80,28 @@ export const Dashboard: FC<{
             'SPACES_add_space'
           )}`}</h3>
           <p id="addspace-description">{t('SPACES_add_space_text')}</p>
-          <SpaceForm
-            isLoading={isLoading}
-            setIsLoading={setIsLoading}
-            mySpaces={mySpaces}
-            setMySpaces={setMySpaces}
-          />
+          {setOpenModal && (
+            <SpaceForm
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
+              mySpaces={mySpaces}
+              setMySpaces={setMySpaces}
+              user={user}
+              setOpenModal={setOpenModal}
+            />
+          )}
         </CondensedContainer>
       </Modal>
 
-      <Snackbar
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'center',
-        }}
-        open={snackbarOpen}
-        autoHideDuration={3000}
-        onClose={() => setSnackbarOpen(false)}
-        message={t(message)}
+      <EditSpaceModal
+        setAlert={setAlert}
+        space={space}
+        setSpace={setSpace}
+        mySpaces={mySpaces}
+        setMySpaces={setMySpaces}
+        openEditModal={openEditModal}
+        setOpenEditModal={setOpenEditModal}
+        t={t}
       />
     </CondensedContainer>
   )

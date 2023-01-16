@@ -12,6 +12,7 @@ import { createNewCategory } from '../../lib/helpers/create_new_category'
 import { deleteObjectKey } from '../../lib/helpers/delete-object-key'
 import { sendError } from '../../lib/helpers/send-error'
 import { sendResponse } from '../../lib/helpers/send-response'
+import { getQueryAsNumber } from '../../lib/helpers/get-query-as-number'
 
 export const config = {
   api: {
@@ -52,18 +53,15 @@ async function createProduct(req: NextApiRequest, res: NextApiResponse) {
 
     const [oldDoc, docRef] = await getProduct(id as string, space)
 
+    const category =
+      typeof formData.fields.category === 'string'
+        ? getQueryAsNumber(formData.fields.category)
+        : formData.fields.category
+
     const data = {
       ...formData.fields,
-    } as Omit<
-      ProductType,
-      | 'id'
-      | 'owner'
-      | 'chats'
-      | 'createdAt'
-      | 'messages'
-      | 'spaceId'
-      | 'spaceName'
-    >
+      category,
+    } as Partial<ProductType>
 
     if (imgSrc) {
       await deleteFileInStorage(oldDoc.imgSrc)

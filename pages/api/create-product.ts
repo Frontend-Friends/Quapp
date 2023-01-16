@@ -13,6 +13,7 @@ import { deleteObjectKey } from '../../lib/helpers/delete-object-key'
 import { getUserRef } from '../../lib/helpers/refs/get-user-ref'
 import { sendError } from '../../lib/helpers/send-error'
 import { sendResponse } from '../../lib/helpers/send-response'
+import { getQueryAsNumber } from '../../lib/helpers/get-query-as-number'
 
 export const config = {
   api: {
@@ -55,8 +56,14 @@ async function createProduct(req: NextApiRequest, res: NextApiResponse) {
 
     deleteObjectKey(formData.fields, 'newCategory')
 
+    const category =
+      typeof formData.fields.category === 'string'
+        ? getQueryAsNumber(formData.fields.category)
+        : formData.fields.category
+
     const productId = await addDoc(docRef, {
       ...formData.fields,
+      category,
       createdAt: new Date().getTime(),
       imgSrc,
       isAvailable: true,
