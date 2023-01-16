@@ -63,11 +63,11 @@ export const BorrowRequestMessage = ({
 
   if (message.accept) {
     inquiryStatus = (
-      <Alert severity="error">{t('BORROW_response_declined_text')}</Alert>
+      <Alert severity="success">{t('BORROW_response_accept_text')}</Alert>
     )
   } else {
     inquiryStatus = (
-      <Alert severity="success">{t('BORROW_response_accept_text')}</Alert>
+      <Alert severity="error">{t('BORROW_response_declined_text')}</Alert>
     )
   }
 

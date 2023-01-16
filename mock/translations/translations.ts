@@ -9,7 +9,7 @@ export const translations: Record<string, string> = {
   GLOBAL_cancel: 'Abbrechen',
   GLOBAL_edit: 'Bearbeiten',
   GLOBAL_delete: 'Löschen',
-  GLOBAL_open: 'Öffne',
+  GLOBAL_open: 'Öffnen',
   GLOBAL_options: 'Optionen',
   GLOBAL_back_to_login: 'Zurück zum Login',
   GLOBAL_hello: 'Hallo',
@@ -128,7 +128,11 @@ export const translations: Record<string, string> = {
   BORROW_date_assigned: 'Das Datum ist schon vergeben',
   BORROW_success_title: 'Deine Anfrage wurde versendet.',
   BORROW_success_text: 'Willst du eine neue Anfrage',
+  BORROW_message_response_title: 'Antwort auf Anfrage: ',
+
   REQUEST_product_link: 'Link zum Angebot',
+  REQUEST_decline: 'Anfrage ablehnen',
+  REQUEST_accept: 'Anfrage annehmen',
 
   FORM_submitting_error: 'Beim erstellen ist ein Fehler entstanden.',
 
@@ -136,7 +140,7 @@ export const translations: Record<string, string> = {
   CREATE_PRODUCT_upload: 'Bild hochladen',
   CREATE_PRODUCT_description: 'Angebot Beschreibung',
   CREATE_PRODUCT_title: 'Angebot Titel',
-  CREATE_PRODUCT_text: 'Angebot Text',
+  CREATE_PRODUCT_text: 'Angebot Untertitel',
   CREATE_PRODUCT_submit: 'Angebot erstellen',
   CREATE_PRODUCT_loading: 'übertragen...',
   CREATE_PRODUCT_page_title: 'Angebot erstellen',
@@ -144,6 +148,7 @@ export const translations: Record<string, string> = {
   CREATE_PRODUCT_add_category: 'Neue Kategorie erstellen',
   EDIT_PRODUCT_page_title: 'Angebot bearbeiten',
   CREATE_PRODUCT_is_available: 'Angebot ist verfügbar',
+  CREATE_PRODUCT_new_category: 'Name der neuen Kategorie',
   PRODUCT_CREATE_wrong_file_format:
     'Das Bild muss entweder ein JPG oder PNG sein',
   PRODUCT_CREATE_file_size:

@@ -122,6 +122,7 @@ export const ProductChats = ({
                     label={chat.chatUserName}
                     value={chat.chatUserId}
                     key={index}
+                    className="mr-1 rounded-tr-xl rounded-tl-xl bg-slate-200"
                   />
                 )
               })}
@@ -130,7 +131,11 @@ export const ProductChats = ({
 
           {selectedChats.map((chat, index) => {
             return (
-              <TabPanel value={chat.chatUserId as string} key={index}>
+              <TabPanel
+                className="p-0 py-4"
+                value={chat.chatUserId as string}
+                key={index}
+              >
                 <div>
                   {isOwner && (
                     <ChatForm

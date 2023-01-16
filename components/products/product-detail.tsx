@@ -124,7 +124,7 @@ export const ProductDetail = ({
       disablePortal
     >
       {product ? (
-        <CondensedContainer className="relative m-0 max-h-full min-h-screen overflow-auto bg-white shadow-2xl md:min-h-max">
+        <CondensedContainer className="absolute m-0 h-full w-full bg-white p-8 drop-shadow-2xl md:top-1/3 md:left-1/2 md:h-[unset] md:-translate-x-1/2 md:-translate-y-1/3">
           <Box className="sticky top-0 z-10 flex h-0 w-full justify-end">
             <Link href={backUrl} passHref shallow>
               <IconButton
