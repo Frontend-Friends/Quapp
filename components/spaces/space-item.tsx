@@ -134,11 +134,11 @@ const SpaceItem: FC<Props> = ({
                 <MenuItem onClick={() => setDialogOpen(true)}>
                   {t('GLOBAL_delete')}
                 </MenuItem>
-                <MenuItem onClick={() => {}}>
-                  {'to implement: ' + t('MENU_invite_member')}
-                </MenuItem>
               </>
             )}
+            <MenuItem onClick={() => {}}>
+              {'to implement: ' + t('MENU_invite_member')}
+            </MenuItem>
           </Menu>
           <CardContent className="flex basis-full items-center pt-2">
             {space.memberCount && (
