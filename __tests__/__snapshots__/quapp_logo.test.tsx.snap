@@ -4,11 +4,11 @@ exports[`renders Quapp Logo unchanged 1`] = `
 <div>
   <svg
     fill="none"
-    height="48"
+    height="42"
     role="img"
     title="Quapp Logo"
     viewBox="0 0 196 66"
-    width="160"
+    width="140"
     xmlns="http://www.w3.org/2000/svg"
   >
     <g
