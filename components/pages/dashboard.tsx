@@ -35,7 +35,7 @@ export const Dashboard: FC<{
 
             return (
               <SpaceItem
-                key={`${mySpace.creationDate}`}
+                key={`${mySpace.creationDate}-${mySpace.id}`}
                 space={mySpace}
                 setMySpaces={setMySpaces}
                 mySpaces={mySpaces}
