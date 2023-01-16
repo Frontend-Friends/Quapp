@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Modal, TextField } from '@mui/material'
+import { Box, IconButton, Modal, TextField } from '@mui/material'
 import { CondensedContainer } from '../../../../components/condensed-container'
 import { Formik } from 'formik'
 import { invitationFormSchema } from '../../../../lib/schema/invitation-form-schema'
@@ -7,6 +7,7 @@ import { LoadingButton } from '@mui/lab'
 import { useTranslation } from '../../../../hooks/use-translation'
 import { InvitationType } from '../../../../components/products/types'
 import { twFormGroup } from '../../../../lib/constants'
+import CloseIcon from '@mui/icons-material/Close'
 
 interface Props {
   openModal: boolean
@@ -33,8 +34,17 @@ const InvitationModal: React.FC<Props> = ({
         aria-labelledby="invitation-title"
         aria-describedby="delete-description"
       >
-        <CondensedContainer className="absolute top-1/3 left-1/2 m-0 w-[400px] -translate-x-1/2 -translate-y-1/3 bg-white p-8 drop-shadow-2xl">
-          <h3 id="invitation-title" className="m-0 mb-4">{`${t(
+        <CondensedContainer className="absolute m-0 h-full w-full bg-white p-8 drop-shadow-2xl md:top-1/3 md:left-1/2 md:h-[unset] md:w-[600px] md:-translate-x-1/2 md:-translate-y-1/3">
+          <Box className="sticky top-0 z-10 flex h-0 w-full justify-end">
+            <IconButton
+              title={t('BUTTON_close')}
+              className="z-10 -mt-2 h-12 w-12 border border-slate-200 bg-white shadow hover:bg-slate-200"
+              onClick={() => setOpenModal(false)}
+            >
+              <CloseIcon />
+            </IconButton>
+          </Box>
+          <h3 id="invitation-title" className="m-0 mb-6 pr-12">{`${t(
             'INVITATION_title'
           )} `}</h3>
 

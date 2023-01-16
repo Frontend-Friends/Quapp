@@ -126,15 +126,17 @@ export const ProductItem: FC<{
         aria-labelledby="delete-title"
         aria-describedby="delete-description"
       >
-        <CondensedContainer className="absolute top-1/2 left-1/2 m-0 w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-white p-8 drop-shadow-2xl">
-          <h3 id="delete-title">{`${t('DELETE_title')} ${product.title}`}</h3>
+        <CondensedContainer className="absolute m-0 h-full w-full bg-white p-8 drop-shadow-2xl md:top-1/3 md:left-1/2 md:h-[unset] md:w-[600px] md:-translate-x-1/2 md:-translate-y-1/3">
+          <h3 className="m-0 mb-6 pr-12" id="delete-title">{`${t(
+            'DELETE_title'
+          )} ${product.title}`}</h3>
           <p id="delete-description">{t('DELETE_text')}</p>
           <Box className="grid grid-cols-2 gap-4">
             <Button
               onClick={() => {
                 setOpenDeleteModal(false)
               }}
-              variant="text"
+              variant="outlined"
             >
               {t('DELETE_cancel_button')}
             </Button>
