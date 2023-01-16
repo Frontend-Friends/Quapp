@@ -158,6 +158,8 @@ export const translations: Record<string, string> = {
   BUTTON_invite_member: 'Person einladen',
   BUTTON_save: 'Speichern',
 
+  MENU_invite_member: 'Person einladen',
+
   CHAT_title: 'Nachrichten',
   CHAT_no_messages: 'Derzeit sind keine Chat-Nachrichten vorhanden.',
 

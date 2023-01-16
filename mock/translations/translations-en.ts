@@ -100,6 +100,8 @@ export const translationsEn: Record<string, string> = {
   BUTTON_reset_password: 'Reset password',
   BUTTON_save: 'Speichern',
 
+  MENU_invite_member: 'Invite person',
+
   CHAT_title: 'News',
 
   SPACES_title: 'Your Spaces',

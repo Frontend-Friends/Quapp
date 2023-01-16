@@ -31,6 +31,8 @@ export const Dashboard: FC<{
       {!!mySpaces?.length ? (
         <Grid container columns={{ md: 1 }} spacing={{ xs: 4 }} pt={4}>
           {mySpaces.map((mySpace) => {
+            const isOwner = mySpace.adminId === user.id
+
             return (
               <SpaceItem
                 key={`${mySpace.creationDate}`}
@@ -39,6 +41,7 @@ export const Dashboard: FC<{
                 mySpaces={mySpaces}
                 setOpenEditModal={setOpenEditModal}
                 setSpace={setSpace}
+                isOwner={isOwner}
               />
             )
           })}

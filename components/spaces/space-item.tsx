@@ -29,6 +29,7 @@ interface Props {
   setMySpaces: Dispatch<SetStateAction<SpaceItemTypeWithUser[]>>
   mySpaces: SpaceItemTypeWithUser[]
   setOpenEditModal: Dispatch<SetStateAction<boolean>>
+  isOwner: boolean
 }
 
 const SpaceItem: FC<Props> = ({
@@ -37,6 +38,7 @@ const SpaceItem: FC<Props> = ({
   setMySpaces,
   mySpaces,
   setOpenEditModal,
+  isOwner,
 }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
@@ -124,10 +126,19 @@ const SpaceItem: FC<Props> = ({
               'aria-labelledby': 'basic-button',
             }}
           >
-            <MenuItem onClick={handleEditClick}>{t('GLOBAL_edit')}</MenuItem>
-            <MenuItem onClick={() => setDialogOpen(true)}>
-              {t('GLOBAL_delete')}
-            </MenuItem>
+            {isOwner && (
+              <>
+                <MenuItem onClick={() => handleEditClick()}>
+                  {t('GLOBAL_edit')}
+                </MenuItem>
+                <MenuItem onClick={() => setDialogOpen(true)}>
+                  {t('GLOBAL_delete')}
+                </MenuItem>
+                <MenuItem onClick={() => {}}>
+                  {'to implement: ' + t('MENU_invite_member')}
+                </MenuItem>
+              </>
+            )}
           </Menu>
           <CardContent className="flex basis-full items-center pt-2">
             {space.memberCount && (
