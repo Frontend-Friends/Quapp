@@ -12,7 +12,7 @@ import {
   Typography,
 } from '@mui/material'
 import React, { Dispatch, FC, SetStateAction, useState } from 'react'
-import { SpaceItemTypeWithUser } from '../products/types'
+import { InvitationType, SpaceItemTypeWithUser } from '../products/types'
 import GroupsIcon from '@mui/icons-material/Groups'
 import CategoryIcon from '@mui/icons-material/Category'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
@@ -22,6 +22,8 @@ import { useTranslation } from '../../hooks/use-translation'
 import Link from 'next/link'
 import { fetchJson } from '../../lib/helpers/fetch-json'
 import { useSnackbar } from '../../hooks/use-snackbar'
+import InvitationModal from '../../pages/community/[space]/products/invitation-modal'
+import { sendFormData } from '../../lib/helpers/send-form-data'
 
 interface Props {
   space: SpaceItemTypeWithUser
@@ -43,6 +45,9 @@ const SpaceItem: FC<Props> = ({
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
   const [dialogOpen, setDialogOpen] = useState<boolean>(false)
+  const [openModal, setOpenModal] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+
   const t = useTranslation()
   const setAlert = useSnackbar((state) => state.setAlert)
 
@@ -84,6 +89,22 @@ const SpaceItem: FC<Props> = ({
       }
     } catch (error) {
       setAlert({ severity: 'error', children: t('RESPONSE_SERVER_ERROR') })
+    }
+  }
+  const handleInvitation = async (values: InvitationType) => {
+    setIsLoading(true)
+    try {
+      const invitation = await sendFormData<{
+        isInvitationOk: boolean
+        message: string
+      }>('/api/invitation', { ...values, space: space.id })
+      setAlert({ severity: 'success', children: invitation.message })
+      setOpenModal(false)
+      setIsLoading(false)
+    } catch {
+      setAlert({ severity: 'error', children: t('INVITATION_server_error') })
+      setOpenModal(true)
+      setIsLoading(false)
     }
   }
 
@@ -136,8 +157,13 @@ const SpaceItem: FC<Props> = ({
                 </MenuItem>
               </div>
             )}
-            <MenuItem onClick={() => {}}>
-              {'to implement: ' + t('MENU_invite_member')}
+            <MenuItem
+              onClick={() => {
+                setOpenModal(true)
+                handleClose()
+              }}
+            >
+              {t('MENU_invite_member')}
             </MenuItem>
           </Menu>
           <CardContent className="flex basis-full items-center pt-2">
@@ -172,6 +198,12 @@ const SpaceItem: FC<Props> = ({
           </Button>
         </DialogActions>
       </Dialog>
+      <InvitationModal
+        setOpenModal={setOpenModal}
+        openModal={openModal}
+        isLoading={isLoading}
+        handleInvitation={handleInvitation}
+      />
     </>
   )
 }
