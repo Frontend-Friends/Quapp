@@ -208,4 +208,5 @@ export const translations: Record<string, string> = {
   FOOTER_privacy: 'Datenschutz',
 
   INBOX_title: 'Benachrichtigungen',
+  INBOX_no_entries: 'Es sind noch keine Nachrichten vorhanden',
 }

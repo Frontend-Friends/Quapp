@@ -12,6 +12,7 @@ import { fetchMessages } from '../../../lib/services/fetch-messages'
 import { useAsync } from 'react-use'
 import { Header } from '../../../components/header'
 import { useTranslation } from '../../../hooks/use-translation'
+import { Typography } from '@mui/material'
 
 export const getServerSideProps: GetServerSideProps<{ messages?: Message[] }> =
   withIronSessionSsr(async ({ req }) => {
@@ -95,6 +96,9 @@ export default function Inbox({
     <CondensedContainer>
       <Header title={t('INBOX_title')} titleSpacingClasses="mb-4" />
       <ul className="grid list-none gap-4 p-0">
+        {!mutateMessages?.length && (
+          <Typography variant="body2">{t('INBOX_no_entries')}</Typography>
+        )}
         {mutateMessages?.map((entry, index) => {
           return (
             <li key={index}>

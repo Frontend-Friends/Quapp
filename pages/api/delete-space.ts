@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { arrayUnion, deleteDoc, doc, updateDoc } from 'firebase/firestore'
+import { deleteDoc, doc, updateDoc } from 'firebase/firestore'
 import { withIronSessionApiRoute } from 'iron-session/next'
 import { sessionOptions } from '../../config/session-config'
 import { sendError } from '../../lib/helpers/send-error'
@@ -19,19 +19,25 @@ async function deleteSpace(req: NextApiRequest, res: NextApiResponse) {
 
     const [space, spaceRef] = await getSpace(spaceId as string)
 
-    space?.users?.map(async (id) => {
-      const fetchedUser = await fetchUser(id)
-      const userRef = doc(db, 'user', id ?? '')
+    await Promise.all(
+      space?.users?.map(
+        (id) =>
+          new Promise(async (resolve) => {
+            const fetchedUser = await fetchUser(id)
+            const userRef = doc(db, 'user', id ?? '')
 
-      const spaceIndex: number =
-        fetchedUser.spaces?.findIndex((item) => item === space.id) ?? -1
-      if (spaceIndex !== -1) {
-        const newSpaces = fetchedUser?.spaces?.splice(spaceIndex, 1)
-        await updateDoc(userRef, {
-          spaces: arrayUnion(newSpaces),
-        })
-      }
-    })
+            const spaceIndex: number =
+              fetchedUser.spaces?.findIndex((item) => item === space.id) ?? -1
+            if (spaceIndex !== -1) {
+              const newSpaces = fetchedUser?.spaces?.splice(spaceIndex, 1)
+              await updateDoc(userRef, {
+                spaces: newSpaces,
+              })
+            }
+            resolve(true)
+          })
+      ) || []
+    )
 
     await deleteDoc(spaceRef)
 
