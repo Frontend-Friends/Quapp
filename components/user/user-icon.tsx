@@ -48,6 +48,7 @@ export const UserIcon: FC = () => {
       </Button>
       <Menu
         id="basic-menu"
+        disableScrollLock={true}
         open={open}
         onClick={handleClick}
         MenuListProps={{

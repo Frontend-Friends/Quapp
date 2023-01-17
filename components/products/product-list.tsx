@@ -150,6 +150,7 @@ export const ProductList = ({
               labelId="filter-select"
               label={t('PRODUCTS_filter_category_label')}
               value={categoryFilter}
+              MenuProps={{ disableScrollLock: true }}
               onChange={handleFilterChange}
             >
               <MenuItem value="">

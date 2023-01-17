@@ -160,6 +160,7 @@ export const Product = ({
         id="products-menu"
         anchorEl={anchorEl}
         open={open}
+        disableScrollLock={true}
         onClose={handleClose}
         MenuListProps={{
           'aria-labelledby': 'basic-button',

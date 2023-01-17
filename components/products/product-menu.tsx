@@ -40,7 +40,12 @@ export const ProductMenu = ({
       <IconButton aria-label={t('PRODUCT_settings')} onClick={handleOnClick}>
         <MoreVertIcon />
       </IconButton>
-      <Menu open={menuOpen} onClose={handleOnClose} anchorEl={buttonElement}>
+      <Menu
+        disableScrollLock={true}
+        open={menuOpen}
+        onClose={handleOnClose}
+        anchorEl={buttonElement}
+      >
         <MenuItem onClick={handleOnEdit}>{t('PRODUCT_edit')}</MenuItem>
         <MenuItem onClick={handleOnDelete}>{t('PRODUCT_delete')}</MenuItem>
       </Menu>
