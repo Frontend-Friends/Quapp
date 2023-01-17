@@ -11,7 +11,13 @@ import {
   Link as MuiLink,
   Typography,
 } from '@mui/material'
-import React, { Dispatch, FC, SetStateAction, useState } from 'react'
+import React, {
+  Dispatch,
+  FC,
+  SetStateAction,
+  useCallback,
+  useState,
+} from 'react'
 import { SpaceItemTypeWithUser } from '../products/types'
 import GroupsIcon from '@mui/icons-material/Groups'
 import CategoryIcon from '@mui/icons-material/Category'
@@ -29,6 +35,12 @@ interface Props {
   setMySpaces: Dispatch<SetStateAction<SpaceItemTypeWithUser[]>>
   mySpaces: SpaceItemTypeWithUser[]
   setOpenEditModal: Dispatch<SetStateAction<boolean>>
+  setOpenMembers: Dispatch<SetStateAction<boolean>>
+  setMembers: Dispatch<
+    SetStateAction<
+      Pick<SpaceItemTypeWithUser, 'enhancedUsersInSpace' | 'id'> | undefined
+    >
+  >
   isOwner: boolean
 }
 
@@ -38,6 +50,8 @@ const SpaceItem: FC<Props> = ({
   setMySpaces,
   mySpaces,
   setOpenEditModal,
+  setOpenMembers,
+  setMembers,
   isOwner,
 }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
@@ -46,18 +60,35 @@ const SpaceItem: FC<Props> = ({
   const t = useTranslation()
   const setAlert = useSnackbar((state) => state.setAlert)
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget)
-  }
-  const handleClose = () => {
+  const handleClick = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      setAnchorEl(event.currentTarget)
+    },
+    []
+  )
+  const handleClose = useCallback(() => {
     setAnchorEl(null)
     setDialogOpen(false)
-  }
-  const handleEditClick = () => {
+  }, [])
+  const handleEditClick = useCallback(() => {
     handleClose()
     setOpenEditModal(true)
     setSpace(space)
-  }
+  }, [handleClose, setOpenEditModal, setSpace, space])
+  const onMemberClick = useCallback(() => {
+    setMembers({
+      id: space.id,
+      enhancedUsersInSpace: space.enhancedUsersInSpace,
+    })
+    setOpenMembers(true)
+    handleClose()
+  }, [
+    setMembers,
+    setOpenMembers,
+    space.enhancedUsersInSpace,
+    space.id,
+    handleClose,
+  ])
 
   const handleDeleteClick = async () => {
     handleClose()
@@ -136,6 +167,7 @@ const SpaceItem: FC<Props> = ({
                 </MenuItem>
               </div>
             )}
+            <MenuItem onClick={onMemberClick}>{t('GLOBAL_members')}</MenuItem>
             <MenuItem onClick={() => {}}>
               {'to implement: ' + t('MENU_invite_member')}
             </MenuItem>
