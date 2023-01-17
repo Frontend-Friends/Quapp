@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react'
 import { CondensedContainer } from '../condensed-container'
 import { Header } from '../header'
-import { Box, Fab, Grid, IconButton, Modal, Typography } from '@mui/material'
+import { Alert, Box, Fab, Grid, IconButton, Modal } from '@mui/material'
 import SpaceItem from '../spaces/space-item'
 import AddIcon from '@mui/icons-material/Add'
 import SpaceForm from '../../pages/community/space-form'
@@ -47,9 +47,9 @@ export const Dashboard: FC<{
           })}
         </Grid>
       ) : (
-        <Typography variant="body2" className="my-3 mx-1 text-xl">
+        <Alert severity="info" className="mx-1 mt-6 text-xl">
           {t('SPACES_no_entries')}
-        </Typography>
+        </Alert>
       )}
       <Fab
         color="secondary"

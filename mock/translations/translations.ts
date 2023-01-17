@@ -29,7 +29,7 @@ export const translations: Record<string, string> = {
 
   SPACES_title: 'Dein Space',
   SPACES_no_entries:
-    'Du bist leider noch keinen Spaces zugeordnet. Erstelle doch einfach deinen eigenen:',
+    'Du bist leider noch keinen Spaces zugeordnet. Erstelle doch einfach deinen eigenen!',
   SPACES_members: 'Mitglieder',
   SPACES_items: 'Einträge',
   SPACES_add_space: 'Space hinzufügen',
