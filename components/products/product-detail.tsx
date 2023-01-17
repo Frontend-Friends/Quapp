@@ -155,7 +155,7 @@ export const ProductDetail = ({
           <Typography variant="h2" className="mb-2">
             {t('PRODUCT_description')}
           </Typography>
-          <Typography variant="body1">{product.text}</Typography>
+          <Typography variant="body1">{product.description}</Typography>
           <Divider className="my-6 -mx-2 md:-mx-8" />
           {!!productMessage?.length && (
             <table cellPadding="0" cellSpacing="0" className="mb-4 w-full">

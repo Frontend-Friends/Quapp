@@ -80,12 +80,12 @@ export const ProductItem: FC<{
                   {product.title}
                 </Typography>
               )}
-              {product.description && (
+              {product.text && (
                 <Typography
                   variant="body2"
                   className="pt-1 text-gray-500 line-clamp-2"
                 >
-                  {product.description}
+                  {product.text}
                 </Typography>
               )}
               {withSpaceName && (
