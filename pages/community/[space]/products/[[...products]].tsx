@@ -181,7 +181,6 @@ export const Product = ({
       />
       <InvitationModal
         setOpenModal={setOpenModal}
-        space={space}
         openModal={openModal}
         isLoading={isLoading}
         handleInvitation={handleInvitation}
