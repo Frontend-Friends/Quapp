@@ -124,8 +124,13 @@ export const Product = ({
       const invitation = await sendFormData<{
         isInvitationOk: boolean
         message: string
+        ok: boolean
       }>('/api/invitation', { ...values, space: space })
-      setAlert({ severity: 'success', children: invitation.message })
+      if (invitation.ok) {
+        setAlert({ severity: 'success', children: invitation.message })
+      } else {
+        setAlert({ severity: 'error', children: invitation.message })
+      }
       setOpenModal(false)
       setIsLoading(false)
     } catch {
