@@ -102,7 +102,7 @@ export const ProductItem: FC<{
               {categories && product.category !== undefined && (
                 <Typography
                   variant="body2"
-                  className="mt-2 inline-flex h-6 items-center rounded-2xl bg-blueishGray-600 px-3 py-1 text-white"
+                  className="mt-2 inline-flex h-6 items-center rounded-2xl bg-blueishGray-300 px-3 py-1 text-white"
                 >
                   {categories?.[product.category as number]}
                 </Typography>

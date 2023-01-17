@@ -232,7 +232,7 @@ export const ProductList = ({
           }}
         />
       </Products>
-      <Box className="py-4">
+      <Box className="rounded-2xl border border-solid border-slate-200 bg-white py-4">
         {!!maxPages && (
           <Pagination
             count={maxPages}
