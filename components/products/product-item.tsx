@@ -74,9 +74,12 @@ export const ProductItem: FC<{
                 <ImageNotSupportedRoundedIcon className="text-5xl text-slate-400 md:text-6xl" />
               </Box>
             )}
-            <CardContent component="span">
+            <CardContent component="span" className="pr-6">
               {product.title && (
-                <Typography variant="h3" className="line-clamp-2 md:text-lg">
+                <Typography
+                  variant="h3"
+                  className="leading-5 line-clamp-2 hyphens-auto md:text-lg"
+                >
                   {product.title}
                 </Typography>
               )}
