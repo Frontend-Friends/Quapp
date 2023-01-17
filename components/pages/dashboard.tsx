@@ -11,6 +11,7 @@ import EditSpaceModal from '../spaces/edit-space-modal'
 import { useSnackbar } from '../../hooks/use-snackbar'
 import { User } from '../user/types'
 import CloseIcon from '@mui/icons-material/Close'
+import { MembersModal } from '../members/member-modal'
 
 export const Dashboard: FC<{
   spaces?: SpaceItemTypeWithUser[]
@@ -23,6 +24,9 @@ export const Dashboard: FC<{
   )
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [openEditModal, setOpenEditModal] = useState<boolean>(false)
+  const [openMemberModal, setOpenMemberModal] = useState<boolean>(false)
+  const [members, setMembers] =
+    useState<Pick<SpaceItemTypeWithUser, 'enhancedUsersInSpace' | 'id'>>()
   const [space, setSpace] = useState<SpaceItemTypeWithUser | null>(null)
   const setAlert = useSnackbar((state) => state.setAlert)
   return (
@@ -41,6 +45,8 @@ export const Dashboard: FC<{
                 mySpaces={mySpaces}
                 setOpenEditModal={setOpenEditModal}
                 setSpace={setSpace}
+                setOpenMembers={setOpenMemberModal}
+                setMembers={setMembers}
                 isOwner={isOwner}
               />
             )
@@ -71,7 +77,7 @@ export const Dashboard: FC<{
         aria-labelledby="addspace-title"
         aria-describedby="addspace-description"
       >
-        <CondensedContainer className="absolute m-0 h-full max-h-full w-full overflow-auto bg-white p-8 drop-shadow-2xl md:top-1/3 md:left-1/2 md:h-[unset] md:w-[600px] md:-translate-x-1/2 md:-translate-y-1/3">
+        <CondensedContainer className="absolute m-0 h-full max-h-full w-full overflow-auto bg-white p-8 drop-shadow-2xl md:top-1/3 md:left-1/2 md:h-[unset] md:-translate-x-1/2 md:-translate-y-1/3">
           <Box className="sticky top-0 z-10 flex h-0 w-full justify-end">
             <IconButton
               title={t('BUTTON_close')}
@@ -97,6 +103,11 @@ export const Dashboard: FC<{
           )}
         </CondensedContainer>
       </Modal>
+      <MembersModal
+        open={openMemberModal}
+        onClose={() => setOpenMemberModal(false)}
+        members={members}
+      />
 
       <EditSpaceModal
         setAlert={setAlert}

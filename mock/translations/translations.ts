@@ -9,6 +9,7 @@ export const translations: Record<string, string> = {
   GLOBAL_cancel: 'Abbrechen',
   GLOBAL_edit: 'Bearbeiten',
   GLOBAL_delete: 'Löschen',
+  GLOBAL_members: 'Mitglieder',
   GLOBAL_open: 'Öffnen',
   GLOBAL_options: 'Optionen',
   GLOBAL_back_to_login: 'Zurück zum Login',
