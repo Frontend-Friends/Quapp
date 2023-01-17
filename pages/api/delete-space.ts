@@ -27,7 +27,7 @@ async function deleteSpace(req: NextApiRequest, res: NextApiResponse) {
             const userRef = doc(db, 'user', id ?? '')
 
             const spaceIndex: number =
-              fetchedUser.spaces?.findIndex((item) => item === space.id) ?? -1
+              fetchedUser?.spaces?.findIndex((item) => item === space.id) ?? -1
             if (spaceIndex !== -1) {
               const newSpaces = fetchedUser?.spaces?.splice(spaceIndex, 1)
               await updateDoc(userRef, {
