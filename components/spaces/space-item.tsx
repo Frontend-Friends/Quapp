@@ -97,8 +97,13 @@ const SpaceItem: FC<Props> = ({
       const invitation = await sendFormData<{
         isInvitationOk: boolean
         message: string
-      }>('/api/invitation', { ...values, space: space.id })
-      setAlert({ severity: 'success', children: invitation.message })
+        ok: boolean
+      }>('/api/invitation', { ...values, space: space })
+      if (invitation.ok) {
+        setAlert({ severity: 'success', children: invitation.message })
+      } else {
+        setAlert({ severity: 'error', children: invitation.message })
+      }
       setOpenModal(false)
       setIsLoading(false)
     } catch {
