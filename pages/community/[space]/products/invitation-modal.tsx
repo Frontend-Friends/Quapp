@@ -12,7 +12,6 @@ import CloseIcon from '@mui/icons-material/Close'
 interface Props {
   openModal: boolean
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>
-  space: string
   isLoading: boolean
   handleInvitation: (values: InvitationType) => Promise<void>
 }
