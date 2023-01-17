@@ -6,7 +6,8 @@ import { AppartmentSVG } from '../components/svg/appartment'
 import { WindowNeighboursSVG } from '../components/svg/windowneighbours'
 import { CollaboratorSVG } from '../components/svg/collaborator'
 import { HangoutSVG } from '../components/svg/hangout'
-import { Box, Button, Divider, Link } from '@mui/material'
+import { Box, Button, Divider } from '@mui/material'
+import Link from 'next/link'
 import { useTranslation } from '../hooks/use-translation'
 import { WaveWhiteSVG } from '../components/svg/wave_white'
 import { WaveWhiteBottomSVG } from '../components/svg/wave_white_bottom'
@@ -90,12 +91,14 @@ const Home: FC<{ isLoggedIn: boolean }> = () => {
           <AppartmentSVG
             aria-label={t('SVG_appartment')}
             className="
-              col-span-3
+            pointer-events-none
+            col-span-3
               row-span-2
               -ml-6
               h-[130px]
               w-full
               flex-1
+              touch-none
               sm:col-span-2
               sm:-ml-14
               sm:scale-125
@@ -122,9 +125,7 @@ const Home: FC<{ isLoggedIn: boolean }> = () => {
               >
                 {t('HOME_intro')}
               </p>
-              <Link
-                underline="none"
-                href="/auth/signup"
+              <div
                 className="
                   col-span-7
                   mx-auto
@@ -139,15 +140,17 @@ const Home: FC<{ isLoggedIn: boolean }> = () => {
                   lg:pl-14
                   2xl:col-span-4"
               >
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="secondary"
-                  className="px-12 py-3 md:text-lg lg:py-4 lg:text-xl"
-                >
-                  {t('HOME_signup_free')}
-                </Button>
-              </Link>
+                <Link href="/auth/signup" passHref>
+                  <Button
+                    component="a"
+                    variant="contained"
+                    color="secondary"
+                    className="px-12 py-3 md:text-lg lg:py-4 lg:text-xl"
+                  >
+                    {t('HOME_signup_free')}
+                  </Button>
+                </Link>
+              </div>
               <Box
                 className="
                   col-span-7
@@ -158,12 +161,10 @@ const Home: FC<{ isLoggedIn: boolean }> = () => {
                   lg:text-xl
                   2xl:col-start-4"
               >
-                <Link
-                  underline="hover"
-                  href="/auth/login"
-                  className="text-white underline"
-                >
-                  {t('LOGIN_has_account')}
+                <Link href="/auth/login">
+                  <a className="text-white underline">
+                    {t('LOGIN_has_account')}
+                  </a>
                 </Link>
               </Box>
             </>
@@ -182,9 +183,7 @@ const Home: FC<{ isLoggedIn: boolean }> = () => {
               >
                 {t('HOME_is_logged_in')}
               </Alert>
-              <Link
-                underline="none"
-                href="/community/dashboard"
+              <div
                 className="
                   col-span-7
                   mx-auto
@@ -199,15 +198,17 @@ const Home: FC<{ isLoggedIn: boolean }> = () => {
                   lg:pl-14
                   2xl:col-span-4"
               >
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="secondary"
-                  className="px-12 py-3 md:text-lg lg:py-4 lg:text-xl"
-                >
-                  {t('HOME_to_dashboard')}
-                </Button>
-              </Link>
+                <Link href="/community/dashboard" passHref>
+                  <Button
+                    component="a"
+                    variant="contained"
+                    color="secondary"
+                    className="px-12 py-3 md:text-lg lg:py-4 lg:text-xl"
+                  >
+                    {t('HOME_to_dashboard')}
+                  </Button>
+                </Link>
+              </div>
             </>
           )}
         </div>
