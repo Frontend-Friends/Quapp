@@ -1,63 +1,17 @@
 import React, { FC, useState } from 'react'
 import { CondensedContainer } from '../condensed-container'
 import { Header } from '../header'
-import {
-  Alert,
-  Box,
-  Fab,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  Modal,
-} from '@mui/material'
+import { Alert, Box, Fab, Grid, IconButton, Modal } from '@mui/material'
 import SpaceItem from '../spaces/space-item'
 import AddIcon from '@mui/icons-material/Add'
 import SpaceForm from '../../pages/community/space-form'
 import { SpaceItemTypeWithUser } from '../products/types'
-import { useTranslation, UseTranslationType } from '../../hooks/use-translation'
+import { UseTranslationType } from '../../hooks/use-translation'
 import EditSpaceModal from '../spaces/edit-space-modal'
 import { useSnackbar } from '../../hooks/use-snackbar'
 import { User } from '../user/types'
 import CloseIcon from '@mui/icons-material/Close'
-import clsx from 'clsx'
-
-const MembersModal = ({
-  members,
-  open,
-  onClose,
-}: {
-  members?: Pick<SpaceItemTypeWithUser, 'enhancedUsersInSpace' | 'id'>
-  open: boolean
-  onClose: () => void
-}) => {
-  const t = useTranslation()
-  return (
-    <Modal
-      open={open}
-      onClose={onClose}
-      aria-labelledby="invitation-title"
-      aria-describedby="delete-description"
-    >
-      <CondensedContainer className="absolute m-0 h-full max-h-full overflow-auto bg-white p-8 drop-shadow-2xl md:top-1/3 md:left-1/2 md:h-[unset] md:-translate-x-1/2 md:-translate-y-1/3">
-        <h3 id="invitation-title">{`${t('GLOBAL_members')} `}</h3>
-        <List>
-          {members?.enhancedUsersInSpace?.map((member, index) => (
-            <ListItem
-              key={index}
-              className={clsx(
-                'border-0 border-b border-solid border-gray-300',
-                index === 0 && 'border-t'
-              )}
-            >
-              {member.userName}
-            </ListItem>
-          ))}
-        </List>
-      </CondensedContainer>
-    </Modal>
-  )
-}
+import { MembersModal } from '../members/member-modal'
 
 export const Dashboard: FC<{
   spaces?: SpaceItemTypeWithUser[]
