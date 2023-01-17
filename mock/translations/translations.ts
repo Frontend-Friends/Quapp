@@ -28,7 +28,8 @@ export const translations: Record<string, string> = {
   GLOBAL_invalid_email: 'E-Mail Adresse ungültig',
 
   SPACES_title: 'Dein Space',
-  SPACES_no_entries: 'Es sind noch keine Spaces vorhanden',
+  SPACES_no_entries:
+    'Es sind leider noch keine Spaces vorhanden. Wieso erstellst du nicht einen eigenen?',
   SPACES_members: 'Mitglieder',
   SPACES_items: 'Einträge',
   SPACES_add_space: 'Space hinzufügen',

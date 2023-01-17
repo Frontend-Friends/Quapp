@@ -47,7 +47,9 @@ export const Dashboard: FC<{
           })}
         </Grid>
       ) : (
-        <Typography variant="body2">{t('SPACES_no_entries')}</Typography>
+        <Typography variant="body2" className="my-3 mx-1 text-xl">
+          {t('SPACES_no_entries')}
+        </Typography>
       )}
       <Fab
         color="secondary"
