@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material'
+import { Alert } from '@mui/material'
 import { ProductItem } from './product-item'
 import React, { Dispatch, ReactNode, SetStateAction } from 'react'
 import { ProductType } from './types'
@@ -27,7 +27,9 @@ export const Products = ({
   return (
     <section className="relative grid gap-4 md:my-5 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
       {!products?.length && (
-        <Typography variant="body2">{t('PRODUCTS_no_entries')}</Typography>
+        <Alert severity="info" className="mt-2 text-lg">
+          {t('PRODUCTS_no_entries')}
+        </Alert>
       )}
       {!!products?.length &&
         products.map((item, index) => (

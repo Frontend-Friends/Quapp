@@ -47,7 +47,7 @@ export const Dashboard: FC<{
           })}
         </Grid>
       ) : (
-        <Alert severity="info" className="mx-1 mt-6 text-lg">
+        <Alert severity="info" className="mt-6 text-lg">
           {t('SPACES_no_entries')}
         </Alert>
       )}
