@@ -1,4 +1,4 @@
-import { FC, ReactNode, useCallback, useMemo, useRef, useState } from 'react'
+import { FC, useCallback, useRef, useState } from 'react'
 import {
   Button,
   Divider,
@@ -16,36 +16,6 @@ import LogoutRounded from '@mui/icons-material/LogoutRounded'
 import SettingsRounded from '@mui/icons-material/SettingsRounded'
 import ListAltIcon from '@mui/icons-material/ListAlt'
 import Link from 'next/link'
-import clsx from 'clsx'
-
-const localeLinkClasses = (isActive: boolean) =>
-  clsx(
-    'flex items-center py-2 px-6 text-current no-underline focus:text-secondary',
-    isActive && 'hover:text-primary',
-    !isActive && 'text-gray-400 cursor-default'
-  )
-
-const LocaleLink = ({
-  children,
-  language,
-}: {
-  children: ReactNode
-  language?: string
-}) => {
-  const { locale, asPath } = useRouter()
-
-  const isActive = useMemo(() => {
-    return locale === language || (language === 'de' && !locale)
-  }, [language, locale])
-
-  return isActive ? (
-    <div className={localeLinkClasses(false)}>{children}</div>
-  ) : (
-    <Link href={asPath} passHref locale={language}>
-      <a className={localeLinkClasses(true)}>{children}</a>
-    </Link>
-  )
-}
 
 export const UserIcon: FC = () => {
   const [open, setOpen] = useState<boolean>(false)
@@ -115,11 +85,6 @@ export const UserIcon: FC = () => {
                 {t('GLOBAL_go_to_account_settings')}
               </a>
             </Link>
-          </MenuItem>
-          <Divider />
-          <MenuItem className="p-0 hover:bg-white">
-            <LocaleLink language="de">Deutsch</LocaleLink> |{' '}
-            <LocaleLink language="en">English</LocaleLink>
           </MenuItem>
           <Divider />
           <MenuItem className="hover:bg-white">

@@ -28,7 +28,7 @@ export const translations: Record<string, string> = {
   GLOBAL_password_min_eight: 'Das Passwort muss mindestens 8 Zeichen lang sein',
   GLOBAL_invalid_email: 'E-Mail Adresse ungültig',
 
-  SPACES_title: 'Dein Space',
+  SPACES_title: 'Deine Spaces',
   SPACES_no_entries:
     'Du bist leider noch keinen Spaces zugeordnet. Erstelle doch einfach deinen eigenen!',
   SPACES_members: 'Mitglieder',

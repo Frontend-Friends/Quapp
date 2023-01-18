@@ -1,11 +1,11 @@
 export const translationsEn: Record<string, string> = {
-  GLOBAL_email: 'email',
+  GLOBAL_email: 'E-mail',
   GLOBAL_password: 'Password',
-  GLOBAL_first_name: 'first_name',
-  GLOBAL_last_name: 'last_name',
-  GLOBAL_user_name: 'nickname',
+  GLOBAL_first_name: 'First name',
+  GLOBAL_last_name: 'Last name',
+  GLOBAL_user_name: 'Nickname',
   GLOBAL_mobile_number: 'Mobile number',
-  GLOBAL_save: 'save',
+  GLOBAL_save: 'Save',
   GLOBAL_cancel: 'Cancel',
   GLOBAL_edit: 'Edit',
   GLOBAL_delete: 'Delete',
@@ -26,15 +26,15 @@ export const translationsEn: Record<string, string> = {
   GLOBAL_required: 'Required field',
   GLOBAL_too_short: 'Input is too short',
   GLOBAL_password_min_eight: 'Password must be at least 8 characters long',
-  GLOBAL_invalid_email: 'Email address invalid',
+  GLOBAL_invalid_email: 'E-mail address invalid',
 
-  SPACES_title: 'Your Space',
+  SPACES_title: 'Your Spaces',
   SPACES_no_entries:
     'Sorry, you are not assigned to any Spaces yet. Just create your own!',
   SPACES_members: 'Members',
   SPACES_items: 'items',
   SPACES_add_space: 'Add Space',
-  SPACES_name: 'space name',
+  SPACES_name: 'Space name',
   SPACES_administrator: 'Administrator',
   SPACES_edit_ok: 'The Space was successfully modified',
   SPACES_edit_failed: 'The Space could not be created',
@@ -102,7 +102,7 @@ export const translationsEn: Record<string, string> = {
   PRODUCT_description: 'offer description',
   PRODUCTS_my_list: 'My offers',
   PRODUCT_location_at: 'in',
-  PRODUCT_label: 'offer',
+  PRODUCT_label: 'Offer',
   DELETE_cancel_button: 'Cancel',
   DELETE_confirm_button: 'Delete',
   DELETE_title: 'Delete from: ',
@@ -133,8 +133,8 @@ export const translationsEn: Record<string, string> = {
   BORROW_new_request: 'Make new request',
 
   REQUEST_product_link: 'Link to quote',
-  REQUEST_decline: 'reject request',
-  REQUEST_accept: 'accept request',
+  REQUEST_decline: 'Reject request',
+  REQUEST_accept: 'Accept request',
 
   FORM_submitting_error: 'An error occurred during creation',
 
@@ -171,9 +171,9 @@ export const translationsEn: Record<string, string> = {
 
   CHAT_button_send: 'Send message',
   CHAT_button_loading: 'will be sent',
-  CHAT_message: 'message',
-  CHAT_message_history: 'message history',
-  CHAT_message_error: 'message must not be empty',
+  CHAT_message: 'Message',
+  CHAT_message_history: 'Message history',
+  CHAT_message_error: 'Message must not be empty',
   CHAT_message_required: 'This is a required field',
 
   SETTINGS_title: 'Settings',
@@ -204,8 +204,8 @@ export const translationsEn: Record<string, string> = {
 
   FOOTER_contact: 'Contact',
   FOOTER_imprint: 'Imprint',
-  FOOTER_privacy: 'privacy policy',
+  FOOTER_privacy: 'Privacy policy',
 
-  INBOX_title: 'notifications',
+  INBOX_title: 'Notifications',
   INBOX_no_entries: 'There are no messages yet',
 }
