@@ -72,7 +72,7 @@ export const ProductChat = ({
               <Box className="p-3">
                 <p className="m-0">{entry.message}</p>
                 <small className="text-xs text-blueishGray-200">
-                  {dayjs(entry.dateTime).format('HH:MM')}
+                  {dayjs(entry.dateTime).format('hh:mm')}
                 </small>
               </Box>
             </Box>
