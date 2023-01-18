@@ -1,1 +1,1 @@
-export const twFormGroup = 'mb-4'
+export const twFormGroup = 'mb-4 bg-white'
