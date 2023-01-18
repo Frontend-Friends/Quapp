@@ -234,7 +234,7 @@ export const ProductList = ({
         />
       </Products>
       {!!maxPages && (
-        <Box className="rounded-2xl border border-solid border-slate-300 bg-white py-4 shadow-2xl">
+        <Box className="rounded-2xl border border-solid border-slate-300 bg-white py-4 shadow">
           <Pagination
             count={maxPages}
             size="large"
