@@ -238,6 +238,7 @@ export const ProductList = ({
           <Pagination
             count={maxPages}
             size="large"
+            color="primary"
             page={currentPage}
             onChange={async (...props) => {
               const value = props[1]
