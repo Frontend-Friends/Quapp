@@ -10,7 +10,7 @@ const nextConfig = {
       'aqftfaikqbudifwboudr.supabase.co',
     ],
   },
-  i18n: { locales: ['de'], defaultLocale: 'de' },
+  i18n: { locales: ['de', 'en'], defaultLocale: 'de' },
 }
 
 module.exports = nextConfig
