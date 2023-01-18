@@ -233,8 +233,8 @@ export const ProductList = ({
           }}
         />
       </Products>
-      <Box className="rounded-2xl border border-solid border-slate-300 bg-white py-4 shadow-2xl">
-        {!!maxPages && (
+      {!!maxPages && (
+        <Box className="rounded-2xl border border-solid border-slate-300 bg-white py-4 shadow-2xl">
           <Pagination
             count={maxPages}
             size="large"
@@ -253,8 +253,8 @@ export const ProductList = ({
               })
             }}
           />
-        )}
-      </Box>
+        </Box>
+      )}
     </>
   )
 }
