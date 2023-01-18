@@ -116,6 +116,7 @@ export const ProductDetail = ({
     <Modal
       open={modalIsOpen}
       onClose={() => {
+        setBorrowRequestSubmitted(false)
         push(backUrl, undefined, { shallow: true })
       }}
       aria-labelledby="parent-modal-title"
