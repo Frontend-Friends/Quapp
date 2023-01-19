@@ -14,8 +14,7 @@ import { resetPasswordFormSchema } from '../../lib/schema/reset-password-form-sc
 import { useSnackbar } from '../../hooks/use-snackbar'
 import { Header } from '../../components/header'
 import CloseIcon from '@mui/icons-material/Close'
-
-const twFormGroup = 'mb-4'
+import { twFormGroup } from '../../lib/constants'
 
 export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
   const { user } = req.session

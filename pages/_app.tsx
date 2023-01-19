@@ -72,7 +72,7 @@ export default function App({
             showNavbar && 'md:pt-[83px]'
           )}
         >
-          <div className="grow bg-[url(/assets/img/neighbourhood.svg)] bg-[length:auto_300px] bg-bottom bg-repeat-x">
+          <div className="grow bg-[url(/assets/img/neighbourhood.svg)] bg-[length:auto_300px] bg-bottom bg-repeat-x md:min-h-[500px]">
             <Component {...pageProps} />
           </div>
           <Footer />

@@ -36,7 +36,7 @@ const LocaleLink = ({
 const Footer: FC = () => {
   const t = useTranslation()
   return (
-    <footer className="bg-blueishGray-900 p-1 pb-16 text-lg font-light text-white md:p-5 md:pb-1">
+    <footer className="bg-blueishGray-900 p-1 pb-16 text-lg font-light text-white md:pb-0">
       <div className="mx-auto max-w-7xl p-3 text-center">
         <ul className="m-0 inline-block list-none p-0 text-center text-sm md:mb-5">
           <li className="inline-block px-2">
