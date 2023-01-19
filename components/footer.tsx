@@ -27,7 +27,7 @@ const LocaleLink = ({
   return isActive ? (
     <div className={localeLinkClasses(false)}>{children}</div>
   ) : (
-    <Link href={asPath} passHref locale={language}>
+    <Link href={asPath} passHref locale={language} shallow>
       <a className={localeLinkClasses(true)}>{children}</a>
     </Link>
   )
