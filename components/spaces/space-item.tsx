@@ -28,8 +28,8 @@ import { useTranslation } from '../../hooks/use-translation'
 import Link from 'next/link'
 import { fetchJson } from '../../lib/helpers/fetch-json'
 import { useSnackbar } from '../../hooks/use-snackbar'
-import InvitationModal from '../../pages/community/[space]/products/invitation-modal'
 import { sendFormData } from '../../lib/helpers/send-form-data'
+import { InvitationModal } from '../invitation-modal'
 
 interface Props {
   space: SpaceItemTypeWithUser

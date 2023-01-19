@@ -1,12 +1,12 @@
 import React from 'react'
 import { Box, IconButton, Modal, TextField } from '@mui/material'
-import { CondensedContainer } from '../../../../components/condensed-container'
+import { CondensedContainer } from './condensed-container'
 import { Formik } from 'formik'
-import { invitationFormSchema } from '../../../../lib/schema/invitation-form-schema'
+import { invitationFormSchema } from '../lib/schema/invitation-form-schema'
 import { LoadingButton } from '@mui/lab'
-import { useTranslation } from '../../../../hooks/use-translation'
-import { InvitationType } from '../../../../components/products/types'
-import { twFormGroup } from '../../../../lib/constants'
+import { useTranslation } from '../hooks/use-translation'
+import { InvitationType } from './products/types'
+import { twFormGroup } from '../lib/constants'
 import CloseIcon from '@mui/icons-material/Close'
 
 interface Props {
@@ -16,7 +16,7 @@ interface Props {
   handleInvitation: (values: InvitationType) => Promise<void>
 }
 
-const InvitationModal: React.FC<Props> = ({
+export const InvitationModal: React.FC<Props> = ({
   openModal,
   setOpenModal,
   isLoading,
@@ -104,5 +104,3 @@ const InvitationModal: React.FC<Props> = ({
     </>
   )
 }
-
-export default InvitationModal

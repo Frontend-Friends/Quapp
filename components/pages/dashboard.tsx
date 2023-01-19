@@ -4,7 +4,6 @@ import { Header } from '../header'
 import { Alert, Box, Fab, Grid, IconButton, Modal } from '@mui/material'
 import SpaceItem from '../spaces/space-item'
 import AddIcon from '@mui/icons-material/Add'
-import SpaceForm from '../../pages/community/space-form'
 import { SpaceItemTypeWithUser } from '../products/types'
 import { UseTranslationType } from '../../hooks/use-translation'
 import EditSpaceModal from '../spaces/edit-space-modal'
@@ -13,6 +12,7 @@ import { User } from '../user/types'
 import CloseIcon from '@mui/icons-material/Close'
 import { MembersModal } from '../members/member-modal'
 import { fetchJson } from '../../lib/helpers/fetch-json'
+import { SpaceForm } from '../spaces/space-form'
 
 const removeMember = async ({
   spaceId,

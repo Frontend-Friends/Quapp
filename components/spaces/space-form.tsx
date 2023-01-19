@@ -1,8 +1,5 @@
 import { Dispatch, FC, SetStateAction } from 'react'
-import {
-  SpaceItemType,
-  SpaceItemTypeWithUser,
-} from '../../components/products/types'
+import { SpaceItemType, SpaceItemTypeWithUser } from '../products/types'
 import { Box, TextField } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 import { Formik } from 'formik'
@@ -11,7 +8,7 @@ import { sendFormData } from '../../lib/helpers/send-form-data'
 import { addSpaceFormSchema } from '../../lib/schema/add-space-form-schema'
 import { twFormGroup } from '../../lib/constants'
 import { useSnackbar } from '../../hooks/use-snackbar'
-import { User } from '../../components/user/types'
+import { User } from '../user/types'
 
 interface Props {
   user: User
@@ -22,7 +19,7 @@ interface Props {
   mySpaces?: SpaceItemTypeWithUser[]
 }
 
-const SpaceForm: FC<Props> = ({
+export const SpaceForm: FC<Props> = ({
   isLoading,
   setIsLoading,
   setOpenModal,
@@ -118,5 +115,3 @@ const SpaceForm: FC<Props> = ({
     </>
   )
 }
-
-export default SpaceForm
