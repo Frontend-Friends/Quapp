@@ -5,15 +5,20 @@ import { CondensedContainer } from '../condensed-container'
 import clsx from 'clsx'
 import React from 'react'
 import CloseIcon from '@mui/icons-material/Close'
+import DeleteIcon from '@mui/icons-material/Delete'
 
 export const MembersModal = ({
-  members,
+  space,
   open,
   onClose,
+  onRemoveMember,
+  isOwner,
 }: {
-  members?: Pick<SpaceItemTypeWithUser, 'enhancedUsersInSpace' | 'id'>
+  space?: SpaceItemTypeWithUser
   open: boolean
   onClose: () => void
+  onRemoveMember: (params: { spaceId: string; userId: string }) => void
+  isOwner: boolean
 }) => {
   const t = useTranslation()
   return (
@@ -37,15 +42,28 @@ export const MembersModal = ({
           'GLOBAL_members'
         )} `}</h3>
         <List>
-          {members?.enhancedUsersInSpace?.map((member, index) => (
+          {space?.enhancedUsersInSpace?.map((member, index) => (
             <ListItem
               key={index}
               className={clsx(
-                'border-0 border-b border-solid border-gray-300',
+                'justify-between border-0 border-b border-solid border-gray-300',
                 index === 0 && 'border-t'
               )}
             >
               {member.userName}
+              {isOwner && space.adminId !== member.id && (
+                <IconButton
+                  onClick={() =>
+                    onRemoveMember({
+                      spaceId: space.id || '',
+                      userId: member.id || '',
+                    })
+                  }
+                  title={`${member.userName} ${t('GLOBAL_remove_member')}`}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              )}
             </ListItem>
           ))}
         </List>

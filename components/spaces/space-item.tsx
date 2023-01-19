@@ -38,22 +38,18 @@ interface Props {
   mySpaces: SpaceItemTypeWithUser[]
   setOpenEditModal: Dispatch<SetStateAction<boolean>>
   setOpenMembers: Dispatch<SetStateAction<boolean>>
-  setMembers: Dispatch<
-    SetStateAction<
-      Pick<SpaceItemTypeWithUser, 'enhancedUsersInSpace' | 'id'> | undefined
-    >
-  >
+  setIsOwner: Dispatch<SetStateAction<boolean>>
   isOwner: boolean
 }
 
 const SpaceItem: FC<Props> = ({
   space,
   setSpace,
+  setIsOwner,
   setMySpaces,
   mySpaces,
   setOpenEditModal,
   setOpenMembers,
-  setMembers,
   isOwner,
 }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
@@ -81,19 +77,11 @@ const SpaceItem: FC<Props> = ({
     setSpace(space)
   }, [handleClose, setOpenEditModal, setSpace, space])
   const onMemberClick = useCallback(() => {
-    setMembers({
-      id: space.id,
-      enhancedUsersInSpace: space.enhancedUsersInSpace,
-    })
+    setSpace(space)
+    setIsOwner(isOwner)
     setOpenMembers(true)
     handleClose()
-  }, [
-    setMembers,
-    setOpenMembers,
-    space.enhancedUsersInSpace,
-    space.id,
-    handleClose,
-  ])
+  }, [isOwner, space, setIsOwner, setSpace, setOpenMembers, handleClose])
 
   const handleDeleteClick = async () => {
     handleClose()
@@ -103,12 +91,7 @@ const SpaceItem: FC<Props> = ({
         message: string
       }>(`/api/delete-space?spaceId=${space.id}`)
 
-      const delSpaceFromUser = await fetchJson<{
-        ok: boolean
-        message: string
-      }>(`/api/delete-space-from-user?spaceId=${space.id}`)
-      const allSuccess = await Promise.all([delSpace, delSpaceFromUser])
-      if (allSuccess) {
+      if (delSpace.ok) {
         setAlert({ severity: 'success', children: delSpace.message })
         setMySpaces(
           mySpaces.filter(
