@@ -25,6 +25,7 @@ import { ProductList } from '../../../../components/products/product-list'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
+import { getUser } from '../../../../lib/services/get-user'
 
 export const maxProductsPerPage = 20
 
@@ -38,12 +39,17 @@ export const getServerSideProps = withIronSessionSsr<{
   categories?: string[]
 }>(async ({ query, req }) => {
   const { user } = req.session
+  const { products: productsQuery, space, skip, filter } = query
 
   if (!user) {
     return { props: {} }
   }
 
-  const { products: productsQuery, space, skip, filter } = query
+  const [fetchedUser] = await getUser(user.id || '')
+
+  if (!fetchedUser.spaces || !fetchedUser.spaces.includes(space as string)) {
+    return { notFound: true }
+  }
 
   const { products, count } = await fetchProductList(
     (space as string) || '',
