@@ -24,7 +24,7 @@ interface Props {
   setMySpaces: Dispatch<SetStateAction<SpaceItemTypeWithUser[]>>
   setSpace: Dispatch<SetStateAction<SpaceItemTypeWithUser>>
   t: UseTranslationType
-  space: SpaceItemTypeWithUser | null
+  space?: SpaceItemTypeWithUser
   mySpaces: SpaceItemTypeWithUser[]
   openEditModal: boolean
   setOpenEditModal: Dispatch<SetStateAction<boolean>>

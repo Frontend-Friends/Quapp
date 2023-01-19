@@ -10,6 +10,8 @@ export const translations: Record<string, string> = {
   GLOBAL_edit: 'Bearbeiten',
   GLOBAL_delete: 'Löschen',
   GLOBAL_members: 'Mitglieder',
+  GLOBAL_removed_member: 'Mitglied wurde aus dem Space entfernt.',
+  GLOBAL_remove_member: 'Mitglied löschen',
   GLOBAL_open: 'Öffnen',
   GLOBAL_options: 'Optionen',
   GLOBAL_back_to_login: 'Zurück zum Login',

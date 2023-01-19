@@ -32,6 +32,8 @@ export const translationsEn: Record<string, string> = {
   SPACES_no_entries:
     'Sorry, you are not assigned to any Spaces yet. Just create your own!',
   SPACES_members: 'Members',
+  GLOBAL_remove_member: 'remove Member',
+  GLOBAL_removed_member: 'Member has been removed from space',
   SPACES_items: 'items',
   SPACES_add_space: 'Add Space',
   SPACES_name: 'Space name',

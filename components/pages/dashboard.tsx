@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useCallback, useState } from 'react'
 import { CondensedContainer } from '../condensed-container'
 import { Header } from '../header'
 import { Alert, Box, Fab, Grid, IconButton, Modal } from '@mui/material'
@@ -12,6 +12,28 @@ import { useSnackbar } from '../../hooks/use-snackbar'
 import { User } from '../user/types'
 import CloseIcon from '@mui/icons-material/Close'
 import { MembersModal } from '../members/member-modal'
+import { fetchJson } from '../../lib/helpers/fetch-json'
+
+const removeMember = async ({
+  spaceId,
+  userId,
+}: {
+  spaceId: string
+  userId: string
+}) =>
+  fetchJson(`/api/remove-member?space=${spaceId}&userId=${userId}`, {
+    method: 'DELETE',
+  })
+
+const removeUserFromArray = (userId: string, space?: SpaceItemTypeWithUser) => {
+  const removedFromArray = space?.enhancedUsersInSpace?.filter(
+    (item) => item.id !== userId
+  )
+  if (space && space.enhancedUsersInSpace) {
+    space.enhancedUsersInSpace = removedFromArray
+  }
+  return space
+}
 
 export const Dashboard: FC<{
   spaces?: SpaceItemTypeWithUser[]
@@ -25,10 +47,32 @@ export const Dashboard: FC<{
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [openEditModal, setOpenEditModal] = useState<boolean>(false)
   const [openMemberModal, setOpenMemberModal] = useState<boolean>(false)
-  const [members, setMembers] =
-    useState<Pick<SpaceItemTypeWithUser, 'enhancedUsersInSpace' | 'id'>>()
-  const [space, setSpace] = useState<SpaceItemTypeWithUser | null>(null)
+  const [isSpaceOwner, setIsSpaceOwner] = useState<boolean>(false)
+  const [space, setSpace] = useState<SpaceItemTypeWithUser>()
   const setAlert = useSnackbar((state) => state.setAlert)
+
+  const handleRemoveMember = useCallback(
+    async ({ spaceId, userId }: { spaceId: string; userId: string }) => {
+      const response = await removeMember({ spaceId, userId })
+
+      if (response.ok) {
+        setMySpaces((state) => {
+          const foundIndex = state.findIndex((item) => item.id === spaceId)
+          removeUserFromArray(userId, state[foundIndex])
+
+          return [...state]
+        })
+        setSpace((state) => {
+          removeUserFromArray(userId, state)
+          return { ...state }
+        })
+        setAlert({ severity: 'success', children: t('GLOBAL_removed_member') })
+      } else {
+        setAlert({ severity: 'error', children: t(response.errorMessage) })
+      }
+    },
+    [setAlert, t]
+  )
   return (
     <CondensedContainer className="relative">
       <Header title={t('SPACES_title')} />
@@ -46,7 +90,7 @@ export const Dashboard: FC<{
                 setOpenEditModal={setOpenEditModal}
                 setSpace={setSpace}
                 setOpenMembers={setOpenMemberModal}
-                setMembers={setMembers}
+                setIsOwner={setIsSpaceOwner}
                 isOwner={isOwner}
               />
             )
@@ -106,7 +150,9 @@ export const Dashboard: FC<{
       <MembersModal
         open={openMemberModal}
         onClose={() => setOpenMemberModal(false)}
-        members={members}
+        space={space}
+        isOwner={isSpaceOwner}
+        onRemoveMember={handleRemoveMember}
       />
 
       <EditSpaceModal

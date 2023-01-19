@@ -20,10 +20,7 @@ const mayHasDate = (
   if (index < 0 && isMoreThan2Hours) {
     return true
   }
-  if (notSameDate) {
-    return true
-  }
-  return false
+  return notSameDate
 }
 
 export const ProductChat = ({

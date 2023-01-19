@@ -1,18 +1,23 @@
 import { SpaceItemTypeWithUser } from '../products/types'
 import { useTranslation } from '../../hooks/use-translation'
-import { List, ListItem, Modal } from '@mui/material'
+import { IconButton, List, ListItem, Modal } from '@mui/material'
 import { CondensedContainer } from '../condensed-container'
 import clsx from 'clsx'
 import React from 'react'
+import DeleteIcon from '@mui/icons-material/Delete'
 
 export const MembersModal = ({
-  members,
+  space,
   open,
   onClose,
+  onRemoveMember,
+  isOwner,
 }: {
-  members?: Pick<SpaceItemTypeWithUser, 'enhancedUsersInSpace' | 'id'>
+  space?: SpaceItemTypeWithUser
   open: boolean
   onClose: () => void
+  onRemoveMember: (params: { spaceId: string; userId: string }) => void
+  isOwner: boolean
 }) => {
   const t = useTranslation()
   return (
@@ -25,15 +30,28 @@ export const MembersModal = ({
       <CondensedContainer className="absolute m-0 h-full max-h-full overflow-auto bg-white p-8 drop-shadow-2xl md:top-1/3 md:left-1/2 md:h-[unset] md:-translate-x-1/2 md:-translate-y-1/3">
         <h3 id="invitation-title">{`${t('GLOBAL_members')} `}</h3>
         <List>
-          {members?.enhancedUsersInSpace?.map((member, index) => (
+          {space?.enhancedUsersInSpace?.map((member, index) => (
             <ListItem
               key={index}
               className={clsx(
-                'border-0 border-b border-solid border-gray-300',
+                'justify-between border-0 border-b border-solid border-gray-300',
                 index === 0 && 'border-t'
               )}
             >
               {member.userName}
+              {isOwner && space.adminId !== member.id && (
+                <IconButton
+                  onClick={() =>
+                    onRemoveMember({
+                      spaceId: space.id || '',
+                      userId: member.id || '',
+                    })
+                  }
+                  title={`${member.userName} ${t('GLOBAL_remove_member')}`}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              )}
             </ListItem>
           ))}
         </List>
