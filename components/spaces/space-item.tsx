@@ -18,7 +18,7 @@ import React, {
   useCallback,
   useState,
 } from 'react'
-import { InvitationType, SpaceItemTypeWithUser } from '../products/types'
+import { SpaceItemTypeWithUser } from '../products/types'
 import GroupsIcon from '@mui/icons-material/Groups'
 import CategoryIcon from '@mui/icons-material/Category'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
@@ -28,8 +28,8 @@ import { useTranslation } from '../../hooks/use-translation'
 import Link from 'next/link'
 import { fetchJson } from '../../lib/helpers/fetch-json'
 import { useSnackbar } from '../../hooks/use-snackbar'
-import { sendFormData } from '../../lib/helpers/send-form-data'
 import { InvitationModal } from '../invitation-modal'
+import { useHandleInvitation } from '../../hooks/useHandleInvitation'
 
 interface Props {
   space: SpaceItemTypeWithUser
@@ -55,8 +55,6 @@ const SpaceItem: FC<Props> = ({
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
   const [dialogOpen, setDialogOpen] = useState<boolean>(false)
-  const [openModal, setOpenModal] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
 
   const t = useTranslation()
   const setAlert = useSnackbar((state) => state.setAlert)
@@ -105,27 +103,8 @@ const SpaceItem: FC<Props> = ({
       setAlert({ severity: 'error', children: t('RESPONSE_SERVER_ERROR') })
     }
   }
-  const handleInvitation = async (values: InvitationType) => {
-    setIsLoading(true)
-    try {
-      const invitation = await sendFormData<{
-        isInvitationOk: boolean
-        message: string
-        ok: boolean
-      }>('/api/invitation', { ...values, space: space })
-      if (invitation.ok) {
-        setAlert({ severity: 'success', children: invitation.message })
-      } else {
-        setAlert({ severity: 'error', children: invitation.message })
-      }
-      setOpenModal(false)
-      setIsLoading(false)
-    } catch {
-      setAlert({ severity: 'error', children: t('INVITATION_server_error') })
-      setOpenModal(true)
-      setIsLoading(false)
-    }
-  }
+  const { isLoading, openModal, setOpenModal, handleInvitation } =
+    useHandleInvitation(space.id ?? '')
 
   return (
     <>

@@ -1,10 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Box, IconButton } from '@mui/material'
 import { useTranslation } from '../../../../hooks/use-translation'
 import { InferGetServerSidePropsType } from 'next'
 import { Header } from '../../../../components/header'
 import {
-  InvitationType,
   ProductType,
   SpaceItemType,
 } from '../../../../components/products/types'
@@ -17,15 +16,13 @@ import { User } from '../../../../components/user/types'
 import { getQueryAsNumber } from '../../../../lib/helpers/get-query-as-number'
 import { getDoc } from 'firebase/firestore'
 import { getSpaceRef } from '../../../../lib/helpers/refs/get-space-ref'
-
-import { sendFormData } from '../../../../lib/helpers/send-form-data'
-import { useSnackbar } from '../../../../hooks/use-snackbar'
 import { ProductList } from '../../../../components/products/product-list'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import { getUser } from '../../../../lib/services/get-user'
 import { InvitationModal } from '../../../../components/invitation-modal'
+import { useHandleInvitation } from '../../../../hooks/useHandleInvitation'
 
 export const maxProductsPerPage = 20
 
@@ -119,32 +116,8 @@ export const Product = ({
     setAnchorEl(null)
   }
 
-  const setAlert = useSnackbar((state) => state.setAlert)
-
-  const [isLoading, setIsLoading] = useState(false)
-  const [openModal, setOpenModal] = useState(false)
-
-  const handleInvitation = async (values: InvitationType) => {
-    setIsLoading(true)
-    try {
-      const invitation = await sendFormData<{
-        isInvitationOk: boolean
-        message: string
-        ok: boolean
-      }>('/api/invitation', { ...values, space: space })
-      if (invitation.ok) {
-        setAlert({ severity: 'success', children: invitation.message })
-      } else {
-        setAlert({ severity: 'error', children: invitation.message })
-      }
-      setOpenModal(false)
-      setIsLoading(false)
-    } catch {
-      setAlert({ severity: 'error', children: t('INVITATION_server_error') })
-      setOpenModal(true)
-      setIsLoading(false)
-    }
-  }
+  const { isLoading, openModal, setOpenModal, handleInvitation } =
+    useHandleInvitation(space)
 
   return (
     <main className="m mx-auto grid w-full max-w-7xl gap-4 p-3">
