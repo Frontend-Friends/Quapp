@@ -1,4 +1,9 @@
-import { DetailedHTMLProps, FC, HTMLAttributes, PropsWithoutRef } from 'react'
+import {
+  DetailedHTMLProps,
+  forwardRef,
+  HTMLAttributes,
+  PropsWithoutRef,
+} from 'react'
 import {
   Box,
   IconButton,
@@ -13,14 +18,15 @@ import clsx from 'clsx'
 import { Url } from 'url'
 import { useTranslation } from '../hooks/use-translation'
 
-const ModalCloseButton: FC<IconButtonProps> = ({ ...props }) => {
-  const t = useTranslation()
+const ModalCloseButton = forwardRef<HTMLButtonElement, IconButtonProps>(
+  ({ ...props }, ref) => {
+    const t = useTranslation()
 
-  return (
-    <IconButton
-      {...props}
-      title={t('BUTTON_close')}
-      className="
+    return (
+      <IconButton
+        {...props}
+        title={t('BUTTON_close')}
+        className="
       z-10
       -mt-2
       -mr-2
@@ -31,13 +37,16 @@ const ModalCloseButton: FC<IconButtonProps> = ({ ...props }) => {
       bg-white
       shadow
       hover:bg-slate-200"
-    >
-      <CloseIcon />
-    </IconButton>
-  )
-}
+        ref={ref}
+      >
+        <CloseIcon />
+      </IconButton>
+    )
+  }
+)
 
-const Overlay: FC<
+const Overlay = forwardRef<
+  HTMLDivElement,
   Omit<ModalUnstyledOwnProps, 'children'> &
     PropsWithoutRef<
       DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>
@@ -48,7 +57,7 @@ const Overlay: FC<
       backUrl?: Url | string
       onCloseClick?: () => void
     }
-> = ({ containerProps, backUrl, onCloseClick, ...props }) => {
+>(({ containerProps, backUrl, onCloseClick, ...props }, ref) => {
   return (
     <Modal
       {...props}
@@ -57,6 +66,7 @@ const Overlay: FC<
         props.className
       )}
       disablePortal
+      ref={ref}
     >
       <CondensedContainer
         {...containerProps}
@@ -78,6 +88,6 @@ const Overlay: FC<
       </CondensedContainer>
     </Modal>
   )
-}
+})
 
 export default Overlay

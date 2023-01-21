@@ -1,12 +1,5 @@
 import { FC, useCallback, useRef, useState } from 'react'
-import {
-  Button,
-  Divider,
-  ListItemIcon,
-  Menu,
-  MenuItem,
-  MenuList,
-} from '@mui/material'
+import { Button, Divider, ListItemIcon, Menu, MenuItem } from '@mui/material'
 import { twNavbarButton } from '../navigation/navigation-bar'
 import Person2RoundedIcon from '@mui/icons-material/Person2Rounded'
 import { useRouter } from 'next/router'
@@ -64,41 +57,39 @@ export const UserIcon: FC = () => {
           horizontal: 'right',
         }}
       >
-        <MenuList>
-          <MenuItem className="p-0 hover:bg-white">
-            <Link href="/user/my-list" passHref>
-              <a className="flex items-center py-2 px-6 text-current no-underline hover:text-primary focus:text-secondary">
-                <ListItemIcon>
-                  <ListAltIcon fontSize="small" />
-                </ListItemIcon>
-                {t('PRODUCTS_my_list')}
-              </a>
-            </Link>
-          </MenuItem>
-          <Divider />
-          <MenuItem className="p-0 hover:bg-white">
-            <Link href="/user/account-settings" passHref>
-              <a className="flex items-center py-2 px-6 text-current no-underline hover:text-primary focus:text-secondary">
-                <ListItemIcon>
-                  <SettingsRounded fontSize="small" />
-                </ListItemIcon>
-                {t('GLOBAL_go_to_account_settings')}
-              </a>
-            </Link>
-          </MenuItem>
-          <Divider />
-          <MenuItem className="hover:bg-white">
-            <button
-              onClick={handleLogout}
-              className="flex cursor-pointer items-center border-0 bg-transparent px-3 font-[Jost] text-base text-current no-underline hover:text-primary focus:text-secondary"
-            >
+        <MenuItem className="p-0 hover:bg-white">
+          <Link href="/user/my-list" passHref>
+            <a className="flex items-center py-2 px-6 text-current no-underline hover:text-primary focus:text-secondary">
               <ListItemIcon>
-                <LogoutRounded fontSize="small" />
+                <ListAltIcon fontSize="small" />
               </ListItemIcon>
-              {t('LOGOUT_logout')}
-            </button>
-          </MenuItem>
-        </MenuList>
+              {t('PRODUCTS_my_list')}
+            </a>
+          </Link>
+        </MenuItem>
+        <Divider />
+        <MenuItem className="p-0 hover:bg-white">
+          <Link href="/user/account-settings" passHref>
+            <a className="flex items-center py-2 px-6 text-current no-underline hover:text-primary focus:text-secondary">
+              <ListItemIcon>
+                <SettingsRounded fontSize="small" />
+              </ListItemIcon>
+              {t('GLOBAL_go_to_account_settings')}
+            </a>
+          </Link>
+        </MenuItem>
+        <Divider />
+        <MenuItem className="hover:bg-white">
+          <button
+            onClick={handleLogout}
+            className="flex cursor-pointer items-center border-0 bg-transparent px-3 font-[Jost] text-base text-current no-underline hover:text-primary focus:text-secondary"
+          >
+            <ListItemIcon>
+              <LogoutRounded fontSize="small" />
+            </ListItemIcon>
+            {t('LOGOUT_logout')}
+          </button>
+        </MenuItem>
       </Menu>
     </div>
   )
