@@ -1,5 +1,13 @@
 import React, { useState } from 'react'
-import { Box, TextField, Typography } from '@mui/material'
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogTitle,
+  TextField,
+  Typography,
+} from '@mui/material'
 import { Formik } from 'formik'
 import { useTranslation } from '../../hooks/use-translation'
 import { SettingType, User } from '../../components/user/types'
@@ -19,8 +27,10 @@ const AccountSettings: React.FC<{ isLoggedIn: boolean; user: User }> = ({
   const [isLoading, setIsLoading] = useState({
     updateAccount: false,
     resetPassword: false,
+    deleteAccount: false,
   })
   const setAlert = useSnackbar((state) => state.setAlert)
+  const [dialogOpen, setDialogOpen] = useState(false)
 
   const t = useTranslation()
   if (!props.user) {
@@ -65,6 +75,38 @@ const AccountSettings: React.FC<{ isLoggedIn: boolean; user: User }> = ({
       setIsLoading({ ...isLoading, resetPassword: true })
       setAlert({ severity: 'error', children: t('LOGIN_server_error') })
       setIsLoading({ ...isLoading, resetPassword: false })
+    }
+  }
+  const handleDeleteAccount = async (userId: string) => {
+    try {
+      const fetchedDeleteUser = await fetchJson<{
+        ok: boolean
+        message: string
+        errorMessage: string
+      }>(`/api/delete-account?${userId}`)
+      if (fetchedDeleteUser.ok) {
+        setIsLoading({ ...isLoading, deleteAccount: false })
+        setAlert({
+          severity: 'success',
+          children: t(fetchedDeleteUser.message),
+        })
+        // setTimeout(async () => {
+        //   await router.push('/auth/login')
+        // }, 1500)
+      } else {
+        setAlert({
+          severity: 'error',
+          children: t(fetchedDeleteUser.errorMessage),
+        })
+        setIsLoading({ ...isLoading, deleteAccount: false })
+      }
+    } catch {
+      setIsLoading({ ...isLoading, deleteAccount: true })
+      setAlert({
+        severity: 'error',
+        children: t('RESPONSE_SERVER_ERROR'),
+      })
+      setIsLoading({ ...isLoading, deleteAccount: false })
     }
   }
   return (
@@ -170,6 +212,31 @@ const AccountSettings: React.FC<{ isLoggedIn: boolean; user: User }> = ({
       >
         {t('BUTTON_reset_password')}
       </LoadingButton>
+
+      <Typography variant="h1" className="mt-14 mb-4">
+        {t('SETTINGS_delete_account')}
+      </Typography>
+      <LoadingButton
+        variant="contained"
+        loading={isLoading.deleteAccount}
+        onClick={() => {
+          handleDeleteAccount(props.user.id ?? '').then()
+          setIsLoading({ ...isLoading, deleteAccount: false })
+        }}
+      >
+        {t('BUTTON_delete_account')}
+      </LoadingButton>
+      <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
+        <DialogTitle>{t('DELETE_text')}</DialogTitle>
+        <DialogActions>
+          <Button onClick={() => handleDeleteAccount(props.user.id ?? '')}>
+            {t('GLOBAL_yes')}
+          </Button>
+          <Button onClick={() => setDialogOpen(false)} autoFocus>
+            {t('GLOBAL_no')}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </CondensedContainer>
   )
 }
