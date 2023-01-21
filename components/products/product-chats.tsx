@@ -6,9 +6,8 @@ import { ProductChat } from './product-chat'
 import { ChatForm } from '../chat-form'
 import { User } from '../user/types'
 import { TabContext, TabList, TabPanel } from '@mui/lab'
-import { useAsync } from 'react-use'
-import { fetchJson } from '../../lib/helpers/fetch-json'
 import { useRouter } from 'next/router'
+import { subScribeChats } from '../../lib/services/chats-listener'
 
 const filteredChats = (
   chats: ProductChatType[],
@@ -38,7 +37,6 @@ export const ProductChats = ({
 
   const { query } = useRouter()
   const [productId] = query.products as string[]
-  const [fetchCount, setFetchCount] = useState(0)
 
   const [selectedTab, setSelectedTab] = useState(selectedChats[0]?.chatUserId)
 
@@ -68,36 +66,25 @@ export const ProductChats = ({
     setSelectedTab(selectedChats[0].chatUserId)
   }, [selectedChats, isOwner])
 
-  useAsync(async () => {
+  useEffect(() => {
     if (!isOwner && !selectedTab) {
       return
     }
     const chatId = isOwner ? selectedTab : userId
 
-    const fetchedChat = await fetchJson<{
-      history: ChatMessage[]
-      userId: string | null
-      chats: ProductChatType[]
-    }>(
-      `/api/chats?productId=${productId}&space=${query.space}&chatId=${
-        chatId || ''
-      }`
+    const unsubscribe = subScribeChats(
+      query.space as string,
+      chatId || '',
+      productId,
+      setSelectedChats,
+      updateChat,
+      selectedTab
     )
 
-    if (fetchedChat.chats.length) {
-      setSelectedChats(fetchedChat.chats)
-    } else if (!!fetchedChat.history.length) {
-      const selectedChatId = selectedTab || fetchedChat.userId
-      updateChat(selectedChatId)(fetchedChat.history)
-    }
-
-    const timeout = setTimeout(() => {
-      setFetchCount(fetchCount + 1)
-    }, 5000)
     return () => {
-      clearTimeout(timeout)
+      unsubscribe()
     }
-  }, [updateChat, fetchCount, productId, query, selectedTab])
+  }, [updateChat, productId, query, selectedTab, isOwner, userId])
 
   return (
     <Box className="rounded border border-slate-200">
