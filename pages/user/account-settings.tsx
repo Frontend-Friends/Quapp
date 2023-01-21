@@ -79,24 +79,21 @@ const AccountSettings: React.FC<{ isLoggedIn: boolean; user: User }> = ({
   }
   const handleDeleteAccount = async (userId: string) => {
     try {
-      const fetchedDeleteUser = await fetchJson<{
+      const fetchedDeleteAccount = await fetchJson<{
         ok: boolean
         message: string
         errorMessage: string
       }>(`/api/delete-account?${userId}`)
-      if (fetchedDeleteUser.ok) {
+      if (fetchedDeleteAccount.ok) {
         setIsLoading({ ...isLoading, deleteAccount: false })
         setAlert({
           severity: 'success',
-          children: t(fetchedDeleteUser.message),
+          children: t(fetchedDeleteAccount.message),
         })
-        // setTimeout(async () => {
-        //   await router.push('/auth/login')
-        // }, 1500)
       } else {
         setAlert({
           severity: 'error',
-          children: t(fetchedDeleteUser.errorMessage),
+          children: t(fetchedDeleteAccount.errorMessage),
         })
         setIsLoading({ ...isLoading, deleteAccount: false })
       }
@@ -222,7 +219,7 @@ const AccountSettings: React.FC<{ isLoggedIn: boolean; user: User }> = ({
         loading={isLoading.deleteAccount}
         onClick={() => {
           setDialogOpen(true)
-          setIsLoading({ ...isLoading, deleteAccount: false })
+          setIsLoading({ ...isLoading, deleteAccount: true })
         }}
       >
         {t('BUTTON_delete_account')}
