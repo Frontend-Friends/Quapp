@@ -17,7 +17,7 @@ export const MessageLink = ({
   const dateFormate = useMemo(() => {
     const date = new Date(parseInt(message.date))
 
-    return dayjs(date).format('DD.MM.YY - HH:MM')
+    return dayjs(date).format('DD.MM.YY - HH:mm')
   }, [message])
 
   return (
