@@ -1,26 +1,26 @@
 const PrivacyPolicy = () => {
   return (
     <>
-      <h2>Datenschutzerklärung</h2>
+      <h1>Datenschutzerklärung</h1>
       <p>
         Verantwortliche Stelle im Sinne der Datenschutzgesetze, insbesondere der
         EU-Datenschutzgrundverordnung (DSGVO), ist:
       </p>
       <br />
       <p>
-        Philip Park
+        xxxxxx
         <br />
-        Grüningerstrasse 6<br />
-        8620 Wetzikon ZH
+        xxxxxx 12
+        <br />
+        1234 xxxxxx
       </p>
       <p>
-        Telefon: 0797955148
+        Telefon: xxxxxxxxx
         <br />
-        E-Mail: shixxor@gmail.com
+        E-Mail: xxx@xxx.xx
         <br />
         WebSite: https://www.quapp.org/
       </p>
-      <p>&nbsp;</p>
       <h2>Allgemeiner Hinweis</h2>
       <p>
         Gestützt auf Artikel 13 der schweizerischen Bundesverfassung und den
@@ -54,7 +54,6 @@ const PrivacyPolicy = () => {
         Basis erhoben. Ohne Ihre Einwilligung erfolgt keine Weitergabe der Daten
         an Dritte.
       </p>
-      <p>&nbsp;</p>
       <h2>Bearbeitung von Personendaten</h2>
       <p>
         Personendaten sind alle Angaben, die sich auf eine bestimmte oder
@@ -143,7 +142,6 @@ const PrivacyPolicy = () => {
         Pflichten, denen wir unterliegen, schränken wir die Bearbeitung
         entsprechend ein.
       </p>
-      <p>&nbsp;</p>
       <h2>Massgebliche Rechtsgrundlagen</h2>
       <p>
         Nach Massgabe des Art. 13 DSGVO teilen wir Ihnen die Rechtsgrundlagen
@@ -161,7 +159,6 @@ const PrivacyPolicy = () => {
         Verarbeitung personenbezogener Daten erforderlich machen, dient Art. 6
         Abs. 1 lit. d DSGVO als Rechtsgrundlage.
       </p>
-      <p>&nbsp;</p>
       <h2>Sicherheitsmassnahmen</h2>
       <p>
         Wir treffen nach Massgabe der gesetzlichen Vorgaben unter
@@ -185,7 +182,6 @@ const PrivacyPolicy = () => {
         entsprechend dem Prinzip des Datenschutzes, durch Technikgestaltung und
         durch datenschutzfreundliche Voreinstellungen.
       </p>
-      <p>&nbsp;</p>
       <h2>Übermittlung von personenbezogenen Daten</h2>
       <p>
         Im Rahmen unserer Verarbeitung von personenbezogenen Daten kommt es vor,
@@ -198,7 +194,6 @@ const PrivacyPolicy = () => {
         entsprechende Verträge bzw. Vereinbarungen, die dem Schutz Ihrer Daten
         dienen, mit den Empfängern Ihrer Daten ab.
       </p>
-      <p>&nbsp;</p>
       <h2>Datenverarbeitung in Drittländern</h2>
       <p>
         Sofern wir Daten in einem Drittland (d.h., ausserhalb der Europäischen
@@ -218,7 +213,6 @@ const PrivacyPolicy = () => {
         EU-Kommission:
         https://ec.europa.eu/info/law/law-topic/data-protection/international-dimension-data-protection_de).
       </p>
-      <p>&nbsp;</p>
       <h2>Datenschutzerklärung für Cookies</h2>
       <p>
         Diese Website verwendet Cookies. Cookies sind Textdateien, die Daten von
@@ -355,7 +349,6 @@ const PrivacyPolicy = () => {
           Berechtigte Interessen (Art. 6 Abs. 1 S. 1 lit. f. DSGVO).
         </li>
       </ul>
-      <p>&nbsp;</p>
       <h2>Datenschutzerklärung für SSL-/TLS-Verschlüsselung</h2>
       <p>
         Diese Website nutzt aus Gründen der Sicherheit und zum Schutz der
@@ -369,7 +362,6 @@ const PrivacyPolicy = () => {
         Wenn die SSL bzw. TLS Verschlüsselung aktiviert ist, können die Daten,
         die Sie an uns übermitteln, nicht von Dritten mitgelesen werden.
       </p>
-      <p>&nbsp;</p>
       <h2>Datenschutzerklärung für Server-Log-Files</h2>
       <p>
         Der Provider dieser Website erhebt und speichert automatisch
@@ -390,7 +382,6 @@ const PrivacyPolicy = () => {
         wenn uns konkrete Anhaltspunkte für eine rechtswidrige Nutzung bekannt
         werden.
       </p>
-      <p>&nbsp;</p>
       <h2>Änderungen</h2>
       <p>
         Wir können diese Datenschutzerklärung jederzeit ohne Vorankündigung
@@ -399,7 +390,6 @@ const PrivacyPolicy = () => {
         Ihnen ist, werden wir Sie im Falle einer Aktualisierung über die
         Änderung per E-Mail oder auf andere geeignete Weise informieren.
       </p>
-      <p>&nbsp;</p>
       <h2>Fragen an den Datenschutzbeauftragten</h2>
       <p>
         Wenn Sie Fragen zum Datenschutz haben, schreiben Sie uns bitte eine
