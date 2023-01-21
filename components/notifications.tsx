@@ -22,14 +22,18 @@ export const Notifications = () => {
     if (!userId) {
       return
     }
-    let allowNotifications = false
-    Notification.requestPermission().then((permission) => {
-      allowNotifications = permission === 'granted'
-    })
-    const unsubscribe = messageListener(userId, push, t, allowNotifications)
+    try {
+      let allowNotifications = false
+      Notification.requestPermission().then((permission) => {
+        allowNotifications = permission === 'granted'
+      })
+      const unsubscribe = messageListener(userId, push, t, allowNotifications)
 
-    return () => {
-      unsubscribe()
+      return () => {
+        unsubscribe()
+      }
+    } catch (err) {
+      console.log(err)
     }
   }, [push, t, userId])
 
