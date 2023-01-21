@@ -230,7 +230,13 @@ const AccountSettings: React.FC<{ isLoggedIn: boolean; user: User }> = ({
           <Button onClick={() => handleDeleteAccount(props.user.id ?? '')}>
             {t('GLOBAL_yes')}
           </Button>
-          <Button onClick={() => setDialogOpen(false)} autoFocus>
+          <Button
+            onClick={() => {
+              setDialogOpen(false)
+              setIsLoading({ ...isLoading, deleteAccount: false })
+            }}
+            autoFocus
+          >
             {t('GLOBAL_no')}
           </Button>
         </DialogActions>
