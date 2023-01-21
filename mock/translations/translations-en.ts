@@ -157,7 +157,7 @@ export const translationsEn: Record<string, string> = {
   PRODUCT_CREATE_file_size:
     'The image is too big. It must not be larger than 2MB',
 
-  BUTTON_borrow: 'I want to borrow this!',
+  BUTTON_borrow: 'Claim offer',
   BUTTON_contact: 'Contact me',
   BUTTON_info: 'Learn more',
   BUTTON_close: 'Close',
