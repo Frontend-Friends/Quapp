@@ -9,10 +9,11 @@ import { Message } from '../../../components/message/type'
 import { MessageDetail } from '../../../components/message/message-detail'
 import { MessageLink } from '../../../components/message/message-link'
 import { fetchMessages } from '../../../lib/services/fetch-messages'
-import { useAsync } from 'react-use'
 import { Header } from '../../../components/header'
 import { useTranslation } from '../../../hooks/use-translation'
 import { Alert } from '@mui/material'
+import { useUser } from '../../../hooks/use-user'
+import { inboxListener } from '../../../lib/services/inbox-listener'
 
 export const getServerSideProps: GetServerSideProps<{ messages?: Message[] }> =
   withIronSessionSsr(async ({ req }) => {
@@ -29,24 +30,20 @@ export default function Inbox({
   messages,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { query, push } = useRouter()
+  const user = useUser()
   const [mutateMessages, setMutateMessages] = useState(messages)
   const [message, setMessage] = useState<Message | undefined>(undefined)
-  const [requestInterval, setRequestInterval] = useState(0)
 
-  useAsync(async () => {
-    const { messages: fetchedMessages, ok } = await fetchJson<{
-      messages: Message[]
-    }>('/api/messages')
-    if (ok) {
-      setMutateMessages(fetchedMessages)
+  useEffect(() => {
+    if (!user?.id) {
+      return
     }
-    const delay = setTimeout(() => {
-      setRequestInterval(requestInterval + 1)
-    }, 5000)
+    const unsubscribe = inboxListener(user.id, setMutateMessages)
+
     return () => {
-      clearTimeout(delay)
+      unsubscribe()
     }
-  }, [requestInterval])
+  }, [user])
 
   useEffect(() => {
     const messageDelay = setTimeout(async () => {
@@ -54,13 +51,6 @@ export default function Inbox({
         await fetchJson('/api/update-message', {
           method: 'POST',
           body: JSON.stringify({ id: message.id, read: true }),
-        })
-        setMutateMessages((state) => {
-          const foundItem = state?.find((item) => item === message)
-          if (foundItem) {
-            foundItem.read = true
-          }
-          return state ? [...state] : state
         })
       }
     }, 2000)
