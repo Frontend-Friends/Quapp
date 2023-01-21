@@ -17,13 +17,9 @@ type RouterType = ReturnType<typeof useRouter>
 export function messageListener(
   userId: string,
   push: RouterType['push'],
-  t: UseTranslationType
+  t: UseTranslationType,
+  allowNotifications: boolean
 ) {
-  let allowNotifications = false
-  Notification.requestPermission().then((permission) => {
-    allowNotifications = permission === 'granted'
-  })
-
   const [, userPath] = getUserRef(userId)
   const messageCollection = collection(...userPath, 'messages')
   const q = query(messageCollection, where('read', '==', false))
