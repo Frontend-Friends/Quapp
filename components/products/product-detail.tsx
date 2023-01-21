@@ -73,6 +73,12 @@ export const ProductDetail = ({
 
   const [borrowRequestSubmitted, setBorrowRequestSubmitted] = useState(false)
 
+  useEffect(() => {
+    if (!product) {
+      setBorrowRequestSubmitted(false)
+    }
+  }, [product])
+
   const handleRequest = useCallback(
     async (accept: boolean, message: Message) => {
       const fetchedData = await fetchJson(`/api/borrow-response`, {
