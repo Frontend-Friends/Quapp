@@ -147,14 +147,14 @@ const SpaceItem: FC<Props> = ({
             }}
           >
             {isOwner && (
-              <div>
+              <>
                 <MenuItem onClick={() => handleEditClick()}>
                   {t('GLOBAL_edit')}
                 </MenuItem>
                 <MenuItem onClick={() => setDialogOpen(true)}>
                   {t('GLOBAL_delete')}
                 </MenuItem>
-              </div>
+              </>
             )}
             <MenuItem
               onClick={() => {
