@@ -3,6 +3,7 @@ import { ChatMessage, ProductChatType } from '../../components/products/types'
 import { collection, doc, DocumentData, onSnapshot } from 'firebase/firestore'
 import { getUser } from './get-user'
 import { Dispatch, SetStateAction } from 'react'
+import { sortChatByTime } from '../scripts/sort-chat-by-time'
 
 export const subScribeChats = (
   space: string,
@@ -28,7 +29,7 @@ export const subScribeChats = (
               resolve({
                 chatUserId: entry.id,
                 chatUserName: fetchedUser.userName || '',
-                history: data.history,
+                history: sortChatByTime(data.history),
               })
             })
         )
@@ -45,7 +46,9 @@ export const subScribeChats = (
         id: item.id,
         ...item.data(),
       } as DocumentData
-      updateChat(tabId || fetchedChat.userId)(fetchedChat?.history || [])
+      updateChat(tabId || fetchedChat.userId)(
+        fetchedChat?.history ? sortChatByTime(fetchedChat.history) : []
+      )
     })
   }
   return unsubscribe
