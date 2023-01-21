@@ -59,6 +59,8 @@
     "react-dom": "18.2.0",
     "react-use": "^17.4.0",
     "sass": "^1.55.0",
+    "socket.io": "^4.5.4",
+    "socket.io-client": "^4.5.4",
     "webcrypto-core": "^1.7.5",
     "yup": "^0.32.11",
     "zustand": "^4.2.0"
