@@ -17,14 +17,16 @@ export function messageListener(
   const q = query(messageCollection, where('read', '==', false))
   return onSnapshot(q, (docs) => {
     setMessage(
-      docs.docs.map(
-        (doc) =>
-          ({
-            id: doc.id,
-            date: doc.id,
-            ...doc.data(),
-          } as Message)
-      )
+      docs.docs.length
+        ? docs.docs.map(
+            (doc) =>
+              ({
+                id: doc.id,
+                date: doc.id,
+                ...doc.data(),
+              } as Message)
+          )
+        : []
     )
   })
 }

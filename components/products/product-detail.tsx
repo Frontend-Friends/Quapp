@@ -219,6 +219,7 @@ export const ProductDetail = ({
               chats={product.chats}
               userId={userId}
               productOwnerName={product.owner.userName}
+              space={product.spaceId}
             />
           )}
         </>
