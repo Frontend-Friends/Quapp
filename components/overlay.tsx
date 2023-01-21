@@ -1,5 +1,11 @@
 import { DetailedHTMLProps, FC, HTMLAttributes, PropsWithoutRef } from 'react'
-import { Box, IconButton, Modal, ModalUnstyledOwnProps } from '@mui/material'
+import {
+  Box,
+  IconButton,
+  IconButtonProps,
+  Modal,
+  ModalUnstyledOwnProps,
+} from '@mui/material'
 import Link from 'next/link'
 import CloseIcon from '@mui/icons-material/Close'
 import { CondensedContainer } from './condensed-container'
@@ -7,11 +13,12 @@ import clsx from 'clsx'
 import { Url } from 'url'
 import { useTranslation } from '../hooks/use-translation'
 
-const ModalCloseButton: FC = () => {
+const ModalCloseButton: FC<IconButtonProps> = ({ ...props }) => {
   const t = useTranslation()
 
   return (
     <IconButton
+      {...props}
       title={t('BUTTON_close')}
       className="
       z-10
@@ -31,16 +38,17 @@ const ModalCloseButton: FC = () => {
 }
 
 const Overlay: FC<
-  ModalUnstyledOwnProps &
+  Omit<ModalUnstyledOwnProps, 'children'> &
     PropsWithoutRef<
       DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>
     > & {
-      containerProps: PropsWithoutRef<
+      containerProps?: PropsWithoutRef<
         DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>
       >
-      backUrl?: Url
+      backUrl?: Url | string
+      onCloseClick?: () => void
     }
-> = ({ containerProps, backUrl, ...props }) => {
+> = ({ containerProps, backUrl, onCloseClick, ...props }) => {
   return (
     <Modal
       {...props}
@@ -53,8 +61,8 @@ const Overlay: FC<
       <CondensedContainer
         {...containerProps}
         className={clsx(
-          'absolute m-0 h-full max-h-full w-full overflow-auto bg-white p-8 drop-shadow-2xl md:top-1/3 md:left-1/2 md:h-[unset] md:-translate-x-1/2 md:-translate-y-1/3',
-          containerProps.className
+          'absolute m-0 h-full max-h-full min-h-[30%] w-full overflow-auto bg-white p-8 drop-shadow-2xl md:top-1/3 md:left-1/2 md:h-[unset] md:-translate-x-1/2 md:-translate-y-1/3',
+          containerProps?.className
         )}
       >
         <Box className="sticky top-0 z-10 flex h-0 w-full justify-end">
@@ -63,7 +71,7 @@ const Overlay: FC<
               <ModalCloseButton />
             </Link>
           ) : (
-            <ModalCloseButton />
+            <ModalCloseButton onClick={onCloseClick} />
           )}
         </Box>
         {props.children}
