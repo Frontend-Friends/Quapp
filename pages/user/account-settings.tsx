@@ -108,6 +108,7 @@ const AccountSettings: React.FC<{ isLoggedIn: boolean; user: User }> = ({
       })
       setIsLoading({ ...isLoading, deleteAccount: false })
     }
+    setDialogOpen(false)
   }
   return (
     <CondensedContainer>
@@ -220,7 +221,7 @@ const AccountSettings: React.FC<{ isLoggedIn: boolean; user: User }> = ({
         variant="contained"
         loading={isLoading.deleteAccount}
         onClick={() => {
-          handleDeleteAccount(props.user.id ?? '').then()
+          setDialogOpen(true)
           setIsLoading({ ...isLoading, deleteAccount: false })
         }}
       >
