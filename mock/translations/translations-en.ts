@@ -165,6 +165,7 @@ export const translationsEn: Record<string, string> = {
   BUTTON_reset_password: 'Reset password',
   BUTTON_invite_member: 'Invite person',
   BUTTON_save: 'Save',
+  BUTTON_delete_account: 'Delete account',
 
   MENU_invite_member: 'Invite person',
 
@@ -184,6 +185,7 @@ export const translationsEn: Record<string, string> = {
   SETTINGS_change_password_description:
     'To change your password, you need to have it reset by our system. You will receive an email with instructions after doing so.',
   SETTINGS_updated: 'The settings have been successfully changed',
+  SETTINGS_delete_account: 'Delete account',
 
   INVITATION_server_error: 'There was an error sending the invitation',
   INVITATION_title: 'Invite a person to this Space',
