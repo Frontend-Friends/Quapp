@@ -20,5 +20,5 @@ export const assignNewOwner = async (
       // space has only one user (the logged-in user), delete the space
       await deleteDoc(spaceRef)
     }
-  } else return
+  }
 }
