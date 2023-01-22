@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import React, { FC, useCallback, useEffect, useRef, useState } from 'react'
 import LoadingButton from '@mui/lab/LoadingButton'
-import { Box, IconButton, Link, Modal, TextField } from '@mui/material'
+import { Box, Link, TextField } from '@mui/material'
 import { CondensedContainer } from '../../components/condensed-container'
 import { useTranslation } from '../../hooks/use-translation'
 import { Formik } from 'formik'
@@ -13,8 +13,8 @@ import { fetchJson } from '../../lib/helpers/fetch-json'
 import { resetPasswordFormSchema } from '../../lib/schema/reset-password-form-schema'
 import { useSnackbar } from '../../hooks/use-snackbar'
 import { Header } from '../../components/header'
-import CloseIcon from '@mui/icons-material/Close'
 import { twFormGroup } from '../../lib/constants'
+import Overlay from '../../components/overlay'
 
 export const getServerSideProps = withIronSessionSsr(async ({ req }) => {
   const { user } = req.session
@@ -183,65 +183,55 @@ const Login: FC = () => {
           </form>
         )}
       </Formik>
-      <Modal
+      <Overlay
         open={openModal}
+        onCloseClick={() => {
+          setOpenModal(false)
+        }}
         onClose={() => {
           setOpenModal(false)
         }}
-        aria-labelledby="reset-title"
-        aria-describedby="reset-description"
       >
-        <CondensedContainer className="absolute m-0 h-full max-h-full w-full overflow-auto bg-white p-8 drop-shadow-2xl md:top-1/3 md:left-1/2 md:h-[unset] md:w-[600px] md:-translate-x-1/2 md:-translate-y-1/3">
-          <Box className="sticky top-0 z-10 flex h-0 w-full justify-end">
-            <IconButton
-              title={t('BUTTON_close')}
-              className="z-10 -mt-2 -mr-2 h-12 w-12 border border-slate-200 bg-white shadow hover:bg-slate-200"
-              onClick={() => setOpenModal(false)}
-            >
-              <CloseIcon />
-            </IconButton>
-          </Box>
-          <h3 id="reset-title" className="my-0">{`${t('RESET_title')}`}</h3>
-          <p id="reset-description">{t('RESET_text')}</p>
-          <Formik
-            initialValues={{
-              email: '',
-            }}
-            validationSchema={resetPasswordFormSchema}
-            validateOnChange={false}
-            validateOnBlur={false}
-            onSubmit={async (values) => {
-              await handleResetPassword(values.email)
-            }}
-          >
-            {(formikProps) => (
-              <form onSubmit={formikProps.handleSubmit}>
-                <Box className="grid grid-cols-1 gap-4">
-                  <TextField
-                    className={twFormGroup}
-                    name="email"
-                    type="text"
-                    label={t('GLOBAL_email')}
-                    variant="outlined"
-                    value={formikProps.values.email}
-                    onChange={formikProps.handleChange}
-                    onBlur={formikProps.handleBlur}
-                    helperText={t(formikProps.errors.email || '')}
-                    error={!!formikProps.errors.email}
-                  />
-                </Box>
-                <LoadingButton
-                  type="submit"
-                  variant="contained"
-                  loading={isLoading}
-                >
-                  {t('RESET_submit_button')}
-                </LoadingButton>
-              </form>
-            )}
-          </Formik>
-        </CondensedContainer>
-      </Modal>
+        <h3 id="reset-title" className="my-0">{`${t('RESET_title')}`}</h3>
+        <p id="reset-description">{t('RESET_text')}</p>
+        <Formik
+          initialValues={{
+            email: '',
+          }}
+          validationSchema={resetPasswordFormSchema}
+          validateOnChange={false}
+          validateOnBlur={false}
+          onSubmit={async (values) => {
+            await handleResetPassword(values.email)
+          }}
+        >
+          {(formikProps) => (
+            <form onSubmit={formikProps.handleSubmit}>
+              <Box className="grid grid-cols-1 gap-4">
+                <TextField
+                  className={twFormGroup}
+                  name="email"
+                  type="text"
+                  label={t('GLOBAL_email')}
+                  variant="outlined"
+                  value={formikProps.values.email}
+                  onChange={formikProps.handleChange}
+                  onBlur={formikProps.handleBlur}
+                  helperText={t(formikProps.errors.email || '')}
+                  error={!!formikProps.errors.email}
+                />
+              </Box>
+              <LoadingButton
+                type="submit"
+                variant="contained"
+                loading={isLoading}
+              >
+                {t('RESET_submit_button')}
+              </LoadingButton>
+            </form>
+          )}
+        </Formik>
+      </Overlay>
     </CondensedContainer>
   )
 }

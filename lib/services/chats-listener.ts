@@ -41,7 +41,6 @@ export const subScribeChats = (
   } else {
     const docRef = doc(...productPath, 'chats', chatId)
     unsubscribe = onSnapshot(docRef, (item) => {
-      console.log('called chat')
       const fetchedChat = {
         id: item.id,
         ...item.data(),

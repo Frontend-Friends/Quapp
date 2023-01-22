@@ -1,37 +1,67 @@
-import { useAsync } from 'react-use'
-import { fetchJson } from '../lib/helpers/fetch-json'
 import { useTranslation } from '../hooks/use-translation'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/router'
 import { messageListener } from '../lib/services/message-listener'
-import { User } from './user/types'
+import { useUnreadMessages } from '../hooks/use-unread-messages'
+import { Message } from './message/type'
+import { useUser } from '../hooks/use-user'
 
 export const Notifications = () => {
   const t = useTranslation()
   const { push } = useRouter()
-  const [userId, setUserId] = useState('')
-
-  useAsync(async () => {
-    const { user, ok } = await fetchJson<{ user: User }>('/api/user')
-    if (ok) {
-      setUserId(user.id || '')
-    }
-  }, [])
+  const user = useUser()
+  const unreadMessages = useRef<Message[]>([])
+  const setMessages = useUnreadMessages((state) => state.setMessages)
+  const allowNotifications = useRef(false)
+  const [incomingMessage, setIncomingMessage] = useState<Message[]>([])
 
   useEffect(() => {
-    if (!userId) {
+    if (!user?.id) {
       return
     }
-    let allowNotifications = false
-    Notification.requestPermission().then((permission) => {
-      allowNotifications = permission === 'granted'
-    })
-    const unsubscribe = messageListener(userId, push, t, allowNotifications)
+    try {
+      Notification.requestPermission().then((permission) => {
+        allowNotifications.current = permission === 'granted'
+      })
+    } catch (err) {
+      console.log(err)
+    }
+    const unsubscribe = messageListener(user.id, push, t, setIncomingMessage)
 
     return () => {
       unsubscribe()
     }
-  }, [push, t, userId])
+  }, [push, t, user])
+
+  useEffect(() => {
+    incomingMessage.forEach((message) => {
+      const mayHasMessage = unreadMessages.current.some(
+        (item) => message.id === item.id
+      )
+      if (!mayHasMessage && allowNotifications) {
+        try {
+          Notification.requestPermission().then((permission) => {
+            if (permission === 'granted') {
+              const notification = new Notification(
+                t('NOTIFICATION_unread_message'),
+                {
+                  body: message.message,
+                  tag: message.id,
+                  icon: '/favicon-32x32.png',
+                }
+              )
+              notification.addEventListener('click', () => {
+                push(`/user/inbox/${message.id}`)
+              })
+            }
+          })
+        } catch (err) {
+          console.log(err)
+        }
+        setMessages([...incomingMessage])
+      }
+    })
+  }, [incomingMessage, push, setMessages, t])
 
   return null
 }

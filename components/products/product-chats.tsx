@@ -23,12 +23,14 @@ export const ProductChats = ({
   isOwner,
   chats,
   productOwnerName,
+  space,
 }: {
   userName: string
   isOwner: boolean
   userId: User['id']
   chats: ProductChatType[]
   productOwnerName: string
+  space: string
 }) => {
   const t = useTranslation()
   const [selectedChats, setSelectedChats] = useState(
@@ -73,7 +75,7 @@ export const ProductChats = ({
     const chatId = isOwner ? selectedTab : userId
 
     const unsubscribe = subScribeChats(
-      query.space as string,
+      space as string,
       chatId || '',
       productId,
       setSelectedChats,
@@ -84,7 +86,7 @@ export const ProductChats = ({
     return () => {
       unsubscribe()
     }
-  }, [updateChat, productId, query, selectedTab, isOwner, userId])
+  }, [updateChat, productId, query, selectedTab, isOwner, userId, space])
 
   return (
     <Box className="rounded border border-slate-200">
