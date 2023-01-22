@@ -25,6 +25,7 @@ const ModalCloseButton = forwardRef<HTMLButtonElement, IconButtonProps>(
     return (
       <IconButton
         {...props}
+        ref={ref}
         title={t('BUTTON_close')}
         className="
       z-10
@@ -37,7 +38,6 @@ const ModalCloseButton = forwardRef<HTMLButtonElement, IconButtonProps>(
       bg-white
       shadow
       hover:bg-slate-200"
-        ref={ref}
       >
         <CloseIcon />
       </IconButton>
@@ -51,13 +51,11 @@ const Overlay = forwardRef<
     PropsWithoutRef<
       DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>
     > & {
-      containerProps?: PropsWithoutRef<
-        DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>
-      >
+      containerCSS?: string
       backUrl?: Url | string
       onCloseClick?: () => void
     }
->(({ containerProps, backUrl, onCloseClick, ...props }, ref) => {
+>(({ containerCSS, backUrl, onCloseClick, ...props }, ref) => {
   return (
     <Modal
       {...props}
@@ -69,10 +67,9 @@ const Overlay = forwardRef<
       ref={ref}
     >
       <CondensedContainer
-        {...containerProps}
         className={clsx(
           'absolute m-0 h-full max-h-full min-h-[30%] w-full overflow-auto bg-white p-8 drop-shadow-2xl md:top-1/3 md:left-1/2 md:h-[unset] md:-translate-x-1/2 md:-translate-y-1/3',
-          containerProps?.className
+          containerCSS
         )}
       >
         <Box className="sticky top-0 z-10 flex h-0 w-full justify-end">
