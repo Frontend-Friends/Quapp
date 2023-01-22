@@ -186,6 +186,8 @@ export const translationsEn: Record<string, string> = {
     'To change your password, you need to have it reset by our system. You will receive an email with instructions after doing so.',
   SETTINGS_updated: 'The settings have been successfully changed',
   SETTINGS_delete_account: 'Delete account',
+  SETTINGS_delete_account_description:
+    'If you do not want to use Quapp services anymore, you can delete your account completely and irrevocable from our system.',
 
   INVITATION_server_error: 'There was an error sending the invitation',
   INVITATION_title: 'Invite a person to this Space',

@@ -188,6 +188,8 @@ export const translations: Record<string, string> = {
     'Um dein Passwort zu ändern, musst du es von unserem System zurücksetzen lassen. Du erhältst nach der Durchführung eine E-Mail mit entsprechenden Anweisungen.',
   SETTINGS_updated: 'Die Einstellungen wurden erfolgreich geändert',
   SETTINGS_delete_account: 'Account löschen',
+  SETTINGS_delete_account_description:
+    'Wenn du die Dienste von Quapp nicht mehr in Anspruch nehmen möchtest, kannst du hier deinen Account komplett und unwiderruflich aus unserem System löschen.',
 
   INVITATION_server_error: 'Beim Versenden der Einladung gab es einen Fehler',
   INVITATION_title: 'Lade eine Person in diesen Space ein',
