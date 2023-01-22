@@ -73,6 +73,8 @@ export const Dashboard: FC<{
     },
     [setAlert, t]
   )
+  console.log(mySpaces)
+
   return (
     <CondensedContainer className="relative">
       <Header title={t('SPACES_title')} />
@@ -92,6 +94,7 @@ export const Dashboard: FC<{
                 setOpenMembers={setOpenMemberModal}
                 setIsOwner={setIsSpaceOwner}
                 isOwner={isOwner}
+                userId={user?.id ?? ''}
               />
             )
           })}

@@ -30,6 +30,8 @@ import { fetchJson } from '../../lib/helpers/fetch-json'
 import { useSnackbar } from '../../hooks/use-snackbar'
 import { InvitationModal } from '../invitation-modal'
 import { useHandleInvitation } from '../../hooks/useHandleInvitation'
+import { removeMember } from '../../lib/helpers/remove-member'
+import { assignNewOwner } from '../../lib/helpers/assign-new-owner'
 
 interface Props {
   space: SpaceItemTypeWithUser
@@ -40,6 +42,7 @@ interface Props {
   setOpenMembers: Dispatch<SetStateAction<boolean>>
   setIsOwner: Dispatch<SetStateAction<boolean>>
   isOwner: boolean
+  userId?: string
 }
 
 const SpaceItem: FC<Props> = ({
@@ -51,6 +54,7 @@ const SpaceItem: FC<Props> = ({
   setOpenEditModal,
   setOpenMembers,
   isOwner,
+  userId,
 }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
@@ -74,6 +78,33 @@ const SpaceItem: FC<Props> = ({
     setOpenEditModal(true)
     setSpace(space)
   }, [handleClose, setOpenEditModal, setSpace, space])
+
+  const handleLeaveSpace = async () => {
+    try {
+      await Promise.all([
+        await removeMember({
+          space: space.id ?? '',
+          userId: userId ?? '',
+        }),
+        await assignNewOwner(space.id ?? '', userId ?? ''),
+      ])
+      setMySpaces((prevState) =>
+        prevState.filter((mySpace) => mySpace.id !== space.id)
+      )
+      setAlert({
+        severity: 'success',
+        children: t('SUCCESSFULLY_REMOVED_MEMBER'),
+      })
+    } catch (error) {
+      setAlert({ severity: 'error', children: t('RESPONSE_SERVER_ERROR') })
+    }
+  }
+
+  const handleLeaveClick = async () => {
+    handleClose()
+    await handleLeaveSpace()
+  }
+
   const onMemberClick = useCallback(() => {
     setSpace(space)
     setIsOwner(isOwner)
@@ -159,10 +190,16 @@ const SpaceItem: FC<Props> = ({
                 setOpenModal(true)
                 handleClose()
               }}
+              key="owner-item-3"
             >
               {t('MENU_invite_member')}
             </MenuItem>
-            <MenuItem onClick={onMemberClick}>{t('GLOBAL_members')}</MenuItem>
+            <MenuItem onClick={onMemberClick} key="owner-item-4">
+              {t('GLOBAL_members')}
+            </MenuItem>
+            <MenuItem onClick={() => handleLeaveClick()} key="owner-item-5">
+              {t('GLOBAL_leave_space')}
+            </MenuItem>
           </Menu>
           <CardContent className="flex basis-full items-center pt-2">
             {space.memberCount && (
