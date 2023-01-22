@@ -9,7 +9,7 @@ export const assignNewOwner = async (
   const [spaceRef] = getSpaceRef(spaceId)
   const res = await getDoc(spaceRef)
   const spaceData = res.data() as SpaceItemType
-  const isOwnSpace = spaceData?.ownerId === userId
+  const isOwnSpace = spaceData?.ownerId === `/user/${userId}`
   if (isOwnSpace) {
     const newOwner = spaceData?.users?.find((id) => id !== userId)
     if (newOwner) {
