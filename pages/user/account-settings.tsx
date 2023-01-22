@@ -218,6 +218,9 @@ const AccountSettings: React.FC<{ isLoggedIn: boolean; user: User }> = ({
       <Typography variant="h1" className="mt-14 mb-4">
         {t('SETTINGS_delete_account')}
       </Typography>
+      <Typography className="mt-4 mb-4">
+        {t('SETTINGS_delete_account_description')}
+      </Typography>
       <LoadingButton
         variant="contained"
         loading={isLoading.deleteAccount}
