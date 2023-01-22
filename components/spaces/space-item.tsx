@@ -146,16 +146,14 @@ const SpaceItem: FC<Props> = ({
               'aria-labelledby': 'basic-button',
             }}
           >
-            {isOwner && (
-              <div>
-                <MenuItem onClick={() => handleEditClick()}>
-                  {t('GLOBAL_edit')}
-                </MenuItem>
-                <MenuItem onClick={() => setDialogOpen(true)}>
-                  {t('GLOBAL_delete')}
-                </MenuItem>
-              </div>
-            )}
+            {isOwner && [
+              <MenuItem onClick={() => handleEditClick()} key="owner-item-1">
+                {t('GLOBAL_edit')}
+              </MenuItem>,
+              <MenuItem onClick={() => setDialogOpen(true)} key="owner-item-2">
+                {t('GLOBAL_delete')}
+              </MenuItem>,
+            ]}
             <MenuItem
               onClick={() => {
                 setOpenModal(true)

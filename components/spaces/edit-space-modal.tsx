@@ -4,12 +4,10 @@ import {
   FormControl,
   InputLabel,
   MenuItem,
-  Modal,
   Select,
   SelectChangeEvent,
   TextField,
 } from '@mui/material'
-import { CondensedContainer } from '../condensed-container'
 import { Formik, FormikValues } from 'formik'
 import { twFormGroup } from '../../lib/constants'
 import LoadingButton from '@mui/lab/LoadingButton'
@@ -18,6 +16,7 @@ import { editSpaceSchema } from '../../lib/schema/edit-space-schema'
 import { SpaceItemTypeWithUser } from '../products/types'
 import { sendFormData } from '../../lib/helpers/send-form-data'
 import { SnackbarProps } from '../../hooks/use-snackbar'
+import Overlay from '../overlay'
 
 interface Props {
   setAlert: (newState?: SnackbarProps) => void
@@ -98,86 +97,87 @@ const EditSpaceModal: React.FC<Props> = ({
   }
 
   return (
-    <Modal
+    <Overlay
       open={openEditModal}
       onClose={() => {
         setOpenEditModal(false)
       }}
-      aria-labelledby="invitation-title"
-      aria-describedby="delete-description"
+      onCloseClick={() => {
+        setOpenEditModal(false)
+      }}
     >
-      <CondensedContainer className="absolute m-0 h-full max-h-full w-full overflow-auto bg-white p-8 drop-shadow-2xl md:top-1/3 md:left-1/2 md:h-[unset] md:-translate-x-1/2 md:-translate-y-1/3">
-        <h3 id="invitation-title">{`${t('SPACES_edit_title')} `}</h3>
+      <h3 id="invitation-title" className="m-0 mb-6 pr-12">{`${t(
+        'SPACES_edit_title'
+      )} `}</h3>
 
-        <Formik
-          initialValues={
-            {
-              name: space?.name,
-              ownerId: space?.adminId,
-            } as {
-              name: string
-              ownerId: string
-            }
+      <Formik
+        initialValues={
+          {
+            name: space?.name,
+            ownerId: space?.adminId,
+          } as {
+            name: string
+            ownerId: string
           }
-          validationSchema={editSpaceSchema}
-          validateOnChange={false}
-          validateOnBlur={false}
-          onSubmit={handleEditSpace}
-        >
-          {(props) => (
-            <form onSubmit={props.handleSubmit}>
-              <Box className="flex flex-col">
-                <TextField
-                  className={twFormGroup}
-                  name="name"
-                  value={props.values.name}
-                  onChange={props.handleChange}
-                  error={!!props.errors.name}
-                  helperText={props.errors.name}
-                  onBlur={props.handleBlur}
-                  type="text"
-                  label={t('SPACES_name')}
+        }
+        validationSchema={editSpaceSchema}
+        validateOnChange={false}
+        validateOnBlur={false}
+        onSubmit={handleEditSpace}
+      >
+        {(props) => (
+          <form onSubmit={props.handleSubmit}>
+            <Box className="flex flex-col">
+              <TextField
+                className={twFormGroup}
+                name="name"
+                value={props.values.name}
+                onChange={props.handleChange}
+                error={!!props.errors.name}
+                helperText={props.errors.name}
+                onBlur={props.handleBlur}
+                type="text"
+                label={t('SPACES_name')}
+                variant="outlined"
+              />
+              <FormControl fullWidth>
+                <InputLabel id="ownerId">
+                  {t('SPACES_administrator')}
+                </InputLabel>
+                <Select
+                  name="ownerId"
+                  labelId="ownerId"
+                  label={t('SPACES_administrator')}
                   variant="outlined"
-                />
-                <FormControl fullWidth>
-                  <InputLabel id="ownerId">
-                    {t('SPACES_administrator')}
-                  </InputLabel>
-                  <Select
-                    name="ownerId"
-                    labelId="ownerId"
-                    label={t('SPACES_administrator')}
-                    variant="outlined"
-                    onChange={(e) => handleChange(e, props)}
-                    onBlur={props.handleBlur}
-                    className={twFormGroup}
-                    id="simple-select"
-                    value={props.values.ownerId}
-                    error={!!props.errors.ownerId}
-                  >
-                    {enhancedUsersInSpace?.map((user) => {
-                      return (
-                        <MenuItem value={user.id} key={user.id}>
-                          {user.userName}
-                        </MenuItem>
-                      )
-                    })}
-                  </Select>
-                </FormControl>
-              </Box>
-              <LoadingButton
-                type="submit"
-                variant="contained"
-                className="mr-4"
-                loading={isLoading}
-              >
-                {t('BUTTON_save')}
-              </LoadingButton>
-            </form>
-          )}
-        </Formik>
-      </CondensedContainer>
-    </Modal>
+                  onChange={(e) => handleChange(e, props)}
+                  onBlur={props.handleBlur}
+                  className={twFormGroup}
+                  id="simple-select"
+                  value={props.values.ownerId}
+                  error={!!props.errors.ownerId}
+                >
+                  {enhancedUsersInSpace?.map((user) => {
+                    return (
+                      <MenuItem value={user.id} key={user.id}>
+                        {user.userName}
+                      </MenuItem>
+                    )
+                  })}
+                </Select>
+              </FormControl>
+            </Box>
+            <LoadingButton
+              type="submit"
+              variant="contained"
+              className="mr-4"
+              loading={isLoading}
+            >
+              {t('BUTTON_save')}
+            </LoadingButton>
+          </form>
+        )}
+      </Formik>
+    </Overlay>
   )
 }
 
