@@ -31,6 +31,7 @@ export const InvitationModal: React.FC<Props> = ({
       onClose={() => {
         setOpenModal(false)
       }}
+      containerCSS="max-w-[600px]"
     >
       <h3 id="invitation-title" className="m-0 mb-6 pr-12">{`${t(
         'INVITATION_title'

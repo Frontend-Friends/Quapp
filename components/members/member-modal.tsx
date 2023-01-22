@@ -21,7 +21,12 @@ export const MembersModal = ({
 }) => {
   const t = useTranslation()
   return (
-    <Overlay open={open} onCloseClick={onClose} onClose={onClose}>
+    <Overlay
+      open={open}
+      onCloseClick={onClose}
+      onClose={onClose}
+      containerCSS="max-w-[600px]"
+    >
       <h3 className="m-0 mb-6 pr-12" id="invitation-title">{`${t(
         'GLOBAL_members'
       )} `}</h3>

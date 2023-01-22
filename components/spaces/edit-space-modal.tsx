@@ -105,6 +105,7 @@ const EditSpaceModal: React.FC<Props> = ({
       onCloseClick={() => {
         setOpenEditModal(false)
       }}
+      containerCSS="max-w-[600px]"
     >
       <h3 id="invitation-title" className="m-0 mb-6 pr-12">{`${t(
         'SPACES_edit_title'

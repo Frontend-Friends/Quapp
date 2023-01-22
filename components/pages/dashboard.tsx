@@ -122,6 +122,7 @@ export const Dashboard: FC<{
         onCloseClick={() => {
           setOpenModal(false)
         }}
+        containerCSS="max-w-[600px]"
       >
         <h3 id="addspace-title" className="my-0">{`${t(
           'SPACES_add_space'

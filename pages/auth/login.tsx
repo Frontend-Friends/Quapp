@@ -191,6 +191,7 @@ const Login: FC = () => {
         onClose={() => {
           setOpenModal(false)
         }}
+        containerCSS="max-w-[600px]"
       >
         <h3 id="reset-title" className="my-0">{`${t('RESET_title')}`}</h3>
         <p id="reset-description">{t('RESET_text')}</p>

@@ -21,7 +21,12 @@ export const MessageDetail = ({
   const t = useTranslation()
 
   return (
-    <Overlay open={open} onClose={onClose} onCloseClick={onClose}>
+    <Overlay
+      open={open}
+      onClose={onClose}
+      onCloseClick={onClose}
+      containerCSS="max-w-[800px]"
+    >
       <h3 className="my-0 pr-10">
         {t('BORROW_message_title')}
         {`"${message?.product?.title}"`}
