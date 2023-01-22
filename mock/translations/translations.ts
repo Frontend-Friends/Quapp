@@ -196,6 +196,7 @@ export const translations: Record<string, string> = {
 
   INVITATION_server_error: 'Beim Versenden der Einladung gab es einen Fehler',
   INVITATION_title: 'Lade eine Person in diesen Space ein',
+  INVITATION_successful_send: 'Deine Einladung wurde erfolgreich versandt',
 
   NOTIFICATION_unread_message: 'Ungelesene Nachricht',
   RESPONSE_SERVER_ERROR: 'Beim Senden gab es einen Fehler',

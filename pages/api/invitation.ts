@@ -43,7 +43,7 @@ async function invitation(req: NextApiRequest, res: NextApiResponse) {
     await sgMail.send(msg)
 
     // await Promise.all([sendMail, addInvitation])
-    sendResponse(res, { message: 'Invitation email sent successfully' })
+    sendResponse(res, { message: 'INVITATION_successful_send' })
   } catch (err) {
     console.error(err)
     sendError(res, { invitationIsOk: false, message: 'An error occurred' })

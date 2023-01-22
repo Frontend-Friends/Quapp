@@ -17,14 +17,16 @@ export const useHandleInvitation = (spaceId: string) => {
         isInvitationOk: boolean
         message: string
       }>('/api/invitation', { ...values, space: spaceId })
-      setAlert({ severity: 'success', children: invitation.message })
-      setOpenModal(false)
-      setIsLoading(false)
+      if (invitation.ok) {
+        setAlert({ severity: 'success', children: t(invitation.message) })
+        setOpenModal(false)
+      } else {
+        setAlert({ severity: 'error', children: t('INVITATION_server_error') })
+      }
     } catch {
       setAlert({ severity: 'error', children: t('INVITATION_server_error') })
-      setOpenModal(true)
-      setIsLoading(false)
     }
+    setIsLoading(false)
   }
 
   return { isLoading, setAlert, openModal, setOpenModal, handleInvitation }

@@ -30,8 +30,6 @@ import { fetchJson } from '../../lib/helpers/fetch-json'
 import { useSnackbar } from '../../hooks/use-snackbar'
 import { InvitationModal } from '../invitation-modal'
 import { useHandleInvitation } from '../../hooks/useHandleInvitation'
-import { removeMember } from '../../lib/helpers/remove-member'
-import { assignNewOwner } from '../../lib/helpers/assign-new-owner'
 
 interface Props {
   space: SpaceItemTypeWithUser
@@ -81,13 +79,10 @@ const SpaceItem: FC<Props> = ({
 
   const handleLeaveSpace = async () => {
     try {
-      await Promise.all([
-        await removeMember({
-          space: space.id ?? '',
-          userId: userId ?? '',
-        }),
-        await assignNewOwner(space.id ?? '', userId ?? ''),
-      ])
+      await fetchJson(`/api/remove-member?space=${space.id}&userId=${userId}`, {
+        method: 'DELETE',
+      })
+
       setMySpaces((prevState) =>
         prevState.filter((mySpace) => mySpace.id !== space.id)
       )

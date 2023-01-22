@@ -4,6 +4,7 @@ import { sessionOptions } from '../../config/session-config'
 import { sendResponse } from '../../lib/helpers/send-response'
 import { sendError } from '../../lib/helpers/send-error'
 import { removeMember } from '../../lib/helpers/remove-member'
+import { assignNewOwner } from '../../lib/helpers/assign-new-owner'
 
 export default withIronSessionApiRoute(
   async (req: NextApiRequest, res: NextApiResponse) => {
@@ -11,6 +12,7 @@ export default withIronSessionApiRoute(
       const { space, userId } = req.query as { space: string; userId: string }
 
       await removeMember({ space, userId })
+      await assignNewOwner(space, userId)
 
       sendResponse(res)
     } catch (err) {
