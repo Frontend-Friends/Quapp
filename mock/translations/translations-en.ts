@@ -27,6 +27,7 @@ export const translationsEn: Record<string, string> = {
   GLOBAL_too_short: 'Input is too short',
   GLOBAL_password_min_eight: 'Password must be at least 8 characters long',
   GLOBAL_invalid_email: 'E-mail address invalid',
+  GLOBAL_leave_space: 'Leave space',
 
   SPACES_title: 'Your Spaces',
   SPACES_no_entries:
@@ -194,6 +195,7 @@ export const translationsEn: Record<string, string> = {
 
   NOTIFICATION_unread_message: 'Unread message',
   RESPONSE_SERVER_ERROR: 'There was an error while sending',
+  SUCCESSFULLY_REMOVED_MEMBER: 'You successfully left the space',
 
   HTML_TITLE_general: 'Quapp - The app that connects neighbors',
   HTML_META_description:
