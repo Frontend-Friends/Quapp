@@ -42,7 +42,7 @@ const Signup: FC = () => {
           query: { name: values.firstName },
         })
       } else {
-        setAlert({ severity: 'error', children: fetchedSignup.errorMessage })
+        setAlert({ severity: 'error', children: t(fetchedSignup.errorMessage) })
         setIsLoading(false)
       }
     } catch {

@@ -167,6 +167,7 @@ export const translations: Record<string, string> = {
   BUTTON_reset_password: 'Passwort zurücksetzen',
   BUTTON_invite_member: 'Person einladen',
   BUTTON_save: 'Speichern',
+  BUTTON_delete_account: 'Account löschen',
 
   MENU_invite_member: 'Person einladen',
 
@@ -186,6 +187,7 @@ export const translations: Record<string, string> = {
   SETTINGS_change_password_description:
     'Um dein Passwort zu ändern, musst du es von unserem System zurücksetzen lassen. Du erhältst nach der Durchführung eine E-Mail mit entsprechenden Anweisungen.',
   SETTINGS_updated: 'Die Einstellungen wurden erfolgreich geändert',
+  SETTINGS_delete_account: 'Account löschen',
 
   INVITATION_server_error: 'Beim Versenden der Einladung gab es einen Fehler',
   INVITATION_title: 'Lade eine Person in diesen Space ein',
