@@ -68,7 +68,7 @@ const Overlay = forwardRef<
     >
       <CondensedContainer
         className={clsx(
-          'absolute m-0 h-full max-h-full min-h-[30%] w-full overflow-auto bg-white p-8 drop-shadow-2xl md:top-1/3 md:left-1/2 md:h-[unset] md:-translate-x-1/2 md:-translate-y-1/3',
+          'absolute m-0 h-full max-h-full min-h-[20%] w-full overflow-auto bg-white p-8 drop-shadow-2xl md:top-1/3 md:left-1/2 md:h-[unset] md:-translate-x-1/2 md:-translate-y-1/3',
           containerCSS
         )}
       >

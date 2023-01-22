@@ -128,6 +128,7 @@ export const ProductItem: FC<{
         onClose={() => {
           setOpenDeleteModal(false)
         }}
+        containerCSS="max-w-[600px]"
       >
         <h3 className="m-0 mb-6 pr-12" id="delete-title">{`${t(
           'DELETE_title'
