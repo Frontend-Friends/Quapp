@@ -28,16 +28,16 @@ const ModalCloseButton = forwardRef<HTMLButtonElement, IconButtonProps>(
         ref={ref}
         title={t('BUTTON_close')}
         className="
-      z-10
-      -mt-2
-      -mr-2
-      h-12
-      w-12
-      border
-      border-slate-200
-      bg-white
-      shadow
-      hover:bg-slate-200"
+          z-10
+          -mt-2
+          -mr-2
+          h-12
+          w-12
+          border
+          border-slate-200
+          bg-white
+          shadow
+          hover:bg-slate-200"
       >
         <CloseIcon />
       </IconButton>
