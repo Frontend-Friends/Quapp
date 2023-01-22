@@ -111,6 +111,8 @@ export const translations: Record<string, string> = {
   DELETE_confirm_button: 'Löschen',
   DELETE_title: 'Löschen von: ',
   DELETE_text: 'Der Eintrag wird unwiderruflich gelöscht.',
+  DELETE_account_text:
+    'Dein Account wird unwideruflich gelöscht. Du kannst dich danach nicht mehr anmelden.',
   DELETE_PRODUCT_success_text: 'Der Eintrag wurde erfolgreich gelöscht.',
 
   SAVE_PRODUCT_submit: 'Speichern',

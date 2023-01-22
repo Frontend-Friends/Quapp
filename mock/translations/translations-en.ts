@@ -111,6 +111,8 @@ export const translationsEn: Record<string, string> = {
   DELETE_title: 'Delete from: ',
   DELETE_text: 'The entry will be irrevocably deleted.',
   DELETE_PRODUCT_success_text: 'The entry was successfully deleted.',
+  DELETE_account_text:
+    "Your account will be deleted. You can't undo this action.",
 
   SAVE_PRODUCT_submit: 'Save',
 

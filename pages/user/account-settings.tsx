@@ -232,7 +232,7 @@ const AccountSettings: React.FC<{ isLoggedIn: boolean; user: User }> = ({
         {t('BUTTON_delete_account')}
       </LoadingButton>
       <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
-        <DialogTitle>{t('DELETE_text')}</DialogTitle>
+        <DialogTitle>{t('DELETE_account_text')}</DialogTitle>
         <DialogActions>
           <Button onClick={() => handleDeleteAccount(props.user.id ?? '')}>
             {t('GLOBAL_yes')}
