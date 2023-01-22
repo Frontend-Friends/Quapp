@@ -1,23 +1,17 @@
+import { CondensedContainer } from '../components/condensed-container'
+
 const PrivacyPolicy = () => {
   return (
-    <>
+    <CondensedContainer>
       <h1>Datenschutzerklärung</h1>
       <p>
         Verantwortliche Stelle im Sinne der Datenschutzgesetze, insbesondere der
         EU-Datenschutzgrundverordnung (DSGVO), ist:
       </p>
       <br />
+      <p>Laurent Kerbage, Philip Park, Fabrice Tobler</p>
       <p>
-        xxxxxx
-        <br />
-        xxxxxx 12
-        <br />
-        1234 xxxxxx
-      </p>
-      <p>
-        Telefon: xxxxxxxxx
-        <br />
-        E-Mail: xxx@xxx.xx
+        E-Mail: quapp.shared@gmail.com
         <br />
         WebSite: https://www.quapp.org/
       </p>
@@ -407,7 +401,7 @@ const PrivacyPolicy = () => {
       >
         SwissAnwalt
       </a>
-    </>
+    </CondensedContainer>
   )
 }
 

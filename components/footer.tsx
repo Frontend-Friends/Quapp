@@ -40,21 +40,21 @@ const Footer: FC = () => {
       <div className="mx-auto max-w-7xl p-3 text-center">
         <ul className="m-0 inline-block list-none p-0 text-center text-sm md:mb-5">
           <li className="inline-block px-2">
-            <Link href="#" passHref>
+            <Link href="/contact" passHref>
               <a className="text-base text-white no-underline">
                 {t('FOOTER_contact')}
               </a>
             </Link>
           </li>
           <li className="inline-block px-2">
-            <Link href="#" passHref>
+            <Link href="/imprint" passHref>
               <a className="text-base text-white no-underline">
                 {t('FOOTER_imprint')}
               </a>
             </Link>
           </li>
           <li className="inline-block px-2">
-            <Link href="#" passHref>
+            <Link href="/privacy-policy" passHref>
               <a className="text-base text-white no-underline">
                 {t('FOOTER_privacy')}
               </a>
