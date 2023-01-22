@@ -24,17 +24,17 @@ async function deleteAccount(req: NextApiRequest, res: NextApiResponse) {
     }
     // since session has not necessarily been updated regarding user.spaces yet
     const user = await fetchUser((sessionUser.id as string) || '')
-    await deleteUser(authUser).then(async () => {
-      await Promise.all(
-        user.spaces?.map((space) => {
-          new Promise(async (resolve) => {
-            await assignNewOwner(space, sessionUser?.id ?? '')
-            await removeMember({ space, userId: user.id ?? '' })
-            resolve(true)
-          })
-        }) ?? []
-      )
-    })
+    await deleteUser(authUser)
+    await Promise.all(
+      user.spaces?.map((space) => {
+        new Promise(async (resolve) => {
+          await assignNewOwner(space, sessionUser?.id ?? '')
+          await removeMember({ space, userId: user.id ?? '' })
+          resolve(true)
+        })
+      }) ?? []
+    )
+
     await deleteUserFromFirestore({ userId: sessionUser.id ?? '' })
     await req.session.destroy()
 

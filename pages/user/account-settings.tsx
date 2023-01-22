@@ -20,6 +20,7 @@ import { ironOptions } from '../../lib/config'
 import { sendFormData } from '../../lib/helpers/send-form-data'
 import { twFormGroup } from '../../lib/constants'
 import { useSnackbar } from '../../hooks/use-snackbar'
+import Router from 'next/router'
 
 const AccountSettings: React.FC<{ isLoggedIn: boolean; user: User }> = ({
   ...props
@@ -90,6 +91,9 @@ const AccountSettings: React.FC<{ isLoggedIn: boolean; user: User }> = ({
           severity: 'success',
           children: t(fetchedDeleteAccount.message),
         })
+        setTimeout(() => {
+          Router.push('/auth/login')
+        }, 1500)
       } else {
         setAlert({
           severity: 'error',
