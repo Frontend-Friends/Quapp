@@ -45,14 +45,14 @@ const Login: FC = () => {
         invitationId?: string
       }>(`/api/get-invitation?invitation=${invitation}`).then((r) => {
         if (r.ok) {
-          setAlert({ severity: 'success', children: r.message })
+          setAlert({ severity: 'success', children: t(r.message) })
           fetchJson(`/api/delete-invitation?invitation=${invitation}`).then()
           setTimeout(() => {
             router.push(`/community/${r.space}/products`)
           }, 2000)
         }
         if (!r.isSignedUp) {
-          setAlert({ severity: 'error', children: r.message })
+          setAlert({ severity: 'error', children: t(r.message) })
           setTimeout(() => {
             router.push(`/auth/signup?invitation=${invitation}`)
           }, 2000)
@@ -60,7 +60,7 @@ const Login: FC = () => {
       })
     // make sure the useEffect is called only once
     calledOnce.current = true
-  }, [router, invitation, setAlert])
+  }, [router, invitation, setAlert, t])
 
   const handleLogin = useCallback(
     async (values: { email: string; password: string }) => {
