@@ -73,8 +73,6 @@ export const Dashboard: FC<{
     },
     [setAlert, t]
   )
-  console.log(mySpaces)
-
   return (
     <CondensedContainer className="relative">
       <Header title={t('SPACES_title')} />
