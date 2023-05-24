@@ -65,7 +65,7 @@ export const CreateEditProduct = ({
             if (onError) onError(t('FORM_submitting_error'))
           }
           setLoading(false)
-          if (response.categories.length) {
+          if (response.categories?.length) {
             setCategories(response.categories)
           }
 

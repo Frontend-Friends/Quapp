@@ -1,9 +1,8 @@
 import React, { FC, useCallback, useState } from 'react'
 import { CondensedContainer } from '../condensed-container'
 import { Header } from '../header'
-import { Alert, Fab, Grid } from '@mui/material'
+import { Alert, Grid } from '@mui/material'
 import SpaceItem from '../spaces/space-item'
-import AddIcon from '@mui/icons-material/Add'
 import { SpaceItemTypeWithUser } from '../products/types'
 import { UseTranslationType } from '../../hooks/use-translation'
 import EditSpaceModal from '../spaces/edit-space-modal'
@@ -102,17 +101,18 @@ export const Dashboard: FC<{
           {t('SPACES_no_entries')}
         </Alert>
       )}
-      <Fab
-        color="secondary"
-        aria-label="add"
-        variant="extended"
-        className="mt-8"
-        onClick={() => {
-          setOpenModal(true)
-        }}
-      >
-        <AddIcon className="mr-2" /> {t('SPACES_add_space')}
-      </Fab>
+      {/*  as agreed no spaces may be created*/}
+      {/*<Fab*/}
+      {/*  color="secondary"*/}
+      {/*  aria-label="add"*/}
+      {/*  variant="extended"*/}
+      {/*  className="mt-8"*/}
+      {/*  onClick={() => {*/}
+      {/*    setOpenModal(true)*/}
+      {/*  }}*/}
+      {/*>*/}
+      {/*  <AddIcon className="mr-2" /> {t('SPACES_add_space')}*/}
+      {/*</Fab>*/}
 
       <Overlay
         open={openModal}

@@ -1,7 +1,6 @@
 import { Dispatch, FC, SetStateAction } from 'react'
 import { SpaceItemType, SpaceItemTypeWithUser } from '../products/types'
 import { Box, TextField } from '@mui/material'
-import { LoadingButton } from '@mui/lab'
 import { Formik } from 'formik'
 import { useTranslation } from '../../hooks/use-translation'
 import { sendFormData } from '../../lib/helpers/send-form-data'
@@ -20,7 +19,7 @@ interface Props {
 }
 
 export const SpaceForm: FC<Props> = ({
-  isLoading,
+  // isLoading,
   setIsLoading,
   setOpenModal,
   setMySpaces,
@@ -51,6 +50,7 @@ export const SpaceForm: FC<Props> = ({
             },
           ],
         })
+
         setIsLoading(false)
         setAlert({ severity: 'success', children: fetchedAddSpace.message })
         setMySpaces([...(mySpaces ?? [])])
@@ -101,14 +101,14 @@ export const SpaceForm: FC<Props> = ({
                 variant="outlined"
               />
             </Box>
-
-            <LoadingButton
-              type="submit"
-              variant="contained"
-              loading={isLoading}
-            >
-              {t('SPACES_add_space')}
-            </LoadingButton>
+            {/*  as agreed no spaces may be created*/}
+            {/*<LoadingButton*/}
+            {/*  type="submit"*/}
+            {/*  variant="contained"*/}
+            {/*  loading={isLoading}*/}
+            {/*>*/}
+            {/*  {t('SPACES_add_space')}*/}
+            {/*</LoadingButton>*/}
           </form>
         )}
       </Formik>
