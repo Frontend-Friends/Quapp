@@ -118,7 +118,7 @@ export const ProductForm = ({
                 <MenuItem value="newCategory">
                   <AddIcon /> {t('CREATE_PRODUCT_add_category')}
                 </MenuItem>
-                {categories?.map((category, key) => (
+                {[...new Set(categories)]?.map((category, key) => (
                   <MenuItem value={key} key={key}>
                     {category}
                   </MenuItem>
